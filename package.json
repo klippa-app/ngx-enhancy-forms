@@ -1,5 +1,5 @@
 {
-  "name": "ngx-enhancy-forms",
+  "name": "@klippa/ngx-enhancy-forms",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
