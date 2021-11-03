@@ -13,8 +13,8 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14.x
-      - run: npm ci --production=false
-      - run: npm run build
+      - run: yarn install
+      - run: yarn run build
       - uses: JS-DevTools/npm-publish@v1
         with:
           package: ./dist/package.json
