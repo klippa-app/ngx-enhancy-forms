@@ -1,12 +1,23 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
+  "strictNullChecks": false,
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
+    "paths": {
+      "ngx-enhancy-forms": [
+        "dist/ngx-enhancy-forms/ngx-enhancy-forms",
+        "dist/ngx-enhancy-forms"
+      ]
+    },
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
@@ -16,5 +27,11 @@
       "es2018",
       "dom"
     ]
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": false,
+    "strictInputAccessModifiers": false,
+    "strictTemplates": false
   }
 }
