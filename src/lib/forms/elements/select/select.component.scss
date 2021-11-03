@@ -1,0 +1,7 @@
+@import 'variables';
+:host {
+	display: block;
+}
+.showErrors ::ng-deep .ng-select-container {
+	border-color: $default-warning;
+}

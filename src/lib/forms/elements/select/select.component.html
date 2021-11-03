@@ -1,0 +1,22 @@
+<ng-select
+	[placeholder]="placeholder"
+	bindLabel="name"
+	bindValue="id"
+	[items]="options"
+	[clearable]="clearable"
+	[(ngModel)]="innerValue"
+	[ngClass]="{showErrors: isInErrorState()}"
+	(change)="setInnerValueAndNotify(innerValue)"
+	[multiple]="multiple"
+	[disabled]="disabled"
+	(blur)="touch()"
+	[dropdownPosition]="dropdownPosition"
+	[searchFn]="customSearchFn"
+>
+	<ng-template let-item="item" ng-option-tmp>
+		{{ item.name }}
+		<div *ngIf="item.description" class="dropdown-item-description">
+			{{ item.description }}
+		</div>
+	</ng-template>
+</ng-select>

@@ -1,0 +1,6 @@
+<app-form-select
+	[options]="languageOptions"
+	[(ngModel)]="innerValue"
+	(ngModelChange)="setInnerValueAndNotify($event)"
+	placeholder="{{'Pick a language' | translate}}"
+></app-form-select>

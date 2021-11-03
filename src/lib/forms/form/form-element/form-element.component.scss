@@ -1,0 +1,43 @@
+@import 'variables';
+:host {
+	display: block;
+}
+.componentContainer {
+	display: flex;
+	align-items: center;
+	&.reverseOrder {
+		flex-direction: row-reverse;
+		justify-content: flex-end;
+	}
+	&.vertical {
+		margin-bottom: $spacing-normal;
+		display: block;
+		.inputContainer {
+			margin-top: $spacing-tiny;
+		}
+		.errorContainer {
+			margin-left: 0;
+		}
+	}
+}
+.caption {
+	font-weight: bold;
+	flex: 0 0 auto;
+	&.percentageSpacing {
+		flex: 0 0 40%;
+	}
+	color: $default-dark;
+	&.hasErrors {
+		color: $default-warning;
+	}
+}
+.inputContainer {
+	flex: 0 0 auto;
+	&.percentageSpacing {
+		flex: 0 0 60%;
+	}
+}
+.errorContainer {
+	margin-left: 40%;
+	color: $default-warning;
+}

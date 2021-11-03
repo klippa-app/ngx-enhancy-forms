@@ -1,0 +1,17 @@
+<ngx-async-template [promise]="optionsPromise">
+	<ng-template ngx-async-pending>
+		<app-loading-indicator variant="textInput"></app-loading-indicator>
+	</ng-template>
+	<ng-template ngx-async-success let-options="value">
+		<app-form-select
+			*ngIf='options.length > 0'
+			[options]="options"
+			[(ngModel)]="innerValue"
+			(ngModelChange)="setInnerValueAndNotify($event)"
+			[clearable]="true"
+			[disabled]="disabled"
+		>
+		</app-form-select>
+		<p *ngIf='options.length === 0' translate>There are no templates available</p>
+	</ng-template>
+</ngx-async-template>

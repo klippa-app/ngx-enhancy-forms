@@ -1,0 +1,19 @@
+<ngx-async-template [promise]="currenciesPromise">
+	<ng-template ngx-async-success let-currencies="value">
+		<ng-select
+			[items]="currencies"
+			bindLabel="Label"
+			bindValue="Code"
+			placeholder="{{ 'All' | translate }}"
+			[clearable]="clearable"
+			[searchFn]="filterCurrency"
+			[(ngModel)]="innerValue"
+			(ngModelChange)="setInnerValueAndNotify($event)"
+			[disabled]="disabled"
+			[multiple]="multiple"
+		></ng-select>
+	</ng-template>
+	<ng-template ngx-async-pending>
+		<app-loading-indicator variant="picker"></app-loading-indicator>
+	</ng-template>
+</ngx-async-template>

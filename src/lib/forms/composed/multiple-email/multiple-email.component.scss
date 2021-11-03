@@ -1,0 +1,16 @@
+:host {
+	display: block;
+}
+.entry {
+	display: flex;
+	margin-top: 10px;
+	app-form-email-input {
+		flex: 1 1 auto;
+	}
+}
+.removeButton {
+	margin-left: 10px;
+}
+.addAnother {
+	margin-top: 10px;
+}

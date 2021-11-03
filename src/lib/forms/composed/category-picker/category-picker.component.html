@@ -1,0 +1,15 @@
+<ngx-async-template [promise]="categoryPromise">
+	<ng-template ngx-async-success let-categories="value">
+		<app-form-select
+			[options]="categories"
+			[(ngModel)]="innerValue"
+			(ngModelChange)="setInnerValueAndNotify($event)"
+			[placeholder]="'Select a category' | translate"
+			[multiple]="multiple"
+		>
+		</app-form-select>
+	</ng-template>
+	<ng-template ngx-async-pending>
+		<app-loading-indicator variant="picker"></app-loading-indicator>
+	</ng-template>
+</ngx-async-template>

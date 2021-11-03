@@ -1,0 +1,11 @@
+<label class="componentContainer">
+	<div class="checkboxContainer">
+		<input type="checkbox" class="checkboxNative"
+			[(ngModel)]="innerValue"
+			(change)="setInnerValueAndNotify(innerValue); touch()"
+			[disabled]="disabled"
+		/>
+		<div class="checkboxVisual"></div>
+	</div>
+	<div *ngIf="caption" class="caption">{{ caption }}</div>
+</label>

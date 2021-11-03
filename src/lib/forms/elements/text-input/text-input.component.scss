@@ -1,0 +1,7 @@
+@import 'variables';
+:host {
+	display: block;
+}
+.showErrors {
+	border-color: $default-warning;
+}

@@ -1,0 +1,14 @@
+<ngx-async-template [promise]="administrationPromise">
+	<ng-template ngx-async-success let-administrations="value">
+		<app-form-select
+			[options]="administrations"
+			[(ngModel)]="innerValue"
+			(ngModelChange)="setInnerValueAndNotify($event)"
+			[placeholder]="'Select an administration' | translate"
+			[multiple]="multiple"
+		></app-form-select>
+	</ng-template>
+	<ng-template ngx-async-pending>
+		<app-loading-indicator variant="picker"></app-loading-indicator>
+	</ng-template>
+</ngx-async-template>
