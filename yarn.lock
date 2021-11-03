@@ -187,6 +187,13 @@
   dependencies:
     tslib "^2.0.0"
 
+"@angular/forms@^12.2.12":
+  version "12.2.12"
+  resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-12.2.12.tgz#82c6d03d58406f7243ce6a2c5b6f6026b6b084d0"
+  integrity sha512-qZKN1igKaeoFqs7ETiVOBJz4KZo9SmDuUrTbkylrYe9I6wHOsmjZSW49M4Lq5dsczl12kTxc3m83RIsRPZAw6Q==
+  dependencies:
+    tslib "^2.2.0"
+
 "@angular/localize@~10.1.6":
   version "10.1.6"
   resolved "https://registry.yarnpkg.com/@angular/localize/-/localize-10.1.6.tgz#251adcbd8e6ac6a2bd9352492584901add774f66"
@@ -1114,6 +1121,13 @@
     merge-source-map "^1.1.0"
     schema-utils "^2.7.0"
 
+"@ng-select/ng-select@^7.3.0":
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/@ng-select/ng-select/-/ng-select-7.3.0.tgz#ebc418c83ce249ad54f6f1ac3bf2473d9fe2ae5a"
+  integrity sha512-YZCdBjhe4QDFFCxnNd/B6abWcVVop8EAYt2UE6TimTM5jR/77ankSOrfiojXv4w/OkIIq4uETHMdQn5NjDcaYQ==
+  dependencies:
+    tslib "^2.0.0"
+
 "@ngtools/webpack@10.1.7":
   version "10.1.7"
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-10.1.7.tgz#0778473a92f49ba72a56167104dcfb26ed7cebb0"
@@ -1258,6 +1272,11 @@
   version "7.0.9"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.9.tgz#97edc9037ea0c38585320b28964dde3b39e4660d"
   integrity sha512-qcUXuemtEu+E5wZSJHNxUXeCZhAfXKQ41D+duX+VYPde7xyEVZci+/oXKJL13tnRs9lR2pr4fod59GT6/X1/yQ==
+
+"@types/lodash@^4.14.176":
+  version "4.14.176"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.176.tgz#641150fc1cda36fbfa329de603bbb175d7ee20c0"
+  integrity sha512-xZmuPTa3rlZoIbtDUyJKZQimJV3bxCmzMIO2c9Pz9afyDro6kr7R79GwcB6mRhuoPmV2p1Vb66WOJH7F886WKQ==
 
 "@types/minimatch@*":
   version "3.0.5"
@@ -5301,7 +5320,7 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
-lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.7.0:
+lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.21, lodash@^4.7.0:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -5782,6 +5801,13 @@ ng-packagr@~10.0.0:
     stylus "^0.54.7"
     terser "^5.0.0"
     update-notifier "^4.0.0"
+
+ngx-sortablejs@^11.1.0:
+  version "11.1.0"
+  resolved "https://registry.yarnpkg.com/ngx-sortablejs/-/ngx-sortablejs-11.1.0.tgz#14e50c48db908c1cb4b37722b28c2d3867c6140a"
+  integrity sha512-eM4dHwWSmXDcvF5gUmyMMQ0qqcqBXWCSZ9IRpqx4UkBKfo4N7pk/QuYh5io2fXVHWVFDaxW1yhn2FNpqxV6Jqw==
+  dependencies:
+    tslib "^2.0.0"
 
 nice-try@^1.0.4:
   version "1.0.5"
@@ -8423,7 +8449,7 @@ tslib@^1.10.0, tslib@^1.9.0:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
-tslib@^2.0.0:
+tslib@^2.0.0, tslib@^2.2.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
   integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==

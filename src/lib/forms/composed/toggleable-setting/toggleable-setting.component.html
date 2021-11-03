@@ -1,9 +1,0 @@
-<div class="componentContainer">
-	<div class="captionAndTooltip">
-		<div class="captionContainer">
-			<span class="caption" (click)="toggle()">{{caption}}</span>
-			<app-info-tooltip *ngIf="tooltip" [title]="tooltip"></app-info-tooltip>
-		</div>
-	</div>
-	<app-form-toggle [(ngModel)]="innerValue" (ngModelChange)="setInnerValueAndNotify($event)"></app-form-toggle>
-</div>
