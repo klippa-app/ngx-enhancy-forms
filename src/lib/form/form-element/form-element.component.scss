@@ -1,6 +1,7 @@
-@import 'variables';
+@import '../../../style/themes/default/variables';
 :host {
 	display: block;
+  margin-top: $spacing-medium;
 }
 .componentContainer {
 	display: flex;

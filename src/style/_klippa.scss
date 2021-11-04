@@ -1,0 +1,1006 @@
+div.or-line { width:100%; text-align:center; border-bottom: 1px solid #000; line-height:0.1em; margin:10px 0 20px; }
+div.or-line span { background:#fff; padding:0 10px; }
+
+.pace .pace-progress {
+  background: $primary;
+}
+
+.list-info .info .light-title {
+  color: #b4b7c8;
+}
+
+.mw-20 {
+  max-width: 20px;
+}
+
+.table-end-left-padding {
+  padding: 15px 0px 15px 5px !important;
+}
+
+.table-end-right-padding {
+  padding: 15px 0px 15px 15px !important;
+}
+
+.default-dark {
+  color: $default-dark;
+}
+
+.receipt-icon {
+  width: 40px;
+}
+
+.list-info {
+  .receipt-icon {
+    line-height: 40px;
+    width: 40px;
+    text-align: center;
+    font-size: 17px;
+    float: left;
+  }
+}
+
+.receipt-amount-symbol {
+  .sale {
+    color: $default-success;
+  }
+
+  .purchase {
+    color: $default-warning;
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.booking-status-information {
+  border-bottom: 1px dotted;
+}
+
+th .checkbox {
+  padding: 0px;
+  label {
+    margin-bottom: 0px;
+  }
+}
+
+chart {
+  display: block;
+}
+
+.scroll-wrapper {
+  height: calc(100vh - #{6 * $spacer});
+  overflow: auto;
+  &.filter-active {
+    height: calc(100vh - #{8 * $spacer});
+  }
+}
+
+.fs-scroll-wrapper {
+  height: calc(100vh - #{15 * $spacer});
+  overflow: auto;
+}
+
+.table-header-button {
+  margin-bottom: 0px;
+  padding: 5px;
+  height: 30px;
+  .badge {
+    padding: 4px 5px;
+  }
+}
+
+.table-header-action-row {
+  line-height: 3em;
+}
+
+.export-column-list .list-group-item {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.input-group-addon-currency {
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 9px;
+  color: $dark;
+}
+
+.input-group-addon-refresh {
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 12px;
+  color: #888da8;
+}
+
+.file-manager-buttons {
+  margin-bottom: $spacer;
+}
+
+.google-map-wrapper {
+  height: 100% !important;
+  width: 100% !important;
+  padding-bottom: 20px;
+  display: block;
+}
+
+.google-map {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+.document-split-input {
+  height: 42px;
+  line-height: 42px;
+
+  span, input, select {
+    margin-right: 8px;
+    width: 60px;
+    display: inline;
+  }
+}
+
+.document-thumbnails {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.document-thumbnail p {
+  padding: 10px 0;
+}
+
+.document-thumbnail img {
+  border-right: 3px dotted #ddd;
+}
+
+.document-thumbnail:hover img {
+  cursor: pointer;
+}
+
+.document-thumbnail img.split {
+  border-right: 3px dotted $primary;
+}
+
+.document-thumbnail:last-child img {
+  cursor: default;
+  border-right-color: transparent;
+}
+
+table.align-middle {
+  tr, td, th {
+    vertical-align: middle;
+  }
+}
+
+.card-settings-toggles > .card-block > div:last-child hr {
+  display: none;
+}
+
+ng-select.is-invalid .ng-select-container {
+  border-color: $default-danger;
+}
+
+ng-select.is-invalid ~ .invalid-feedback {
+  display: block;
+}
+
+.side-nav .side-nav-inner .side-nav-menu li.dropdown.active > a .icon-holder {
+  color: $primary;
+}
+
+.side-nav .side-nav-inner .side-nav-menu li.dropdown.active > a {
+  color: $default-dark;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+ngb-tooltip-window {
+  pointer-events: none;
+}
+
+.pointer label {
+  cursor: pointer;
+}
+
+ngb-tooltip-window, [_nghost-c1].tooltip {
+  border: 0!important;
+  padding: 0 0 5px 0!important;
+}
+
+.tooltip.show {
+  width: 200px!important;
+}
+
+app-receipt-expense-status, .expense-status-badges {
+  .tooltip.show {
+    width: auto;
+  }
+  .tooltip-inner {
+    max-width: 500px;
+    text-align: left;
+  }
+}
+
+@media (min-width: 750px) {
+  .modal-dialog {
+    max-width: 650px;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .modal-xl .modal-dialog {
+    max-width: 800px;
+  }
+
+  .sticky-45 {
+    position: sticky;
+    top: 45%;
+    margin-bottom: 5 * $spacer;
+  }
+}
+@media (min-width: 950px) {
+  .modal-lg {
+    max-width: 900px;
+  }
+}
+@media (min-width: 1050px) {
+  .modal-lg {
+    max-width: 1000px;
+  }
+}
+@media (min-width: 1150px) {
+  .modal-lg {
+    max-width: 1100px;
+  }
+}
+@media (min-width: 1250px) {
+  .modal-lg {
+    max-width: 1200px;
+  }
+}
+@media (min-width: 1650px) {
+  .modal-lg {
+    max-width: 1600px;
+  }
+}
+@media (min-width: 1850px) {
+  .modal-lg {
+    max-width: 1700px;
+  }
+}
+@media (min-width: 2050px) {
+  .modal-lg {
+    max-width: 1800px;
+  }
+}
+
+
+
+
+
+//app-percentage-input > * {
+//  max-width: 110px;
+//}
+//
+//app-amount-input > * {
+//  max-width: 140px;
+//}
+
+app-vat-input > div > * {
+  flex: 3
+}
+
+app-vat-input > div > .input-group-append {
+  flex: 2
+}
+
+.flex-3 {
+  flex: 3;
+}
+
+.flex-2 {
+  flex: 2;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.input-icon-append {
+  position: relative;
+}
+
+.input-icon-append > * + span.append-close {
+  right: 10px;
+  left: unset;
+  position: absolute;
+  top: 12px;
+  cursor: pointer;
+  color: #999;
+  font-size: 18px;
+  font-weight: 400;
+  width: 17px;
+  display: inline-block;
+  line-height: 1;
+}
+
+.input-icon-append .form-control {
+  padding-right: 40px;
+}
+
+.wrap-text {
+  white-space: normal;
+}
+
+
+th span.sortable > span {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.line-height {
+  line-height: 3em;
+}
+
+.modal-header {
+  padding-bottom: 15px;
+}
+
+ng-select.ng-select.ng-select-multiple .ng-select-container .ng-value-container {
+  padding-left: 0;
+  .ng-placeholder {
+    padding-left: 0;
+  }
+}
+
+.ocr-processing {
+  background: $ocr-processing;
+}
+
+.form-highlight .ng-select-container {
+  background: $ocr-processing;
+}
+
+.needs-ocr-review {
+  background: $needs-ocr-review;
+}
+
+app-file-viewer > div > div {
+  padding-bottom: 0!important;
+}
+
+.form-control {
+  &::placeholder {
+    color: #aaa;
+  }
+
+  &:disabled, &[readonly] {
+    background-color: #f9f9f9;
+  }
+}
+
+
+.ng-dropdown-panel .ng-dropdown-panel-items {
+  max-height: 280px!important;
+}
+
+app-receipts-table table th {
+  white-space: nowrap !important;
+}
+
+.no-wrap {
+  white-space: nowrap;
+}
+
+.sticky-100 {
+  position: sticky;
+  top: 100px;
+}
+
+.height-250 {
+  height: 250px;
+}
+
+.badge.badge-sale {
+  background-color: $primary;
+  color: $light;
+}
+
+.badge.badge-purchase {
+  background-color: #ff8000;
+  color: $light;
+}
+
+.badge {
+  padding: 7px 10px 5px;
+  background-color: #515365;
+  transition: unset !important;
+  border-radius: 50px;
+  text-transform: uppercase;
+  color: $light;
+  font-weight: bold;
+
+  &.invert {
+    background-color: $white;
+    color: #515365;
+  }
+
+  &.unavailable {
+    opacity: 0.3;
+  }
+
+  &.badge-warning {
+    background-color: $warning;
+    color: $light;
+
+    &.invert {
+      background-color: $white;
+      color: $warning;
+    }
+
+    &.badge-quick-status {
+      border-color: $warning;
+    }
+  }
+
+  &.badge-info {
+    background-color: $info;
+    color: $light;
+
+    &.invert {
+      background-color: $white;
+      color: $info;
+    }
+
+    &.badge-quick-status {
+      border-color: $info;
+    }
+  }
+
+  &.badge-danger {
+    background-color: $danger;
+    color: $light;
+
+    &.invert {
+      background-color: $white;
+      color: $danger;
+    }
+
+    &.badge-quick-status {
+      border-color: $danger;
+    }
+  }
+
+  &.badge-primary {
+    background-color: $primary;
+    color: $light;
+
+    &.invert {
+      background-color: $white;
+      color: $primary;
+    }
+
+    &.badge-quick-status {
+      border-color: $primary;
+    }
+  }
+
+  &.badge-white {
+    background-color: $white;
+    color: $primary;
+  }
+
+  &.badge-secondary {
+    background-color: $secondary;
+    color: $light;
+  }
+
+  &.badge-outline-primary {
+    background-color: $light;
+    color: $primary;
+  }
+
+  &.badge-outline-secondary {
+    background-color: $light;
+    color: $secondary;
+  }
+
+  &.badge-quick-status {
+    margin-right: 10px;
+    border-style: solid;
+    border-color: #515365;
+
+    &.invert {
+      border-color: $white;
+    }
+  }
+}
+
+.dropdown-item-description {
+  margin: 1px 0 0px 10px;
+  font-size: 10px;
+}
+
+app-valuta-exchange .form-group .form-group {
+  margin-bottom: 0;
+}
+
+.circle-primary {
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  background-color: $primary;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.manual-entry-overlay {
+  position: relative;
+
+  & > div {
+    position: absolute;
+    width: 100%;
+    top: 0;
+  }
+
+  & > .overlay {
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: 5;
+    display: flex!important;
+
+  }
+}
+
+/* Browser update styling */
+body .buorg {
+  position: absolute;
+  position: fixed;
+  z-index: 111111;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  border-bottom: 1px solid #A29330;
+  text-align: center;
+  color: #000;
+  background-color: #fff8ea;
+  font: $font-primary;
+  font-size: small;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  animation: 1s ease-out 0s buorgfly
+}
+body #buorgul {
+  background-color: $primary;
+  color: $light;
+  margin: 10px 2px;
+}
+
+body #buorgig {
+  color: $default-dark;
+  background-color: $default-white;
+  border-color: darken($border-color, 5%);
+  font-weight: 500;
+  margin: 10px 2px;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: $default-dark;
+    background-color: lighten($border-color, 2%);
+    border-color: lighten($border-color, 2%);
+  }
+}
+
+body.bu-active {
+  .side-nav {
+    top: 173px!important;
+  }
+
+  .side-nav-inner {
+    overflow-y: scroll!important;
+  }
+}
+/* End browser update styling */
+
+.clearfix {
+  clear: both;
+}
+
+.break-all {
+  word-break: break-all;
+}
+
+
+.expense-status-badges {
+  display: none;
+  position: fixed;
+  left: -8vw;
+  pointer-events: none;
+
+  .badge {
+    pointer-events: auto;
+  }
+}
+
+@media (min-width: 1050px) {
+  .expense-status-badges {
+    display: block;
+  }
+}
+@media (min-width: 1650px) {
+  .expense-status-badges {
+    left: -2vw;
+  }
+}
+
+.mt--5 {
+  margin-top: -3 * $spacer;
+}
+
+
+app-receipt-edit-modal {
+  div.arrow {
+    position: fixed;
+    top: 50%;
+    color: #fff;
+    cursor: pointer;
+    font-size: 4rem;
+    opacity: 0.3;
+    margin-top: -20px;
+
+    &:hover {
+      opacity: 1.0;
+    }
+
+    &.left {
+      left: -60px;
+    }
+
+    &.right {
+      right: -60px;
+    }
+  }
+}
+
+.missing-field {
+  label, span {
+    color: $default-danger!important;
+  }
+
+  input, .ng-select-container {
+    border-color: $default-danger!important;
+  }
+}
+
+.nav-pills {
+  .nav-link {
+    .badge {
+      font-size: 10px;
+      padding: 4px 6px;
+      position: relative;
+      top: -2px;
+      background-color: #27bb5f;
+      color: #fff;
+    }
+
+    &.active {
+      .badge {
+        background-color: #fff;
+        color: #27bb5f;
+      }
+    }
+  }
+}
+
+
+ul.scope-select {
+  .disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .disabled * {
+    cursor: not-allowed !important;
+  }
+  .hoverScope:hover {
+    background-color: #ccc;
+    border-radius: 2px;
+  }
+  .active .disabled {
+    opacity: 0.2;
+  }
+  .focusRow {
+    background-color: #e7e7e7;
+  }
+}
+
+.nav-pills {
+  .nav-link {
+    .badge {
+      font-size: 10px;
+      padding: 4px 6px;
+      position: relative;
+      top: -2px;
+      background-color: #27bb5f;
+      color: #fff;
+    }
+
+    &.active {
+      .badge {
+        background-color: #fff;
+        color: #27bb5f;
+      }
+    }
+  }
+}
+
+.booking-table-wrapper {
+  overflow: auto!important;
+  -webkit-box-shadow: 0px -4px 20px -14px #333;
+  -moz-box-shadow: 0px -4px 20px -14px #333;
+  box-shadow: 0px -4px 20px -14px #333;
+  overscroll-behavior-x: contain;
+  z-index: 9999;
+  position: relative;
+
+  .resize-handle {
+    position: fixed;
+    color: rgba(0,0,0,0.5);;
+    right: 15px;
+
+    font-size: 22px;
+    font-weight: bold;
+    z-index: 99999;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+
+  &.expanded {
+    height: auto!important;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+
+    .resize-handle {
+      display: none;
+    }
+  }
+
+  app-booking-table {
+    $headers-padding: 15px;
+    $cells-padding: 5px;
+    $font-size: 10pt;
+    $icon-font-size: 11pt;
+    $input-width: 100px;
+    $ng-select-width: 175px;
+    $input-padding: 0.25 * $spacer;
+    $text-color: #515365;
+    $animation: width 0.2s ease-in-out;
+
+    table {
+      thead, tbody {
+        tr {
+          th {
+            padding: $headers-padding;
+            padding-left: $cells-padding;
+            white-space: nowrap;
+
+            &:last-child {
+              padding-left: $headers-padding;
+            }
+          }
+
+          td {
+            padding: $cells-padding;
+            white-space: nowrap;
+
+            * {
+              font-size: $font-size !important;
+            }
+
+            i.fa {
+              font-size: $icon-font-size!important;
+            }
+
+            input, .span-amount {
+              color: $text-color !important;
+            }
+
+            input::placeholder {
+              color: lighten($text-color, 30%);
+            }
+
+            &:last-child {
+              width: 100%; /* Uncomment if we don't want to fill the whole table row */
+              text-align: right;
+              padding: $headers-padding;
+            }
+          }
+        }
+      }
+    }
+    input {
+      width: $input-width!important;
+      max-width: $input-width;
+      padding: $input-padding;
+
+      &#description {
+        width: 2 * $input-width!important;
+        max-width: 2 * $input-width;
+      }
+
+      &.datepicker {
+        width: 1.5 * $input-width!important;
+        max-width: 1.5 * $input-width;
+      }
+    }
+
+    ngb-tooltip-window {
+      top: inherit!important;
+      bottom: inherit!important;
+      left: inherit!important;
+      right: inherit!important;
+      margin-top: 22px;
+
+      .tooltip-inner {
+        margin-top: -12px;
+      }
+    }
+
+    ng-select {
+      min-width: $ng-select-width;
+      width: $ng-select-width;
+      max-width: $ng-select-width;
+      -webkit-transition: $animation;
+      -moz-transition: $animation;
+      -o-transition: $animation;
+      transition: $animation;
+
+      &:hover {
+        width: 100%;
+      }
+
+      .ng-select-container {
+        padding: $input-padding;
+        color: $text-color;
+
+        .ng-value-container {
+          .ng-input {
+            padding-left: 0!important;
+
+            > input {
+              color: $text-color;
+            }
+          }
+
+          .ng-placeholder {
+            color: lighten($text-color, 30%);
+          }
+        }
+
+      }
+
+      .ng-dropdown-panel {
+        min-width: $ng-select-width;
+
+        .ng-dropdown-panel-items .ng-option {
+          padding: $input-padding;
+          color: $text-color;
+        }
+      }
+    }
+
+    app-percentage-input .input-group {
+      width: $input-width + 40px;
+      input {
+        max-width: inherit;
+      }
+    }
+
+    app-amount-input .input-group {
+      width: $input-width + 60px;
+      input {
+        max-width: inherit;
+      }
+    }
+
+    app-company-integration-g-account .input-group {
+      width: $input-width + 180px;
+      input {
+        max-width: inherit;
+      }
+    }
+  }
+
+  tr.sticky-bottom-right {
+    td {
+      position: sticky;
+      bottom: 0;
+      right: 0;
+      background: $white;
+    }
+  }
+}
+
+.table-hover > tbody > tr.no-hover:hover {
+  background-color: inherit;
+}
+
+.sticky-table-header {
+  border-collapse: separate;
+  border-spacing: 0;
+
+  th {
+    background: $white;
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+  }
+}
+
+.previous-remarks-icon {
+  margin-left: 50%;
+  margin-right:50%;
+  cursor:pointer;
+  color:$primary;
+  i {
+    font-size: 1.5em;
+  }
+}
+
+.previous-remarks-icon > .up {
+  transform:rotate(180deg);
+   -webkit-transform:rotate(180deg);
+   -moz-transform: rotate(180deg);
+   -o-transform: rotate(180deg);
+   -ms-transform: rotate(180deg);
+}
+
+.nav-search-bar {
+  margin-top: 11px;
+  $input-border-radius: 6px;
+
+  input {
+    width: 300px;
+    border-radius: $input-border-radius;
+  }
+
+  .ng-select .ng-select-container {
+    border-radius: $input-border-radius;
+    min-width: 250px;
+  }
+}
+
+app-receipt-edit-modal > .bootstrap-datetimepicker-widget {
+  /* Display none, because positioning and display is handled by the DatetimePickerComponent. */
+  display: none!important;
+}
+
+#modal-booking-table-column-settings {
+    z-index: 100000;
+
+  .list-group-item {
+    min-height: 85px;
+    display: flex;
+
+    > a {
+      width: 100%;
+    }
+  }
+
+    .scroll-wrapper {
+      height: 100%;
+      overflow: auto;
+      padding-bottom: 8 * $spacer;
+    }
+
+  .modal-footer {
+    background: $white;
+    z-index: 100;
+  }
+}
+
+@import 'klippa/loader';
+@import 'klippa/compact-mode';

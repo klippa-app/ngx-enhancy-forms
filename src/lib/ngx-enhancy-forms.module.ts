@@ -47,10 +47,21 @@ import {FormComponent} from "./form/form.component";
 	],
 	exports: [
 		ValueAccessorBase,
+		ButtonComponent,
 		CheckboxComponent,
 		EmailInputComponent,
+		LoadingIndicatorComponent,
 		NumberInputComponent,
 		PasswordFieldComponent,
+		SelectComponent,
+		SortableItemsComponent,
+		TextInputComponent,
+		ToggleComponent,
+		FormCaptionComponent,
+		FormElementComponent,
+		FormErrorComponent,
+		FormSubmitButtonComponent,
+		FormComponent,
 	]
 })
 export class NgxEnhancyFormsModule {
