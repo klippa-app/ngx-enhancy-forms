@@ -1,0 +1,81 @@
+@import '../../../style/themes/default/variables';
+@import '../../../style/mixins';
+
+$width: 35px;
+$height: 20px;
+
+:host {
+  display: block;
+}
+
+.componentContainer {
+  position: relative;
+}
+
+.nativeCheckbox {
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  width: $width;
+  height: $height;
+  cursor: pointer;
+}
+
+.toggleVisual {
+  pointer-events: none;
+  position: relative;
+  display: block;
+  @include transition(0.4s ease);
+  width: $width;
+  height: $height;
+  border: 1px solid $border-color;
+  border-radius: $width;
+
+  &:before {
+    content: '';
+    position: absolute;
+    display: block;
+    @include transition(0.2s cubic-bezier(0.24, 0, 0.5, 1));
+    width: $width;
+    height: $height;
+    top: 0;
+    left: 0;
+    border-radius: 30px;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    display: block;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 0px 0 rgba(0, 0, 0, 0.04), 0 4px 9px rgba(0, 0, 0, 0.13), 0 3px 3px rgba(0, 0, 0, 0.05);
+    @include transition(0.35s cubic-bezier(0.54, 1.6, 0.5, 1));
+    background: darken($default-white, 3%);
+    height: $height;
+    width: $height; // using height here because we want the knob to be as same width as height
+    top: 0px;
+    left: 0px;
+    border-radius: 60px;
+  }
+}
+
+.nativeCheckbox:checked {
+  + .toggleVisual {
+    &:before {
+      background: $default-success;
+      @include transition(width 0.2s cubic-bezier(0, 0, 0, 0.1));
+    }
+
+    &:after {
+      left: 18px;
+    }
+  }
+}
+
+.disabled {
+  opacity: 0.6;
+}
+
+.showErrors + .toggleVisual:before {
+  border: 1px solid $default-warning;
+}

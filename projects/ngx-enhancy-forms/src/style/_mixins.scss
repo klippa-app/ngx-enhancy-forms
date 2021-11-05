@@ -1,0 +1,72 @@
+//--------------------------------------------------
+// [Transition]
+//--------------------------------------------------
+
+// eg: @include transition(all 0.4s ease-in-out);
+@mixin transition($transition) {
+  transition: $transition;
+  -webkit-transition: $transition;
+  -moz-transition: $transition;
+  -o-transition: $transition;
+  -ms-transition: $transition;
+}
+
+//--------------------------------------------------
+// [Placeholder]
+//--------------------------------------------------
+
+// usage: @include placeholder {font-size: 10px;}
+@mixin placeholder {
+  &::-webkit-input-placeholder {
+    @content
+  }
+  &:-moz-placeholder {
+    @content
+  }
+  &::-moz-placeholder {
+    @content
+  }
+  &:-ms-input-placeholder {
+    @content
+  }
+}
+
+@mixin formControl() {
+  border: 1px solid $border-color;
+  border-radius: 2px;
+  box-shadow: none;
+  height: 42px;
+  padding: $padding-small $padding-large;
+  font-size: 14px;
+  color: $default-text-color;
+  @include transition(all 0.2s ease-in);
+  @include placeholder {
+    color: $default-gray-faded-dark;
+  }
+
+  &:focus {
+    outline: 0 none;
+    box-shadow: none;
+    border-color: lighten($primary, 10%);
+  }
+
+  &.input-sm {
+    height: 30px;
+  }
+
+  &.input-lg {
+    height: 50px;
+  }
+
+  &.error {
+    border-color: $default-danger;
+    background-color: $inverse-danger;
+  }
+
+  &.valid {
+    border-color: $default-success;
+    background-color: $inverse-success;
+    color: darken($default-success, 15%);
+  }
+}
+

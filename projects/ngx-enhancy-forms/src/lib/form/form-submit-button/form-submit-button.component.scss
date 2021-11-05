@@ -1,0 +1,11 @@
+:host {
+  display: inline-block;
+
+  &._fullWidth {
+    display: block;
+  }
+}
+
+.fullWidth {
+  width: 100%;
+}

@@ -1,0 +1,209 @@
+@import '../../../style/themes/default/variables';
+
+:host {
+  display: inline-block;
+
+  &._fullWidth {
+    display: block;
+  }
+}
+
+.buttonFundamentals {
+  cursor: pointer;
+  letter-spacing: 1px;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: $border-default;
+  border-radius: $border-radius-default;
+  color: $default-text-color;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.no-border {
+  border: none;
+}
+
+.caption {
+  &.invisible {
+    visibility: hidden;
+  }
+}
+
+button {
+  position: relative; // for the absolute loading spinner
+}
+
+.loadingSpinnerContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.small {
+  padding-top: $padding-small;
+  padding-bottom: $padding-small;
+}
+
+.large {
+  line-height: 2;
+}
+
+.white {
+  color: $default-dark;
+  background-color: $default-white;
+  border-color: darken($border-color, 5%);
+  font-weight: 500;
+
+  &:hover,
+  &:active {
+    color: $default-dark;
+    background-color: lighten($border-color, 2%);
+    border-color: lighten($border-color, 2%);
+  }
+
+  &:focus {
+    text-decoration: underline;
+  }
+}
+
+.greenFilled {
+  background-color: $default-primary;
+  border-color: $default-primary;
+  color: $default-white;
+
+  &:hover {
+    color: $default-white;
+    background-color: lighten($default-primary, 5%);
+    border-color: lighten($default-primary, 5%);
+  }
+
+  &:focus {
+    text-decoration: underline;
+  }
+
+  &:active {
+    background-color: darken($default-primary, 5%);
+    border-color: darken($default-primary, 5%);
+  }
+}
+
+.greenOutlined {
+  background-color: $default-white;
+  border-color: $default-primary;
+  color: $default-primary;
+
+  &:hover {
+    color: $default-white;
+    background-color: lighten($default-primary, 5%);
+    border-color: lighten($default-primary, 5%);
+  }
+
+  &:focus {
+    text-decoration: underline;
+  }
+
+  &:active {
+    background-color: darken($default-primary, 5%);
+    border-color: darken($default-primary, 5%);
+  }
+}
+
+.greenLink {
+  color: $default-primary;
+  border: none;
+  background: none;
+  padding: 0;
+
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+  }
+}
+
+.contextMenuItem {
+  color: $default-text-color;
+  background-color: $default-white;
+  border-color: $default-white;
+
+  &:hover {
+    background-color: $default-gray;
+    border-color: $default-gray;
+  }
+
+  &:focus,
+  &:active {
+    text-decoration: underline;
+  }
+}
+
+.redFilled {
+  color: $default-white;
+  background-color: $default-danger;
+  border-color: $default-danger;
+
+  &:hover {
+    color: $default-white;
+    background-color: lighten($default-danger, 5%);
+    border-color: lighten($default-danger, 5%);
+  }
+
+  &:focus {
+    text-decoration: underline;
+  }
+
+  &:active {
+    background-color: darken($default-danger, 5%);
+    border-color: darken($default-danger, 5%);
+  }
+}
+
+.redOutlined {
+  color: $default-danger;
+  background-color: $default-white;
+  border-color: $default-danger;
+
+  &:hover {
+    color: $default-white;
+    background-color: lighten($default-danger, 5%);
+    border-color: lighten($default-danger, 5%);
+  }
+
+  &:focus {
+    text-decoration: underline;
+  }
+
+  &:active {
+    background-color: darken($default-danger, 5%);
+    border-color: darken($default-danger, 5%);
+  }
+}
+
+.orangeFilled {
+  color: $default-white;
+  background-color: $default-warning;
+  border-color: $default-warning;
+
+  &:hover {
+    color: $default-white;
+    background-color: lighten($default-warning, 5%);
+    border-color: lighten($default-warning, 5%);
+  }
+
+  &:focus {
+    text-decoration: underline;
+  }
+
+  &:active {
+    background-color: darken($default-warning, 5%);
+    border-color: darken($default-warning, 5%);
+  }
+}

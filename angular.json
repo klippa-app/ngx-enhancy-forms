@@ -5,24 +5,43 @@
   "projects": {
     "ngx-enhancy-forms": {
       "projectType": "library",
-      "root": "./",
-      "sourceRoot": "./src",
+      "root": "projects/ngx-enhancy-forms",
+      "sourceRoot": "projects/ngx-enhancy-forms/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "./tsconfig.lib.json",
-            "project": "./ng-package.json"
+            "tsConfig": "projects/ngx-enhancy-forms/tsconfig.lib.json",
+            "project": "projects/ngx-enhancy-forms/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "./tsconfig.lib.prod.json"
+              "tsConfig": "projects/ngx-enhancy-forms/tsconfig.lib.prod.json"
             }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-enhancy-forms/src/test.ts",
+            "tsConfig": "projects/ngx-enhancy-forms/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-enhancy-forms/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-enhancy-forms/tsconfig.lib.json",
+              "projects/ngx-enhancy-forms/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }
-    }
-  },
+    }},
   "defaultProject": "ngx-enhancy-forms"
 }

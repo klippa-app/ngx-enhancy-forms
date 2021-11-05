@@ -1,0 +1,73 @@
+@import '../../../style/themes/default/variables';
+
+$size: 22px;
+:host {
+  display: block;
+}
+
+.componentContainer {
+  display: flex;
+  margin-bottom: 0;
+}
+
+.checkboxContainer {
+  position: relative;
+}
+
+.caption {
+  cursor: pointer;
+  font-weight: bold;
+  color: $default-text-color;
+}
+
+.checkboxNative {
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  width: $size;
+  height: $size;
+  cursor: pointer;
+}
+
+.checkboxVisual {
+  pointer-events: none;
+
+  &:before {
+    content: '';
+    width: $size;
+    height: $size;
+    display: inline-block;
+    border: 2px solid $border-color;
+    border-radius: 3px;
+    margin-right: 10px;
+    font-size: 15px;
+    font-family: 'themify';
+    font-weight: 400;
+    line-height: 19px;
+    vertical-align: bottom;
+    text-align: center;
+    background-color: $default-white;
+    cursor: pointer;
+  }
+}
+
+.checkboxNative:checked {
+  + .checkboxVisual {
+    &:before {
+      content: '\e64c';
+      color: $default-primary;
+      font-weight: bold;
+    }
+  }
+}
+
+.checkboxNative[disabled] {
+  cursor: not-allowed;
+
+  + .checkboxVisual {
+    &:before {
+      color: $default-gray-dark;
+    }
+  }
+}

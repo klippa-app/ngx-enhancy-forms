@@ -1,9 +1,0 @@
-<div class="componentContainer" [ngClass]="{disabled: disabled}">
-	<input type="checkbox" class="nativeCheckbox"
-		[(ngModel)]="innerValue"
-		(input)="setInnerValueAndNotify($event.target.checked); touch()"
-		[disabled]="disabled"
-		[ngClass]="{showErrors: isInErrorState()}"
-	/>
-	<div class="toggleVisual"></div>
-</div>

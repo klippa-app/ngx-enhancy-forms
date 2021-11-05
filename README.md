@@ -1,43 +1,27 @@
 # NgxEnhancyForms
 
-TODO: Description
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.6.
 
-# Install guide
+## Development server
 
-### yarn
-`yarn add @klippa/ngx-enhancy-forms`
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-### npm
-`npm install @klippa/ngx-enhancy-forms`
+## Code scaffolding
 
-## Import
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-TODO
+## Build
 
-EXAMPLE:
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-```
-I recommend importing the module in a generic ui module and then export it from there, so you can use the ngx-async-template everywhere in your app.
+## Running unit tests
 
-\`\`\`js
-import { NgxAsyncTemplateModule } from '@klippa/ngx-async-template';
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-@NgModule({
-	imports: [
-		NgxAsyncTemplateModule,
-	],
-	exports: [
-		NgxAsyncTemplateModule,
-	],
-})
-export class UiModule {}
-\`\`\`
-```
+## Running end-to-end tests
 
-# Example
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-TODO
+## Further help
 
-# Usage
-
-TODO
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
