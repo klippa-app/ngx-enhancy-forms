@@ -32,7 +32,7 @@ class MultiParseDateFnsDateAdapter extends NgxDateFnsDateAdapter {
 }
 
 @Component({
-	selector: 'app-datepicker',
+	selector: 'klp-datepicker',
 	templateUrl: './datepicker.component.html',
 	styleUrls: ['./datepicker.component.scss'],
 	providers: [

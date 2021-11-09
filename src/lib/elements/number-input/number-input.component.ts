@@ -3,7 +3,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import {ValueAccessorBase} from "../value-accessor-base/value-accessor-base.component";
 
 @Component({
-	selector: 'app-form-number-input',
+	selector: 'klp-form-number-input',
 	templateUrl: './number-input.component.html',
 	styleUrls: ['./number-input.component.scss'],
 	providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: NumberInputComponent, multi: true }],

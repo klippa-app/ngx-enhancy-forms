@@ -3,7 +3,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import {ValueAccessorBase} from "../value-accessor-base/value-accessor-base.component";
 
 @Component({
-	selector: 'app-form-email-input',
+	selector: 'klp-form-email-input',
 	templateUrl: './email-input.component.html',
 	styleUrls: ['./email-input.component.scss'],
 	providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: EmailInputComponent, multi: true }],

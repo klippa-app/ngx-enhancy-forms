@@ -5,7 +5,11 @@
 			(change)="setInnerValueAndNotify(innerValue); touch()"
 			[disabled]="disabled"
 		/>
-		<div class="checkboxVisual"></div>
+    <div class="checkboxVisual">
+      <svg *ngIf="innerValue" version="1.1" viewBox="0 0 4.2333 4.2333" xmlns="http://www.w3.org/2000/svg">
+        <path d="m0.17014 2.7065 1.3073 1.1798 2.5656-3.7404" stroke="currentColor" fill="none" stroke-width=".4646px" />
+      </svg>
+    </div>
 	</div>
 	<div *ngIf="caption" class="caption">{{ caption }}</div>
 </label>

@@ -3,7 +3,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import {ValueAccessorBase} from "../value-accessor-base/value-accessor-base.component";
 
 @Component({
-	selector: 'app-form-sortable-items',
+	selector: 'klp-form-sortable-items',
 	templateUrl: './sortable-items.component.html',
 	styleUrls: ['./sortable-items.component.scss'],
 	providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: SortableItemsComponent, multi: true }],

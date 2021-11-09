@@ -3,7 +3,7 @@ import { AbstractControl, FormControl } from '@angular/forms';
 import {FormComponent} from "../form.component";
 
 @Component({
-	selector: 'app-form-element',
+	selector: 'klp-form-element',
 	templateUrl: './form-element.component.html',
 	styleUrls: ['./form-element.component.scss'],
 })

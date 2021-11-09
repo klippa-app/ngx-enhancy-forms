@@ -1,5 +1,4 @@
 @import '../../../style/themes/default/variables';
-
 $size: 22px;
 :host {
 	display: block;
@@ -26,35 +25,24 @@ $size: 22px;
 	height: $size;
 	cursor: pointer;
 }
+
 .checkboxVisual {
 	pointer-events: none;
-	&:before {
-		content: '';
-		width: $size;
-		height: $size;
-		display: inline-block;
-		border: 2px solid $border-color;
-		border-radius: 3px;
-		margin-right: 10px;
-		font-size: 15px;
-		font-family: 'themify';
-		font-weight: 400;
-		line-height: 19px;
-		vertical-align: bottom;
-		text-align: center;
-		background-color: $default-white;
-		cursor: pointer;
-	}
-}
-
-.checkboxNative:checked {
-	+ .checkboxVisual {
-		&:before {
-			content: '\e64c';
-			color: $default-primary;
-			font-weight: bold;
-		}
-	}
+  color: $primary;
+  padding: $padding-tiny;
+  width: $size;
+  height: $size;
+  display: inline-block;
+  border: 2px solid $border-color;
+  border-radius: 3px;
+  margin-right: 10px;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 19px;
+  vertical-align: bottom;
+  text-align: center;
+  background-color: $default-white;
+  cursor: pointer;
 }
 
 .checkboxNative[disabled] {

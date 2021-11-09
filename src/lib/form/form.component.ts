@@ -3,7 +3,7 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import {FormElementComponent} from "./form-element/form-element.component";
 
 @Component({
-	selector: 'app-form',
+	selector: 'klp-form',
 	templateUrl: './form.component.html',
 	styleUrls: ['./form.component.scss'],
 })

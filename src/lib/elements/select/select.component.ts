@@ -13,7 +13,7 @@ export type AppSelectOptions = Array<{
 }>;
 
 @Component({
-	selector: 'app-form-select',
+	selector: 'klp-form-select',
 	templateUrl: './select.component.html',
 	styleUrls: ['./select.component.scss'],
 	providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: SelectComponent, multi: true }],

@@ -2,7 +2,7 @@ import { Component, Host, HostBinding, Input, Optional } from '@angular/core';
 import {FormComponent} from "../form.component";
 
 @Component({
-	selector: 'app-form-submit-button',
+	selector: 'klp-form-submit-button',
 	templateUrl: './form-submit-button.component.html',
 	styleUrls: ['./form-submit-button.component.scss'],
 })
@@ -10,7 +10,7 @@ export class FormSubmitButtonComponent {
 	@Input() public isLoading = false;
 	@Input() fullWidth = false;
 	@Input() variant: 'greenFilled' | 'redFilled' = 'greenFilled';
-	@Input() public submitCallback: (any) => Promise<null>;
+	@Input() public submitCallback: (any) => Promise<void>;
 
 	@HostBinding('class._fullWidth') get _() {
 		return this.fullWidth;

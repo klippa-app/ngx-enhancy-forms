@@ -3,7 +3,7 @@ import {FormElementComponent} from "../form-element/form-element.component";
 import {isNullOrUndefined} from "../../util/values";
 
 @Component({
-	selector: 'app-form-caption',
+	selector: 'klp-form-caption',
 	templateUrl: './form-caption.component.html',
 	styleUrls: ['./form-caption.component.scss'],
 })

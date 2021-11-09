@@ -3,7 +3,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessorBase } from '../value-accessor-base/value-accessor-base.component';
 
 @Component({
-	selector: 'app-form-checkbox',
+	selector: 'klp-form-checkbox',
 	templateUrl: './checkbox.component.html',
 	styleUrls: ['./checkbox.component.scss'],
 	providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: CheckboxComponent, multi: true }],
