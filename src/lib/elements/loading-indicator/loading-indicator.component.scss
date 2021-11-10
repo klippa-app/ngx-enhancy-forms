@@ -1,0 +1,179 @@
+@import '../../../style/themes/default/variables';
+
+:host {
+	display: block;
+}
+
+.threeDots {
+	display: block;
+	position: relative;
+
+	&.tiny {
+		--base: 4px;
+	}
+
+	&.small {
+		--base: 8px;
+	}
+
+	&.medium {
+		--base: 12px;
+	}
+
+	&.large {
+		--base: 18px;
+	}
+
+	&.huge {
+		--base: 26px;
+	}
+
+	width: calc(4 * var(--base));
+	height: var(--base);
+
+	div {
+		position: absolute;
+		top: 0px;
+		width: var(--base);
+		height: var(--base);
+		border-radius: 50%;
+		background: $primary;
+		animation-timing-function: cubic-bezier(0, 1, 1, 0);
+	}
+
+	div:nth-child(1) {
+		animation: lds-ellipsis1 0.6s infinite;
+	}
+
+	div:nth-child(2) {
+		animation: lds-ellipsis2 0.6s infinite;
+	}
+
+	div:nth-child(3) {
+		left: calc(1.5 * var(--base));
+		animation: lds-ellipsis2 0.6s infinite;
+	}
+
+	div:nth-child(4) {
+		left: calc(3 * var(--base));
+		animation: lds-ellipsis3 0.6s infinite;
+	}
+
+	@keyframes lds-ellipsis1 {
+		0% {
+			transform: scale(0);
+		}
+		100% {
+			transform: scale(1);
+		}
+	}
+	@keyframes lds-ellipsis3 {
+		0% {
+			transform: scale(1);
+		}
+		100% {
+			transform: scale(0);
+		}
+	}
+	@keyframes lds-ellipsis2 {
+		0% {
+			transform: translate(0, 0);
+		}
+		100% {
+			transform: translate(150%, 0);
+		}
+	}
+}
+
+.spinner {
+	&.tiny {
+		svg {
+			width: 1rem;
+			height: 1rem;
+		}
+	}
+	&.small {
+		svg {
+			width: 1.6rem;
+			height: 1.6rem;
+		}
+	}
+	&.medium {
+		svg {
+			width: 2.5rem;
+			height: 2.5rem;
+		}
+	}
+	&.large {
+		svg {
+			width: 3rem;
+			height: 3rem;
+		}
+	}
+	&.huge {
+		svg {
+			width: 4rem;
+			height: 4rem;
+		}
+	}
+
+	svg {
+		-webkit-transition-property: -webkit-transform;
+		-webkit-transition-duration: 1.2s;
+		-webkit-animation-name: rotate;
+		-webkit-animation-iteration-count: infinite;
+		-webkit-animation-timing-function: linear;
+
+		-moz-transition-property: -moz-transform;
+		-moz-animation-name: rotate;
+		-moz-animation-duration: 1.2s;
+		-moz-animation-iteration-count: infinite;
+		-moz-animation-timing-function: linear;
+
+		transition-property: transform;
+		animation-name: rotate;
+		animation-duration: 1.2s;
+		animation-iteration-count: infinite;
+		animation-timing-function: linear;
+	}
+
+	@-webkit-keyframes rotate {
+		from {
+			-webkit-transform: rotate(0deg);
+		}
+		to {
+			-webkit-transform: rotate(360deg);
+		}
+	}
+
+	@-moz-keyframes rotate {
+		from {
+			-moz-transform: rotate(0deg);
+		}
+		to {
+			-moz-transform: rotate(360deg);
+		}
+	}
+
+	@keyframes rotate {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+}
+.picker {
+	position: relative;
+	.chevronDown {
+		position: absolute;
+		top: 18px;
+		right: 23px;
+		width: 0;
+		height: 0;
+		border-top: 5px solid $default-text-color;
+		border-left: 5px solid transparent;
+		border-right: 5px solid transparent;
+	}
+}
