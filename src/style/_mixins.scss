@@ -24,10 +24,12 @@
 }
 
 @mixin formControl() {
+  display: block;
   border: 1px solid $border-color;
   border-radius: 2px;
   box-shadow: none;
   height: 42px;
+  width: 100%;
   padding: $padding-small $padding-large;
   font-size: 14px;
   color: $default-text-color;
