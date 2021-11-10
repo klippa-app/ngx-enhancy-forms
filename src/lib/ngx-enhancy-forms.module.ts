@@ -19,7 +19,6 @@ import {FormSubmitButtonComponent} from "./form/form-submit-button/form-submit-b
 import {ButtonComponent} from "./elements/button/button.component";
 import {LoadingIndicatorComponent} from "./elements/loading-indicator/loading-indicator.component";
 import {FormComponent} from "./form/form.component";
-import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
     imports: [
@@ -27,7 +26,6 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         FormsModule,
         NgSelectModule,
         SortablejsModule,
-        MatCheckboxModule,
     ],
 	declarations: [
 		ValueAccessorBase,
