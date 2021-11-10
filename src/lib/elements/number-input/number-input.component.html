@@ -1,0 +1,7 @@
+<input
+	type="number"
+	class="form-control"
+	[(ngModel)]="innerValue"
+	(input)="setInnerValueAndNotify($event.target.value)"
+	[placeholder]="placeholder ? placeholder : ''"
+/>

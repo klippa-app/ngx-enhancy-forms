@@ -1,0 +1,34 @@
+@import '../../../style/themes/default/variables';
+
+:host {
+	display: block;
+}
+.itemsContainer {
+	border: 1px solid $border-color;
+	border-radius: $border-radius-default;
+	padding: 0;
+	margin-bottom: 0; // overwrite default styling for <ol>
+}
+.sortableItem {
+	list-style: none;
+	border-top: 1px solid $border-color;
+	cursor: grab;
+	&:hover {
+		background: $default-gray-light;
+	}
+	&:first-child {
+		border-top: none; // otherwise you get 2 borders, 1 from container and 1 from the topmost item
+	}
+}
+
+.largeSortableItem {
+	padding: 15px;
+}
+
+.smallSortableItem {
+	padding: 0 10px;
+}
+
+.disabled-mouse-cursor li {
+	cursor: no-drop;
+}
