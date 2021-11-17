@@ -9,6 +9,7 @@
 		<div *ngIf="showDefaultError('pattern')" translate>This input is not valid</div>
 		<div *ngIf="showDefaultError('MatchPassword')" translate>Passwords must match</div>
 		<div *ngIf="showDefaultError('date')" translate>Enter a valid date</div>
+		<div *ngIf="showDefaultError('message')" translate>{{attachedControl.errors.message.value}}</div>
 		<div [ngTemplateOutlet]="getCustomErrorHandler(getErrorToShow())?.templateRef"></div>
 	</div>
 </ng-template>

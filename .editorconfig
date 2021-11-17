@@ -10,7 +10,11 @@ trim_trailing_whitespace = true
 
 [*.ts]
 indent_style = tab
+indent_size = 2
 quote_type = single
+
+[*.html]
+indent_size = tab
 
 [*.md]
 max_line_length = off
