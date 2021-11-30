@@ -1,4 +1,5 @@
 @import '../../../style/themes/default/variables';
+@import "../../../style/mixins";
 
 :host {
 	display: block;
@@ -41,6 +42,7 @@
 }
 
 .componentContainer {
+	@include formControl();
 	&.showErrors {
 		border-color: $default-warning;
 	}

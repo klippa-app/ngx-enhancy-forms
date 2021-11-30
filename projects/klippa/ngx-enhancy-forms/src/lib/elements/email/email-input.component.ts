@@ -9,5 +9,5 @@ import {ValueAccessorBase} from "../value-accessor-base/value-accessor-base.comp
 	providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: EmailInputComponent, multi: true }],
 })
 export class EmailInputComponent extends ValueAccessorBase<string> {
-	@Input() placeholder: string;
+	@Input() placeholder = '';
 }

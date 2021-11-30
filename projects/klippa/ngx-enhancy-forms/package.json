@@ -1,0 +1,16 @@
+{
+	"name": "@klippa/ngx-enhancy-forms",
+	"version": "0.0.1",
+	"peerDependencies": {
+		"@angular/common": ">=10.x",
+		"@angular/core": ">=10.x",
+		"ngx-mat-datefns-date-adapter": ">=10.x",
+		"date-fns": ">=2.26.x",
+		"lodash": ">=4.17.x",
+		"ngx-sortablejs": ">=10.x",
+		"sortablejs": ">=1.14.x"
+	},
+	"dependencies": {
+		"tslib": "^2.0.0"
+	}
+}

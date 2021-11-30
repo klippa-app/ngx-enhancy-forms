@@ -1,10 +1,8 @@
 <input
-	type="password"
+	type="email"
 	class="form-control"
-  [ngClass]="{showErrors: isInErrorState()}"
 	[(ngModel)]="innerValue"
 	(input)="setInnerValueAndNotify($event.target.value)"
-	placeholder="{{ 'Password' }}"
+	[placeholder]="placeholder"
 	(blur)="touch()"
 />
-<!-- TODO: translate -->
