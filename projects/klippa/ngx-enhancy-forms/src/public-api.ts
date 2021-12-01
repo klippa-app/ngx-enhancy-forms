@@ -24,3 +24,5 @@ export * from './lib/form/form-error/form-error.component';
 export * from './lib/form/form-submit-button/form-submit-button.component';
 
 export * from './lib/validators/dateValidator';
+
+export * from './lib/types';

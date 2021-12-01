@@ -6,7 +6,7 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import {ValueAccessorBase} from "../value-accessor-base/value-accessor-base.component";
 
 @Component({
-	selector: 'klp-datepicker',
+	selector: 'klp-form-datepicker',
 	templateUrl: './datepicker.component.html',
 	styleUrls: ['./datepicker.component.scss'],
 	providers: [

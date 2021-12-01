@@ -1,7 +1,7 @@
 import { Component, HostBinding, Input } from '@angular/core';
 
 @Component({
-	selector: 'klp-button',
+	selector: 'klp-form-button',
 	templateUrl: './button.component.html',
 	styleUrls: ['./button.component.scss'],
 })

@@ -1,15 +1,15 @@
 <ng-template #errorRef>
 	<div *ngIf="getErrorToShow()" class="errorContainer">
-		<div *ngIf="showDefaultError('min')" translate [translateParams]="{min: attachedControl.errors.min.min}">Use a number larger than %min%</div>
-		<div *ngIf="showDefaultError('max')" translate [translateParams]="{max: attachedControl.errors.max.max}">Use a number smaller than %max%</div>
-		<div *ngIf="showDefaultError('required')" translate>This field is required</div>
-		<div *ngIf="showDefaultError('email')" translate>Use a valid email address</div>
-		<div *ngIf="showDefaultError('minlength')" translate [translateParams]="{minLength: attachedControl.errors.minlength.requiredLength}">Has to be longer than %minLength% character(s)</div>
-		<div *ngIf="showDefaultError('maxlength')" translate [translateParams]="{maxlength: attachedControl.errors.maxlength.requiredLength}">Has to be shorter than %maxlength% character(s)</div>
-		<div *ngIf="showDefaultError('pattern')" translate>This input is not valid</div>
-		<div *ngIf="showDefaultError('MatchPassword')" translate>Passwords must match</div>
-		<div *ngIf="showDefaultError('date')" translate>Enter a valid date</div>
-		<div *ngIf="showDefaultError('message')" translate>{{attachedControl.errors.message.value}}</div>
+		<div *ngIf="showDefaultError('min')">{{substituteParameters(getErrorMessages("min"), {min: attachedControl.errors.min.min})}}</div>
+		<div *ngIf="showDefaultError('max')">{{substituteParameters(getErrorMessages("max"), {max: attachedControl.errors.max.max})}}</div>
+		<div *ngIf="showDefaultError('required')">{{getErrorMessages("required")}}</div>
+		<div *ngIf="showDefaultError('email')">{{getErrorMessages("email")}}</div>
+		<div *ngIf="showDefaultError('minlength')">{{substituteParameters(getErrorMessages("minLength"), {minLength: attachedControl.errors.minlength.requiredLength})}}</div>
+		<div *ngIf="showDefaultError('maxlength')">{{substituteParameters(getErrorMessages("maxLength"), {maxLength: attachedControl.errors.maxlength.requiredLength})}}</div>
+		<div *ngIf="showDefaultError('pattern')">{{getErrorMessages("pattern")}}</div>
+		<div *ngIf="showDefaultError('MatchPassword')">{{getErrorMessages("matchPassword")}}</div>
+		<div *ngIf="showDefaultError('date')">{{getErrorMessages("date")}}</div>
+		<div *ngIf="showDefaultError('message')">{{attachedControl.errors.message.value}}</div>
 		<div [ngTemplateOutlet]="getCustomErrorHandler(getErrorToShow())?.templateRef"></div>
 	</div>
 </ng-template>

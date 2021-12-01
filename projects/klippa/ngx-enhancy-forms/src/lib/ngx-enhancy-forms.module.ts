@@ -20,9 +20,6 @@ import {FormComponent} from "./form/form.component";
 import {SortablejsModule} from "ngx-sortablejs";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {DatepickerComponent} from "./elements/datepicker/datepicker.component";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatDatepickerModule} from "@angular/material/datepicker";
-import {MatInputModule} from "@angular/material/input";
 import {MaterialModule} from "./material.module";
 
 

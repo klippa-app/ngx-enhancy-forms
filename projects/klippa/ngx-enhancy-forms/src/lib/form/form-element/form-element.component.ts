@@ -1,6 +1,22 @@
-import { Component, ElementRef, Host, Input, Optional, ViewChild } from '@angular/core';
+import {Component, ElementRef, Host, Inject, InjectionToken, Input, OnInit, Optional, ViewChild} from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
 import {FormComponent} from "../form.component";
+import {CustomErrorMessages, FormErrorMessages} from "../../types";
+import {isObservable} from "rxjs";
+
+export const FORM_ERROR_MESSAGES = new InjectionToken<CustomErrorMessages>('form.error.messages');
+
+export const DEFAULT_ERROR_MESSAGES: FormErrorMessages = {
+	min: "use a number larger than %min%",
+	max: "Use a number smaller than %max%",
+	required: "This field is required",
+	email: "Use a valid email address",
+	minLength: "Has to be longer than %minLength% character(s)",
+	maxLength: "Has to be shorter than %maxLength% character(s)",
+	pattern: "This input is not valid",
+	matchPassword: "Passwords must match",
+	date: "Enter a valid date",
+}
 
 @Component({
 	selector: 'klp-form-element',
@@ -16,9 +32,20 @@ export class FormElementComponent {
 	@ViewChild('internalComponentRef') public internalComponentRef: ElementRef;
 
 	public captionRef: ElementRef;
+	public errorMessages: FormErrorMessages = DEFAULT_ERROR_MESSAGES;
 	public customErrorHandlers: Array<{ error: string; templateRef: ElementRef }> = [];
 
-	constructor(@Host() @Optional() private parent: FormComponent) {}
+	constructor(
+		@Host() @Optional() private parent: FormComponent,
+		@Inject(FORM_ERROR_MESSAGES) @Optional() private customMessages: CustomErrorMessages
+	) {
+	}
+
+	public substituteParameters(message: string, parameters: Record<string, any>): string {
+		return Object.keys(parameters).reduce((msg, key) => {
+			return msg.replace(`%${key}%`, parameters[key]);
+		}, message);
+	}
 
 	public registerControl(formControl: FormControl) {
 		this.attachedControl = formControl;
@@ -72,5 +99,9 @@ export class FormElementComponent {
 		this.internalComponentRef.nativeElement.scrollIntoView(true);
 		// to give some breathing room, we scroll 100px more to the top
 		this.getScrollableParent(this.internalComponentRef.nativeElement)?.scrollBy(0, -100);
+	}
+
+	getErrorMessages(key: keyof FormErrorMessages) {
+		return this.customMessages[key]?.() ?? this.errorMessages[key];
 	}
 }

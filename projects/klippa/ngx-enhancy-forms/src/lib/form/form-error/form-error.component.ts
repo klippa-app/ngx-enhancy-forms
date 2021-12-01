@@ -1,6 +1,7 @@
 import { Component, ElementRef, Host, Input, OnInit, Optional, ViewChild } from '@angular/core';
 import {FormElementComponent} from "../form-element/form-element.component";
 import {isNullOrUndefined} from "../../util/values";
+import {ErrorTypes} from "../../types";
 
 @Component({
 	selector: 'klp-form-error',
@@ -8,7 +9,7 @@ import {isNullOrUndefined} from "../../util/values";
 	styleUrls: ['./form-error.component.scss'],
 })
 export class FormErrorComponent implements OnInit {
-	@Input() error: 'min' | 'max' | 'required' | 'email' | 'minlength' | 'maxlength' | 'pattern' | 'MatchPassword';
+	@Input() error: ErrorTypes;
 	public showError = false;
 	@ViewChild('contentRef') public contentRef: ElementRef;
 	constructor(@Host() @Optional() private parent: FormElementComponent) {}
