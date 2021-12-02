@@ -1,27 +1,50 @@
 # NgxEnhancyForms
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.6.
+This is the readme for developers. For information on how to use the library,
+[see this readme](./projects/klippa/ngx-enhancy-forms/README.md).
 
-## Development server
+# Double `Package.json`
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+You might have noticed that there are two `package.json` files in this repo. The top one (`./package.json`), is for
+building and developing the library. The inner one (`./projects/klippa/ngx-enhancy-forms/package.json`) is what is
+distributed with the library to end users.
 
-## Code scaffolding
+## Adding dependencies
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+To add a development dependency, such as prettier, simply add it to `devDependencies` in the top `package.json`.
+To add a dependency to the library, add it to the inner `package.json`'s `peerDependencies` __AND__ to the outer
+`package.json`'s `dependencies`. Only ever run `yarn install` with the top `package.json`.
 
-## Build
+# Building
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Always run `yarn build:prod`, `ng build --prod`, or `ng build --configuration=production`.
 
-## Running unit tests
+The normal build does not build the library for distribution and it will not work.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+# Testing
 
-## Running end-to-end tests
+There are several ways to test the library after building locally, the most direct way is add the built library to your
+project as a _file_ dependency.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+For example, if you cloned this repo in your home directory:
 
-## Further help
+```json
+{
+	"name": "my-awesome-app",
+	"dependencies": {
+		"@klippa/ngx-enhancy-forms": "file:$HOME/dist/klippa/ngx-enhancy-forms"
+	}
+}
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Whenever you make changes to the library, run `yarn build:prod`, and then in the application:
+
+```
+$ yarn update @klippa/ngx-enhancy-forms
+```
+
+You can also try using `link:` instead of `file:`, or using `yarn link` however your millage may vary.
+I have personally noticed that this preserves the references to _this_ repo's `node_packages` which will
+break the build of the application using it. `file:` will not preserve symlinks, but will not dynamically
+update after building the library (hence why you need to run `yarn update`).
+

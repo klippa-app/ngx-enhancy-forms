@@ -5,7 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "test": "ng test",
+		"build:prod": "ng build --configuration=production",
+		"test": "ng test",
     "lint": "ng lint"
   },
   "private": true,
