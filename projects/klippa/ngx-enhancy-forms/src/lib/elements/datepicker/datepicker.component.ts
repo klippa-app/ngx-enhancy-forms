@@ -17,6 +17,7 @@ export class DatepickerComponent extends ValueAccessorBase<Date | typeof invalid
 	@Input() public minDate: Date = undefined;
 	@Input() public maxDate: Date = undefined;
 	@Input() public placeholder = 'Select date';
+	@Input() public clearable = false;
 
 	@ViewChild('nativeInput') nativeInputRef: ElementRef;
 	@ViewChild('picker') datePickerRef: MatDatepicker<Date>;
@@ -91,5 +92,11 @@ export class DatepickerComponent extends ValueAccessorBase<Date | typeof invalid
 		} else {
 			this.setInnerValueAndNotify(date);
 		}
+	}
+
+	resetToNull() {
+		this.setInnerValueAndNotify(null);
+		this.valueForMaterialDatePicker = null;
+		this.nativeInputRef.nativeElement.value = null;
 	}
 }
