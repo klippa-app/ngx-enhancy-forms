@@ -43,7 +43,20 @@
 
 .componentContainer {
 	@include formControl();
+	position: relative;
 	&.showErrors {
 		border-color: $default-warning;
+	}
+	.clearButton {
+		position: absolute;
+		display: flex;
+		align-items: center;
+		color: #7b7b7b;
+		top: 0;
+		bottom: 0;
+		right: $spacing-medium;
+		background: none;
+		border: none;
+		font-size: 18px;
 	}
 }

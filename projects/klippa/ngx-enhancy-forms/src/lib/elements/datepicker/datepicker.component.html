@@ -17,4 +17,5 @@
 		<mat-datepicker #picker
 		></mat-datepicker>
 	</mat-form-field>
+	<button *ngIf="clearable" class="clearButton" (click)="resetToNull()">×</button>
 </div>
