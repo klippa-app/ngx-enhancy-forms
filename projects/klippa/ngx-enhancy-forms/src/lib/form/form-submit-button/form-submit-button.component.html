@@ -1,0 +1,11 @@
+<klp-form-button
+		[variant]="variant"
+		(click)="submitForm()"
+		[disabled]="isLoading"
+		[isLoading]="isLoading"
+		[fullWidth]="fullWidth"
+		type="submit"
+		[ngClass]="fullWidth ? 'fullWidth' : ''"
+	>
+	<ng-content></ng-content>
+</klp-form-button>
