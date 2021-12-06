@@ -3,26 +3,46 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ngx-enhancy-forms": {
+    "@klippa/ngx-enhancy-forms": {
       "projectType": "library",
-      "root": "./",
-      "sourceRoot": "./src",
-      "prefix": "lib",
+      "root": "projects/klippa/ngx-enhancy-forms",
+      "sourceRoot": "projects/klippa/ngx-enhancy-forms/src",
+      "prefix": "klp",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "./tsconfig.lib.json",
-            "project": "./ng-package.json"
+            "tsConfig": "projects/klippa/ngx-enhancy-forms/tsconfig.lib.json",
+            "project": "projects/klippa/ngx-enhancy-forms/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "./tsconfig.lib.prod.json"
+              "tsConfig": "projects/klippa/ngx-enhancy-forms/tsconfig.lib.prod.json"
             }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/klippa/ngx-enhancy-forms/src/test.ts",
+            "tsConfig": "projects/klippa/ngx-enhancy-forms/tsconfig.spec.json",
+            "karmaConfig": "projects/klippa/ngx-enhancy-forms/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/klippa/ngx-enhancy-forms/tsconfig.lib.json",
+              "projects/klippa/ngx-enhancy-forms/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }
     }
-  },
-  "defaultProject": "ngx-enhancy-forms"
+	},
+  "defaultProject": "@klippa/ngx-enhancy-forms"
 }

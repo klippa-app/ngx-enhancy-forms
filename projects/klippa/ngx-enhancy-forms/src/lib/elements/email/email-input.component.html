@@ -1,0 +1,8 @@
+<input
+	type="email"
+	class="form-control"
+	[(ngModel)]="innerValue"
+	(input)="setInnerValueAndNotify($event.target.value)"
+	[placeholder]="placeholder"
+	(blur)="touch()"
+/>

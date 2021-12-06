@@ -24,7 +24,7 @@
     "import-spacing": true,
     "indent": {
       "options": [
-        "spaces"
+        "tabs"
       ]
     },
     "max-classes-per-file": false,
@@ -108,7 +108,8 @@
       "options": [
         "ban-keywords",
         "check-format",
-        "allow-pascal-case"
+        "allow-pascal-case",
+				"allow-leading-underscore"
       ]
     },
     "whitespace": {

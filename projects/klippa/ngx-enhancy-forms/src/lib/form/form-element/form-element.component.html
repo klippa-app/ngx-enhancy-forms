@@ -1,0 +1,26 @@
+<ng-template #errorRef>
+	<div *ngIf="getErrorToShow()" class="errorContainer">
+		<div *ngIf="showDefaultError('min')">{{substituteParameters(getErrorMessages("min"), {min: attachedControl.errors.min.min})}}</div>
+		<div *ngIf="showDefaultError('max')">{{substituteParameters(getErrorMessages("max"), {max: attachedControl.errors.max.max})}}</div>
+		<div *ngIf="showDefaultError('required')">{{getErrorMessages("required")}}</div>
+		<div *ngIf="showDefaultError('email')">{{getErrorMessages("email")}}</div>
+		<div *ngIf="showDefaultError('minlength')">{{substituteParameters(getErrorMessages("minLength"), {minLength: attachedControl.errors.minlength.requiredLength})}}</div>
+		<div *ngIf="showDefaultError('maxlength')">{{substituteParameters(getErrorMessages("maxLength"), {maxLength: attachedControl.errors.maxlength.requiredLength})}}</div>
+		<div *ngIf="showDefaultError('pattern')">{{getErrorMessages("pattern")}}</div>
+		<div *ngIf="showDefaultError('MatchPassword')">{{getErrorMessages("matchPassword")}}</div>
+		<div *ngIf="showDefaultError('date')">{{getErrorMessages("date")}}</div>
+		<div *ngIf="showDefaultError('message')">{{attachedControl.errors.message.value}}</div>
+		<div [ngTemplateOutlet]="getCustomErrorHandler(getErrorToShow())?.templateRef"></div>
+	</div>
+</ng-template>
+<ng-container *ngIf="direction === 'horizontal'" [ngTemplateOutlet]="errorRef"></ng-container>
+<div *ngIf="attachedControl" class="componentContainer" [ngClass]="{vertical: direction === 'vertical', reverseOrder: swapInputAndCaption}" #internalComponentRef>
+	<div class="caption" [ngClass]="{ hasErrors: getErrorToShow() && attachedControl.touched, percentageSpacing: captionSpacing === 'percentages' }">
+		<div *ngIf="captionRef" [ngTemplateOutlet]="captionRef"></div>
+		<div *ngIf="!captionRef">{{caption}}</div>
+	</div>
+	<ng-container *ngIf="direction === 'vertical'" [ngTemplateOutlet]="errorRef"></ng-container>
+	<div class="inputContainer" [ngClass]="{ percentageSpacing: captionSpacing === 'percentages' }">
+		<ng-content></ng-content>
+	</div>
+</div>

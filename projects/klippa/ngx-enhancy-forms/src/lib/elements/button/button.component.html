@@ -1,0 +1,18 @@
+<button class="buttonFundamentals"
+	[ngClass]="[
+		variant,
+		size,
+		fullWidth ? 'fullWidth' : '',
+		hasBorder ? '' : 'no-border',
+		disabled ? 'disabled' : ''
+	]"
+	[type]="type"
+	(click)="onClick($event)"
+>
+	<div class="caption" [ngClass]="{invisible: isLoading}">
+		<ng-content></ng-content>
+	</div>
+	<div class="loadingSpinnerContainer" *ngIf="isLoading">
+		<klp-form-loading-indicator variant="spinner" size="small"></klp-form-loading-indicator>
+	</div>
+</button>

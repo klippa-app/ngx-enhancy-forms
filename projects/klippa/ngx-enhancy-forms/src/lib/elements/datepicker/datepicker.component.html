@@ -1,0 +1,20 @@
+<div class="componentContainer" [ngClass]="{showErrors: isInErrorState()}">
+	<mat-form-field [floatLabel]="'never'">
+		<input
+			#nativeInput
+			matInput
+			[matDatepicker]="picker"
+			[(ngModel)]="valueForMaterialDatePicker"
+			(dateInput)="dateChanged($event)"
+			(input)="nativeValueChanged($event)"
+			[min]="minDateStartOfDay"
+			[max]="maxDateEndOfDay"
+			[placeholder]="placeholder"
+			(click)="picker.open()"
+			(blur)="touch()"
+		>
+		<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+		<mat-datepicker #picker
+		></mat-datepicker>
+	</mat-form-field>
+</div>
