@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import {FormElementComponent} from "./form-element/form-element.component";
 
+export const invalidFieldsSymbol = Symbol('Not all fields are valid');
+
 @Component({
 	selector: 'klp-form',
 	templateUrl: './form.component.html',
@@ -61,7 +63,7 @@ export class FormComponent {
 			return Promise.resolve(this.formGroup.value);
 		} else {
 			this.activeControls.find((e) => !e.formControl.valid)?.formElement?.scrollTo();
-			return Promise.reject('Not all fields are valid');
+			return Promise.reject(invalidFieldsSymbol);
 		}
 	}
 }

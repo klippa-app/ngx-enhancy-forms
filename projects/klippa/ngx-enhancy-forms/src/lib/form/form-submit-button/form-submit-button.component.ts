@@ -1,5 +1,6 @@
 import { Component, Host, HostBinding, Input, Optional } from '@angular/core';
-import {FormComponent} from "../form.component";
+import {FormComponent, invalidFieldsSymbol} from "../form.component";
+import {isNullOrUndefined} from "../../util/values";
 
 @Component({
 	selector: 'klp-form-submit-button',
@@ -23,10 +24,18 @@ export class FormSubmitButtonComponent {
 			.trySubmit()
 			.then((value) => {
 				this.isLoading = true;
-				this.submitCallback(value)
-					.then(() => (this.isLoading = false))
-					.catch(() => (this.isLoading = false));
+				const result = this.submitCallback(value);
+				if (isNullOrUndefined(result)) {
+					throw new Error('No promise is returned in your submit function.');
+				}
+				result.then(() => (this.isLoading = false)).catch(() => (this.isLoading = false));
 			})
-			.catch(() => {}); // swallow the error, the framework will scroll to the field that needs attention
+			.catch((e) => {
+				if (e === invalidFieldsSymbol) {
+					return // swallow the error, the framework will scroll to the field that needs attention
+				}
+
+				throw e;
+			});
 	}
 }

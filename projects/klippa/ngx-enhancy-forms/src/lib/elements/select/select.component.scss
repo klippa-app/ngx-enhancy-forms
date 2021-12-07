@@ -5,6 +5,9 @@ $label-border: lighten($primary, 30%)!default;
 
 :host {
 	display: block;
+	&.showErrors ::ng-deep .ng-select-container {
+		border-color: $default-warning;
+	}
 }
 .showErrors ::ng-deep .ng-select-container {
 	border-color: $default-warning;
