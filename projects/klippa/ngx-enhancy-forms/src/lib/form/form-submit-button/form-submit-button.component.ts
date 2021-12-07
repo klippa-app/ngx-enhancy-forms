@@ -24,17 +24,19 @@ export class FormSubmitButtonComponent {
 			.trySubmit()
 			.then((value) => {
 				this.isLoading = true;
-				const result = this.submitCallback(value);
-				if (isNullOrUndefined(result)) {
+				const submitCallbackResult = this.submitCallback(value);
+				if (isNullOrUndefined(submitCallbackResult)) {
 					throw new Error('No promise is returned in your submit function.');
 				}
-				result.then(() => (this.isLoading = false)).catch(() => (this.isLoading = false));
+				return submitCallbackResult.then(() => (this.isLoading = false)).catch((e) => {
+					this.isLoading = false
+					throw e;
+				});
 			})
 			.catch((e) => {
 				if (e === invalidFieldsSymbol) {
 					return // swallow the error, the framework will scroll to the field that needs attention
 				}
-
 				throw e;
 			});
 	}
