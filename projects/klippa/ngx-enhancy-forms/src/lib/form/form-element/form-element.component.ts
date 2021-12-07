@@ -2,12 +2,11 @@ import {Component, ElementRef, Host, Inject, InjectionToken, Input, OnInit, Opti
 import { AbstractControl, FormControl } from '@angular/forms';
 import {FormComponent} from "../form.component";
 import {CustomErrorMessages, FormErrorMessages} from "../../types";
-import {isObservable} from "rxjs";
 
 export const FORM_ERROR_MESSAGES = new InjectionToken<CustomErrorMessages>('form.error.messages');
 
 export const DEFAULT_ERROR_MESSAGES: FormErrorMessages = {
-	min: "use a number larger than %min%",
+	min: "Use a number larger than %min%",
 	max: "Use a number smaller than %max%",
 	required: "This field is required",
 	email: "Use a valid email address",
@@ -102,6 +101,6 @@ export class FormElementComponent {
 	}
 
 	getErrorMessages(key: keyof FormErrorMessages) {
-		return this.customMessages[key]?.() ?? this.errorMessages[key];
+		return this.customMessages?.[key]?.() ?? this.errorMessages[key];
 	}
 }

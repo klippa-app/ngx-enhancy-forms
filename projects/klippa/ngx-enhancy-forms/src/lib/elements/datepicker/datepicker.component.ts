@@ -1,9 +1,27 @@
-import {Component, ElementRef, Input, SimpleChanges, ViewChild} from '@angular/core';
-import {NG_VALUE_ACCESSOR} from '@angular/forms';
-import { isNullOrUndefined, stringIsSetAndNotEmpty } from '../../util/values';
+import {
+	Component,
+	ElementRef,
+	Host,
+	Inject,
+	InjectionToken,
+	Input,
+	Optional,
+	SimpleChanges,
+	ViewChild
+} from '@angular/core';
+import {ControlContainer, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {isNullOrUndefined, isValueSet, stringIsSetAndNotEmpty} from '../../util/values';
 import { invalidDateKey } from '../../validators/dateValidator';
 import { MatDatepicker } from '@angular/material/datepicker';
 import {ValueAccessorBase} from "../value-accessor-base/value-accessor-base.component";
+import {MAT_DATE_FORMATS, MAT_NATIVE_DATE_FORMATS} from "@angular/material/core";
+import {KlpDateFormats} from "../../types";
+
+export const KLP_DATE_FORMATS = new InjectionToken<KlpDateFormats>('klp.form.date.formats');
+
+export function matDateFormatsFactory(component: DatepickerComponent, dateFormats?: KlpDateFormats) {
+	return dateFormats?.(component.format) ?? MAT_NATIVE_DATE_FORMATS;
+}
 
 @Component({
 	selector: 'klp-form-datepicker',
@@ -11,11 +29,16 @@ import {ValueAccessorBase} from "../value-accessor-base/value-accessor-base.comp
 	styleUrls: ['./datepicker.component.scss'],
 	providers: [
 		{ provide: NG_VALUE_ACCESSOR, useExisting: DatepickerComponent, multi: true },
+		{ provide: MAT_DATE_FORMATS,
+			deps: [DatepickerComponent, [new Optional(), KLP_DATE_FORMATS]],
+			useFactory: matDateFormatsFactory,
+		}
 	],
 })
 export class DatepickerComponent extends ValueAccessorBase<Date | typeof invalidDateKey> {
 	@Input() public minDate: Date = undefined;
 	@Input() public maxDate: Date = undefined;
+	@Input() public format: string;
 	@Input() public placeholder = 'Select date';
 	@Input() public clearable = false;
 
