@@ -150,8 +150,8 @@ class MultiParseDateFnsDateAdapter extends NgxDateFnsDateAdapter {
 	}
 }
 ```
-
-```js
+git
+```ts
 @Component({
 	selector: 'app-login-form',
 	templateUrl: './login-form.component.html',
@@ -159,20 +159,20 @@ class MultiParseDateFnsDateAdapter extends NgxDateFnsDateAdapter {
 	providers: [
 		{ provide: DateAdapter, useClass: MultiParseDateFnsDateAdapter, deps: [MAT_DATE_LOCALE] },
 		{
-			provide: MAT_DATE_FORMATS,
-			deps: [LoginFormComponent], // depend on self to access preferred format. Could also use a PreferredDateService or something.
-			useFactory: (component) => {
+			provide: KLP_DATE_FORMATS,
+			useValue: (format?: string) => { // format is the format provided as an input to the date field.
+				const preferred = format ?? 'dd-MM-yyyy';
 				return {
-					parse: {
+					parse: { // formats to parse.
 						// if the selected format fails to parse try all supported and all long locale formats.
-						dateInput: [component.format, 'dd-MM-yyyy', 'MM-dd-yyyy', 'PP', 'PPP', 'PPPP'],
+						dateInput: [preferred, 'dd-MM-yyyy', 'MM-dd-yyyy', 'PP', 'PPP', 'PPPP'],
 					},
-					display: {
-						dateInput: component.format, // Display as prefered format.
+					display: { // format to display.
+						dateInput: preferred, // Display as prefered format.
 						monthLabel: 'MMM', // Month label in the date picker.
 						monthYearLabel: 'MMM yyyy', // month and year label in the date picker.
-						dateA11yLabel: 'MMM dd, yyyy',
-						monthYearA11yLabel: 'MMMM yyyy',
+						dateA11yLabel: 'MMM dd, yyyy', // Accessability variant for screen readers etc.
+						monthYearA11yLabel: 'MMMM yyyy', // same as above.
 					},
 				};
 			},
@@ -180,11 +180,12 @@ class MultiParseDateFnsDateAdapter extends NgxDateFnsDateAdapter {
 	],
 })
 export class LoginFormComponent {
-	@Input() format: string = 'yyyy-MM-dd'; // the preferred format, (by users locale or settings etc.)
- /* ... */
+    /** **/
 }
 
 ```
+
+Here we provide a function for `KLP_DATE_FORMATS` to the LoginFormComponent, you can also do this in a module for project wide config.
 
 #### Angular 12
 
