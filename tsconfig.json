@@ -16,13 +16,8 @@
       "dom"
     ],
     "paths": {
-      "ngx-enhancy-forms": [
-        "dist/ngx-enhancy-forms/ngx-enhancy-forms",
-        "dist/ngx-enhancy-forms"
-      ],
       "@klippa/ngx-enhancy-forms": [
-        "dist/klippa/ngx-enhancy-forms/klippa-ngx-enhancy-forms",
-        "dist/klippa/ngx-enhancy-forms"
+        "projects/klippa/ngx-enhancy-forms/src/public-api.ts"
       ]
     }
   }
