@@ -58,9 +58,21 @@ export class FormComponent {
 
 	trySubmit(): Promise<any> {
 		this.formGroup.markAllAsTouched();
+		const originalDisabledStates = Object.values(this.formGroup.controls).map(e => {
+			return { control: e, disabled: e.disabled};
+		});
+		console.log(originalDisabledStates);
 		this.disableInactiveFormGroupControls(this.formGroup);
 		if (this.formGroup.valid) {
-			return Promise.resolve(this.formGroup.value);
+			const p = Promise.resolve(this.formGroup.value);
+			originalDisabledStates.forEach((e) => {
+				if (e.disabled) {
+					e.control.disable();
+				} else {
+					e.control.enable();
+				}
+			});
+			return p;
 		} else {
 			this.activeControls.find((e) => !e.formControl.valid)?.formElement?.scrollTo();
 			return Promise.reject(invalidFieldsSymbol);
