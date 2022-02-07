@@ -23,7 +23,6 @@ export class FormComponent {
 	}
 
 	public unregisterControl(formControl: FormControl) {
-		console.log("remove:", formControl)
 		this.activeControls = this.activeControls.filter((e) => e.formControl !== formControl);
 	}
 
@@ -50,13 +49,11 @@ export class FormComponent {
 		});
 	}
 	private disableInactiveFormControl(control: FormControl) {
-		console.log(control);
 		if (this.activeControls.some((e) => e.formControl === control)) {
 			if (!control.disabled) {
 				control.enable();
 			}
 		} else {
-			console.log("DISABLE")
 			control.disable();
 		}
 	}
@@ -69,11 +66,9 @@ export class FormComponent {
 		this.disableInactiveFormGroupControls(this.formGroup);
 		const values = this.formGroup.value;
 		if (this.formGroup.valid) {
-			console.log(1);
 			this.setDisabledStatesForAllControls(originalDisabledStates);
 			return Promise.resolve(values);
 		} else {
-			console.log(2);
 			this.activeControls.find((e) => !e.formControl.valid)?.formElement?.scrollTo();
 			this.setDisabledStatesForAllControls(originalDisabledStates);
 			return Promise.reject(invalidFieldsSymbol);
