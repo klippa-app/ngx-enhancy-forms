@@ -10,21 +10,33 @@ export class AppComponent {
 
 	public myForm = this.fb.group({
 		firstName: ['Dirk'],
-		lastName: [{value: null, disabled: true}, Validators.required],
+		lastName: [{value: 'Gently', disabled: true}, Validators.required],
 	});
 
 	public formSubmission: any;
-	public show: boolean;
+	public show: boolean = true;
 
 	constructor(private fb: FormBuilder) {
 	}
 
 	public submitForm = (values: any) => {
 		this.formSubmission = values;
-		return Promise.resolve();
+		return	new Promise((resolve) => setTimeout(() => {
+			console.log(values);
+			resolve()
+		}, 1000));
 	};
 
-	subm() {
-		console.log(this.myForm.value);
+	toggleLastNameState() {
+		const controls = this.myForm.get("lastName");
+		if(controls.disabled) {
+			controls.enable()
+		} else {
+			controls.disable()
+		}
+	}
+
+	toggleLastNameVisibility() {
+		this.show = !this.show;
 	}
 }

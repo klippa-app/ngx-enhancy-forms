@@ -12,11 +12,13 @@
 	</klp-form-submit-button>
 </klp-form>
 
-<form [formGroup]="myForm">
-	<input formControlName="firstName" />
-	<input formControlName="lastName" />
-	<button (click)="subm()">bla</button>
-</form>
+<klp-form-button (click)="toggleLastNameState()">
+	Disable/Enable Lastname
+</klp-form-button>
+
+<klp-form-button (click)="toggleLastNameVisibility()">
+	Show/Hide Lastname
+</klp-form-button>
 
 <br>
 <h1>
