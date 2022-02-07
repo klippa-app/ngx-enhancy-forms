@@ -3,7 +3,7 @@
 		<klp-form-text-input formControlName="firstName">
 		</klp-form-text-input>
 	</klp-form-element>
-	<klp-form-element caption="Last Name">
+	<klp-form-element caption="Last Name" *ngIf="show">
 		<klp-form-text-input formControlName="lastName">
 		</klp-form-text-input>
 	</klp-form-element>
@@ -11,6 +11,12 @@
 		Submit
 	</klp-form-submit-button>
 </klp-form>
+
+<form [formGroup]="myForm">
+	<input formControlName="firstName" />
+	<input formControlName="lastName" />
+	<button (click)="subm()">bla</button>
+</form>
 
 <br>
 <h1>
