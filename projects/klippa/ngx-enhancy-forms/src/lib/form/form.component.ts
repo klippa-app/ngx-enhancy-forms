@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import {AbstractControl, FormArray, FormControl, FormGroup} from '@angular/forms';
 import {FormElementComponent} from "./form-element/form-element.component";
 
 export const invalidFieldsSymbol = Symbol('Not all fields are valid');
@@ -18,15 +18,15 @@ export class FormComponent {
 		formElement: FormElementComponent;
 	}> = [];
 
-	public registerControl(formControl: FormControl, formElement: FormElementComponent) {
+	public registerControl(formControl: FormControl, formElement: FormElementComponent): void {
 		this.activeControls.push({ formControl, formElement });
 	}
 
-	public unregisterControl(formControl: FormControl) {
+	public unregisterControl(formControl: FormControl): void {
 		this.activeControls = this.activeControls.filter((e) => e.formControl !== formControl);
 	}
 
-	private disableInactiveFormGroupControls(formGroup: FormGroup) {
+	private disableInactiveFormGroupControls(formGroup: FormGroup): void {
 		Object.values(formGroup.controls).forEach((value) => {
 			if (value instanceof FormGroup) {
 				this.disableInactiveFormGroupControls(value);
@@ -37,7 +37,7 @@ export class FormComponent {
 			}
 		});
 	}
-	private disableInactiveFormArrayControls(formArray: FormArray) {
+	private disableInactiveFormArrayControls(formArray: FormArray): void {
 		formArray.controls.forEach((value) => {
 			if (value instanceof FormGroup) {
 				this.disableInactiveFormGroupControls(value);
@@ -48,22 +48,36 @@ export class FormComponent {
 			}
 		});
 	}
-	private disableInactiveFormControl(control: FormControl) {
-		if (this.activeControls.some((e) => e.formControl === control)) {
-			control.enable();
-		} else {
+	private disableInactiveFormControl(control: FormControl): void {
+		if (!this.activeControls.some((e) => e.formControl === control)) {
 			control.disable();
 		}
 	}
 
 	trySubmit(): Promise<any> {
 		this.formGroup.markAllAsTouched();
+		const originalDisabledStates = Object.values(this.formGroup.controls).map(e => {
+			return { control: e, disabled: e.disabled};
+		});
 		this.disableInactiveFormGroupControls(this.formGroup);
+		const values = this.formGroup.value;
 		if (this.formGroup.valid) {
-			return Promise.resolve(this.formGroup.value);
+			this.setDisabledStatesForAllControls(originalDisabledStates);
+			return Promise.resolve(values);
 		} else {
 			this.activeControls.find((e) => !e.formControl.valid)?.formElement?.scrollTo();
+			this.setDisabledStatesForAllControls(originalDisabledStates);
 			return Promise.reject(invalidFieldsSymbol);
 		}
+	}
+
+	private setDisabledStatesForAllControls(originalDisabledStates: Array<{ control: AbstractControl; disabled: boolean }>): void {
+		originalDisabledStates.forEach((e) => {
+			if (e.disabled) {
+				e.control.disable();
+			} else {
+				e.control.enable();
+			}
+		});
 	}
 }

@@ -3,7 +3,7 @@
 		<klp-form-text-input formControlName="firstName">
 		</klp-form-text-input>
 	</klp-form-element>
-	<klp-form-element caption="Last Name">
+	<klp-form-element caption="Last Name" *ngIf="show">
 		<klp-form-text-input formControlName="lastName">
 		</klp-form-text-input>
 	</klp-form-element>
@@ -11,6 +11,14 @@
 		Submit
 	</klp-form-submit-button>
 </klp-form>
+
+<klp-form-button (click)="toggleLastNameState()">
+	Disable/Enable Lastname
+</klp-form-button>
+
+<klp-form-button (click)="toggleLastNameVisibility()">
+	Show/Hide Lastname
+</klp-form-button>
 
 <br>
 <h1>
