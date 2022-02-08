@@ -18,15 +18,15 @@ export class FormComponent {
 		formElement: FormElementComponent;
 	}> = [];
 
-	public registerControl(formControl: FormControl, formElement: FormElementComponent) {
+	public registerControl(formControl: FormControl, formElement: FormElementComponent): void {
 		this.activeControls.push({ formControl, formElement });
 	}
 
-	public unregisterControl(formControl: FormControl) {
+	public unregisterControl(formControl: FormControl): void {
 		this.activeControls = this.activeControls.filter((e) => e.formControl !== formControl);
 	}
 
-	private disableInactiveFormGroupControls(formGroup: FormGroup) {
+	private disableInactiveFormGroupControls(formGroup: FormGroup): void {
 		Object.values(formGroup.controls).forEach((value) => {
 			if (value instanceof FormGroup) {
 				this.disableInactiveFormGroupControls(value);
@@ -37,7 +37,7 @@ export class FormComponent {
 			}
 		});
 	}
-	private disableInactiveFormArrayControls(formArray: FormArray) {
+	private disableInactiveFormArrayControls(formArray: FormArray): void {
 		formArray.controls.forEach((value) => {
 			if (value instanceof FormGroup) {
 				this.disableInactiveFormGroupControls(value);
@@ -48,12 +48,8 @@ export class FormComponent {
 			}
 		});
 	}
-	private disableInactiveFormControl(control: FormControl) {
-		if (this.activeControls.some((e) => e.formControl === control)) {
-			if (!control.disabled) {
-				control.enable();
-			}
-		} else {
+	private disableInactiveFormControl(control: FormControl): void {
+		if (!this.activeControls.some((e) => e.formControl === control)) {
 			control.disable();
 		}
 	}
