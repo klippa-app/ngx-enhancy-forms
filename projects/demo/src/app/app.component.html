@@ -20,6 +20,12 @@
 	Show/Hide Lastname
 </klp-form-button>
 
+<klp-form-select
+	[options]="options"
+	(onSearch)="addItem($event)"
+>
+</klp-form-select>
+
 <br>
 <h1>
 	Submitted Values:

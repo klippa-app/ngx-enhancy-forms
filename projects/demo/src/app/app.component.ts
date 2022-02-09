@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
+import {AppSelectOptions} from "@klippa/ngx-enhancy-forms";
 
 @Component({
 	selector: 'app-root',
@@ -15,6 +16,8 @@ export class AppComponent {
 
 	public formSubmission: any;
 	public show: boolean = true;
+
+	public options: AppSelectOptions = [];
 
 	constructor(private fb: FormBuilder) {
 	}
@@ -38,5 +41,10 @@ export class AppComponent {
 
 	toggleLastNameVisibility() {
 		this.show = !this.show;
+	}
+
+	addItem($event: string) {
+		this.options = [...this.options, {id: this.options.length + 1, name: $event}];
+		console.log(this.options);
 	}
 }

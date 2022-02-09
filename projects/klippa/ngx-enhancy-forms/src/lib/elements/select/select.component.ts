@@ -1,4 +1,4 @@
-import { Component, Host, Input, OnInit, Optional } from '@angular/core';
+import {Component, EventEmitter, Host, Input, OnInit, Optional, Output} from '@angular/core';
 import { ControlContainer, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {ValueAccessorBase} from "../value-accessor-base/value-accessor-base.component";
 import {FormElementComponent} from "../../form/form-element/form-element.component";
@@ -23,6 +23,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> {
 	@Input() clearable = true;
 	@Input() public dropdownPosition: string;
 	@Input() public customSearchFn: (term: string, item: { id: string; name: string; description: string }) => boolean;
+	@Output() public onSearch = new EventEmitter<string>();
 
 	constructor(
 		@Optional() @Host() protected parent: FormElementComponent,
