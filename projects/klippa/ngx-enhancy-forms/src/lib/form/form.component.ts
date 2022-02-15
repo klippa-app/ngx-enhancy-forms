@@ -33,16 +33,12 @@ export class FormComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		if (this.parent) {
-			if (!isValueSet(this.surroundingFormGroupName?.name)) {
-				throw new Error('No surrounding groupname is found for a nested form');
-			}
+		if (this.parent && isValueSet(this.surroundingFormGroupName?.name)) {
 			const groupName = String(this.surroundingFormGroupName.name);
 			const groupToOverwrite = this.parent.formGroup.get(groupName);
-			if (!(groupToOverwrite instanceof SubForm)) {
-				throw new Error(`Surrounding groupname '${groupName}' is not a subFormSubstitute'`);
+			if (groupToOverwrite instanceof SubForm) {
+				this.parent.formGroup.setControl(groupName, this.formGroup);
 			}
-			this.parent.formGroup.setControl(groupName, this.formGroup);
 		}
 	}
 
