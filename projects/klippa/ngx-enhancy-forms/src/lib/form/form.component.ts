@@ -1,15 +1,23 @@
-import { Component, Input } from '@angular/core';
-import {AbstractControl, FormArray, FormControl, FormGroup} from '@angular/forms';
-import {FormElementComponent} from "./form-element/form-element.component";
+import {Component, Input, OnInit, Optional, SkipSelf} from '@angular/core';
+import {AbstractControl, FormArray, FormControl, FormGroup, FormGroupName} from '@angular/forms';
+import {FormElementComponent} from './form-element/form-element.component';
+import {isValueSet} from '../util/values';
 
 export const invalidFieldsSymbol = Symbol('Not all fields are valid');
+
+// Only used as a 'marker' to define a property will be filled in by a sub form
+export class SubForm extends FormGroup {
+	constructor() {
+		super({}, null);
+	}
+}
 
 @Component({
 	selector: 'klp-form',
 	templateUrl: './form.component.html',
 	styleUrls: ['./form.component.scss'],
 })
-export class FormComponent {
+export class FormComponent implements OnInit {
 	@Input() public formGroup: FormGroup;
 
 	// we keep track of what form controls are actually rendered. Only those count when looking at form validation
@@ -18,36 +26,74 @@ export class FormComponent {
 		formElement: FormElementComponent;
 	}> = [];
 
+	constructor(
+		@SkipSelf() @Optional() private parent: FormComponent,
+		@Optional() private surroundingFormGroupName: FormGroupName,
+	) {
+	}
+
+	ngOnInit(): void {
+		if (this.parent) {
+			if (!isValueSet(this.surroundingFormGroupName?.name)) {
+				throw new Error('No surrounding groupname is found for a nested form');
+			}
+			const groupName = String(this.surroundingFormGroupName.name);
+			const groupToOverwrite = this.parent.formGroup.get(groupName);
+			if (!(groupToOverwrite instanceof SubForm)) {
+				throw new Error(`Surrounding groupname '${groupName}' is not a subFormSubstitute'`);
+			}
+			this.parent.formGroup.setControl(groupName, this.formGroup);
+		}
+	}
+
 	public registerControl(formControl: FormControl, formElement: FormElementComponent): void {
-		this.activeControls.push({ formControl, formElement });
+		this.activeControls.push({formControl, formElement});
+		if (this.parent) {
+			this.parent.registerControl(formControl, formElement);
+		}
 	}
 
 	public unregisterControl(formControl: FormControl): void {
 		this.activeControls = this.activeControls.filter((e) => e.formControl !== formControl);
+		if (this.parent) {
+			this.parent.unregisterControl(formControl);
+		}
 	}
 
-	private disableInactiveFormGroupControls(formGroup: FormGroup): void {
+	private addFormGroupControls(formGroup: FormGroup, result: Array<FormControl>): void {
 		Object.values(formGroup.controls).forEach((value) => {
 			if (value instanceof FormGroup) {
-				this.disableInactiveFormGroupControls(value);
+				this.addFormGroupControls(value, result);
 			} else if (value instanceof FormArray) {
-				this.disableInactiveFormArrayControls(value);
+				this.addFormArrayControls(value, result);
 			} else if (value instanceof FormControl) {
-				this.disableInactiveFormControl(value);
+				this.addFormControl(value, result);
 			}
 		});
 	}
-	private disableInactiveFormArrayControls(formArray: FormArray): void {
+
+	private addFormArrayControls(formArray: FormArray, result: Array<FormControl>): void {
 		formArray.controls.forEach((value) => {
 			if (value instanceof FormGroup) {
-				this.disableInactiveFormGroupControls(value);
+				this.addFormGroupControls(value, result);
 			} else if (value instanceof FormArray) {
-				this.disableInactiveFormArrayControls(value);
+				this.addFormArrayControls(value, result);
 			} else if (value instanceof FormControl) {
-				this.disableInactiveFormControl(value);
+				this.addFormControl(value, result);
 			}
 		});
 	}
+
+	private getAllFormControls(): Array<FormControl> {
+		const result = [];
+		this.addFormGroupControls(this.formGroup, result);
+		return result;
+	}
+
+	private addFormControl(control: FormControl, result: Array<FormControl>): void {
+		result.push(control);
+	}
+
 	private disableInactiveFormControl(control: FormControl): void {
 		if (!this.activeControls.some((e) => e.formControl === control)) {
 			control.disable();
@@ -56,10 +102,11 @@ export class FormComponent {
 
 	trySubmit(): Promise<any> {
 		this.formGroup.markAllAsTouched();
-		const originalDisabledStates = Object.values(this.formGroup.controls).map(e => {
-			return { control: e, disabled: e.disabled};
+		const allControls: Array<FormControl> = this.getAllFormControls();
+		const originalDisabledStates = allControls.map(e => {
+			return {control: e, disabled: e.disabled};
 		});
-		this.disableInactiveFormGroupControls(this.formGroup);
+		allControls.forEach(e => this.disableInactiveFormControl(e));
 		const values = this.formGroup.value;
 		if (this.formGroup.valid) {
 			this.setDisabledStatesForAllControls(originalDisabledStates);

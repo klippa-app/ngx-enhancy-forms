@@ -1,12 +1,19 @@
 <klp-form [formGroup]="myForm">
-	<klp-form-element caption="First Name">
+
+	<klp-form-element caption="top level firstName">
 		<klp-form-text-input formControlName="firstName">
 		</klp-form-text-input>
 	</klp-form-element>
-	<klp-form-element caption="Last Name" *ngIf="show">
+
+	<klp-form-element caption="top level lastName" *ngIf="show">
 		<klp-form-text-input formControlName="lastName">
 		</klp-form-text-input>
 	</klp-form-element>
+
+	<ng-container formGroupName="level1">
+		<app-sub-form></app-sub-form>
+	</ng-container>
+
 	<klp-form-submit-button [submitCallback]="submitForm">
 		Submit
 	</klp-form-submit-button>

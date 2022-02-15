@@ -47,6 +47,8 @@ export class FormElementComponent {
 	}
 
 	public registerControl(formControl: FormControl) {
+		// console.log('register');
+		// console.log(this.caption);
 		this.attachedControl = formControl;
 		this.parent.registerControl(formControl, this);
 	}

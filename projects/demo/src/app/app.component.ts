@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
-import {AppSelectOptions} from "@klippa/ngx-enhancy-forms";
+import {AppSelectOptions, SubForm} from '@klippa/ngx-enhancy-forms';
 
 @Component({
 	selector: 'app-root',
@@ -11,11 +11,12 @@ export class AppComponent {
 
 	public myForm = this.fb.group({
 		firstName: ['Dirk'],
-		lastName: [{value: 'Gently', disabled: true}, Validators.required],
+		lastName: [{value: 'Gently', disabled: false}, Validators.required],
+		level1: new SubForm(),
 	});
 
 	public formSubmission: any;
-	public show: boolean = true;
+	public show = true;
 
 	public options: AppSelectOptions = [];
 
@@ -24,18 +25,18 @@ export class AppComponent {
 
 	public submitForm = (values: any) => {
 		this.formSubmission = values;
-		return	new Promise((resolve) => setTimeout(() => {
+		return new Promise((resolve) => setTimeout(() => {
 			console.log(values);
-			resolve()
-		}, 1000));
+			resolve();
+		}, 100));
 	};
 
-	toggleLastNameState() {
-		const controls = this.myForm.get("lastName");
-		if(controls.disabled) {
-			controls.enable()
+	toggleLastNameState(): void {
+		const controls = this.myForm.get('lastName');
+		if (controls.disabled) {
+			controls.enable();
 		} else {
-			controls.disable()
+			controls.disable();
 		}
 	}
 

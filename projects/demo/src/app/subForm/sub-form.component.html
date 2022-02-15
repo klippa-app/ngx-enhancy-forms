@@ -1,0 +1,29 @@
+<klp-form [formGroup]="myNestedForm">
+	<klp-form-element caption="Nested value">
+		<klp-form-text-input formControlName="nestedValue">
+		</klp-form-text-input>
+	</klp-form-element>
+
+	<ng-container formGroupName="level2">
+		<klp-form [formGroup]="myNestedForm2">
+			<klp-form-element caption="Nested value2" *ngIf="show">
+				<klp-form-text-input formControlName="nestedValue2">
+				</klp-form-text-input>
+			</klp-form-element>
+			<klp-form-element caption="Nested value3">
+				<klp-form-text-input formControlName="nestedValue3">
+				</klp-form-text-input>
+			</klp-form-element>
+		</klp-form>
+
+		<klp-form-button (click)="toggleDisabled()">
+			Disable/Enable nested value 2
+		</klp-form-button>
+
+		<klp-form-button (click)="show = !show">
+			Show/Hide Lastname
+		</klp-form-button>
+
+	</ng-container>
+
+</klp-form>
