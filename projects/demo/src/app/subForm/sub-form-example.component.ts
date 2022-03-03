@@ -3,10 +3,10 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {SubForm} from '@klippa/ngx-enhancy-forms';
 
 @Component({
-	selector: 'app-sub-form',
-	templateUrl: './sub-form.component.html',
+	selector: 'app-sub-form-example',
+	templateUrl: './sub-form-example.component.html',
 })
-export class SubFormComponent {
+export class SubFormExampleComponent {
 
 	public myNestedForm = new FormGroup({
 		nestedValue: new FormControl('abc', [Validators.required]),
