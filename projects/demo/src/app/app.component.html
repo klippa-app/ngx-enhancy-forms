@@ -10,9 +10,9 @@
 		</klp-form-text-input>
 	</klp-form-element>
 
-	<ng-container formGroupName="level1">
-		<app-sub-form></app-sub-form>
-	</ng-container>
+	<klp-sub-form [injectInto]="myForm.get('level1')">
+		<app-sub-form-example></app-sub-form-example>
+	</klp-sub-form>
 
 	<klp-form-submit-button [submitCallback]="submitForm">
 		Submit

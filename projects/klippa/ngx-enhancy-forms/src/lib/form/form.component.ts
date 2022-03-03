@@ -1,9 +1,17 @@
-import {Component, Input, OnInit, Optional, SkipSelf} from '@angular/core';
+import {Component, Directive, Input, OnInit, Optional, SkipSelf} from '@angular/core';
 import {AbstractControl, FormArray, FormControl, FormGroup, FormGroupName} from '@angular/forms';
 import {FormElementComponent} from './form-element/form-element.component';
 import {isValueSet} from '../util/values';
 
 export const invalidFieldsSymbol = Symbol('Not all fields are valid');
+
+@Directive({
+	// tslint:disable-next-line:directive-selector
+	selector: 'klp-sub-form',
+})
+export class SubFormDirective {
+	@Input() injectInto: AbstractControl;
+}
 
 // Only used as a 'marker' to define a property will be filled in by a sub form
 export class SubForm extends FormGroup {
@@ -26,18 +34,22 @@ export class FormComponent implements OnInit {
 		formElement: FormElementComponent;
 	}> = [];
 
-	constructor(
-		@SkipSelf() @Optional() private parent: FormComponent,
-		@Optional() private surroundingFormGroupName: FormGroupName,
-	) {
-	}
+	constructor(@SkipSelf() @Optional() private parent: FormComponent, @Optional() private subFormPlaceholder: SubFormDirective) {}
 
 	ngOnInit(): void {
-		if (this.parent && isValueSet(this.surroundingFormGroupName?.name)) {
-			const groupName = String(this.surroundingFormGroupName.name);
-			const groupToOverwrite = this.parent.formGroup.get(groupName);
-			if (groupToOverwrite instanceof SubForm) {
-				this.parent.formGroup.setControl(groupName, this.formGroup);
+		if (isValueSet(this.parent) && isValueSet(this.subFormPlaceholder)) {
+			const parentOfInjectInto = this.subFormPlaceholder.injectInto.parent;
+			if (parentOfInjectInto instanceof FormArray) {
+				const i = parentOfInjectInto.controls.findIndex((e) => e === this.subFormPlaceholder.injectInto);
+				parentOfInjectInto.setControl(i, this.formGroup);
+			} else if (parentOfInjectInto instanceof FormGroup) {
+				const toReplace = Object.entries(parentOfInjectInto.controls).find(([key, val]) => {
+					return val === this.subFormPlaceholder.injectInto;
+				});
+				if (!(toReplace?.[1] instanceof SubForm)) {
+					throw new Error(`You are trying to inject a subForm ('${toReplace?.[0]}') within something that is not annotated as such.`);
+				}
+				parentOfInjectInto.setControl(toReplace[0], this.formGroup);
 			}
 		}
 	}

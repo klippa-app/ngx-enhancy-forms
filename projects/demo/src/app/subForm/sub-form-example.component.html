@@ -4,7 +4,7 @@
 		</klp-form-text-input>
 	</klp-form-element>
 
-	<ng-container formGroupName="level2">
+	<klp-sub-form [injectInto]="myNestedForm.get('level2')">
 		<klp-form [formGroup]="myNestedForm2">
 			<klp-form-element caption="Nested value2" *ngIf="show">
 				<klp-form-text-input formControlName="nestedValue2">
@@ -24,6 +24,6 @@
 			Show/Hide Lastname
 		</klp-form-button>
 
-	</ng-container>
+	</klp-sub-form>
 
 </klp-form>
