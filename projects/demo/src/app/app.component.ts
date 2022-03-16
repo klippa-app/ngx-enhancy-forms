@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {AppSelectOptions, SubForm} from '@klippa/ngx-enhancy-forms';
+import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
 	selector: 'app-root',
@@ -9,43 +8,41 @@ import {AppSelectOptions, SubForm} from '@klippa/ngx-enhancy-forms';
 })
 export class AppComponent {
 
+	show = false;
+
 	public myForm = this.fb.group({
-		firstName: ['Dirk'],
-		lastName: [{value: 'Gently', disabled: false}, Validators.required],
-		level1: new SubForm(),
+		emails: [""],
+		subbies: this.fb.array([]),
+		groupie: this.fb.group({}),
+		oli: ["bob"],
 	});
 
-	public formSubmission: any;
-	public show = true;
-
-	public options: AppSelectOptions = [];
+	subForms = [];
 
 	constructor(private fb: FormBuilder) {
 	}
 
-	public submitForm = (values: any) => {
-		this.formSubmission = values;
-		return new Promise((resolve) => setTimeout(() => {
-			console.log(values);
-			resolve();
-		}, 100));
+	public get emails(): any[] {
+		const emails = this.myForm.get("emails").value as string
+		if (emails.length == 0) {
+			return [];
+		}
+		return emails.split(",");
+	}
+
+	public get subbies () {
+		return this.myForm.get("subbies") as FormArray
+	}
+
+	public get groupie () {
+		return this.myForm.get("groupie") as FormGroup
+	}
+
+	public submitForm = async (values: any) => {
+		console.log(values);
 	};
 
-	toggleLastNameState(): void {
-		const controls = this.myForm.get('lastName');
-		if (controls.disabled) {
-			controls.enable();
-		} else {
-			controls.disable();
-		}
-	}
-
-	toggleLastNameVisibility() {
+	public toggie () {
 		this.show = !this.show;
-	}
-
-	addItem($event: string) {
-		this.options = [...this.options, {id: this.options.length + 1, name: $event}];
-		console.log(this.options);
 	}
 }

@@ -1,4 +1,4 @@
-import {Component, Directive, Input, OnInit, Optional, SkipSelf} from '@angular/core';
+import {Component, Directive, Input, OnDestroy, OnInit, Optional, SkipSelf} from '@angular/core';
 import {AbstractControl, FormArray, FormControl, FormGroup, FormGroupName} from '@angular/forms';
 import {FormElementComponent} from './form-element/form-element.component';
 import {isValueSet} from '../util/values';
@@ -10,14 +10,8 @@ export const invalidFieldsSymbol = Symbol('Not all fields are valid');
 	selector: 'klp-sub-form',
 })
 export class SubFormDirective {
-	@Input() injectInto: AbstractControl;
-}
-
-// Only used as a 'marker' to define a property will be filled in by a sub form
-export class SubForm extends FormGroup {
-	constructor() {
-		super({}, null);
-	}
+	@Input() injectInto: FormArray | FormGroup;
+	@Input() at: number | string;
 }
 
 @Component({
@@ -25,7 +19,7 @@ export class SubForm extends FormGroup {
 	templateUrl: './form.component.html',
 	styleUrls: ['./form.component.scss'],
 })
-export class FormComponent implements OnInit {
+export class FormComponent implements OnInit, OnDestroy {
 	@Input() public formGroup: FormGroup;
 
 	// we keep track of what form controls are actually rendered. Only those count when looking at form validation
@@ -38,18 +32,38 @@ export class FormComponent implements OnInit {
 
 	ngOnInit(): void {
 		if (isValueSet(this.parent) && isValueSet(this.subFormPlaceholder)) {
-			const parentOfInjectInto = this.subFormPlaceholder.injectInto.parent;
-			if (parentOfInjectInto instanceof FormArray) {
-				const i = parentOfInjectInto.controls.findIndex((e) => e === this.subFormPlaceholder.injectInto);
-				parentOfInjectInto.setControl(i, this.formGroup);
-			} else if (parentOfInjectInto instanceof FormGroup) {
-				const toReplace = Object.entries(parentOfInjectInto.controls).find(([key, val]) => {
-					return val === this.subFormPlaceholder.injectInto;
-				});
-				if (!(toReplace?.[1] instanceof SubForm)) {
-					throw new Error(`You are trying to inject a subForm ('${toReplace?.[0]}') within something that is not annotated as such.`);
+			const injectInto = this.subFormPlaceholder.injectInto;
+			const injectAt = this.subFormPlaceholder.at;
+			if (injectInto instanceof FormArray) {
+				if (typeof injectAt !== "number") {
+					throw new Error(`cannot index FormArray with ${typeof injectAt}`);
 				}
-				parentOfInjectInto.setControl(toReplace[0], this.formGroup);
+
+				injectInto.setControl(injectAt, this.formGroup);
+			} else if (injectInto instanceof FormGroup) {
+				if (typeof injectAt !== "string") {
+					throw new Error(`cannot index FormGroup with ${typeof injectAt}`);
+				}
+
+				injectInto.setControl(injectAt, this.formGroup);
+			}
+		}
+	}
+
+	ngOnDestroy(): void {
+		if (isValueSet(this.parent) && isValueSet(this.subFormPlaceholder)) {
+			const injectInto = this.subFormPlaceholder.injectInto;
+			const injectAt = this.subFormPlaceholder.at;
+			if (injectInto instanceof FormArray) {
+				const idx = injectInto.controls.findIndex(e => e === this.formGroup);
+
+				injectInto.removeAt(idx);
+			} else if (injectInto instanceof FormGroup) {
+				if (typeof injectAt !== "string") {
+					throw new Error(`cannot index FormGroup with ${typeof injectAt}`);
+				}
+
+				injectInto.removeControl(injectAt);
 			}
 		}
 	}
