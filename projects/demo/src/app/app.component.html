@@ -1,43 +1,11 @@
 <klp-form [formGroup]="myForm">
-
-	<klp-form-element caption="top level firstName">
-		<klp-form-text-input formControlName="firstName">
-		</klp-form-text-input>
-	</klp-form-element>
-
-	<klp-form-element caption="top level lastName" *ngIf="show">
-		<klp-form-text-input formControlName="lastName">
-		</klp-form-text-input>
-	</klp-form-element>
-
-	<klp-sub-form [injectInto]="myForm.get('level1')">
-		<app-sub-form-example></app-sub-form-example>
-	</klp-sub-form>
+	<ng-container *ngFor="let control of formArray.controls">
+		<klp-sub-form [injectInto]="control">
+			<app-sub-form-example></app-sub-form-example>
+		</klp-sub-form>
+	</ng-container>
 
 	<klp-form-submit-button [submitCallback]="submitForm">
 		Submit
 	</klp-form-submit-button>
 </klp-form>
-
-<klp-form-button (click)="toggleLastNameState()">
-	Disable/Enable Lastname
-</klp-form-button>
-
-<klp-form-button (click)="toggleLastNameVisibility()">
-	Show/Hide Lastname
-</klp-form-button>
-
-<klp-form-select
-	[options]="options"
-	(onSearch)="addItem($event)"
->
-</klp-form-select>
-
-<br>
-<h1>
-	Submitted Values:
-</h1>
-<p>
-	{{(formSubmission | json) || "null"}}
-</p>
-

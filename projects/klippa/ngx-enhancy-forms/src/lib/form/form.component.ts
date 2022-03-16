@@ -41,7 +41,12 @@ export class FormComponent implements OnInit {
 			const parentOfInjectInto = this.subFormPlaceholder.injectInto.parent;
 			if (parentOfInjectInto instanceof FormArray) {
 				const i = parentOfInjectInto.controls.findIndex((e) => e === this.subFormPlaceholder.injectInto);
-				parentOfInjectInto.setControl(i, this.formGroup);
+				if (parentOfInjectInto.controls[i] instanceof SubForm) {
+					console.log('setting it!');
+					parentOfInjectInto.setControl(i, this.formGroup);
+				} else {
+					console.log('wrong thing');
+				}
 			} else if (parentOfInjectInto instanceof FormGroup) {
 				const toReplace = Object.entries(parentOfInjectInto.controls).find(([key, val]) => {
 					return val === this.subFormPlaceholder.injectInto;
