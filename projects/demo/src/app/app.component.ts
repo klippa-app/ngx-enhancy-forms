@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
-import {FormArray, FormBuilder, Validators} from '@angular/forms';
-import {AppSelectOptions, SubForm} from '@klippa/ngx-enhancy-forms';
+import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
 	selector: 'app-root',
@@ -9,18 +8,41 @@ import {AppSelectOptions, SubForm} from '@klippa/ngx-enhancy-forms';
 })
 export class AppComponent {
 
+	show = false;
+
 	public myForm = this.fb.group({
-		subbies: this.fb.array([new SubForm()]),
+		emails: [""],
+		subbies: this.fb.array([]),
+		groupie: this.fb.group({}),
+		oli: ["bob"],
 	});
+
+	subForms = [];
 
 	constructor(private fb: FormBuilder) {
 	}
 
-	public get formArray(): FormArray {
-		return this.myForm.get('subbies') as FormArray;
+	public get emails(): any[] {
+		const emails = this.myForm.get("emails").value as string
+		if (emails.length == 0) {
+			return [];
+		}
+		return emails.split(",");
+	}
+
+	public get subbies () {
+		return this.myForm.get("subbies") as FormArray
+	}
+
+	public get groupie () {
+		return this.myForm.get("groupie") as FormGroup
 	}
 
 	public submitForm = async (values: any) => {
 		console.log(values);
 	};
+
+	public toggie () {
+		this.show = !this.show;
+	}
 }
