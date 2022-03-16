@@ -1,6 +1,22 @@
-<klp-form [formGroup]="myForm">
-	<ng-container *ngFor="let control of formArray.controls">
-		<klp-sub-form [injectInto]="control">
+<!--<klp-form [formGroup]="myForm">-->
+<!--	<ng-container *ngIf="show">-->
+<!--		<klp-sub-form [injectInto]="formArray.controls[0]">-->
+<!--			<app-sub-form-example></app-sub-form-example>-->
+<!--		</klp-sub-form>-->
+<!--	</ng-container>-->
+
+<!--	<div style="position: fixed; top: 200px; left: 30px;">-->
+<!--		<klp-form-button (click)="toggle()">click me</klp-form-button>-->
+<!--	</div>-->
+
+<!--	<klp-form-submit-button [submitCallback]="submitForm">-->
+<!--		Submit-->
+<!--	</klp-form-submit-button>-->
+<!--</klp-form>-->
+
+<klp-form [formGroup]="myForm2">
+	<ng-container *ngFor="let _ of gregArray; index as i; trackBy: trackert">
+		<klp-sub-form [injectInto]="formArray2" [index]="i">
 			<app-sub-form-example></app-sub-form-example>
 		</klp-sub-form>
 	</ng-container>

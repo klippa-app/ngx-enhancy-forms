@@ -34,19 +34,23 @@ export class FormComponent implements OnInit {
 		formElement: FormElementComponent;
 	}> = [];
 
-	constructor(@SkipSelf() @Optional() private parent: FormComponent, @Optional() private subFormPlaceholder: SubFormDirective) {}
+	constructor(@SkipSelf() @Optional() private parent: FormComponent, @Optional() private subFormPlaceholder: SubFormDirective) {
+	}
 
 	ngOnInit(): void {
 		if (isValueSet(this.parent) && isValueSet(this.subFormPlaceholder)) {
-			const parentOfInjectInto = this.subFormPlaceholder.injectInto.parent;
+			console.log('im initting because im a nested form');
+			const parentOfInjectInto = this.subFormPlaceholder.injectInto;
+			// debugger;
 			if (parentOfInjectInto instanceof FormArray) {
-				const i = parentOfInjectInto.controls.findIndex((e) => e === this.subFormPlaceholder.injectInto);
-				if (parentOfInjectInto.controls[i] instanceof SubForm) {
-					console.log('setting it!');
-					parentOfInjectInto.setControl(i, this.formGroup);
-				} else {
-					console.log('wrong thing');
-				}
+				parentOfInjectInto.setControl(0, this.formGroup);
+				// const i = parentOfInjectInto.controls.findIndex((e) => e === this.subFormPlaceholder.injectInto);
+				// if (parentOfInjectInto.controls[i] instanceof SubForm) {
+				// 	console.log('setting it!');
+				// 	parentOfInjectInto.setControl(i, this.formGroup);
+				// } else {
+				// 	console.log('wrong thing');
+				// }
 			} else if (parentOfInjectInto instanceof FormGroup) {
 				const toReplace = Object.entries(parentOfInjectInto.controls).find(([key, val]) => {
 					return val === this.subFormPlaceholder.injectInto;
@@ -56,6 +60,16 @@ export class FormComponent implements OnInit {
 				}
 				parentOfInjectInto.setControl(toReplace[0], this.formGroup);
 			}
+		}
+	}
+
+	ngOnDestroy() {
+		console.log('destroying me', this.formGroup);
+		const parentOfInjectInto = this.subFormPlaceholder.injectInto.parent;
+		if (parentOfInjectInto instanceof FormArray) {
+			const i = parentOfInjectInto.controls.findIndex(e => e === this.formGroup);
+			// parentOfInjectInto.setControl(i, new SubForm());
+			console.log(i);
 		}
 	}
 

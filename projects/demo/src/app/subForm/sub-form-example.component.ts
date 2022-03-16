@@ -11,4 +11,8 @@ export class SubFormExampleComponent {
 		name: new FormControl('abc'),
 	});
 
+	constructor() {
+		console.log('construction complete');
+	}
+
 }
