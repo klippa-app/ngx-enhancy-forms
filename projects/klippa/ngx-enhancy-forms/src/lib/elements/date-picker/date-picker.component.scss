@@ -1,0 +1,18 @@
+@import '../../../style/themes/default/variables';
+
+:host {
+	display: block;
+}
+
+.componentContainer {
+	&.showErrors {
+		::ng-deep {
+			klp-form-date-time-picker {
+				.dateContainer,
+				.clearButton {
+					border-color: $default-warning;
+				}
+			}
+		}
+	}
+}

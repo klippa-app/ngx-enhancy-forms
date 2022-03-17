@@ -1,0 +1,19 @@
+@import '../../../../style/themes/default/variables';
+
+:host {
+	display: block;
+}
+
+.componentContainer {
+	cursor: pointer;
+	padding: 6px 10px;
+
+	&:hover {
+		background: #e7faee;
+	}
+}
+
+.prefix {
+	font-size: 80%;
+	padding-right: $spacing-small;
+}

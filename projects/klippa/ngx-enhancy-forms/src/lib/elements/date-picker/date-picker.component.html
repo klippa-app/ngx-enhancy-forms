@@ -1,0 +1,16 @@
+<div class="componentContainer" [ngClass]="{showErrors: isInErrorState()}">
+	<klp-form-date-time-picker
+		[multiple]="multiple"
+		[disabled]="disabled"
+		[(ngModel)]="dateValue"
+		(ngModelChange)="dateChanged($event)"
+		[minDate]="minDate"
+		[maxDate]="maxDate"
+		[sameMonthOnly]="sameMonthOnly"
+		[format]="format"
+		[placeholder]="placeholder"
+		[clearable]="clearable"
+		[showTimeInput]="false"
+		(onTouch)="touch()"
+	></klp-form-date-time-picker>
+</div>

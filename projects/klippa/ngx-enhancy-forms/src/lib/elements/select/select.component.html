@@ -20,4 +20,14 @@
 			{{ item.description }}
 		</div>
 	</ng-template>
+	<ng-container *ngIf="multiple && multipleDisplayedAsAmount && innerValue?.length > 1">
+		<ng-template ng-multi-label-tmp>
+			<div class="ng-value">
+				<span class="ng-value-label">%amount% selected</span>
+			</div>
+		</ng-template>
+	</ng-container>
+	<ng-template ng-footer-tmp *ngIf="footerElement">
+		<ng-container [ngTemplateOutlet]="footerElement"></ng-container>
+	</ng-template>
 </ng-select>

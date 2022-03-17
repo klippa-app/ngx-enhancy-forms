@@ -1,10 +1,15 @@
-<input
-	[type]="type"
-	class="form-control"
-	[ngClass]="{showErrors: isInErrorState()}"
-	[(ngModel)]="innerValue"
-	(input)="setInnerValueAndNotify($event.target.value)"
-	[placeholder]="placeholder ? placeholder : ''"
-	(blur)="touch()"
-	[disabled]='disabled'
-/>
+<div class="componentContainer">
+	<ng-container *ngIf="icon?.length > 0">
+		<i class="ti-search" *ngIf="icon === 'search'"></i>
+	</ng-container>
+	<input
+		[type]="type"
+		[ngClass]="{showErrors: isInErrorState(), hasIcon: icon?.length > 0, hasClearButton: clearable}"
+		[(ngModel)]="innerValue"
+		(input)="setInnerValueAndNotify($event.target.value)"
+		[placeholder]="placeholder ? placeholder : ''"
+		(blur)="touch()"
+		[disabled]='disabled'
+	/>
+	<div class="clearIcon" *ngIf="clearable && innerValue?.length > 0" (click)="resetToNull()">×</div>
+</div>
