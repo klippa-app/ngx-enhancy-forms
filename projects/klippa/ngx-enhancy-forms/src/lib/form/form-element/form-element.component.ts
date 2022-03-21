@@ -1,21 +1,21 @@
 import {Component, ElementRef, Host, Inject, InjectionToken, Input, OnInit, Optional, ViewChild} from '@angular/core';
-import { AbstractControl, FormControl } from '@angular/forms';
-import {FormComponent} from "../form.component";
-import {CustomErrorMessages, FormErrorMessages} from "../../types";
+import {AbstractControl, FormControl} from '@angular/forms';
+import {FormComponent} from '../form.component';
+import {CustomErrorMessages, FormErrorMessages} from '../../types';
 
 export const FORM_ERROR_MESSAGES = new InjectionToken<CustomErrorMessages>('form.error.messages');
 
 export const DEFAULT_ERROR_MESSAGES: FormErrorMessages = {
-	min: "Use a number larger than %min%",
-	max: "Use a number smaller than %max%",
-	required: "This field is required",
-	email: "Use a valid email address",
-	minLength: "Has to be longer than %minLength% character(s)",
-	maxLength: "Has to be shorter than %maxLength% character(s)",
-	pattern: "This input is not valid",
-	matchPassword: "Passwords must match",
-	date: "Enter a valid date",
-}
+	min: 'Use a number larger than %min%',
+	max: 'Use a number smaller than %max%',
+	required: 'This field is required',
+	email: 'Use a valid email address',
+	minLength: 'Has to be longer than %minLength% character(s)',
+	maxLength: 'Has to be shorter than %maxLength% character(s)',
+	pattern: 'This input is not valid',
+	matchPassword: 'Passwords must match',
+	date: 'Enter a valid date',
+};
 
 @Component({
 	selector: 'klp-form-element',
@@ -24,7 +24,7 @@ export const DEFAULT_ERROR_MESSAGES: FormErrorMessages = {
 })
 export class FormElementComponent {
 	public attachedControl: AbstractControl;
-	@Input() public caption: String;
+	@Input() public caption: string;
 	@Input() public direction: 'horizontal' | 'vertical' = 'horizontal';
 	@Input() public captionSpacing: 'percentages' | 'none' = 'percentages';
 	@Input() public swapInputAndCaption: boolean = false;
@@ -46,46 +46,44 @@ export class FormElementComponent {
 		}, message);
 	}
 
-	public registerControl(formControl: FormControl) {
-		// console.log('register');
-		// console.log(this.caption);
+	public registerControl(formControl: FormControl): void {
 		this.attachedControl = formControl;
 		this.parent.registerControl(formControl, this);
 	}
 
-	public unregisterControl(formControl: FormControl) {
+	public unregisterControl(formControl: FormControl): void {
 		this.attachedControl = null;
 		this.parent.unregisterControl(formControl);
 	}
 
-	public getAttachedControl() {
+	public getAttachedControl(): AbstractControl {
 		return this.attachedControl;
 	}
 
-	public registerErrorHandler(error: string, templateRef: ElementRef) {
-		this.customErrorHandlers.push({ error, templateRef });
+	public registerErrorHandler(error: string, templateRef: ElementRef): void {
+		this.customErrorHandlers.push({error, templateRef});
 	}
 
-	public registerCaption(templateRef: ElementRef) {
+	public registerCaption(templateRef: ElementRef): void {
 		this.captionRef = templateRef;
 	}
 
-	getErrorToShow() {
+	getErrorToShow(): string {
 		if (this.attachedControl?.touched === true && this.attachedControl?.errors) {
 			return Object.keys(this.attachedControl?.errors)[0];
 		}
 		return null;
 	}
 
-	getCustomErrorHandler(error: string) {
+	getCustomErrorHandler(error: string): { error: string; templateRef: ElementRef } {
 		return this.customErrorHandlers.find((e) => e.error === error);
 	}
 
-	showDefaultError(error: string) {
+	showDefaultError(error: string): boolean {
 		return this.getErrorToShow() === error && !this.customErrorHandlers.some((e) => e.error === error);
 	}
 
-	getScrollableParent(node) {
+	getScrollableParent(node): any {
 		if (node == null) {
 			return null;
 		}
@@ -96,13 +94,13 @@ export class FormElementComponent {
 		}
 	}
 
-	scrollTo() {
+	scrollTo(): void{
 		this.internalComponentRef.nativeElement.scrollIntoView(true);
 		// to give some breathing room, we scroll 100px more to the top
 		this.getScrollableParent(this.internalComponentRef.nativeElement)?.scrollBy(0, -100);
 	}
 
-	getErrorMessages(key: keyof FormErrorMessages) {
+	getErrorMessage(key: keyof FormErrorMessages): string {
 		return this.customMessages?.[key]?.() ?? this.errorMessages[key];
 	}
 }

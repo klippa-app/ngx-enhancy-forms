@@ -56,6 +56,9 @@
 	position: relative;
 	border-radius: 2px;
 	color: #888da8;
+	.placeholderForMultipleSelection {
+		color: $default-gray-faded-dark;
+	}
 	&.showErrors {
 		.dateContainer,
 		.timeContainer,

@@ -1,7 +1,9 @@
-import {Component, EventEmitter, Host, Input, Optional, Output, TemplateRef} from '@angular/core';
+import {Component, EventEmitter, Host, Inject, InjectionToken, Input, Optional, Output, TemplateRef} from '@angular/core';
 import {ControlContainer, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {ValueAccessorBase} from '../value-accessor-base/value-accessor-base.component';
 import {FormElementComponent} from '../../form/form-element/form-element.component';
+import {format as formatDate} from 'date-fns';
+import {DATE_TIME_PICKER_TRANSLATIONS} from '../date-time-picker/date-time-picker.component';
 
 export type AppSelectOptions = Array<{
 	id: any;
@@ -10,6 +12,8 @@ export type AppSelectOptions = Array<{
 	disabled?: boolean;
 }>;
 
+export const SELECT_TRANSLATIONS = new InjectionToken<any>('klp.form.select.translations');
+
 @Component({
 	selector: 'klp-form-select',
 	templateUrl: './select.component.html',
@@ -17,7 +21,7 @@ export type AppSelectOptions = Array<{
 	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: SelectComponent, multi: true}],
 })
 export class SelectComponent extends ValueAccessorBase<string | string[]> {
-	@Input() placeholder: string = 'Pick an option';
+	@Input() placeholder: string;
 	@Input() options: AppSelectOptions;
 	@Input() multiple = false;
 	@Input() multipleDisplayedAsAmount = false;
@@ -31,12 +35,26 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> {
 	constructor(
 		@Optional() @Host() protected parent: FormElementComponent,
 		@Optional() @Host() protected controlContainer: ControlContainer,
+		@Inject(SELECT_TRANSLATIONS) @Optional() private translations: any,
 	) {
 		super(parent, controlContainer);
 	}
 
-	onTextInput(value: string) {
+	onTextInput(value: string): void {
 		this.currentQueryString = value;
 		this.onSearch.emit(value);
+	}
+
+	getDefaultTranslation(key: string): (x: any) => string {
+		switch (key) {
+			case 'placeholder':
+				return () => this.placeholder ?? 'Pick an option';
+			case 'amountSelected':
+				return (amount) => `${amount} selected`;
+		}
+	}
+
+	getTranslation(key: string, params: any = null): string {
+		return this.translations?.[key]?.(params) ?? this.getDefaultTranslation(key)(params);
 	}
 }

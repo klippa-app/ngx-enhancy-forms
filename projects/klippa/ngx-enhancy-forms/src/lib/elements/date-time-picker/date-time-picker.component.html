@@ -3,11 +3,11 @@
 		<mat-form-field floatLabel="never">
 			<div *ngIf="multiple" class="daysSelectedCaption" (click)="picker.open()" [ngClass]="{disabled: disabled}">
 				<ng-container *ngIf="selectedDates.length >= 2">
-					<span>%daysCount% days selected</span>
-					<span *ngIf="getSelectedMonths().length === 1">&nbsp;in %monthName%</span>
+					<span>{{getTranslation('daysSelected', selectedDates.length)}}</span>
+					<span *ngIf="getSelectedMonths() === 1">{{getTranslation('selectedInMonth', selectedDates[0])}}</span>
 				</ng-container>
-				<span *ngIf="selectedDates.length === 1">{{selectedDates[0]}}</span>
-				<span *ngIf="selectedDates.length === 0">Select day(s)</span>
+				<span *ngIf="selectedDates.length === 1">{{getTranslation('selectedDate', selectedDates[0])}}</span>
+				<span *ngIf="selectedDates.length === 0" class="placeholderForMultipleSelection">{{getTranslation('selectDays')}}</span>
 			</div>
 			<input
 				#nativeInput
@@ -19,7 +19,7 @@
 				(input)="nativeValueChanged()"
 				[min]="minDateStartOfDay"
 				[max]="maxDateEndOfDay"
-				[placeholder]="placeholder"
+				[placeholder]="getTranslation('placeholder')"
 				(click)="picker.open()"
 				(blur)="touchDate()"
 				[ngClass]="{inputForMultipleDays: multiple}"

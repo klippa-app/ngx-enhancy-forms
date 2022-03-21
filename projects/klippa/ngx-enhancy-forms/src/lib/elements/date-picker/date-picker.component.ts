@@ -1,9 +1,12 @@
-import {Component, Input} from '@angular/core';
-import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import {Component, Host, Inject, InjectionToken, Input, Optional} from '@angular/core';
+import {ControlContainer, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {format as dateFormat, parse} from 'date-fns';
 import {MultipleValueAccessorBase} from '../value-accessor-base/multiple-value-accessor-base.component';
 import {invalidDateKey} from '../../validators/dateValidator';
 import {isNullOrUndefined} from '../../util/values';
+import {FormElementComponent} from '../../form/form-element/form-element.component';
+
+export const DATE_PICKER_TRANSLATIONS = new InjectionToken<any>('klp.form.date.translations');
 
 @Component({
 	selector: 'klp-form-date-picker',
@@ -16,10 +19,18 @@ export class DatePickerComponent extends MultipleValueAccessorBase<string | type
 	@Input() public maxDate: Date = undefined;
 	@Input() public sameMonthOnly = false;
 	@Input() public format = 'dd-MM-yyyy';
-	@Input() public placeholder = 'Select date';
+	@Input() public placeholder: string;
 	@Input() public clearable = false;
 
 	public dateValue: Date | Array<Date>;
+
+	constructor(
+		@Host() @Optional() protected parent: FormElementComponent,
+		@Host() @Optional() protected controlContainer: ControlContainer,
+		@Inject(DATE_PICKER_TRANSLATIONS) @Optional() private translations: any,
+	) {
+		super(parent, controlContainer);
+	}
 
 	writeValue(value: string | Array<string> | typeof invalidDateKey): void {
 		if (value === invalidDateKey) {
@@ -51,5 +62,19 @@ export class DatePickerComponent extends MultipleValueAccessorBase<string | type
 				this.setInnerValueAndNotify(dateFormat(value, 'yyyy-MM-dd'));
 			}
 		}
+	}
+
+	getDefaultTranslation(key: string): (x: any) => string {
+		switch (key) {
+			case 'placeholder':
+				return () => this.placeholder ?? 'Select date';
+		}
+	}
+
+	getTranslation(key: string, params: any = null): string {
+		if (key === 'placeholder' && this.multiple) {
+			return '';
+		}
+		return this.translations?.[key]?.(params) ?? this.getDefaultTranslation(key)(params);
 	}
 }

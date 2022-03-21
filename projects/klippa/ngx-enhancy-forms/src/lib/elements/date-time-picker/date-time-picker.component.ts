@@ -4,8 +4,10 @@ import {
 	Component,
 	ElementRef,
 	Host,
+	Inject,
 	InjectionToken,
-	Input, OnChanges,
+	Input,
+	OnChanges,
 	OnInit,
 	Optional,
 	SimpleChanges,
@@ -19,9 +21,10 @@ import {KlpDateFormats} from '../../types';
 import {FormElementComponent} from '../../form/form-element/form-element.component';
 import {MultipleValueAccessorBase} from '../value-accessor-base/multiple-value-accessor-base.component';
 import {removeDuplicatesFromArray, stringIsSetAndFilled} from '../../util/values';
-import { endOfMonth, isMatch, startOfMonth, format as formatDate } from 'date-fns';
+import {endOfMonth, format as formatDate, startOfMonth} from 'date-fns';
 
 export const KLP_DATE_FORMATS = new InjectionToken<KlpDateFormats>('klp.form.date.formats');
+export const DATE_TIME_PICKER_TRANSLATIONS = new InjectionToken<any>('klp.form.dateTime.translations');
 
 export function matDateFormatsFactory(component: DateTimePickerComponent, dateFormats?: KlpDateFormats): MatDateFormats {
 	return dateFormats?.(component.format) ?? MAT_NATIVE_DATE_FORMATS;
@@ -32,8 +35,9 @@ export function matDateFormatsFactory(component: DateTimePickerComponent, dateFo
 	templateUrl: './date-time-picker.component.html',
 	styleUrls: ['./date-time-picker.component.scss'],
 	providers: [
-		{ provide: NG_VALUE_ACCESSOR, useExisting: DateTimePickerComponent, multi: true },
-		{ provide: MAT_DATE_FORMATS,
+		{provide: NG_VALUE_ACCESSOR, useExisting: DateTimePickerComponent, multi: true},
+		{
+			provide: MAT_DATE_FORMATS,
 			deps: [DateTimePickerComponent, [new Optional(), KLP_DATE_FORMATS]],
 			useFactory: matDateFormatsFactory,
 		}
@@ -44,7 +48,7 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 	@Input() public maxDate: Date = undefined;
 	@Input() public sameMonthOnly = false;
 	@Input() public format = 'dd-MM-yyyy';
-	@Input() public placeholder = 'Select date';
+	@Input() public placeholder: string;
 	@Input() public clearable = false;
 	@Input() public showTimeInput = true;
 	@Input() public invalidTimeAsMidnight = false; // if the time is not valid, use 00:00 as the time
@@ -70,6 +74,7 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 	constructor(
 		@Host() @Optional() protected parent: FormElementComponent,
 		@Host() @Optional() protected controlContainer: ControlContainer,
+		@Inject(DATE_TIME_PICKER_TRANSLATIONS) @Optional() private translations: any,
 		private cdr: ChangeDetectorRef
 	) {
 		super(parent, controlContainer);
@@ -117,8 +122,8 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 		}
 	}
 
-	getSelectedMonths(): Array<string> {
-		return removeDuplicatesFromArray(this.selectedDates.map((e) => formatDate(e, 'MMMM')));
+	getSelectedMonths(): number {
+		return removeDuplicatesFromArray(this.selectedDates.map((e) => formatDate(e, 'MMMM'))).length;
 	}
 
 	// dateChanged is called when the output of the datepicker is changed and
@@ -127,7 +132,8 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 	dateChanged(event: any): void {
 		const date = event.value;
 		if (this.multiple) {
-			this.datePickerRef.close = () => {};
+			this.datePickerRef.close = () => {
+			};
 
 			if (this.selectedDates.some((e) => e.getTime() === date.getTime())) {
 				this.selectedDates = this.selectedDates.filter((e) => e.getTime() !== date.getTime());
@@ -308,5 +314,28 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 		if ((this.dateTouched && this.hoursTouched && this.minutesTouched) || (this.dateTouched && !this.showTimeInput)) {
 			this.touch();
 		}
+	}
+
+
+	getDefaultTranslation(key: string): (x: any) => string {
+		switch (key) {
+			case 'placeholder':
+				return () => this.placeholder ?? 'Select date';
+			case 'selectDays':
+				return () => 'Select day(s)';
+			case 'selectedDate':
+				return (d: Date) => d.toLocaleDateString();
+			case 'daysSelected':
+				return (amount) => `${amount} days selected`;
+			case 'selectedInMonth':
+				return (d: Date) => ` in ${formatDate(d, 'MMMM')}`;
+		}
+	}
+
+	getTranslation(key: string, params: any = null): string {
+		if (key === 'placeholder' && this.multiple) {
+			return '';
+		}
+		return this.translations?.[key]?.(params) ?? this.getDefaultTranslation(key)(params);
 	}
 }
