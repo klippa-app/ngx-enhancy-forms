@@ -1,6 +1,6 @@
 import { isString } from 'lodash';
 
-export function stringIsSetAndNotEmpty(s: string) {
+export function stringIsSetAndFilled(s: string) {
 	return isString(s) && s.length > 0;
 }
 
@@ -16,26 +16,15 @@ export function isValueSet(value: any) {
 	return value !== null && value !== undefined;
 }
 
+export function removeDuplicatesFromArray(array: Array<any>) {
+	return array.filter((c, i) => {
+		const firstOccurrenceIndex = array.findIndex((c2) => c2 === c);
+		return i === firstOccurrenceIndex;
+	});
+}
+
 export function stringOrArrayIsSetAndEmpty(value: any[] | string) {
 	return value !== null && value !== undefined && value.length === 0;
-}
-
-export function useIfStringIsSet(s: string) {
-	if (stringIsSetAndNotEmpty(s)) {
-		return s;
-	}
-	return undefined;
-}
-
-export function useIfArrayIsSetWithOneItem(a: Array<any>): any {
-	if (!isNullOrUndefined(a) && a.length === 1) {
-		return a[0];
-	}
-	return undefined;
-}
-
-export function convertParentToChild<C>(originalClass: any, newClass: C): C {
-	return Object.assign(newClass, originalClass);
 }
 
 export function truncateString(s: string, length: number) {

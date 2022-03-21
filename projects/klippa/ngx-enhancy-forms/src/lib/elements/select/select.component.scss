@@ -18,7 +18,6 @@ $label-border: lighten($primary, 30%)!default;
 
 :host ::ng-deep .ng-select.ng-select-opened>.ng-select-container{
   background:#fff;
-  //border-color:#b3b3b3 #ccc #d9d9d9
   border-color: lighten($primary, 10%);
 }
 :host ::ng-deep .ng-select.ng-select-opened>.ng-select-container:hover{
@@ -39,10 +38,6 @@ $label-border: lighten($primary, 30%)!default;
 :host ::ng-deep .ng-select.ng-select-opened.ng-select-top>.ng-select-container{
   border-top-right-radius:0;
   border-top-left-radius:0
-}
-:host ::ng-deep .ng-select.ng-select-focused:not(.ng-select-opened)>.ng-select-container{
-  //border-color:#007eff;
-  //box-shadow:inset 0 1px 1px rgba(0,0,0,0.075),0 0 0 3px rgba(0,126,255,0.1)
 }
 :host ::ng-deep .ng-select.ng-select-disabled>.ng-select-container{
   background-color:#f9f9f9
@@ -68,7 +63,6 @@ $label-border: lighten($primary, 30%)!default;
   color: #888da8;
   font-size: 1rem;
   font-size: 14px;
-  //height: calc(2.25rem + 2px);
   line-height: 1.5;
   margin: 0;
   outline: none;
@@ -107,16 +101,12 @@ $label-border: lighten($primary, 30%)!default;
 :host ::ng-deep .ng-select.ng-select-multiple.ng-select-disabled>.ng-select-container .ng-value-container .ng-value .ng-value-label{
   padding:0px 5px
 }
-:host ::ng-deep .ng-select.ng-select-multiple .ng-select-container .ng-value-container{
-  padding-left:7px;
-  padding-right:10px;
-  padding-top:2px;
-}
 
 :host ::ng-deep .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value{
   font-size:0.9em;
   margin-right:5px;
-  margin-bottom:5px;
+  margin-top:3px;
+  margin-bottom:3px;
   background-color:$label-background;
   border-radius:2px;
   border:1px solid $label-border;

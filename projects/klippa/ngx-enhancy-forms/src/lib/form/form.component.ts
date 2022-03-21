@@ -21,6 +21,7 @@ export class SubFormDirective {
 })
 export class FormComponent implements OnInit, OnDestroy {
 	@Input() public formGroup: FormGroup;
+	@Input() public patchValueInterceptor: (values: any) => Promise<any>;
 
 	// we keep track of what form controls are actually rendered. Only those count when looking at form validation
 	private activeControls: Array<{
@@ -28,25 +29,29 @@ export class FormComponent implements OnInit, OnDestroy {
 		formElement: FormElementComponent;
 	}> = [];
 
-	constructor(@SkipSelf() @Optional() private parent: FormComponent, @Optional() private subFormPlaceholder: SubFormDirective) {}
+	constructor(@SkipSelf() @Optional() private parent: FormComponent, @Optional() private subFormPlaceholder: SubFormDirective) {
+	}
 
 	ngOnInit(): void {
 		if (isValueSet(this.parent) && isValueSet(this.subFormPlaceholder)) {
 			const injectInto = this.subFormPlaceholder.injectInto;
 			const injectAt = this.subFormPlaceholder.at;
 			if (injectInto instanceof FormArray) {
-				if (typeof injectAt !== "number") {
+				if (typeof injectAt !== 'number') {
 					throw new Error(`cannot index FormArray with ${typeof injectAt}`);
 				}
 
 				injectInto.setControl(injectAt, this.formGroup);
 			} else if (injectInto instanceof FormGroup) {
-				if (typeof injectAt !== "string") {
+				if (typeof injectAt !== 'string') {
 					throw new Error(`cannot index FormGroup with ${typeof injectAt}`);
 				}
 
 				injectInto.setControl(injectAt, this.formGroup);
 			}
+		}
+		if (isValueSet(this.patchValueInterceptor)) {
+			this.addSupportForPatchValueInterceptor();
 		}
 	}
 
@@ -56,16 +61,34 @@ export class FormComponent implements OnInit, OnDestroy {
 			const injectAt = this.subFormPlaceholder.at;
 			if (injectInto instanceof FormArray) {
 				const idx = injectInto.controls.findIndex(e => e === this.formGroup);
-
 				injectInto.removeAt(idx);
 			} else if (injectInto instanceof FormGroup) {
-				if (typeof injectAt !== "string") {
+				if (typeof injectAt !== 'string') {
 					throw new Error(`cannot index FormGroup with ${typeof injectAt}`);
 				}
-
 				injectInto.removeControl(injectAt);
 			}
 		}
+	}
+
+	private addSupportForPatchValueInterceptor(): void {
+		const fn = this.formGroup.patchValue;
+		const newFn = (
+			value: {
+				[key: string]: any;
+			},
+			options?: {
+				onlySelf?: boolean;
+				emitEvent?: boolean;
+			}
+		): void => {
+			this.patchValueInterceptor(value).then((val) => {
+				setTimeout(() => {
+					fn.call(this.formGroup, val, options);
+				});
+			});
+		};
+		this.formGroup.patchValue = newFn;
 	}
 
 	public registerControl(formControl: FormControl, formElement: FormElementComponent): void {
@@ -123,6 +146,7 @@ export class FormComponent implements OnInit, OnDestroy {
 	}
 
 	trySubmit(): Promise<any> {
+		this.formGroup.updateValueAndValidity();
 		this.formGroup.markAllAsTouched();
 		const allControls: Array<FormControl> = this.getAllFormControls();
 		const originalDisabledStates = allControls.map(e => {

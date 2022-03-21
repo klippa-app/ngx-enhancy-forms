@@ -3,11 +3,41 @@
 
 :host {
 	display: block;
+
+	input:disabled {
+		cursor: not-allowed;
+	}
+}
+
+.componentContainer {
+	position: relative;
+}
+
+i {
+	position: absolute;
+	left: $spacing-small;
+	top: 14px;
 }
 
 input {
-  outline: none;
-  @include formControl();
+	outline: none;
+	@include formControl();
+
+	&.hasIcon {
+		padding-left: $spacing-large;
+	}
+
+	&.hasClearButton {
+		padding-right: $spacing-large;
+	}
+}
+
+.clearIcon {
+	position: absolute;
+	right: $spacing-small;
+	top: 7px;
+	font-size: 18px;
+	cursor: pointer;
 }
 
 .showErrors {

@@ -1,7 +1,7 @@
 import { ControlContainer, ControlValueAccessor, FormControl } from '@angular/forms';
-import { Component, Host, Input, Optional } from '@angular/core';
+import {Component, Host, Input, OnDestroy, OnInit, Optional} from '@angular/core';
 import { FormElementComponent } from '../../form/form-element/form-element.component';
-import { isNullOrUndefined, stringIsSetAndNotEmpty } from '../../util/values';
+import { isNullOrUndefined, stringIsSetAndFilled } from '../../util/values';
 
 /**
  * This component is a base in order to create a component that supports ngModel.
@@ -17,7 +17,7 @@ import { isNullOrUndefined, stringIsSetAndNotEmpty } from '../../util/values';
 	selector: '',
 	template: '',
 })
-export class ValueAccessorBase<T> implements ControlValueAccessor {
+export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDestroy {
 	public innerValue: T;
 	public changed = new Array<(value: T) => void>();
 	private touched = new Array<() => void>();
@@ -34,10 +34,10 @@ export class ValueAccessorBase<T> implements ControlValueAccessor {
 		@Host() @Optional() protected controlContainer: ControlContainer
 	) {}
 
-	ngOnInit() {
+	ngOnInit(): void {
 		if (this.formControl) {
 			this.attachedFormControl = this.formControl;
-		} else if (stringIsSetAndNotEmpty(this.formControlName)) {
+		} else if (stringIsSetAndFilled(this.formControlName)) {
 			this.attachedFormControl = this.controlContainer?.control.get(this.formControlName) as FormControl;
 			if (isNullOrUndefined(this.attachedFormControl)) {
 				throw new Error(`Form element '${this.formControlName}' with caption '${this.parent?.caption}' is not declared in your FormGroup.`);
@@ -52,38 +52,38 @@ export class ValueAccessorBase<T> implements ControlValueAccessor {
 		}
 	}
 
-	isInErrorState() {
+	isInErrorState(): boolean {
 		return this.attachedFormControl && this.attachedFormControl.status === 'INVALID' && this.attachedFormControl.touched;
 	}
 
-	ngOnDestroy() {
+	ngOnDestroy(): void {
 		if (this.attachedFormControl) {
 			this.parent?.unregisterControl(this.attachedFormControl);
 		}
 	}
 
-	touch() {
+	touch(): void {
 		this.touched.forEach((f) => f());
 	}
 
-	writeValue(value: T) {
+	writeValue(value: T): void {
 		this.innerValue = value;
 	}
 
-	registerOnChange(fn: (value: T) => void) {
+	registerOnChange(fn: (value: T) => void): void {
 		this.changed.push(fn);
 	}
 
-	registerOnTouched(fn: () => void) {
+	registerOnTouched(fn: () => void): void {
 		this.touched.push(fn);
 	}
 
-	setInnerValueAndNotify(value) {
+	setInnerValueAndNotify(value): void {
 		this.innerValue = value;
 		this.changed.forEach((fn) => fn(value));
 	}
 
-	resetToNull() {
+	resetToNull(): void {
 		this.setInnerValueAndNotify(null);
 	}
 }

@@ -1,19 +1,19 @@
 <ng-template #listItem>
 	<li *ngFor="let item of innerValue; index as index"
-	    class="sortableItem"
-	    [ngClass]="{
+			class="sortableItem"
+			[ngClass]="{
 			largeSortableItem: sortableItemSize === 'lg',
 		 	smallSortableItem: sortableItemSize === 'sm'
 		 }"
 	>
-		<ng-container [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{ item: item, index:index }" ></ng-container>
+		<ng-container [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{ item: item, index:index }"></ng-container>
 	</li>
 </ng-template>
 
 <ol *ngIf='!disabled'
-        [sortablejs]="innerValue"
-        [sortablejsOptions]="{ onUpdate: itemsOrderChanged }"
-        class="itemsContainer"
+		[sortablejs]="innerValue"
+		[sortablejsOptions]="sortablejsOptions"
+		class="itemsContainer"
 >
 	<ng-container *ngTemplateOutlet="listItem"></ng-container>
 </ol>

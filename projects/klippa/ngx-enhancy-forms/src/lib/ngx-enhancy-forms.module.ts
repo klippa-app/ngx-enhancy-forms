@@ -9,6 +9,7 @@ import {LoadingIndicatorComponent} from './elements/loading-indicator/loading-in
 import {NumberInputComponent} from './elements/number-input/number-input.component';
 import {PasswordFieldComponent} from './elements/password-field/password-field.component';
 import {SelectComponent} from './elements/select/select.component';
+import {SelectFooterComponent} from './elements/select/select-footer/select-footer.component';
 import {SortableItemsComponent} from './elements/sortable-items/sortable-items.component';
 import {TextInputComponent} from './elements/text-input/text-input.component';
 import {ToggleComponent} from './elements/toggle/toggle.component';
@@ -19,8 +20,10 @@ import {FormSubmitButtonComponent} from './form/form-submit-button/form-submit-b
 import {FormComponent, SubFormDirective} from './form/form.component';
 import {SortablejsModule} from 'ngx-sortablejs';
 import {NgSelectModule} from '@ng-select/ng-select';
-import {DatepickerComponent} from './elements/datepicker/datepicker.component';
+import {DatePickerComponent} from './elements/date-picker/date-picker.component';
+import {DateTimePickerComponent} from './elements/date-time-picker/date-time-picker.component';
 import {MaterialModule} from './material.module';
+import {MultipleValueAccessorBase} from './elements/value-accessor-base/multiple-value-accessor-base.component';
 
 
 @NgModule({
@@ -33,14 +36,17 @@ import {MaterialModule} from './material.module';
 	],
 	declarations: [
 		ValueAccessorBase,
+		MultipleValueAccessorBase,
 		ButtonComponent,
 		CheckboxComponent,
-		DatepickerComponent,
+		DatePickerComponent,
+		DateTimePickerComponent,
 		EmailInputComponent,
 		LoadingIndicatorComponent,
 		NumberInputComponent,
 		PasswordFieldComponent,
 		SelectComponent,
+		SelectFooterComponent,
 		SortableItemsComponent,
 		TextInputComponent,
 		ToggleComponent,
@@ -53,14 +59,17 @@ import {MaterialModule} from './material.module';
 	],
 	exports: [
 		ValueAccessorBase,
+		MultipleValueAccessorBase,
 		ButtonComponent,
-		DatepickerComponent,
+		DatePickerComponent,
+		DateTimePickerComponent,
 		CheckboxComponent,
 		EmailInputComponent,
 		LoadingIndicatorComponent,
 		NumberInputComponent,
 		PasswordFieldComponent,
 		SelectComponent,
+		SelectFooterComponent,
 		SortableItemsComponent,
 		TextInputComponent,
 		ToggleComponent,

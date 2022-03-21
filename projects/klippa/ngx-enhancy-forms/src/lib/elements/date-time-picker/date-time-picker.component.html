@@ -1,0 +1,40 @@
+<div class="componentContainer" [ngClass]="{showErrors: isInErrorState()}">
+	<div class="dateContainer" [ngClass]="{noRightBorder: !showTimeInput && clearable && !disabled, disabled: disabled}">
+		<mat-form-field floatLabel="never">
+			<div *ngIf="multiple" class="daysSelectedCaption" (click)="picker.open()" [ngClass]="{disabled: disabled}">
+				<ng-container *ngIf="selectedDates.length >= 2">
+					<span>{{getTranslation('daysSelected', selectedDates.length)}}</span>
+					<span *ngIf="getSelectedMonths() === 1">{{getTranslation('selectedInMonth', selectedDates[0])}}</span>
+				</ng-container>
+				<span *ngIf="selectedDates.length === 1">{{getTranslation('selectedDate', selectedDates[0])}}</span>
+				<span *ngIf="selectedDates.length === 0" class="placeholderForMultipleSelection">{{getTranslation('selectDays')}}</span>
+			</div>
+			<input
+				#nativeInput
+				matInput
+				[matDatepicker]="picker"
+				[matDatepickerFilter]="filterDates"
+				[(ngModel)]="valueForMaterialDatePicker"
+				(dateInput)="dateChanged($event)"
+				(input)="nativeValueChanged()"
+				[min]="minDateStartOfDay"
+				[max]="maxDateEndOfDay"
+				[placeholder]="getTranslation('placeholder')"
+				(click)="picker.open()"
+				(blur)="touchDate()"
+				[ngClass]="{inputForMultipleDays: multiple}"
+			>
+			<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+			<mat-datepicker
+				#picker
+				[dateClass]="isSelected"
+			></mat-datepicker>
+		</mat-form-field>
+	</div>
+	<div class="timeContainer" *ngIf="showTimeInput" [ngClass]="{disabled: disabled}">
+		<input maxlength="2" placeholder="__" [disabled]="disabled" [(ngModel)]="hours" (ngModelChange)="notifyNewDate()" (blur)="formatTime(); touchHours()">
+		<div class="divider">:</div>
+		<input maxlength="2" placeholder="__" [disabled]="disabled" [(ngModel)]="minutes" (ngModelChange)="notifyNewDate()" (blur)="formatTime(); touchMinutes()">
+	</div>
+	<button *ngIf="clearable && !disabled" class="clearButton" (click)="resetToNull()" [ngClass]="{withoutSpacing: !showTimeInput}">×</button>
+</div>

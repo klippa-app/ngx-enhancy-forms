@@ -11,4 +11,6 @@ import {ValueAccessorBase} from "../value-accessor-base/value-accessor-base.comp
 export class TextInputComponent extends ValueAccessorBase<string> {
 	@Input() placeholder: string;
 	@Input() type: 'text' | 'password' = 'text';
+	@Input() clearable = false;
+	@Input() icon: 'search';
 }
