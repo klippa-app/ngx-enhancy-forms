@@ -2,6 +2,8 @@ import {Component, ElementRef, Host, Inject, InjectionToken, Input, OnInit, Opti
 import {AbstractControl, FormControl} from '@angular/forms';
 import {FormComponent} from '../form.component';
 import {CustomErrorMessages, FormErrorMessages} from '../../types';
+import { ValueAccessorBase } from '../../elements/value-accessor-base/value-accessor-base.component';
+import { isValueSet } from '../../util/values';
 
 export const FORM_ERROR_MESSAGES = new InjectionToken<CustomErrorMessages>('form.error.messages');
 
@@ -27,12 +29,14 @@ export class FormElementComponent {
 	@Input() public caption: string;
 	@Input() public direction: 'horizontal' | 'vertical' = 'horizontal';
 	@Input() public captionSpacing: 'percentages' | 'none' = 'percentages';
+	@Input() public spaceDistribution: '40-60' | '30-70' = '40-60';
 	@Input() public swapInputAndCaption: boolean = false;
 	@ViewChild('internalComponentRef') public internalComponentRef: ElementRef;
 
 	public captionRef: ElementRef;
 	public errorMessages: FormErrorMessages = DEFAULT_ERROR_MESSAGES;
 	public customErrorHandlers: Array<{ error: string; templateRef: ElementRef }> = [];
+	private input: ValueAccessorBase<any>;
 
 	constructor(
 		@Host() @Optional() private parent: FormComponent,
@@ -46,9 +50,10 @@ export class FormElementComponent {
 		}, message);
 	}
 
-	public registerControl(formControl: FormControl): void {
+	public registerControl(formControl: FormControl, input: ValueAccessorBase<any> = null): void {
 		this.attachedControl = formControl;
 		this.parent.registerControl(formControl, this);
+		this.input = input;
 	}
 
 	public unregisterControl(formControl: FormControl): void {
@@ -98,6 +103,13 @@ export class FormElementComponent {
 		this.internalComponentRef.nativeElement.scrollIntoView(true);
 		// to give some breathing room, we scroll 100px more to the top
 		this.getScrollableParent(this.internalComponentRef.nativeElement)?.scrollBy(0, -100);
+	}
+
+	isRequired(): boolean {
+		if (isValueSet(this.input)) {
+			return this.input.hasValidator('required');
+		}
+		return false;
 	}
 
 	getErrorMessage(key: keyof FormErrorMessages): string {

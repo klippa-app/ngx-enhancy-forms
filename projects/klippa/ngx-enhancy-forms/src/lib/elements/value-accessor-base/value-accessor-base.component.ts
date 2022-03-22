@@ -1,7 +1,7 @@
 import { ControlContainer, ControlValueAccessor, FormControl } from '@angular/forms';
-import {Component, Host, Input, OnDestroy, OnInit, Optional} from '@angular/core';
+import {Component, EventEmitter, Host, Input, OnDestroy, OnInit, Optional, Output} from '@angular/core';
 import { FormElementComponent } from '../../form/form-element/form-element.component';
-import { isNullOrUndefined, stringIsSetAndFilled } from '../../util/values';
+import {arrayIsSetAndFilled, isNullOrUndefined, isValueSet, stringIsSetAndFilled} from '../../util/values';
 
 /**
  * This component is a base in order to create a component that supports ngModel.
@@ -26,8 +26,10 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 	// we support both providing just the formControlName and the full formControl
 	@Input() public formControlName: string = null;
 	@Input() public formControl: FormControl = null;
+	@Output() public onTouch = new EventEmitter<void>();
 
 	private attachedFormControl: FormControl;
+	private validators: Array<string> = [];
 
 	constructor(
 		@Host() @Optional() protected parent: FormElementComponent,
@@ -48,7 +50,15 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 			this.attachedFormControl.statusChanges.subscribe(() => {
 				this.disabled = this.attachedFormControl.disabled;
 			});
-			this.parent?.registerControl(this.attachedFormControl);
+			this.parent?.registerControl(this.attachedFormControl, this);
+			if (this.attachedFormControl?.validator) {
+				const vals = this.attachedFormControl.validator({} as any);
+				if (isValueSet(vals)) {
+					this.validators = Object.keys(vals);
+				} else {
+					this.validators = [];
+				}
+			}
 		}
 	}
 
@@ -85,5 +95,12 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 
 	resetToNull(): void {
 		this.setInnerValueAndNotify(null);
+	}
+
+	hasValidator(validatorName: string): boolean {
+		if (arrayIsSetAndFilled(this.validators)) {
+			return this.validators.includes(validatorName);
+		}
+		return false;
 	}
 }

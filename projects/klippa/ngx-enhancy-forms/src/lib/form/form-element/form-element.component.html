@@ -15,12 +15,15 @@
 </ng-template>
 <ng-container *ngIf="direction === 'horizontal'" [ngTemplateOutlet]="errorRef"></ng-container>
 <div *ngIf="attachedControl" class="componentContainer" [ngClass]="{vertical: direction === 'vertical', reverseOrder: swapInputAndCaption}" #internalComponentRef>
-	<div class="caption" [ngClass]="{ hasErrors: getErrorToShow() && attachedControl.touched, percentageSpacing: captionSpacing === 'percentages' }">
-		<div *ngIf="captionRef" [ngTemplateOutlet]="captionRef"></div>
-		<div *ngIf="!captionRef">{{caption}}</div>
+	<div class="caption" *ngIf="caption || captionRef" [ngClass]="{ hasErrors: getErrorToShow() && attachedControl.touched, percentageSpacing: captionSpacing === 'percentages', 'd30-70': spaceDistribution === '30-70' }">
+		<div *ngIf="captionRef" class="captionRefContainer">
+			<ng-container [ngTemplateOutlet]="captionRef"></ng-container>
+			<div *ngIf="isRequired()">&nbsp;*</div>
+		</div>
+		<div *ngIf="!captionRef">{{caption}}<span *ngIf="isRequired()">&nbsp;*</span></div>
 	</div>
 	<ng-container *ngIf="direction === 'vertical'" [ngTemplateOutlet]="errorRef"></ng-container>
-	<div class="inputContainer" [ngClass]="{ percentageSpacing: captionSpacing === 'percentages' }">
+	<div class="inputContainer" [ngClass]="{ percentageSpacing: captionSpacing === 'percentages', 'd30-70': spaceDistribution === '30-70' }">
 		<ng-content></ng-content>
 	</div>
 </div>

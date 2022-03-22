@@ -1,7 +1,6 @@
 @import '../../../style/themes/default/variables';
 :host {
 	display: block;
-  margin-top: $spacing-medium;
 }
 .componentContainer {
 	display: flex;
@@ -21,11 +20,17 @@
 		}
 	}
 }
+.captionRefContainer {
+	display: flex;
+}
 .caption {
 	font-weight: bold;
 	flex: 0 0 auto;
 	&.percentageSpacing {
 		flex: 0 0 40%;
+		&.d30-70 {
+			flex-basis: 30%;
+		}
 	}
 	color: $default-dark;
 	&.hasErrors {
@@ -33,12 +38,18 @@
 	}
 }
 .inputContainer {
-	flex: 0 0 auto;
+	flex: 1;
 	&.percentageSpacing {
 		flex: 0 0 60%;
+		&.d30-70 {
+			flex-basis: 70%;
+		}
 	}
 }
 .errorContainer {
 	margin-left: 40%;
+	&.d30-70 {
+		margin-left: 30%;
+	}
 	color: $default-warning;
 }
