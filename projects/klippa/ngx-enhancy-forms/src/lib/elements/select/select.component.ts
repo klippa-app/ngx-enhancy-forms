@@ -4,6 +4,7 @@ import {ValueAccessorBase} from '../value-accessor-base/value-accessor-base.comp
 import {FormElementComponent} from '../../form/form-element/form-element.component';
 import {format as formatDate} from 'date-fns';
 import {DATE_TIME_PICKER_TRANSLATIONS} from '../date-time-picker/date-time-picker.component';
+import {isValueSet, stringIsSetAndFilled} from '../../util/values';
 
 export type AppSelectOptions = Array<{
 	id: any;
@@ -48,13 +49,16 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> {
 	getDefaultTranslation(key: string): (x: any) => string {
 		switch (key) {
 			case 'placeholder':
-				return () => this.placeholder ?? 'Pick an option';
+				return () => 'Pick an option';
 			case 'amountSelected':
 				return (amount) => `${amount} selected`;
 		}
 	}
 
 	getTranslation(key: string, params: any = null): string {
+		if (key === 'placeholder' && stringIsSetAndFilled(this.placeholder)) {
+			return this.placeholder;
+		}
 		return this.translations?.[key]?.(params) ?? this.getDefaultTranslation(key)(params);
 	}
 }

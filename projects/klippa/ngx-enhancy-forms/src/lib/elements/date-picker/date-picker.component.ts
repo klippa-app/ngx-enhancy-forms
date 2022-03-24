@@ -3,7 +3,7 @@ import {ControlContainer, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {format as dateFormat, parse} from 'date-fns';
 import {MultipleValueAccessorBase} from '../value-accessor-base/multiple-value-accessor-base.component';
 import {invalidDateKey} from '../../validators/dateValidator';
-import {isNullOrUndefined} from '../../util/values';
+import {isNullOrUndefined, isValueSet, stringIsSetAndFilled} from '../../util/values';
 import {FormElementComponent} from '../../form/form-element/form-element.component';
 
 export const DATE_PICKER_TRANSLATIONS = new InjectionToken<any>('klp.form.date.translations');
@@ -67,13 +67,16 @@ export class DatePickerComponent extends MultipleValueAccessorBase<string | type
 	getDefaultTranslation(key: string): (x: any) => string {
 		switch (key) {
 			case 'placeholder':
-				return () => this.placeholder ?? 'Select date';
+				return () => 'Select date';
 		}
 	}
 
 	getTranslation(key: string, params: any = null): string {
 		if (key === 'placeholder' && this.multiple) {
 			return '';
+		}
+		if (key === 'placeholder' && stringIsSetAndFilled(this.placeholder)) {
+			return this.placeholder;
 		}
 		return this.translations?.[key]?.(params) ?? this.getDefaultTranslation(key)(params);
 	}

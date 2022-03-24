@@ -20,7 +20,7 @@ import {MAT_DATE_FORMATS, MAT_NATIVE_DATE_FORMATS, MatDateFormats} from '@angula
 import {KlpDateFormats} from '../../types';
 import {FormElementComponent} from '../../form/form-element/form-element.component';
 import {MultipleValueAccessorBase} from '../value-accessor-base/multiple-value-accessor-base.component';
-import {removeDuplicatesFromArray, stringIsSetAndFilled} from '../../util/values';
+import {isValueSet, removeDuplicatesFromArray, stringIsSetAndFilled} from '../../util/values';
 import {endOfMonth, format as formatDate, startOfMonth} from 'date-fns';
 
 export const KLP_DATE_FORMATS = new InjectionToken<KlpDateFormats>('klp.form.date.formats');
@@ -320,7 +320,7 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 	getDefaultTranslation(key: string): (x: any) => string {
 		switch (key) {
 			case 'placeholder':
-				return () => this.placeholder ?? 'Select date';
+				return () => 'Select date';
 			case 'selectDays':
 				return () => 'Select day(s)';
 			case 'selectedDate':
@@ -335,6 +335,9 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 	getTranslation(key: string, params: any = null): string {
 		if (key === 'placeholder' && this.multiple) {
 			return '';
+		}
+		if (key === 'placeholder' && stringIsSetAndFilled(this.placeholder)) {
+			return this.placeholder;
 		}
 		return this.translations?.[key]?.(params) ?? this.getDefaultTranslation(key)(params);
 	}
