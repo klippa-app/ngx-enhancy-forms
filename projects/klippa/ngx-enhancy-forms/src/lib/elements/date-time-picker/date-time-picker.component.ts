@@ -16,7 +16,7 @@ import {
 import {ControlContainer, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {invalidDateKey} from '../../validators/dateValidator';
 import {DateFilterFn, MatDatepicker} from '@angular/material/datepicker';
-import {MAT_DATE_FORMATS, MAT_NATIVE_DATE_FORMATS, MatDateFormats} from '@angular/material/core';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_NATIVE_DATE_FORMATS, MatDateFormats} from '@angular/material/core';
 import {KlpDateFormats} from '../../types';
 import {FormElementComponent} from '../../form/form-element/form-element.component';
 import {MultipleValueAccessorBase} from '../value-accessor-base/multiple-value-accessor-base.component';
@@ -25,6 +25,7 @@ import {endOfMonth, format as formatDate, startOfMonth} from 'date-fns';
 
 export const KLP_DATE_FORMATS = new InjectionToken<KlpDateFormats>('klp.form.date.formats');
 export const DATE_TIME_PICKER_TRANSLATIONS = new InjectionToken<any>('klp.form.dateTime.translations');
+export const DATE_PICKER_LOCALE = new InjectionToken<any>('klp.form.dateTime.locale');
 
 export function matDateFormatsFactory(component: DateTimePickerComponent, dateFormats?: KlpDateFormats): MatDateFormats {
 	return dateFormats?.(component.format) ?? MAT_NATIVE_DATE_FORMATS;
@@ -40,7 +41,7 @@ export function matDateFormatsFactory(component: DateTimePickerComponent, dateFo
 			provide: MAT_DATE_FORMATS,
 			deps: [DateTimePickerComponent, [new Optional(), KLP_DATE_FORMATS]],
 			useFactory: matDateFormatsFactory,
-		}
+		},
 	],
 })
 export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | typeof invalidDateKey> implements OnInit, AfterViewInit, OnChanges {
@@ -75,9 +76,14 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 		@Host() @Optional() protected parent: FormElementComponent,
 		@Host() @Optional() protected controlContainer: ControlContainer,
 		@Inject(DATE_TIME_PICKER_TRANSLATIONS) @Optional() private translations: any,
+		@Inject(DATE_PICKER_LOCALE) @Optional() private datePickerLocale: any,
+		private dateAdapter: DateAdapter<Date>,
 		private cdr: ChangeDetectorRef
 	) {
 		super(parent, controlContainer);
+		if (isValueSet(datePickerLocale)) {
+			dateAdapter.setLocale(datePickerLocale());
+		}
 	}
 
 	ngOnInit(): void {
