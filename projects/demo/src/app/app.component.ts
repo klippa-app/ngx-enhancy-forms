@@ -9,6 +9,7 @@ import {AppSelectOptions} from '@klippa/ngx-enhancy-forms';
 })
 export class AppComponent {
 
+	testDate: Date;
 	show = false;
 
 	public myForm = this.fb.group({
@@ -47,6 +48,7 @@ export class AppComponent {
 	public submitForm = async (values: any) => {
 		console.log(values);
 	};
+
 
 
 	public toggie() {
