@@ -41,19 +41,13 @@ export class FormComponent implements OnInit, OnDestroy {
 					throw new Error(`cannot index FormArray with ${typeof injectAt}`);
 				}
 
-				// do this next cycle to avoid 'ExpressionChangedAfterItHasBeenCheckedError'
-				setTimeout(() => {
-					injectInto.setControl(injectAt, this.formGroup);
-				});
+				injectInto.setControl(injectAt, this.formGroup);
 			} else if (injectInto instanceof FormGroup) {
 				if (typeof injectAt !== 'string') {
 					throw new Error(`cannot index FormGroup with ${typeof injectAt}`);
 				}
 
-				// do this next cycle to avoid 'ExpressionChangedAfterItHasBeenCheckedError'
-				setTimeout(() => {
-					injectInto.setControl(injectAt, this.formGroup);
-				});
+				injectInto.setControl(injectAt, this.formGroup);
 			}
 		}
 		if (isValueSet(this.patchValueInterceptor)) {

@@ -16,7 +16,7 @@ export class SortableItemsComponent extends ValueAccessorBase<Array<any>> implem
 	@Input() useCustomScroll = false;
 
 	public sortablejsOptions: Options;
-	private scrollInterval: number = null;
+	private scrollInterval = null;
 
 	ngOnInit(): void {
 		super.ngOnInit();
