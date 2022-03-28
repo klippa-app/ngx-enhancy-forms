@@ -146,13 +146,13 @@ export class FormComponent implements OnInit, OnDestroy {
 	}
 
 	trySubmit(): Promise<any> {
-		this.formGroup.updateValueAndValidity();
 		this.formGroup.markAllAsTouched();
 		const allControls: Array<FormControl> = this.getAllFormControls();
 		const originalDisabledStates = allControls.map(e => {
 			return {control: e, disabled: e.disabled};
 		});
 		allControls.forEach(e => this.disableInactiveFormControl(e));
+		allControls.forEach(e => e.updateValueAndValidity());
 		const values = this.formGroup.value;
 		if (this.formGroup.valid) {
 			this.setDisabledStatesForAllControls(originalDisabledStates);
