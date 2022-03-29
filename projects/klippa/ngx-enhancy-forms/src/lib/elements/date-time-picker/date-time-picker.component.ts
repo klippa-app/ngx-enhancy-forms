@@ -188,7 +188,7 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 			}
 		} else {
 			this.setMinDate(this.minDate);
-			this.setMinDate(this.maxDate);
+			this.setMaxDate(this.maxDate);
 		}
 	}
 
