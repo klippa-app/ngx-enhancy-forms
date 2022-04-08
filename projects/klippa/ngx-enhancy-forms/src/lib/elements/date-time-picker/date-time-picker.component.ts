@@ -20,7 +20,7 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_NATIVE_DATE_FORMATS, MatDateFormats} 
 import {KlpDateFormats} from '../../types';
 import {FormElementComponent} from '../../form/form-element/form-element.component';
 import {MultipleValueAccessorBase} from '../value-accessor-base/multiple-value-accessor-base.component';
-import {isValueSet, removeDuplicatesFromArray, stringIsSetAndFilled} from '../../util/values';
+import {arrayIsSetAndFilled, isValueSet, removeDuplicatesFromArray, stringIsSetAndFilled} from '../../util/values';
 import {endOfMonth, format as formatDate, startOfMonth} from 'date-fns';
 
 export const KLP_DATE_FORMATS = new InjectionToken<KlpDateFormats>('klp.form.date.formats');
@@ -57,6 +57,7 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 	@ViewChild('nativeInput') nativeInputRef: ElementRef;
 	@ViewChild('picker') datePickerRef: MatDatepicker<Date>;
 
+	openPickerOnDate = null;
 	minDateStartOfDay: Date = undefined;
 	maxDateEndOfDay: Date = undefined;
 
@@ -246,15 +247,20 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 			this.selectedDates = value;
 			this.determineMinAndMaxDates();
 			this.valueForMaterialDatePicker = null;
+			if (arrayIsSetAndFilled(value)) {
+				this.openPickerOnDate = this.selectedDates[0];
+			}
 		} else {
 			this.valueForMaterialDatePicker = value === invalidDateKey ? null : value;
 			if (value instanceof Date) {
 				this.hours = String(value.getHours());
 				this.minutes = String(value.getMinutes());
 				this.formatTime();
+				this.openPickerOnDate = value;
 			} else {
 				this.hours = '';
 				this.minutes = '';
+				this.openPickerOnDate = null;
 			}
 		}
 	}
