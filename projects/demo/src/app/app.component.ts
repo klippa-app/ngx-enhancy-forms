@@ -11,6 +11,7 @@ export class AppComponent {
 
 	testDate: Date;
 	show = false;
+	isChecked: boolean = undefined;
 
 	public myForm = this.fb.group({
 		emails: [''],
@@ -48,6 +49,7 @@ export class AppComponent {
 	public submitForm = async (values: any) => {
 		console.log(values);
 	};
+
 
 
 

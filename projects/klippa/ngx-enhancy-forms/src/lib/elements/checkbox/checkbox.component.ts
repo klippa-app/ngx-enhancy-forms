@@ -10,5 +10,5 @@ import { ValueAccessorBase } from '../value-accessor-base/value-accessor-base.co
 })
 export class CheckboxComponent extends ValueAccessorBase<boolean> {
 	@Input() caption: string;
-	@Input() disabled: boolean;
+	@Input() renderUndefinedAsIndeterminate = false;
 }
