@@ -45,10 +45,13 @@
 		}
 	}
 }
+
 .errorContainer {
-	margin-left: 40%;
-	&.d30-70 {
-		margin-left: 30%;
-	}
 	color: $default-warning;
+	&.hasCaption {
+		margin-left: 40%;
+		&.d30-70 {
+			margin-left: 30%;
+		}
+	}
 }

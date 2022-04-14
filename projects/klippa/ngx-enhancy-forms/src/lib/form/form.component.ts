@@ -20,6 +20,7 @@ export class SubFormDirective {
 	styleUrls: ['./form.component.scss'],
 })
 export class FormComponent implements OnInit, OnDestroy {
+	@Input() public showErrorMessages = true;
 	@Input() public formGroup: FormGroup;
 	@Input() public patchValueInterceptor: (values: any) => Promise<any>;
 

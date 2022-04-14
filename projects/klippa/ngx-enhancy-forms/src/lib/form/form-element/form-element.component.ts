@@ -1,5 +1,5 @@
-import {Component, ElementRef, Host, Inject, InjectionToken, Input, OnInit, Optional, ViewChild} from '@angular/core';
-import {AbstractControl, FormControl} from '@angular/forms';
+import {Component, Directive, ElementRef, Host, Inject, InjectionToken, Input, OnInit, Optional, ViewChild} from '@angular/core';
+import {AbstractControl, FormArray, FormControl, FormGroup} from '@angular/forms';
 import {FormComponent} from '../form.component';
 import {CustomErrorMessages, FormErrorMessages} from '../../types';
 import { ValueAccessorBase } from '../../elements/value-accessor-base/value-accessor-base.component';
@@ -40,8 +40,12 @@ export class FormElementComponent {
 
 	constructor(
 		@Host() @Optional() private parent: FormComponent,
-		@Inject(FORM_ERROR_MESSAGES) @Optional() private customMessages: CustomErrorMessages
+		@Inject(FORM_ERROR_MESSAGES) @Optional() private customMessages: CustomErrorMessages,
 	) {
+	}
+
+	public shouldShowErrorMessages(): boolean {
+		return this.parent?.showErrorMessages !== false;
 	}
 
 	public substituteParameters(message: string, parameters: Record<string, any>): string {

@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AppSelectOptions} from '@klippa/ngx-enhancy-forms';
 
 @Component({
@@ -14,7 +14,7 @@ export class AppComponent {
 	isChecked: boolean = undefined;
 
 	public myForm = this.fb.group({
-		emails: [''],
+		emails: ['', [Validators.required]],
 		subbies: this.fb.array([]),
 		groupie: this.fb.group({}),
 		oli: ['bob'],
