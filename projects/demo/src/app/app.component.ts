@@ -15,6 +15,7 @@ export class AppComponent {
 
 	public myForm = this.fb.group({
 		emails: ['', [Validators.required]],
+		selector: [null, [Validators.required]],
 		subbies: this.fb.array([]),
 		groupie: this.fb.group({}),
 		oli: ['bob'],
