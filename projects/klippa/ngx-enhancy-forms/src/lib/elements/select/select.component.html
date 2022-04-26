@@ -14,6 +14,7 @@
 	[dropdownPosition]="dropdownPosition"
 	[searchFn]="customSearchFn"
 	(input)="onTextInput($event.target.value)"
+	[selectOnTab]="true"
 >
 	<ng-template let-item="item" ng-option-tmp>
 		{{ item.name }}
