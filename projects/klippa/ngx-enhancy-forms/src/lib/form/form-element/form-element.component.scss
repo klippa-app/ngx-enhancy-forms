@@ -18,6 +18,9 @@
 		.errorContainer {
 			margin-left: 0;
 		}
+		.caption {
+			padding-right: 0;
+		}
 	}
 }
 .captionRefContainer {
@@ -26,6 +29,7 @@
 .caption {
 	font-weight: bold;
 	flex: 0 0 auto;
+	padding-right: $spacing-medium;
 	&.percentageSpacing {
 		flex: 0 0 40%;
 		&.d30-70 {
