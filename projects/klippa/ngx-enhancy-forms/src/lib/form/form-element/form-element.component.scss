@@ -5,6 +5,7 @@
 .componentContainer {
 	display: flex;
 	align-items: center;
+	min-height: 42px;
 	&.reverseOrder {
 		flex-direction: row-reverse;
 		justify-content: flex-end;
