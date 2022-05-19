@@ -6,7 +6,8 @@ import {format as formatDate} from 'date-fns';
 import {DATE_TIME_PICKER_TRANSLATIONS} from '../date-time-picker/date-time-picker.component';
 import {isValueSet, stringIsSetAndFilled} from '../../util/values';
 
-export type AppSelectOptions = Array<{
+export type AppSelectOptions = Array<AppSelectOption>;
+export type AppSelectOption = Array<{
 	id: any;
 	name: string;
 	description?: string;
