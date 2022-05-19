@@ -11,6 +11,7 @@ export type AppSelectOption = {
 	id: any;
 	name: string;
 	description?: string;
+	active?: boolean;
 	disabled?: boolean;
 };
 
