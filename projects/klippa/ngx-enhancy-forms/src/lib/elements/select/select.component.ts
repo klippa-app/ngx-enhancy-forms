@@ -7,12 +7,12 @@ import {DATE_TIME_PICKER_TRANSLATIONS} from '../date-time-picker/date-time-picke
 import {isValueSet, stringIsSetAndFilled} from '../../util/values';
 
 export type AppSelectOptions = Array<AppSelectOption>;
-export type AppSelectOption = Array<{
+export type AppSelectOption = {
 	id: any;
 	name: string;
 	description?: string;
 	disabled?: boolean;
-}>;
+};
 
 export const SELECT_TRANSLATIONS = new InjectionToken<any>('klp.form.select.translations');
 
