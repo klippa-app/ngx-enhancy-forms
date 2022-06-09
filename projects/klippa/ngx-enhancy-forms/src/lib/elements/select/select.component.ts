@@ -65,6 +65,6 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> {
 		if (this.lastItemIndexReached < lastItemIndex && lastItemIndex === this.options.length) {
 			this.onEndReached.emit();
 		}
-		this.lastItemIndexReached = lastItemIndex;
+		this.lastItemIndexReached = Math.max(lastItemIndex, this.lastItemIndexReached);
 	}
 }
