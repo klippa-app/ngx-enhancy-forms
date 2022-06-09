@@ -33,6 +33,9 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> {
 	@Input() public customSearchFn: (term: string, item: { id: string; name: string; description: string }) => boolean;
 	@Input() public footerElement: TemplateRef<any>;
 	@Output() public onSearch = new EventEmitter<string>();
+	@Output() public onEndReached = new EventEmitter<void>();
+
+	private lastItemIndexReached = 0;
 
 	constructor(
 		@Optional() @Host() protected parent: FormElementComponent,
@@ -56,5 +59,12 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> {
 			return this.placeholder;
 		}
 		return this.translations?.[key]?.(params) ?? this.getDefaultTranslation(key)(params);
+	}
+
+	onScroll(lastItemIndex: number): void {
+		if (this.lastItemIndexReached < lastItemIndex && lastItemIndex === this.options.length) {
+			this.onEndReached.emit();
+		}
+		this.lastItemIndexReached = lastItemIndex;
 	}
 }

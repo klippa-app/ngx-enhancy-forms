@@ -25,9 +25,37 @@ export class AppComponent {
 
 	subForms = [];
 	options: AppSelectOptions = [
-		{id: 1, name: 'eins'},
-		{id: 2, name: 'zwei'},
-		{id: 3, name: 'drei'},
+		{id: 1, name: '111'},
+		{id: 2, name: '222'},
+		{id: 3, name: '333'},
+		{id: 3, name: '444'},
+		{id: 3, name: '555'},
+		{id: 3, name: '666'},
+		{id: 3, name: '777'},
+		{id: 3, name: '888'},
+		{id: 3, name: '999'},
+		{id: 3, name: 'aaa'},
+		{id: 3, name: 'bbb'},
+		{id: 3, name: 'ccc'},
+		{id: 3, name: 'ddd'},
+		{id: 3, name: 'eee'},
+		{id: 3, name: 'fff'},
+		{id: 3, name: 'ggg'},
+		{id: 3, name: 'hhh'},
+		{id: 3, name: 'hhh'},
+		{id: 3, name: 'hhh'},
+		{id: 3, name: 'hhh'},
+		{id: 3, name: 'hhh'},
+		{id: 3, name: 'hhh'},
+		{id: 3, name: 'hhh'},
+		{id: 3, name: 'hhh'},
+		{id: 3, name: 'hhh'},
+		{id: 3, name: 'hhh'},
+		{id: 3, name: 'hhh'},
+		{id: 3, name: 'hhh'},
+		{id: 3, name: 'hhh'},
+		{id: 3, name: 'hhh'},
+		{id: 3, name: 'hhh'},
 	];
 
 	constructor(private fb: FormBuilder) {
@@ -53,14 +81,15 @@ export class AppComponent {
 		console.log(values);
 	};
 
-
-
-
 	public toggie() {
 		this.show = !this.show;
 	}
 
 	search($event: string) {
 		console.log($event);
+	}
+
+	loadMore() {
+		this.options = [...this.options, {id: 4, name: 'iii'}, {id: 4, name: 'jjj'}, {id: 4, name: 'kkk'}, {id: 4, name: 'lll'}, {id: 4, name: 'mmm'}, {id: 4, name: 'nnn'}];
 	}
 }

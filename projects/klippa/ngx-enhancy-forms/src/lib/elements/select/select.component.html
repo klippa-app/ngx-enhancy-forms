@@ -14,6 +14,8 @@
 	[dropdownPosition]="dropdownPosition"
 	[searchFn]="customSearchFn"
 	[selectOnTab]="true"
+	[virtualScroll]="true"
+	(scroll)="onScroll($event.end)"
 >
 	<ng-template let-item="item" ng-option-tmp>
 		{{ item.name }}

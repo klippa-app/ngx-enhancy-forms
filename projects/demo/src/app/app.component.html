@@ -12,7 +12,7 @@
 		</klp-form-toggle>
 	</klp-form-element>
 	<klp-form-element caption="select something">
-		<klp-form-select [options]="options" formControlName="selector" (onSearch)="search($event)"></klp-form-select>
+		<klp-form-select [options]="options" formControlName="selector" (onSearch)="search($event)" (onEndReached)="loadMore()"></klp-form-select>
 	</klp-form-element>
 	<ng-container *ngFor="let email of emails; index as idx">
 		<klp-sub-form [injectInto]="subbies" [at]="idx">
