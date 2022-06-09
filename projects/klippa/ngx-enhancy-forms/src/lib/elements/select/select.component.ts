@@ -33,7 +33,6 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> {
 	@Input() public customSearchFn: (term: string, item: { id: string; name: string; description: string }) => boolean;
 	@Input() public footerElement: TemplateRef<any>;
 	@Output() public onSearch = new EventEmitter<string>();
-	public currentQueryString: string;
 
 	constructor(
 		@Optional() @Host() protected parent: FormElementComponent,
@@ -41,11 +40,6 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> {
 		@Inject(SELECT_TRANSLATIONS) @Optional() private translations: any,
 	) {
 		super(parent, controlContainer);
-	}
-
-	onTextInput(value: string): void {
-		this.currentQueryString = value;
-		this.onSearch.emit(value);
 	}
 
 	getDefaultTranslation(key: string): (x: any) => string {

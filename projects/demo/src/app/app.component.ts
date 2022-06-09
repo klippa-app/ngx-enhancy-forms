@@ -59,4 +59,8 @@ export class AppComponent {
 	public toggie() {
 		this.show = !this.show;
 	}
+
+	search($event: string) {
+		console.log($event);
+	}
 }
