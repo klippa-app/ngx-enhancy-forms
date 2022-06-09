@@ -10,7 +10,7 @@
 	[multiple]="multiple"
 	[disabled]="disabled"
 	(blur)="touch()"
-	(search)="onSearch.emit($event.term)"
+	(search)="searchQueryChanged($event.term)"
 	[dropdownPosition]="dropdownPosition"
 	[searchFn]="customSearchFn"
 	[selectOnTab]="true"

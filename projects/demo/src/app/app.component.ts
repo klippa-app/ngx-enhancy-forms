@@ -90,6 +90,7 @@ export class AppComponent {
 	}
 
 	loadMore() {
+		console.log('load it');
 		this.options = [...this.options, {id: 4, name: 'iii'}, {id: 4, name: 'jjj'}, {id: 4, name: 'kkk'}, {id: 4, name: 'lll'}, {id: 4, name: 'mmm'}, {id: 4, name: 'nnn'}];
 	}
 }

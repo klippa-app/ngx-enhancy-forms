@@ -35,7 +35,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> {
 	@Output() public onSearch = new EventEmitter<string>();
 	@Output() public onEndReached = new EventEmitter<void>();
 
-	private lastItemIndexReached = 0;
+	private lastItemIndexReached = -1;
 
 	constructor(
 		@Optional() @Host() protected parent: FormElementComponent,
@@ -66,5 +66,10 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> {
 			this.onEndReached.emit();
 		}
 		this.lastItemIndexReached = Math.max(lastItemIndex, this.lastItemIndexReached);
+	}
+
+	searchQueryChanged(searchQuery: string): void {
+		this.onSearch.emit(searchQuery);
+		this.lastItemIndexReached = -1;
 	}
 }
