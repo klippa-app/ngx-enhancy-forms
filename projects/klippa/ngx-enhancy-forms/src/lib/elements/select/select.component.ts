@@ -1,9 +1,19 @@
-import {Component, EventEmitter, Host, Inject, InjectionToken, Input, Optional, Output, TemplateRef} from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Host,
+	Inject,
+	InjectionToken,
+	Input,
+	OnChanges,
+	Optional,
+	Output,
+	SimpleChanges,
+	TemplateRef, ViewChild
+} from '@angular/core';
 import {ControlContainer, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {ValueAccessorBase} from '../value-accessor-base/value-accessor-base.component';
 import {FormElementComponent} from '../../form/form-element/form-element.component';
-import {format as formatDate} from 'date-fns';
-import {DATE_TIME_PICKER_TRANSLATIONS} from '../date-time-picker/date-time-picker.component';
 import {isValueSet, stringIsSetAndFilled} from '../../util/values';
 
 export type AppSelectOptions = Array<AppSelectOption>;
@@ -23,7 +33,7 @@ export const SELECT_TRANSLATIONS = new InjectionToken<any>('klp.form.select.tran
 	styleUrls: ['./select.component.scss'],
 	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: SelectComponent, multi: true}],
 })
-export class SelectComponent extends ValueAccessorBase<string | string[]> {
+export class SelectComponent extends ValueAccessorBase<string | string[]> implements OnChanges{
 	@Input() placeholder: string;
 	@Input() options: AppSelectOptions;
 	@Input() multiple = false;
@@ -34,6 +44,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> {
 	@Input() public footerElement: TemplateRef<any>;
 	@Output() public onSearch = new EventEmitter<string>();
 	@Output() public onEndReached = new EventEmitter<void>();
+	@ViewChild('ngSelect') ngSelect;
 
 	private lastItemIndexReached = -1;
 
@@ -43,6 +54,13 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> {
 		@Inject(SELECT_TRANSLATIONS) @Optional() private translations: any,
 	) {
 		super(parent, controlContainer);
+	}
+
+
+	ngOnChanges(changes: SimpleChanges): void {
+		if (isValueSet(changes.options)) {
+			this.lastItemIndexReached = -1;
+		}
 	}
 
 	getDefaultTranslation(key: string): (x: any) => string {
@@ -62,7 +80,8 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> {
 	}
 
 	onScroll(lastItemIndex: number): void {
-		if (this.lastItemIndexReached < lastItemIndex && lastItemIndex === this.options.length) {
+		const visibleItems = this.ngSelect?.itemsList?.filteredItems?.length ?? 0;
+		if (this.lastItemIndexReached < lastItemIndex && lastItemIndex === visibleItems) {
 			this.onEndReached.emit();
 		}
 		this.lastItemIndexReached = Math.max(lastItemIndex, this.lastItemIndexReached);
@@ -70,6 +89,5 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> {
 
 	searchQueryChanged(searchQuery: string): void {
 		this.onSearch.emit(searchQuery);
-		this.lastItemIndexReached = -1;
 	}
 }

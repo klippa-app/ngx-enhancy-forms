@@ -25,37 +25,37 @@ export class AppComponent {
 
 	subForms = [];
 	options: AppSelectOptions = [
-		{id: 1, name: '111'},
-		{id: 2, name: '222'},
-		{id: 3, name: '333'},
-		{id: 3, name: '444'},
-		{id: 3, name: '555'},
-		{id: 3, name: '666'},
-		{id: 3, name: '777'},
-		{id: 3, name: '888'},
-		{id: 3, name: '999'},
-		{id: 3, name: 'aaa'},
-		{id: 3, name: 'bbb'},
-		{id: 3, name: 'ccc'},
-		{id: 3, name: 'ddd'},
-		{id: 3, name: 'eee'},
-		{id: 3, name: 'fff'},
+		{id: 1, name: 'a111'},
+		{id: 2, name: 'a222'},
+		{id: 3, name: 'a333'},
+		{id: 3, name: 'a444'},
+		{id: 3, name: 'a555'},
+		{id: 3, name: 'a666'},
+		{id: 3, name: 'a777'},
+		{id: 3, name: 'a888'},
+		{id: 3, name: 'a999'},
+		{id: 3, name: 'aaaa'},
+		{id: 3, name: 'abbb'},
+		{id: 3, name: 'accc'},
+		{id: 3, name: 'addd'},
+		{id: 3, name: 'aeee'},
+		{id: 3, name: 'afff'},
 		{id: 3, name: 'ggg'},
 		{id: 3, name: 'hhh'},
-		{id: 3, name: 'hhh'},
-		{id: 3, name: 'hhh'},
-		{id: 3, name: 'hhh'},
-		{id: 3, name: 'hhh'},
-		{id: 3, name: 'hhh'},
-		{id: 3, name: 'hhh'},
-		{id: 3, name: 'hhh'},
-		{id: 3, name: 'hhh'},
-		{id: 3, name: 'hhh'},
-		{id: 3, name: 'hhh'},
-		{id: 3, name: 'hhh'},
-		{id: 3, name: 'hhh'},
-		{id: 3, name: 'hhh'},
-		{id: 3, name: 'hhh'},
+		// {id: 3, name: 'hhh'},
+		// {id: 3, name: 'hhh'},
+		// {id: 3, name: 'hhh'},
+		// {id: 3, name: 'hhh'},
+		// {id: 3, name: 'hhh'},
+		// {id: 3, name: 'hhh'},
+		// {id: 3, name: 'hhh'},
+		// {id: 3, name: 'hhh'},
+		// {id: 3, name: 'hhh'},
+		// {id: 3, name: 'hhh'},
+		// {id: 3, name: 'hhh'},
+		// {id: 3, name: 'hhh'},
+		// {id: 3, name: 'hhh'},
+		// {id: 3, name: 'hhh'},
 	];
 
 	constructor(private fb: FormBuilder) {
@@ -91,6 +91,8 @@ export class AppComponent {
 
 	loadMore() {
 		console.log('load it');
-		this.options = [...this.options, {id: 4, name: 'iii'}, {id: 4, name: 'jjj'}, {id: 4, name: 'kkk'}, {id: 4, name: 'lll'}, {id: 4, name: 'mmm'}, {id: 4, name: 'nnn'}];
+		setTimeout(() => {
+			this.options = [...this.options, {id: 4, name: 'iii'}, {id: 4, name: 'jjj'}, {id: 4, name: 'kkk'}, {id: 4, name: 'lll'}, {id: 4, name: 'mmm'}, {id: 4, name: 'nnn'}];
+		}, 1000);
 	}
 }
