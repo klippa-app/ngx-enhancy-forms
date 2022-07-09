@@ -1,11 +1,11 @@
-<div class="threeDots" [class]="size" *ngIf="variant === '3dots'">
+<div class="threeDots" [ngClass]="[size]" *ngIf="variant === '3dots'">
 	<div></div>
 	<div></div>
 	<div></div>
 	<div></div>
 </div>
 
-<div class="spinner" [class]="size" *ngIf="variant === 'spinner'">
+<div class="spinner" [ngClass]="[size]" *ngIf="variant === 'spinner'">
 	<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
 		<circle cx="24" cy="4" r="4" fill="currentColor" />
 		<circle cx="12.19" cy="7.86" r="3.7" fill="currentColor" />
