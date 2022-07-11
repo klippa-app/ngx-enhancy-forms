@@ -9,7 +9,7 @@ import {AppSelectOptions} from '@klippa/ngx-enhancy-forms';
 })
 export class AppComponent {
 
-	testDate: Date;
+	testDate: Array<Date>;
 	show = false;
 	isChecked: boolean = undefined;
 
@@ -26,36 +26,6 @@ export class AppComponent {
 	subForms = [];
 	options: AppSelectOptions = [
 		{id: 1, name: 'a111'},
-		{id: 2, name: 'a222'},
-		{id: 3, name: 'a333'},
-		{id: 3, name: 'a444'},
-		{id: 3, name: 'a555'},
-		{id: 3, name: 'a666'},
-		{id: 3, name: 'a777'},
-		{id: 3, name: 'a888'},
-		{id: 3, name: 'a999'},
-		{id: 3, name: 'aaaa'},
-		{id: 3, name: 'abbb'},
-		{id: 3, name: 'accc'},
-		{id: 3, name: 'addd'},
-		{id: 3, name: 'aeee'},
-		{id: 3, name: 'afff'},
-		{id: 3, name: 'ggg'},
-		{id: 3, name: 'hhh'},
-		// {id: 3, name: 'hhh'},
-		// {id: 3, name: 'hhh'},
-		// {id: 3, name: 'hhh'},
-		// {id: 3, name: 'hhh'},
-		// {id: 3, name: 'hhh'},
-		// {id: 3, name: 'hhh'},
-		// {id: 3, name: 'hhh'},
-		// {id: 3, name: 'hhh'},
-		// {id: 3, name: 'hhh'},
-		// {id: 3, name: 'hhh'},
-		// {id: 3, name: 'hhh'},
-		// {id: 3, name: 'hhh'},
-		// {id: 3, name: 'hhh'},
-		// {id: 3, name: 'hhh'},
 	];
 
 	constructor(private fb: FormBuilder) {

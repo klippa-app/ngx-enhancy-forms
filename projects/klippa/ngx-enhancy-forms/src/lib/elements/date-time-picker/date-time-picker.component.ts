@@ -57,7 +57,7 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 	@ViewChild('nativeInput') nativeInputRef: ElementRef;
 	@ViewChild('picker') datePickerRef: MatDatepicker<Date>;
 
-	openPickerOnDate = null;
+	openPickerOnDate: Date = null;
 	minDateStartOfDay: Date = undefined;
 	maxDateEndOfDay: Date = undefined;
 
@@ -261,6 +261,7 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 				this.hours = '';
 				this.minutes = '';
 				this.openPickerOnDate = null;
+				this.selectedDates = [];
 			}
 		}
 	}
