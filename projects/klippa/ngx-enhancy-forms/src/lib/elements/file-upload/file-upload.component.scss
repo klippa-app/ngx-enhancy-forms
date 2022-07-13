@@ -1,0 +1,37 @@
+@import '../../../style/themes/default/variables';
+@import '../../../style/mixins';
+
+:host {
+	display: block;
+
+	input:disabled {
+		cursor: not-allowed;
+	}
+}
+.componentContainer {
+	display: flex;
+	align-items: center;
+}
+
+.uploadButton {
+	position: relative;
+	flex: 0 0 auto;
+	input {
+		position: absolute;
+		cursor: pointer;
+		opacity: 0;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+	}
+}
+
+.fileName {
+	flex: 1 1 0px;
+	margin-left: $spacing-small;
+	color: $default-dark;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}

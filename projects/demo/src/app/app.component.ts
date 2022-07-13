@@ -59,6 +59,7 @@ export class AppComponent {
 	public submitForm = async (values: any) => {
 		console.log(values);
 	};
+	myfile: any;
 
 	public toggie() {
 		this.show = !this.show;

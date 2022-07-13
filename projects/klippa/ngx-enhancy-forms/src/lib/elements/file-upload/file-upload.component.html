@@ -1,0 +1,9 @@
+<div class="componentContainer">
+	<klp-form-button class="uploadButton">
+		Upload a file
+		<input type="file" (change)="onChange($event.target.files)" [multiple]="multiple">
+	</klp-form-button>
+	<div class="fileName">
+		{{getFileNames()}}
+	</div>
+</div>
