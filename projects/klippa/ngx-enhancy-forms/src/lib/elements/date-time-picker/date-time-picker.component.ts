@@ -21,7 +21,7 @@ import {KlpDateFormats} from '../../types';
 import {FormElementComponent} from '../../form/form-element/form-element.component';
 import {MultipleValueAccessorBase} from '../value-accessor-base/multiple-value-accessor-base.component';
 import {arrayIsSetAndFilled, isValueSet, removeDuplicatesFromArray, stringIsSetAndFilled} from '../../util/values';
-import {endOfMonth, format as formatDate, startOfMonth} from 'date-fns';
+import {endOfMonth, format as formatDate, startOfMonth, isSameDay} from 'date-fns';
 
 export const KLP_DATE_FORMATS = new InjectionToken<KlpDateFormats>('klp.form.date.formats');
 export const DATE_TIME_PICKER_TRANSLATIONS = new InjectionToken<any>('klp.form.dateTime.translations');
@@ -288,7 +288,7 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 
 	isSelected = (d: Date) => {
 		if (this.multiple) {
-			return this.selectedDates.some((e) => e.getTime() === d.getTime()) ? 'selected' : '';
+			return this.selectedDates.some((e) => isSameDay(e, d)) ? 'selected' : '';
 		}
 		return '';
 	};

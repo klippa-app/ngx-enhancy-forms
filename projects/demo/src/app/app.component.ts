@@ -9,7 +9,16 @@ import {AppSelectOptions} from '@klippa/ngx-enhancy-forms';
 })
 export class AppComponent {
 
-	testDate: Array<Date>;
+	testDate: Array<Date> = [
+		'2022-07-06T00:00:00Z',
+		'2022-07-12T22:00:00Z',
+		'2022-07-15T23:00:00Z',
+		'2022-07-21T00:00:00Z',
+		'2022-07-27T15:00:00Z',
+	].map(e => {
+		console.log(e);
+		return new Date(e);
+	});
 	show = false;
 	isChecked: boolean = undefined;
 
@@ -62,7 +71,10 @@ export class AppComponent {
 	loadMore() {
 		console.log('load it');
 		setTimeout(() => {
-			this.options = [...this.options, {id: 4, name: 'iii'}, {id: 4, name: 'jjj'}, {id: 4, name: 'kkk'}, {id: 4, name: 'lll'}, {id: 4, name: 'mmm'}, {id: 4, name: 'nnn'}];
+			this.options = [...this.options, {id: 4, name: 'iii'}, {id: 4, name: 'jjj'}, {id: 4, name: 'kkk'}, {id: 4, name: 'lll'}, {
+				id: 4,
+				name: 'mmm'
+			}, {id: 4, name: 'nnn'}];
 		}, 1000);
 	}
 }

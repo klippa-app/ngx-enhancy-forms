@@ -2,3 +2,33 @@
 * {
 	box-sizing: border-box;
 }
+
+.cdk-overlay-container {
+	z-index: 1051;
+
+	// These styles are so specific because of how the styling is done in the material date picker. No other way around this unfortunately (no, we are not going to use !important)
+
+	// unselected dates
+	.mat-calendar-body-cell:not(.mat-calendar-body-disabled):not(.selected):hover>.mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical),
+	.cdk-keyboard-focused .mat-calendar-body-active:not(.selected)>.mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical),
+	.cdk-program-focused .mat-calendar-body-active:not(.selected)>.mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
+		background-color: white;
+		color: black;
+		text-decoration: underline;
+	}
+
+	// selected and focused dates
+	.mat-calendar-body-cell:not(.mat-calendar-body-disabled).selected:hover>.mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical),
+	.cdk-keyboard-focused .mat-calendar-body-active.selected>.mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical),
+	.cdk-program-focused .mat-calendar-body-active.selected>.mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
+		background-color: green;
+		color: white;
+		text-decoration: underline;
+	}
+
+	// selected dates
+	.mat-calendar-body-selected, .mat-calendar-body-cell.selected .mat-calendar-body-cell-content {
+		background-color: green;
+		color: white;
+	}
+}
