@@ -1,9 +1,10 @@
 <div class="componentContainer">
-	<klp-form-button class="uploadButton">
+	<klp-form-button class="uploadButton" [isLoading]="isLoading">
 		Upload a file
 		<input type="file" (change)="onChange($event.target.files)" [multiple]="multiple">
 	</klp-form-button>
 	<div class="fileName">
 		{{getFileNames()}}
 	</div>
+	<klp-form-button class="clearButton" variant="white" *ngIf="shouldShowClearButton()" (click)="resetToNull()">X</klp-form-button>
 </div>

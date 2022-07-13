@@ -34,6 +34,6 @@ export function truncateString(s: string, length: number) {
 	return s.substring(0, length) + '...';
 }
 
-export function arrayIsSetAndFilled(arr: Array<any>) {
-	return arr !== null && arr !== undefined && arr.length > 0;
+export function arrayIsSetAndFilled(arr: any): boolean {
+	return Array.isArray(arr) && arr !== null && arr !== undefined && arr.length > 0;
 }

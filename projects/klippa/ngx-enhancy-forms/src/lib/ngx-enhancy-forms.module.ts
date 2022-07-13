@@ -24,7 +24,7 @@ import {DatePickerComponent} from './elements/date-picker/date-picker.component'
 import {DateTimePickerComponent} from './elements/date-time-picker/date-time-picker.component';
 import {MaterialModule} from './material.module';
 import {MultipleValueAccessorBase} from './elements/value-accessor-base/multiple-value-accessor-base.component';
-import {FileUploadComponent} from './elements/file-upload/file-upload.component';
+import {FileInputComponent} from './elements/file-input/file-input.component';
 
 
 @NgModule({
@@ -51,7 +51,7 @@ import {FileUploadComponent} from './elements/file-upload/file-upload.component'
 		SortableItemsComponent,
 		TextInputComponent,
 		ToggleComponent,
-		FileUploadComponent,
+		FileInputComponent,
 		FormCaptionComponent,
 		FormElementComponent,
 		FormErrorComponent,
@@ -75,7 +75,7 @@ import {FileUploadComponent} from './elements/file-upload/file-upload.component'
 		SortableItemsComponent,
 		TextInputComponent,
 		ToggleComponent,
-		FileUploadComponent,
+		FileInputComponent,
 		FormCaptionComponent,
 		FormElementComponent,
 		FormErrorComponent,
