@@ -142,8 +142,8 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 			this.datePickerRef.close = () => {
 			};
 
-			if (this.selectedDates.some((e) => e.getTime() === date.getTime())) {
-				this.selectedDates = this.selectedDates.filter((e) => e.getTime() !== date.getTime());
+			if (this.selectedDates.some((e) => isSameDay(e, date))) {
+				this.selectedDates = this.selectedDates.filter((e) => !isSameDay(e, date));
 			} else {
 				this.selectedDates = [...this.selectedDates, date];
 			}
