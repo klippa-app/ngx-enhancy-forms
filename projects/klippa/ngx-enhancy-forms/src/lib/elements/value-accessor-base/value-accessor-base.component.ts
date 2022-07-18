@@ -1,6 +1,6 @@
-import { ControlContainer, ControlValueAccessor, FormControl } from '@angular/forms';
+import {ControlContainer, ControlValueAccessor, FormControl} from '@angular/forms';
 import {Component, EventEmitter, Host, Input, OnDestroy, OnInit, Optional, Output} from '@angular/core';
-import { FormElementComponent } from '../../form/form-element/form-element.component';
+import {FormElementComponent} from '../../form/form-element/form-element.component';
 import {arrayIsSetAndFilled, isNullOrUndefined, isValueSet, stringIsSetAndFilled} from '../../util/values';
 
 /**
@@ -21,8 +21,12 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 	public innerValue: T;
 	public changed = new Array<(value: T) => void>();
 	private touched = new Array<() => void>();
+	private prevValue: T = null;
 
 	@Input() public disabled = false;
+	// needed to prevent race conditions
+	private latestInnerValueChangedInterceptorPromise: Promise<void>;
+	@Input() innerValueChangeInterceptor: () => Promise<void>;
 	// we support both providing just the formControlName and the full formControl
 	@Input() public formControlName: string = null;
 	@Input() public formControl: FormControl = null;
@@ -34,7 +38,8 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 	constructor(
 		@Host() @Optional() protected parent: FormElementComponent,
 		@Host() @Optional() protected controlContainer: ControlContainer
-	) {}
+	) {
+	}
 
 	ngOnInit(): void {
 		if (this.formControl) {
@@ -78,6 +83,7 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 
 	writeValue(value: T): void {
 		this.innerValue = value;
+		this.prevValue = value;
 	}
 
 	registerOnChange(fn: (value: T) => void): void {
@@ -88,9 +94,31 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 		this.touched.push(fn);
 	}
 
-	setInnerValueAndNotify(value): void {
-		this.innerValue = value;
-		this.changed.forEach((fn) => fn(value));
+	setInnerValueAndNotify(value: T): void {
+		const actuallySetValue = (valueToSet: T): void => {
+			this.innerValue = valueToSet;
+			this.prevValue = valueToSet;
+			this.changed.forEach((fn) => fn(valueToSet));
+		};
+		if (isValueSet(this.innerValueChangeInterceptor)) {
+			this.latestInnerValueChangedInterceptorPromise = this.innerValueChangeInterceptor();
+			const myPromise = this.latestInnerValueChangedInterceptorPromise;
+			this.latestInnerValueChangedInterceptorPromise.then(() => {
+				if (this.latestInnerValueChangedInterceptorPromise === myPromise) {
+					actuallySetValue(value);
+				} else {
+					// ignore outdated promises
+				}
+			}).catch(() => {
+				if (this.latestInnerValueChangedInterceptorPromise === myPromise) {
+					actuallySetValue(this.prevValue);
+				} else {
+					// ignore outdated promises
+				}
+			});
+		} else {
+			actuallySetValue(value);
+		}
 	}
 
 	resetToNull(): void {

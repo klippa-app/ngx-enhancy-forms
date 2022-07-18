@@ -17,6 +17,7 @@ export * from './lib/elements/select/select.component';
 export * from './lib/elements/sortable-items/sortable-items.component';
 export * from './lib/elements/text-input/text-input.component';
 export * from './lib/elements/toggle/toggle.component';
+export * from './lib/elements/file-input/file-input.component';
 export * from './lib/elements/value-accessor-base/value-accessor-base.component';
 export * from './lib/elements/value-accessor-base/multiple-value-accessor-base.component';
 

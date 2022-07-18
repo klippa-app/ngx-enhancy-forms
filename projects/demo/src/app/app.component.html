@@ -1,6 +1,7 @@
 <klp-form [formGroup]="myForm" [showErrorMessages]="false">
+	{{myForm.get('emails').value}}
 	<klp-form-element caption="Emails" direction="vertical">
-		<klp-form-text-input formControlName="emails">
+		<klp-form-text-input formControlName="emails" [innerValueChangeInterceptor]="innerValueChangeInterceptor">
 		</klp-form-text-input>
 	</klp-form-element>
 	<klp-form-element caption="Yes or no">

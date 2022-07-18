@@ -60,6 +60,15 @@ export class AppComponent {
 		console.log(values);
 	};
 	myfile: any;
+	public innerValueChangeInterceptor = (): Promise<void> => {
+		return new Promise((resolve, reject) => {
+			if (Math.random() < 0.8) {
+				setTimeout(resolve, 1000);
+			} else {
+				setTimeout(reject, 1000);
+			}
+		});
+	};
 
 	public toggie() {
 		this.show = !this.show;
