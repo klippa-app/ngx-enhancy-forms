@@ -1,7 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {MultipleValueAccessorBase} from '../value-accessor-base/multiple-value-accessor-base.component';
-import {arrayIsSetAndFilled, isValueSet} from '../../util/values';
+import {isValueSet} from '../../util/values';
+import { arrayIsSetAndFilled } from '../../util/arrays';
 
 @Component({
 	selector: 'klp-form-file-input',

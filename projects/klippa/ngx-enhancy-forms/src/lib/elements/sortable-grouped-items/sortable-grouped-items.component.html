@@ -1,0 +1,10 @@
+<ng-container *ngIf="reloader">
+	<klp-form-sortable-items
+		[(ngModel)]="items"
+		(ngModelChange)="onItemsRearranged($event)"
+	>
+		<ng-template let-item="item">
+			<div>{{item}}</div>
+		</ng-template>
+	</klp-form-sortable-items>
+</ng-container>

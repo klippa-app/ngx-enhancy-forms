@@ -38,6 +38,9 @@ export class AppComponent {
 	];
 
 	constructor(private fb: FormBuilder) {
+		setTimeout(() => {
+			this.groupedItems = [['a', 'b', 'c'], ['d', 'e']];
+		}, 2000);
 	}
 
 	public get emails(): any[] {
@@ -69,6 +72,7 @@ export class AppComponent {
 			}
 		});
 	};
+	groupedItems = [['a', 'b']];
 
 	public toggie() {
 		this.show = !this.show;

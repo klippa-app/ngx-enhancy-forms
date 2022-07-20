@@ -25,6 +25,7 @@ import {DateTimePickerComponent} from './elements/date-time-picker/date-time-pic
 import {MaterialModule} from './material.module';
 import {MultipleValueAccessorBase} from './elements/value-accessor-base/multiple-value-accessor-base.component';
 import {FileInputComponent} from './elements/file-input/file-input.component';
+import {SortableGroupedItemsComponent} from './elements/sortable-grouped-items/sortable-grouped-items.component';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import {FileInputComponent} from './elements/file-input/file-input.component';
 		SelectComponent,
 		SelectFooterComponent,
 		SortableItemsComponent,
+		SortableGroupedItemsComponent,
 		TextInputComponent,
 		ToggleComponent,
 		FileInputComponent,
@@ -73,6 +75,7 @@ import {FileInputComponent} from './elements/file-input/file-input.component';
 		SelectComponent,
 		SelectFooterComponent,
 		SortableItemsComponent,
+		SortableGroupedItemsComponent,
 		TextInputComponent,
 		ToggleComponent,
 		FileInputComponent,

@@ -36,5 +36,6 @@
 <klp-form-checkbox [(ngModel)]="isChecked" [renderUndefinedAsIndeterminate]="true"></klp-form-checkbox>
 <klp-form-file-input [(ngModel)]="myfile" [multiple]="false"></klp-form-file-input>
 <klp-form-button (click)="toggie()">clickie</klp-form-button>
-
+{{groupedItems | json}}
+<klp-form-sortable-grouped-items [(ngModel)]="groupedItems"></klp-form-sortable-grouped-items>
 

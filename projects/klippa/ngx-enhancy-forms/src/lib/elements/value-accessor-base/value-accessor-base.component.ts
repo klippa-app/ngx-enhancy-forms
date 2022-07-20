@@ -1,7 +1,8 @@
 import {ControlContainer, ControlValueAccessor, FormControl} from '@angular/forms';
 import {Component, EventEmitter, Host, Input, OnDestroy, OnInit, Optional, Output} from '@angular/core';
 import {FormElementComponent} from '../../form/form-element/form-element.component';
-import {arrayIsSetAndFilled, isNullOrUndefined, isValueSet, stringIsSetAndFilled} from '../../util/values';
+import {isNullOrUndefined, isValueSet, stringIsSetAndFilled} from '../../util/values';
+import { arrayIsSetAndFilled } from '../../util/arrays';
 
 /**
  * This component is a base in order to create a component that supports ngModel.
