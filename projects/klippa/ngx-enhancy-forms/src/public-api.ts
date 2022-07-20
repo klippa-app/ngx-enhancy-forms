@@ -15,6 +15,7 @@ export * from './lib/elements/password-field/password-field.component';
 export * from './lib/elements/select/select-footer/select-footer.component';
 export * from './lib/elements/select/select.component';
 export * from './lib/elements/sortable-items/sortable-items.component';
+export * from './lib/elements/sortable-grouped-items/sortable-grouped-items.component';
 export * from './lib/elements/text-input/text-input.component';
 export * from './lib/elements/toggle/toggle.component';
 export * from './lib/elements/file-input/file-input.component';
