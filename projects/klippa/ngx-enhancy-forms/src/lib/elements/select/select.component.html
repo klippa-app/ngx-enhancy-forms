@@ -19,9 +19,11 @@
 	(scroll)="onScroll($event.end)"
 >
 	<ng-template let-item="item" ng-option-tmp>
-		{{ item.name }}
-		<div *ngIf="item.description" class="dropdown-item-description">
-			{{ item.description }}
+		<div [attr.data-cy]="item.id">
+			{{ item.name }}
+			<div *ngIf="item.description" class="dropdown-item-description">
+				{{ item.description }}
+			</div>
 		</div>
 	</ng-template>
 	<ng-container *ngIf="multiple && multipleDisplayedAsAmount && innerValue?.length > 1">
