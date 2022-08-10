@@ -232,7 +232,13 @@ ng-select.showErrors {
 :host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option{
   background-color:#fff;
   color:rgba(0,0,0,0.87);
-  padding:8px 10px
+	padding: 8px 10px;
+
+	div {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
 }
 :host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected{
   color:#333;
