@@ -28,18 +28,6 @@
             "tsConfig": "projects/klippa/ngx-enhancy-forms/tsconfig.spec.json",
             "karmaConfig": "projects/klippa/ngx-enhancy-forms/karma.conf.js"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/klippa/ngx-enhancy-forms/tsconfig.lib.json",
-              "projects/klippa/ngx-enhancy-forms/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -62,7 +50,6 @@
             "main": "projects/demo/src/main.ts",
             "polyfills": "projects/demo/src/polyfills.ts",
             "tsConfig": "projects/demo/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "projects/demo/src/favicon.ico",
               "projects/demo/src/assets"
@@ -71,7 +58,13 @@
               "projects/demo/src/styles.scss",
 							"./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
 						],
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -84,7 +77,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -102,7 +94,8 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -138,19 +131,6 @@
             "scripts": []
           }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/demo/tsconfig.app.json",
-              "projects/demo/tsconfig.spec.json",
-              "projects/demo/e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        },
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
@@ -165,6 +145,5 @@
         }
       }
     }
-	},
-  "defaultProject": "@klippa/ngx-enhancy-forms"
+	}
 }

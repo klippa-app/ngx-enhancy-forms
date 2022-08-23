@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AppSelectOptions} from '@klippa/ngx-enhancy-forms';
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {AppSelectOptions} from "@klippa/ngx-enhancy-forms";
 
 @Component({
 	selector: 'app-root',
@@ -9,86 +9,38 @@ import {AppSelectOptions} from '@klippa/ngx-enhancy-forms';
 })
 export class AppComponent {
 
-	testDate: Array<Date> = [
-		'2022-07-06T00:00:00Z',
-		'2022-07-12T22:00:00Z',
-		'2022-07-15T23:00:00Z',
-		'2022-07-21T00:00:00Z',
-		'2022-07-27T15:00:00Z',
-	].map(e => {
-		console.log(e);
-		return new Date(e);
-	});
-	show = false;
-	isChecked: boolean = undefined;
+	public form: FormGroup = this.fb.group({
+		checkbox: false,
+		date: null,
+		dateTime: null,
+		email: null,
+		file: null,
+		number: null,
+		password: null,
+		select: null,
+		multiSelect: null,
+		text: null,
+		toggle: false,
+	})
 
-	public myForm = this.fb.group({
-		emails: ['', [Validators.required]],
-		yesno: false,
-		yesno2: false,
-		selector: [null, [Validators.required]],
-		subbies: this.fb.array([]),
-		groupie: this.fb.group({}),
-		oli: ['bob'],
-	});
-
-	subForms = [];
-	options: AppSelectOptions = [
-		{id: 1, name: 'a111'},
+	public options: AppSelectOptions = [
+		{id: 0, name: "option 0"},
+		{id: 1, name: "option 1"},
+		{id: 2, name: "option 2"},
+		{id: 3, name: "option 3"},
+		{id: 4, name: "option 4"},
+		{id: 5, name: "option 5"},
 	];
 
-	constructor(private fb: FormBuilder) {
-		setTimeout(() => {
-			this.groupedItems = [['a', 'b', 'c'], ['d', 'e']];
-		}, 2000);
-	}
+	public submitted = {};
 
-	public get emails(): any[] {
-		const emails = this.myForm.get('emails').value as string;
-		if (emails.length === 0) {
-			return [];
-		}
-		return emails.split(',');
-	}
+	public multi = false;
 
-	public get subbies() {
-		return this.myForm.get('subbies') as FormArray;
-	}
+	constructor(
+		private fb: FormBuilder,
+	) {}
 
-	public get groupie() {
-		return this.myForm.get('groupie') as FormGroup;
-	}
-
-	public submitForm = async (values: any) => {
-		console.log(values);
-	};
-	myfile: any;
-	public innerValueChangeInterceptor = (): Promise<void> => {
-		return new Promise((resolve, reject) => {
-			if (Math.random() < 0.8) {
-				setTimeout(resolve, 1000);
-			} else {
-				setTimeout(reject, 1000);
-			}
-		});
-	};
-	groupedItems = [['a', 'b']];
-
-	public toggie() {
-		this.show = !this.show;
-	}
-
-	search($event: string) {
-		console.log($event);
-	}
-
-	loadMore() {
-		console.log('load it');
-		setTimeout(() => {
-			this.options = [...this.options, {id: 4, name: 'iii'}, {id: 4, name: 'jjj'}, {id: 4, name: 'kkk'}, {id: 4, name: 'lll'}, {
-				id: 4,
-				name: 'mmm'
-			}, {id: 4, name: 'nnn'}];
-		}, 1000);
+	submitForm = async (value) => {
+		this.submitted = value;
 	}
 }

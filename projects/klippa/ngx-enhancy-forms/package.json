@@ -5,13 +5,16 @@
 		"access": "public"
 	},
 	"peerDependencies": {
-		"@angular/common": ">=10.x",
-		"@angular/core": ">=10.x",
+		"@angular/common": ">=14.x",
+		"@angular/material": ">= 14.x",
+		"@angular/forms": ">= 14.x",
+		"@angular/core": ">=14.x",
+		"@ng-select/ng-select": ">=9.0.2",
 		"ngx-mat-datefns-date-adapter": ">=10.x",
 		"date-fns": ">=2.26.x",
 		"lodash": ">=4.17.x",
-		"ngx-sortablejs": ">=10.x",
-		"sortablejs": ">=1.14.x"
+		"ngx-sortablejs": ">=11.1.0",
+		"sortablejs": ">=1.15.0"
 	},
 	"dependencies": {
 		"tslib": "^2.0.0"

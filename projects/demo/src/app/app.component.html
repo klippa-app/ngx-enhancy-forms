@@ -1,41 +1,59 @@
-<klp-form [formGroup]="myForm" [showErrorMessages]="false">
-	{{myForm.get('emails').value}}
-	<klp-form-element caption="Emails" direction="vertical">
-		<klp-form-text-input formControlName="emails" [innerValueChangeInterceptor]="innerValueChangeInterceptor">
-		</klp-form-text-input>
-	</klp-form-element>
-	<klp-form-element caption="Yes or no">
-		<klp-form-toggle formControlName="yesno">
-		</klp-form-toggle>
-	</klp-form-element>
-	<klp-form-element caption="Yes or no2">
-		<klp-form-toggle formControlName="yesno2">
-		</klp-form-toggle>
-	</klp-form-element>
-	<klp-form-element caption="select something">
-		<klp-form-select [options]="options" formControlName="selector" (onSearch)="search($event)" (onEndReached)="loadMore()"></klp-form-select>
-	</klp-form-element>
-	<ng-container *ngFor="let email of emails; index as idx">
-		<klp-sub-form [injectInto]="subbies" [at]="idx">
-			<app-sub-form-example></app-sub-form-example>
-		</klp-sub-form>
-	</ng-container>
-	<klp-sub-form *ngIf="show" [injectInto]="myForm" at="oli">
-		<app-sub-form-example></app-sub-form-example>
-	</klp-sub-form>
-	<klp-form-submit-button [submitCallback]="submitForm">
-		Submit
-	</klp-form-submit-button>
-	<klp-form-button variant="redOutlined">Red</klp-form-button>
-</klp-form>
+<div>
+	<h1>Form:</h1>
+	<klp-form [formGroup]="form">
+		<div>
+			<klp-form-button *ngIf="form.disabled" variant="greenOutlined" (click)="form.enable()">Enable Form</klp-form-button>
+			<klp-form-button *ngIf="form.enabled" variant="redOutlined" (click)="form.disable()">Disable Form</klp-form-button>
+			<klp-form-button *ngIf="multi" variant="greenOutlined" (click)="multi = false">Multiple Enabled</klp-form-button>
+			<klp-form-button *ngIf="!multi" variant="white" (click)="multi = true">Multiple Disabled</klp-form-button>
+		</div>
+		<klp-form-element>
+			<klp-form-caption>Checkbox: {{form.get("checkbox").value}}</klp-form-caption>
+			<klp-form-checkbox formControlName="checkbox"></klp-form-checkbox>
+		</klp-form-element>
+		<klp-form-element>
+			<klp-form-caption>DatePicker: {{form.get("date").value}}</klp-form-caption>
+			<klp-form-date-picker [multiple]="multi" formControlName="date"></klp-form-date-picker>
+		</klp-form-element>
+		<klp-form-element>
+			<klp-form-caption>DateTimePicker: {{form.get("dateTime").value}}</klp-form-caption>
+			<klp-form-date-time-picker [multiple]="multi" formControlName="dateTime"></klp-form-date-time-picker>
+		</klp-form-element>
+		<klp-form-element>
+			<klp-form-caption>Email: {{form.get("email").value}}</klp-form-caption>
+			<klp-form-email-input formControlName="email"></klp-form-email-input>
+		</klp-form-element>
+		<klp-form-element>
+			<klp-form-caption>File: {{form.get("file").value | json}}</klp-form-caption>
+			<klp-form-file-input formControlName="file"></klp-form-file-input>
+		</klp-form-element>
+		<klp-form-element>
+			<klp-form-caption>Number: {{form.get("number").value}}</klp-form-caption>
+			<klp-form-number-input formControlName="number"></klp-form-number-input>
+		</klp-form-element>
+		<klp-form-element>
+			<klp-form-caption>Password: {{form.get("password").value}}</klp-form-caption>
+			<klp-form-password-field formControlName="password"></klp-form-password-field>
+		</klp-form-element>
+		<klp-form-element>
+			<klp-form-caption>Select: {{form.get("select").value | json}}</klp-form-caption>
+			<klp-form-select [options]="options" [multiple]="multi" formControlName="select"></klp-form-select>
+		</klp-form-element>
+		<klp-form-element>
+			<klp-form-caption>Text: {{form.get("text").value}}</klp-form-caption>
+			<klp-form-text-input formControlName="text"></klp-form-text-input>
+		</klp-form-element>
+		<klp-form-element>
+			<klp-form-caption>Toggle: {{form.get("toggle").value}}</klp-form-caption>
+			<klp-form-toggle formControlName="toggle"></klp-form-toggle>
+		</klp-form-element>
 
-<klp-form-select [options]="options" [multiple]="true"></klp-form-select>
-{{testDate}}
-<klp-form-date-time-picker [(ngModel)]="testDate" [multiple]="true"></klp-form-date-time-picker>
-<klp-form-checkbox [(ngModel)]="isChecked"></klp-form-checkbox>
-<klp-form-checkbox [(ngModel)]="isChecked" [renderUndefinedAsIndeterminate]="true"></klp-form-checkbox>
-<klp-form-file-input [(ngModel)]="myfile" [multiple]="false"></klp-form-file-input>
-<klp-form-button (click)="toggie()">clickie</klp-form-button>
-{{groupedItems | json}}
-<klp-form-sortable-grouped-items [(ngModel)]="groupedItems"></klp-form-sortable-grouped-items>
-
+		<klp-form-submit-button [submitCallback]="submitForm">
+			Submit
+		</klp-form-submit-button>
+	</klp-form>
+</div>
+<div>
+	<h1>Submitted:</h1>
+	{{ submitted | json }}
+</div>

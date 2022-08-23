@@ -310,6 +310,7 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 	}
 
 	touchDate(): void {
+		console.log("WAT");
 		this.dateTouched = true;
 		this.determineAllTouched();
 	}
@@ -330,6 +331,9 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 		}
 	}
 
+	closePicker() {
+		console.log("pickr blur");
+	}
 
 	getDefaultTranslation(key: string): (x: any) => string {
 		switch (key) {
