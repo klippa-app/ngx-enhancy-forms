@@ -8,6 +8,16 @@ import {ValueAccessorBase} from "../value-accessor-base/value-accessor-base.comp
 	styleUrls: ['./number-input.component.scss'],
 	providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: NumberInputComponent, multi: true }],
 })
-export class NumberInputComponent extends ValueAccessorBase<string> {
+export class NumberInputComponent extends ValueAccessorBase<string | number> {
 	@Input() placeholder: string;
+	@Input() parseNumber: boolean = false;
+
+
+	setInnerValueAndNotify(value: string | number) {
+		if (this.parseNumber && typeof value === "string") {
+			super.setInnerValueAndNotify(Number(value));
+		} else {
+			super.setInnerValueAndNotify(value);
+		}
+	}
 }
