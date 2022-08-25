@@ -6,6 +6,12 @@
 	display: flex;
 	align-items: center;
 	min-height: 42px;
+	&:not(.hasCaption) {
+		display: block;
+		.inputContainer {
+			margin-top: 0;
+		}
+	}
 	&.reverseOrder {
 		flex-direction: row-reverse;
 		justify-content: flex-end;

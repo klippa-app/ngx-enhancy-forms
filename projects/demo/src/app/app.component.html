@@ -15,6 +15,9 @@
 	<klp-form-element caption="select something">
 		<klp-form-select [options]="options" formControlName="selector" (onSearch)="search($event)" (onEndReached)="loadMore()"></klp-form-select>
 	</klp-form-element>
+	<klp-form-element>
+		<klp-form-text-input formControlName="emails"></klp-form-text-input>
+	</klp-form-element>
 	<ng-container *ngFor="let email of emails; index as idx">
 		<klp-sub-form [injectInto]="subbies" [at]="idx">
 			<app-sub-form-example></app-sub-form-example>

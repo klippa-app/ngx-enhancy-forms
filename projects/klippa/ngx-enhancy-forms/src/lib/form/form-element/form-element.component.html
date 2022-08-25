@@ -16,7 +16,7 @@
 
 <ng-container *ngIf="direction === 'horizontal'" [ngTemplateOutlet]="errorRef"></ng-container>
 
-<div class="componentContainer" [ngClass]="{vertical: direction === 'vertical', reverseOrder: swapInputAndCaption}" #internalComponentRef>
+<div class="componentContainer" [ngClass]="{hasCaption: caption || captionRef, vertical: direction === 'vertical', reverseOrder: swapInputAndCaption}" #internalComponentRef>
 	<div class="caption" *ngIf="caption || captionRef" [ngClass]="{ hasErrors: getErrorToShow() && attachedControl.touched, percentageSpacing: captionSpacing === 'percentages', 'd30-70': spaceDistribution === '30-70' }">
 		<div *ngIf="captionRef" class="captionRefContainer">
 			<ng-container [ngTemplateOutlet]="captionRef"></ng-container>
