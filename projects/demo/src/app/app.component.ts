@@ -73,6 +73,8 @@ export class AppComponent {
 		});
 	};
 	groupedItems = [['a', 'b']];
+	minutes: number = null;
+	fancyDate: any;
 
 	public toggie() {
 		this.show = !this.show;

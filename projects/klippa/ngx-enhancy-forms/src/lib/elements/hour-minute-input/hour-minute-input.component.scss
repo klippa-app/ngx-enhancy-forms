@@ -1,0 +1,33 @@
+@import '../../../style/themes/default/variables';
+@import '../../../style/mixins';
+
+:host {
+	display: flex;
+}
+
+.componentContainer {
+	height: 42px;
+	flex: 0 0 auto;
+	padding: 6px $spacing-small;
+	background: $default-white;
+	display: flex;
+	align-items: center;
+	border: $border-default;
+	&.disabled {
+		background: $default-disabled-background;
+		cursor: not-allowed;
+	}
+	input {
+		color: #888da8;
+		text-align: center;
+		width: 20px;
+		padding: 0;
+		border: none;
+		&::placeholder {
+			color: $default-gray-faded-dark;
+		}
+	}
+	.divider {
+		margin: 0 $spacing-tiny;
+	}
+}
