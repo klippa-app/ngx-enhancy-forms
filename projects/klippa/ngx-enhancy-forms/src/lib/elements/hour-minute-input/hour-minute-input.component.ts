@@ -63,11 +63,9 @@ export class HourMinuteInputComponent extends ValueAccessorBase<number | typeof 
 		}
 		// if we have valid time
 		if (
-			stringIsSetAndFilled(this.hours) &&
 			Number.isFinite(parsedHours) &&
 			parsedHours >= 0 &&
 			parsedHours <= 99 &&
-			stringIsSetAndFilled(this.minutes) &&
 			Number.isFinite(parsedMinutes) &&
 			parsedMinutes >= 0 &&
 			parsedMinutes <= 59
