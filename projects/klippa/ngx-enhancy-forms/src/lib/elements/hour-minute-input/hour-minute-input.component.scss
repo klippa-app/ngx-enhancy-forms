@@ -21,6 +21,9 @@
 		color: #888da8;
 		text-align: center;
 		width: 20px;
+		&.hourInput {
+			width: 40px;
+		}
 		padding: 0;
 		border: none;
 		&::placeholder {

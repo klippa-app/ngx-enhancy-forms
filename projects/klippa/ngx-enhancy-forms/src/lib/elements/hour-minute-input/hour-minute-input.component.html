@@ -1,5 +1,5 @@
 <div class="componentContainer" [ngClass]="{disabled: disabled}">
-	<input maxlength="2" placeholder="__" [disabled]="disabled" [(ngModel)]="hours" (blur)="formatHours(); formatTime(); touchHours(); notifyNewTime()" (ngModelChange)="notifyNewTime()">
+	<input class="hourInput" maxlength="4" placeholder="____" [disabled]="disabled" [(ngModel)]="hours" (blur)="formatHours(); formatTime(); touchHours(); notifyNewTime()" (ngModelChange)="notifyNewTime()">
 	<div class="divider">:</div>
 	<input maxlength="2" placeholder="__" [disabled]="disabled" [(ngModel)]="minutes" (blur)="formatMinutes(); formatTime(); touchMinutes(); notifyNewTime()" (ngModelChange)="notifyNewTime()">
 </div>

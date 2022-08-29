@@ -65,7 +65,7 @@ export class HourMinuteInputComponent extends ValueAccessorBase<number | typeof 
 		if (
 			Number.isFinite(parsedHours) &&
 			parsedHours >= 0 &&
-			parsedHours <= 99 &&
+			parsedHours <= 9999 &&
 			Number.isFinite(parsedMinutes) &&
 			parsedMinutes >= 0 &&
 			parsedMinutes <= 59
