@@ -15,6 +15,8 @@ export class HourMinuteInputComponent extends ValueAccessorBase<number | typeof 
 	public hours: string; // string because it's a text input
 	public minutes: string; // string because it's a text input
 
+	public placeholders: Array<string> = ['hour', 'min'];
+
 	private hoursTouched = false;
 	private minutesTouched = false;
 
