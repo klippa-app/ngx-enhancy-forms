@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {ValueAccessorBase} from '../value-accessor-base/value-accessor-base.component';
 import {stringIsSetAndFilled} from '../../util/values';
@@ -15,7 +15,7 @@ export class HourMinuteInputComponent extends ValueAccessorBase<number | typeof 
 	public hours: string; // string because it's a text input
 	public minutes: string; // string because it's a text input
 
-	public placeholders: Array<string> = ['hour', 'min'];
+	@Input() placeholders: Array<string> = ['hour', 'min'];
 
 	private hoursTouched = false;
 	private minutesTouched = false;
