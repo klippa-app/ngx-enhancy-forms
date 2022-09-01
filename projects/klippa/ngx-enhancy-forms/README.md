@@ -1,6 +1,6 @@
 # NgxEnhancyForms
 
-Enhancy Forms is the forms framework used for klippa frontend applications.
+Enhancy Forms is the forms framework used for Klippa frontend applications.
 
 Known Issues:
 - ngx-date-fns-adapter is not compatible with Angular 12. The date picker can be used, but cannot be internationalised.
@@ -150,7 +150,7 @@ class MultiParseDateFnsDateAdapter extends NgxDateFnsDateAdapter {
 	}
 }
 ```
-git
+
 ```ts
 @Component({
 	selector: 'app-login-form',
