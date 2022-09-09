@@ -19,34 +19,27 @@ export class MultipleValueAccessorBase<T> extends ValueAccessorBase<Array<T> | T
 	}
 
 	writeValue(value: Array<T> | T): void {
-		if (this.multiple) {
-			if (Array.isArray(value)) {
-				super.writeValue(value.filter(isValueSet));
-			} else {
-				super.writeValue([value].filter(isValueSet));
-			}
+		// if the outside world passes a value in the wrong format, it should be corrected
+		if (this.multiple && !Array.isArray(value)) {
+			const correctedVal = [value].filter(isValueSet);
+			super.writeValue(correctedVal);
+			super.setInnerValueAndNotify(correctedVal);
+		} else if (!this.multiple && Array.isArray(value)) {
+			const correctedVal = value[0];
+			super.writeValue(correctedVal);
+			super.setInnerValueAndNotify(correctedVal);
 		} else {
-			if (Array.isArray(value)) {
-				super.writeValue(value[0]);
-			} else {
-				super.writeValue(value);
-			}
+			super.writeValue(value);
 		}
 	}
 
 	setInnerValueAndNotify(value: T | Array<T>): void {
-		if (this.multiple) {
-			if (Array.isArray(value)) {
-				super.setInnerValueAndNotify(value.filter(isValueSet));
-			} else {
-				super.setInnerValueAndNotify([value].filter(isValueSet));
-			}
+		if (this.multiple && !Array.isArray(value)) {
+			super.setInnerValueAndNotify([value].filter(isValueSet));
+		} else if (!this.multiple && Array.isArray(value)) {
+			super.setInnerValueAndNotify(value[0]);
 		} else {
-			if (Array.isArray(value)) {
-				super.setInnerValueAndNotify(value[0]);
-			} else {
-				super.setInnerValueAndNotify(value);
-			}
+			super.setInnerValueAndNotify(value);
 		}
 	}
 }
