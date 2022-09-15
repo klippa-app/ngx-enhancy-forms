@@ -10,5 +10,4 @@ import {ValueAccessorBase} from '../value-accessor-base/value-accessor-base.comp
 })
 export class PasswordFieldComponent extends ValueAccessorBase<string> {
 	@Input() placeholder = 'Password';
-	@Input() isPasswordConfirm = false;
 }
