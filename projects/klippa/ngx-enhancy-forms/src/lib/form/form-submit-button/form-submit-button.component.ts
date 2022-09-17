@@ -11,7 +11,7 @@ export class FormSubmitButtonComponent {
 	@Input() public isLoading = false;
 	@Input() fullWidth = false;
 	@Input() variant: 'greenFilled' | 'redFilled' = 'greenFilled';
-	@Input() public submitCallback: (any) => Promise<void>;
+	@Input() public submitCallback: (any: any) => Promise<any>;
 
 	@HostBinding('class._fullWidth') get _() {
 		return this.fullWidth;

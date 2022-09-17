@@ -27,7 +27,7 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 	@Input() public disabled = false;
 	// needed to prevent race conditions
 	private latestInnerValueChangedInterceptorPromise: Promise<void>;
-	@Input() innerValueChangeInterceptor: () => Promise<void>;
+	@Input() innerValueChangeInterceptor: (prev: T, cur: T) => Promise<void>;
 	// we support both providing just the formControlName and the full formControl
 	@Input() public formControlName: string = null;
 	@Input() public formControl: FormControl = null;
@@ -102,7 +102,7 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 			this.changed.forEach((fn) => fn(valueToSet));
 		};
 		if (isValueSet(this.innerValueChangeInterceptor)) {
-			this.latestInnerValueChangedInterceptorPromise = this.innerValueChangeInterceptor();
+			this.latestInnerValueChangedInterceptorPromise = this.innerValueChangeInterceptor(this.prevValue, value);
 			const myPromise = this.latestInnerValueChangedInterceptorPromise;
 			this.latestInnerValueChangedInterceptorPromise.then(() => {
 				if (this.latestInnerValueChangedInterceptorPromise === myPromise) {

@@ -63,7 +63,9 @@ export class AppComponent {
 		console.log(values);
 	};
 	myfile: any;
-	public innerValueChangeInterceptor = (): Promise<void> => {
+	public innerValueChangeInterceptor = (prev, cur): Promise<void> => {
+		console.log(prev);
+		console.log(cur);
 		return new Promise((resolve, reject) => {
 			if (Math.random() < 0.8) {
 				setTimeout(resolve, 1000);
