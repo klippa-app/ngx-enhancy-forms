@@ -17,6 +17,7 @@
 	[selectOnTab]="true"
 	[virtualScroll]="true"
 	(scroll)="onScroll($event.end)"
+	(open)="onOpen()"
 >
 	<ng-template let-item="item" ng-option-tmp>
 		<div [attr.data-cy]="item.id">

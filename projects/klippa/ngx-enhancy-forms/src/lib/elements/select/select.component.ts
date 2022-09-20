@@ -1,5 +1,5 @@
 import {
-	Component,
+	Component, ElementRef,
 	EventEmitter,
 	Host,
 	Inject,
@@ -44,6 +44,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	@Input() public footerElement: TemplateRef<any>;
 	@Output() public onSearch = new EventEmitter<string>();
 	@Output() public onEndReached = new EventEmitter<void>();
+	@Output() public onOpened = new EventEmitter<void>();
 	@ViewChild('ngSelect') ngSelect;
 
 	private lastItemIndexReached = -1;
@@ -52,6 +53,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 		@Optional() @Host() protected parent: FormElementComponent,
 		@Optional() @Host() protected controlContainer: ControlContainer,
 		@Inject(SELECT_TRANSLATIONS) @Optional() private translations: any,
+		private elRef: ElementRef,
 	) {
 		super(parent, controlContainer);
 	}
@@ -89,5 +91,12 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 
 	searchQueryChanged(searchQuery: string): void {
 		this.onSearch.emit(searchQuery);
+	}
+
+	onOpen(): void {
+		// waiting for the thing to render until we fire the event
+		setTimeout(() => {
+			this.onOpened.emit();
+		});
 	}
 }

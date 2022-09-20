@@ -77,6 +77,17 @@ export class AppComponent {
 	groupedItems = [['a', 'b']];
 	minutes: number = null;
 	fancyDate: any;
+	staticOptions: AppSelectOptions = [
+		{
+			id: 1,
+			name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+		},
+		{
+			id: 2,
+			name: 'bb'
+		}
+	];
+	kers: any;
 
 	public toggie() {
 		this.show = !this.show;
