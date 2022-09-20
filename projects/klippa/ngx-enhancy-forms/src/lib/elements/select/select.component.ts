@@ -39,6 +39,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	@Input() multiple = false;
 	@Input() multipleDisplayedAsAmount = false;
 	@Input() clearable = true;
+	@Input() truncateOptions = true;
 	@Input() public dropdownPosition: string;
 	@Input() public customSearchFn: (term: string, item: { id: string; name: string; description: string }) => boolean;
 	@Input() public footerElement: TemplateRef<any>;
@@ -97,6 +98,14 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 		// waiting for the thing to render until we fire the event
 		setTimeout(() => {
 			this.onOpened.emit();
+			if (this.truncateOptions === false) {
+				const widths: Array<number> = Array.from(this.elRef.nativeElement.querySelectorAll('.ng-option div')).map(
+					(e: any) => e.scrollWidth,
+				);
+				const maxWidth = Math.max(...widths);
+				const dropdownPanel = this.elRef.nativeElement.querySelector('ng-dropdown-panel');
+				dropdownPanel.style.width = `${maxWidth + 40}px`;
+			}
 		});
 	}
 }
