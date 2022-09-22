@@ -3,7 +3,7 @@ import {ControlContainer, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {format as dateFormat, parse} from 'date-fns';
 import {MultipleValueAccessorBase} from '../value-accessor-base/multiple-value-accessor-base.component';
 import {invalidDateKey} from '../../validators/dateValidator';
-import {isNullOrUndefined, isValueSet, stringIsSetAndFilled} from '../../util/values';
+import {isNullOrUndefined, stringIsSetAndFilled} from '../../util/values';
 import {FormElementComponent} from '../../form/form-element/form-element.component';
 
 export const DATE_PICKER_TRANSLATIONS = new InjectionToken<any>('klp.form.date.translations');
@@ -36,8 +36,8 @@ export class DatePickerComponent extends MultipleValueAccessorBase<string | type
 		if (value === invalidDateKey) {
 			super.writeValue(invalidDateKey);
 		} else if (isNullOrUndefined(value)) {
-			this.dateValue = null;
-			super.writeValue(null);
+			this.dateValue = this.multiple ? [] : null;
+			super.writeValue(this.multiple ? [] : null);
 		} else {
 			if (Array.isArray(value)) {
 				this.dateValue = value.map((e) => parse(e, 'yyyy-MM-dd', new Date()));
@@ -52,8 +52,8 @@ export class DatePickerComponent extends MultipleValueAccessorBase<string | type
 		if (value === invalidDateKey) {
 			this.setInnerValueAndNotify(invalidDateKey);
 		} else if (isNullOrUndefined(value)) {
-			this.dateValue = null;
-			this.setInnerValueAndNotify(null);
+			this.dateValue = this.multiple ? [] : null;
+			this.setInnerValueAndNotify(this.multiple ? [] : null);
 		} else {
 			this.dateValue = value;
 			if (Array.isArray(value)) {
