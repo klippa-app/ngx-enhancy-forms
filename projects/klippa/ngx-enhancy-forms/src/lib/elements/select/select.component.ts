@@ -1,5 +1,8 @@
 import {
-	Component, ElementRef,
+	Component,
+	ContentChild,
+	Directive,
+	ElementRef,
 	EventEmitter,
 	Host,
 	Inject,
@@ -9,7 +12,8 @@ import {
 	Optional,
 	Output,
 	SimpleChanges,
-	TemplateRef, ViewChild
+	TemplateRef,
+	ViewChild
 } from '@angular/core';
 import {ControlContainer, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {ValueAccessorBase} from '../value-accessor-base/value-accessor-base.component';
@@ -26,6 +30,9 @@ export type AppSelectOption = {
 };
 
 export const SELECT_TRANSLATIONS = new InjectionToken<any>('klp.form.select.translations');
+
+@Directive({ selector: '[klpSelectOptionTpl]' })
+export class KlpSelectOptionTemplateDirective {}
 
 @Component({
 	selector: 'klp-form-select',
@@ -47,6 +54,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	@Output() public onEndReached = new EventEmitter<void>();
 	@Output() public onOpened = new EventEmitter<void>();
 	@ViewChild('ngSelect') ngSelect;
+	@ContentChild(KlpSelectOptionTemplateDirective, { read: TemplateRef }) customOptionTpl: TemplateRef<any>;
 
 	private lastItemIndexReached = -1;
 

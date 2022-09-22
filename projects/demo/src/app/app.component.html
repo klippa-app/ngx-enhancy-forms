@@ -48,4 +48,8 @@
 {{fancyDate}}
 <klp-form-date-time-picker [(ngModel)]="fancyDate"></klp-form-date-time-picker>
 
-<klp-form-select [options]="staticOptions" [(ngModel)]="kers" [truncateOptions]="false" style="width: 100px"></klp-form-select>
+<klp-form-select [options]="staticOptions" [(ngModel)]="kers">
+	<ng-template klpSelectOptionTpl let-item="item">
+		<div style="background-color: red">custom stuff {{item | json}}</div>
+	</ng-template>
+</klp-form-select>

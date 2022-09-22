@@ -8,7 +8,7 @@ import {EmailInputComponent} from './elements/email/email-input.component';
 import {LoadingIndicatorComponent} from './elements/loading-indicator/loading-indicator.component';
 import {NumberInputComponent} from './elements/number-input/number-input.component';
 import {PasswordFieldComponent} from './elements/password-field/password-field.component';
-import {SelectComponent} from './elements/select/select.component';
+import {KlpSelectOptionTemplateDirective, SelectComponent} from './elements/select/select.component';
 import {SelectFooterComponent} from './elements/select/select-footer/select-footer.component';
 import {SortableItemsComponent} from './elements/sortable-items/sortable-items.component';
 import {TextInputComponent} from './elements/text-input/text-input.component';
@@ -49,6 +49,7 @@ import {HourMinuteInputComponent} from './elements/hour-minute-input/hour-minute
 		NumberInputComponent,
 		PasswordFieldComponent,
 		SelectComponent,
+		KlpSelectOptionTemplateDirective,
 		SelectFooterComponent,
 		SortableItemsComponent,
 		SortableGroupedItemsComponent,
@@ -75,6 +76,7 @@ import {HourMinuteInputComponent} from './elements/hour-minute-input/hour-minute
 		NumberInputComponent,
 		PasswordFieldComponent,
 		SelectComponent,
+		KlpSelectOptionTemplateDirective,
 		SelectFooterComponent,
 		SortableItemsComponent,
 		SortableGroupedItemsComponent,

@@ -20,7 +20,8 @@
 	(open)="onOpen()"
 >
 	<ng-template let-item="item" ng-option-tmp>
-		<div [attr.data-cy]="item.id">
+		<ng-container *ngIf="customOptionTpl" [ngTemplateOutlet]="customOptionTpl" [ngTemplateOutletContext]="{item: item}"></ng-container>
+		<div [attr.data-cy]="item.id" *ngIf="!customOptionTpl">
 			{{ item.name }}
 			<div *ngIf="item.description" class="dropdown-item-description">
 				{{ item.description }}
