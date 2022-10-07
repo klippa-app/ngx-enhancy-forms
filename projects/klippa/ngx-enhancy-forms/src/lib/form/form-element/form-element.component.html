@@ -17,14 +17,23 @@
 <ng-container *ngIf="direction === 'horizontal'" [ngTemplateOutlet]="errorRef"></ng-container>
 
 <div class="componentContainer" [ngClass]="{hasCaption: caption || captionRef, vertical: direction === 'vertical', reverseOrder: swapInputAndCaption}" #internalComponentRef>
-	<div class="caption" *ngIf="caption || captionRef" [ngClass]="{ hasErrors: getErrorToShow() && attachedControl.touched, percentageSpacing: captionSpacing === 'percentages', 'd30-70': spaceDistribution === '30-70' }">
+	<div class="caption" *ngIf="caption || captionRef"
+		[ngClass]="{
+			hasErrors: getErrorToShow() && attachedControl.touched,
+			percentageSpacing: captionSpacing === 'percentages', 'd30-70': spaceDistribution === '30-70',
+			withErrorRightOfCaption: getErrorLocation() === 'rightOfCaption'
+		}"
+	>
 		<div *ngIf="captionRef" class="captionRefContainer">
 			<ng-container [ngTemplateOutlet]="captionRef"></ng-container>
 			<div *ngIf="isRequired()">&nbsp;*</div>
 		</div>
 		<div *ngIf="!captionRef">{{caption}}<span *ngIf="isRequired()">&nbsp;*</span></div>
+		<div class="rightOfCaptionError">
+			<ng-container *ngIf="direction === 'vertical' && getErrorLocation() === 'rightOfCaption'" [ngTemplateOutlet]="errorRef"></ng-container>
+		</div>
 	</div>
-	<ng-container *ngIf="direction === 'vertical'" [ngTemplateOutlet]="errorRef"></ng-container>
+	<ng-container *ngIf="direction === 'vertical' && getErrorLocation() === 'belowCaption'" [ngTemplateOutlet]="errorRef"></ng-container>
 	<div class="inputContainer" [ngClass]="{ percentageSpacing: captionSpacing === 'percentages', 'd30-70': spaceDistribution === '30-70' }">
 		<ng-content></ng-content>
 	</div>

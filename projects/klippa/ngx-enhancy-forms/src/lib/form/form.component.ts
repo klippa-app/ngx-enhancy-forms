@@ -21,6 +21,7 @@ export class SubFormDirective {
 })
 export class FormComponent implements OnInit, OnDestroy {
 	@Input() public showErrorMessages = true;
+	@Input() public errorMessageLocation: 'belowCaption' | 'rightOfCaption' = 'belowCaption';
 	@Input() public formGroup: FormGroup;
 	@Input() public patchValueInterceptor: (values: any) => Promise<any>;
 

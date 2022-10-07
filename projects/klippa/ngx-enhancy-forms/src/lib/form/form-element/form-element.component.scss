@@ -46,6 +46,20 @@
 	&.hasErrors {
 		color: $default-warning;
 	}
+	&.withErrorRightOfCaption {
+		display: flex;
+		justify-content: space-between;
+		gap: $spacing-huge;
+		.rightOfCaptionError {
+			font-weight: normal;
+			overflow: hidden;
+			* {
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
+	}
 }
 .inputContainer {
 	flex: 1;

@@ -119,4 +119,8 @@ export class FormElementComponent {
 	getErrorMessage(key: keyof FormErrorMessages): string {
 		return this.customMessages?.[key]?.() ?? this.errorMessages[key];
 	}
+
+	public getErrorLocation(): 'belowCaption' | 'rightOfCaption' {
+		return this.parent?.errorMessageLocation ?? 'belowCaption';
+	}
 }
