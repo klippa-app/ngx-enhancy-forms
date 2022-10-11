@@ -106,4 +106,8 @@ export class AppComponent {
 			}, {id: 4, name: 'nnn'}];
 		}, 1000);
 	}
+
+	fileSelected($event: any) {
+		console.log($event);
+	}
 }

@@ -1,5 +1,5 @@
 import {Component, Directive, Input, OnDestroy, OnInit, Optional, SkipSelf} from '@angular/core';
-import {AbstractControl, FormArray, FormControl, FormGroup, FormGroupName} from '@angular/forms';
+import {AbstractControl, FormArray, FormControl, FormGroup} from '@angular/forms';
 import {FormElementComponent} from './form-element/form-element.component';
 import {isValueSet} from '../util/values';
 

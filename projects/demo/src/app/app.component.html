@@ -37,7 +37,7 @@
 <klp-form-date-time-picker [(ngModel)]="testDate" [multiple]="true" [disabled]="true"></klp-form-date-time-picker>
 <klp-form-checkbox [(ngModel)]="isChecked"></klp-form-checkbox>
 <klp-form-checkbox [(ngModel)]="isChecked" [renderUndefinedAsIndeterminate]="true"></klp-form-checkbox>
-<klp-form-file-input [(ngModel)]="myfile" [multiple]="false"></klp-form-file-input>
+<klp-form-file-input style="height: 100%;" [(ngModel)]="myfile" [multiple]="false" [onlyShowUploadButton]="false" (ngModelChange)="fileSelected($event)" [useFullParentSize]="false"></klp-form-file-input>
 <klp-form-button (click)="toggie()">clickie</klp-form-button>
 {{groupedItems | json}}
 <klp-form-sortable-grouped-items [(ngModel)]="groupedItems"></klp-form-sortable-grouped-items>

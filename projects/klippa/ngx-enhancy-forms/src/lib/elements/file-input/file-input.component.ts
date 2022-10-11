@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {MultipleValueAccessorBase} from '../value-accessor-base/multiple-value-accessor-base.component';
 import {isValueSet} from '../../util/values';
@@ -11,9 +11,11 @@ import { arrayIsSetAndFilled } from '../../util/arrays';
 	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: FileInputComponent, multi: true}],
 })
 export class FileInputComponent extends MultipleValueAccessorBase<File> {
-
 	@Input() isLoading = false;
 	@Input() clearable = false;
+	@Input() onlyShowUploadButton = false;
+	@Input() useFullParentSize = false;
+	@ViewChild('fileInput') fileInputEl: ElementRef<HTMLInputElement>;
 
 	public onChange(files: FileList): void {
 		const result = [];
@@ -21,6 +23,8 @@ export class FileInputComponent extends MultipleValueAccessorBase<File> {
 			result.push(files.item(i));
 		}
 		this.setInnerValueAndNotify(result);
+		// to make sure we can select the same file again
+		this.fileInputEl.nativeElement.value = null;
 	}
 
 	public getFileNames(): string {
@@ -33,6 +37,9 @@ export class FileInputComponent extends MultipleValueAccessorBase<File> {
 	}
 
 	public shouldShowClearButton(): boolean {
+		if (this.onlyShowUploadButton) {
+			return false;
+		}
 		if (this.multiple) {
 			if (arrayIsSetAndFilled(this.innerValue)) {
 				return true;
@@ -43,5 +50,9 @@ export class FileInputComponent extends MultipleValueAccessorBase<File> {
 			return true;
 		}
 		return false;
+	}
+
+	public uploadFileClicked(): void {
+		this.fileInputEl.nativeElement.click();
 	}
 }
