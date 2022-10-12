@@ -11,10 +11,22 @@
 	letter-spacing: 1px;
 	font-size: 13px;
 	font-weight: bold;
-	padding: 10px 20px;
+	padding: 0px 20px;
 	border: $border-default;
 	border-radius: $border-radius-default;
 	color: $default-text-color;
+	height: 2.625rem;
+	&.disabled {
+		cursor: not-allowed;
+	}
+	&.tiny {
+		font-size: $font-size-small-2;
+		font-weight: normal;
+		height: 2rem;
+	}
+	&.large {
+		height: 3rem;
+	}
 }
 
 .fullWidth {
@@ -41,15 +53,6 @@ button {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-}
-
-.small {
-	padding-top: $padding-small;
-	padding-bottom: $padding-small;
-}
-
-.large {
-	line-height: 2;
 }
 
 .white {
