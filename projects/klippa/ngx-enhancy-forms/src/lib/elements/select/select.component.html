@@ -6,7 +6,7 @@
 	[items]="options"
 	[clearable]="clearable"
 	[(ngModel)]="innerValue"
-	[ngClass]="{showErrors: isInErrorState()}"
+	[ngClass]="{showErrors: isInErrorState(), verticalOrientation: orientation === 'vertical'}"
 	(change)="setInnerValueAndNotify(innerValue)"
 	[multiple]="multiple"
 	[disabled]="disabled"

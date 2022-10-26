@@ -42,6 +42,7 @@ export class KlpSelectOptionTemplateDirective {}
 })
 export class SelectComponent extends ValueAccessorBase<string | string[]> implements OnChanges{
 	@Input() placeholder: string;
+	@Input() orientation: 'vertical' | 'horizontal' = 'horizontal';
 	@Input() options: AppSelectOptions;
 	@Input() multiple = false;
 	@Input() multipleDisplayedAsAmount = false;

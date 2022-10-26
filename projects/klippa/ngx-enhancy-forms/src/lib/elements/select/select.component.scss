@@ -287,3 +287,19 @@ ng-select.showErrors {
     width: auto;
   }
 }
+
+
+.verticalOrientation {
+	transform: translateY(100%) rotate(-90deg);
+	transform-origin: top left;
+	::ng-deep {
+		ng-dropdown-panel.ng-select-bottom {
+			transform: rotate(90deg) translateX(100%);
+			transform-origin: top right;
+			border-top-color: #3ed778;
+			border-bottom-right-radius: 2px;
+			border-bottom-left-radius: 0px;
+			border-top-right-radius: 2px;
+		}
+	}
+}
