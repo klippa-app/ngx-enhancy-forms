@@ -110,4 +110,8 @@ export class AppComponent {
 	fileSelected($event: any) {
 		console.log($event);
 	}
+
+	slowClick = async () => {
+		await new Promise(resolve => setTimeout(resolve, 1000));
+	}
 }

@@ -1,4 +1,5 @@
 import { Component, HostBinding, Input } from '@angular/core';
+import {isValueSet} from "../../util/values";
 
 @Component({
 	selector: 'klp-form-button',
@@ -21,6 +22,7 @@ export class ButtonComponent {
 	@Input() disabled = false;
 	@Input() isLoading = false;
 	@Input() type: 'button' | 'submit' = 'button';
+	@Input() clickCallback: (event: Event) => Promise<any>;
 
 	@HostBinding('class._fullWidth') get _() {
 		return this.fullWidth;
@@ -29,6 +31,16 @@ export class ButtonComponent {
 	onClick(event: Event) {
 		if (this.disabled) {
 			event.stopPropagation();
+			return
+		}
+
+		if (isValueSet(this.clickCallback)) {
+			this.isLoading = true;
+			this.clickCallback(event)
+				.catch(() => null) // gobble up errors.
+				.then(() => {
+					this.isLoading = false;
+				});
 		}
 	}
 }
