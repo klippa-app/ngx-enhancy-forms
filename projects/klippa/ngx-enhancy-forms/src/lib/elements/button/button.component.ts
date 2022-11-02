@@ -28,7 +28,7 @@ export class ButtonComponent {
 		return this.fullWidth;
 	}
 
-	onClick(event: Event) {
+	async onClick(event: Event) {
 		if (this.disabled) {
 			event.stopPropagation();
 			return
@@ -36,11 +36,9 @@ export class ButtonComponent {
 
 		if (isValueSet(this.clickCallback)) {
 			this.isLoading = true;
-			this.clickCallback(event)
-				.catch(() => null) // gobble up errors.
-				.then(() => {
-					this.isLoading = false;
-				});
+			await this.clickCallback(event).finally(() => {
+				this.isLoading = false;
+			});
 		}
 	}
 }
