@@ -1,4 +1,4 @@
-import { isString } from 'lodash';
+import { isString } from 'lodash-es';
 
 export function stringIsSetAndFilled(s: string): boolean {
 	return isString(s) && s.length > 0;

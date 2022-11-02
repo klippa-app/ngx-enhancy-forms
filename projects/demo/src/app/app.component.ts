@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {AppSelectOptions} from '@klippa/ngx-enhancy-forms';
 
 @Component({
@@ -37,7 +37,7 @@ export class AppComponent {
 		{id: 1, name: 'a111'},
 	];
 
-	constructor(private fb: FormBuilder) {
+	constructor(private fb: UntypedFormBuilder) {
 		setTimeout(() => {
 			this.groupedItems = [['a', 'b', 'c'], ['d', 'e']];
 		}, 2000);
@@ -52,11 +52,11 @@ export class AppComponent {
 	}
 
 	public get subbies() {
-		return this.myForm.get('subbies') as FormArray;
+		return this.myForm.get('subbies') as UntypedFormArray;
 	}
 
 	public get groupie() {
-		return this.myForm.get('groupie') as FormGroup;
+		return this.myForm.get('groupie') as UntypedFormGroup;
 	}
 
 	public submitForm = async (values: any) => {

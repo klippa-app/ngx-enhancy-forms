@@ -1,4 +1,4 @@
-import {ControlContainer, ControlValueAccessor, FormControl} from '@angular/forms';
+import {ControlContainer, ControlValueAccessor, UntypedFormControl} from '@angular/forms';
 import {Component, EventEmitter, Host, Input, OnDestroy, OnInit, Optional, Output} from '@angular/core';
 import {FormElementComponent} from '../../form/form-element/form-element.component';
 import {isNullOrUndefined, isValueSet, stringIsSetAndFilled} from '../../util/values';
@@ -30,10 +30,10 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 	@Input() innerValueChangeInterceptor: (prev: T, cur: T) => Promise<void>;
 	// we support both providing just the formControlName and the full formControl
 	@Input() public formControlName: string = null;
-	@Input() public formControl: FormControl = null;
+	@Input() public formControl: UntypedFormControl = null;
 	@Output() public onTouch = new EventEmitter<void>();
 
-	private attachedFormControl: FormControl;
+	private attachedFormControl: UntypedFormControl;
 	private validators: Array<string> = [];
 
 	constructor(
@@ -46,7 +46,7 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 		if (this.formControl) {
 			this.attachedFormControl = this.formControl;
 		} else if (stringIsSetAndFilled(this.formControlName)) {
-			this.attachedFormControl = this.controlContainer?.control.get(this.formControlName) as FormControl;
+			this.attachedFormControl = this.controlContainer?.control.get(this.formControlName) as UntypedFormControl;
 			if (isNullOrUndefined(this.attachedFormControl)) {
 				throw new Error(`Form element '${this.formControlName}' with caption '${this.parent?.caption}' is not declared in your FormGroup.`);
 			}

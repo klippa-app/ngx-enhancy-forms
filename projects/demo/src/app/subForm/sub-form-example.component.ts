@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup} from '@angular/forms';
 
 @Component({
 	selector: 'app-sub-form-example',
@@ -7,8 +7,8 @@ import {FormControl, FormGroup} from '@angular/forms';
 })
 export class SubFormExampleComponent {
 
-	public myNestedForm = new FormGroup({
-		name: new FormControl('abc'),
+	public myNestedForm = new UntypedFormGroup({
+		name: new UntypedFormControl('abc'),
 	});
 
 }

@@ -1,5 +1,5 @@
 import {Component, Directive, ElementRef, Host, Inject, InjectionToken, Input, OnInit, Optional, ViewChild} from '@angular/core';
-import {AbstractControl, FormArray, FormControl, FormGroup} from '@angular/forms';
+import {AbstractControl, FormArray, UntypedFormControl, FormGroup} from '@angular/forms';
 import {FormComponent} from '../form.component';
 import {CustomErrorMessages, FormErrorMessages} from '../../types';
 import { ValueAccessorBase } from '../../elements/value-accessor-base/value-accessor-base.component';
@@ -54,13 +54,13 @@ export class FormElementComponent {
 		}, message);
 	}
 
-	public registerControl(formControl: FormControl, input: ValueAccessorBase<any> = null): void {
+	public registerControl(formControl: UntypedFormControl, input: ValueAccessorBase<any> = null): void {
 		this.attachedControl = formControl;
 		this.parent.registerControl(formControl, this);
 		this.input = input;
 	}
 
-	public unregisterControl(formControl: FormControl): void {
+	public unregisterControl(formControl: UntypedFormControl): void {
 		this.attachedControl = null;
 		this.parent.unregisterControl(formControl);
 	}

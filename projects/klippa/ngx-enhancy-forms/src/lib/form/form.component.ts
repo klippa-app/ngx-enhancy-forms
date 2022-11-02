@@ -1,5 +1,5 @@
 import {Component, Directive, Input, OnDestroy, OnInit, Optional, SkipSelf} from '@angular/core';
-import {AbstractControl, FormArray, FormControl, FormGroup} from '@angular/forms';
+import {AbstractControl, UntypedFormArray, UntypedFormControl, UntypedFormGroup} from '@angular/forms';
 import {FormElementComponent} from './form-element/form-element.component';
 import {isValueSet} from '../util/values';
 
@@ -10,7 +10,7 @@ export const invalidFieldsSymbol = Symbol('Not all fields are valid');
 	selector: 'klp-sub-form',
 })
 export class SubFormDirective {
-	@Input() injectInto: FormArray | FormGroup;
+	@Input() injectInto: UntypedFormArray | UntypedFormGroup;
 	@Input() at: number | string;
 }
 
@@ -22,12 +22,12 @@ export class SubFormDirective {
 export class FormComponent implements OnInit, OnDestroy {
 	@Input() public showErrorMessages = true;
 	@Input() public errorMessageLocation: 'belowCaption' | 'rightOfCaption' = 'belowCaption';
-	@Input() public formGroup: FormGroup;
+	@Input() public formGroup: UntypedFormGroup;
 	@Input() public patchValueInterceptor: (values: any) => Promise<any>;
 
 	// we keep track of what form controls are actually rendered. Only those count when looking at form validation
 	private activeControls: Array<{
-		formControl: FormControl;
+		formControl: UntypedFormControl;
 		formElement: FormElementComponent;
 	}> = [];
 
@@ -38,13 +38,13 @@ export class FormComponent implements OnInit, OnDestroy {
 		if (isValueSet(this.parent) && isValueSet(this.subFormPlaceholder)) {
 			const injectInto = this.subFormPlaceholder.injectInto;
 			const injectAt = this.subFormPlaceholder.at;
-			if (injectInto instanceof FormArray) {
+			if (injectInto instanceof UntypedFormArray) {
 				if (typeof injectAt !== 'number') {
 					throw new Error(`cannot index FormArray with ${typeof injectAt}`);
 				}
 
 				injectInto.setControl(injectAt, this.formGroup);
-			} else if (injectInto instanceof FormGroup) {
+			} else if (injectInto instanceof UntypedFormGroup) {
 				if (typeof injectAt !== 'string') {
 					throw new Error(`cannot index FormGroup with ${typeof injectAt}`);
 				}
@@ -61,10 +61,10 @@ export class FormComponent implements OnInit, OnDestroy {
 		if (isValueSet(this.parent) && isValueSet(this.subFormPlaceholder)) {
 			const injectInto = this.subFormPlaceholder.injectInto;
 			const injectAt = this.subFormPlaceholder.at;
-			if (injectInto instanceof FormArray) {
+			if (injectInto instanceof UntypedFormArray) {
 				const idx = injectInto.controls.findIndex(e => e === this.formGroup);
 				injectInto.removeAt(idx);
-			} else if (injectInto instanceof FormGroup) {
+			} else if (injectInto instanceof UntypedFormGroup) {
 				if (typeof injectAt !== 'string') {
 					throw new Error(`cannot index FormGroup with ${typeof injectAt}`);
 				}
@@ -93,55 +93,55 @@ export class FormComponent implements OnInit, OnDestroy {
 		this.formGroup.patchValue = newFn;
 	}
 
-	public registerControl(formControl: FormControl, formElement: FormElementComponent): void {
+	public registerControl(formControl: UntypedFormControl, formElement: FormElementComponent): void {
 		this.activeControls.push({formControl, formElement});
 		if (this.parent) {
 			this.parent.registerControl(formControl, formElement);
 		}
 	}
 
-	public unregisterControl(formControl: FormControl): void {
+	public unregisterControl(formControl: UntypedFormControl): void {
 		this.activeControls = this.activeControls.filter((e) => e.formControl !== formControl);
 		if (this.parent) {
 			this.parent.unregisterControl(formControl);
 		}
 	}
 
-	private addFormGroupControls(formGroup: FormGroup, result: Array<FormControl>): void {
+	private addFormGroupControls(formGroup: UntypedFormGroup, result: Array<UntypedFormControl>): void {
 		Object.values(formGroup.controls).forEach((value) => {
-			if (value instanceof FormGroup) {
+			if (value instanceof UntypedFormGroup) {
 				this.addFormGroupControls(value, result);
-			} else if (value instanceof FormArray) {
+			} else if (value instanceof UntypedFormArray) {
 				this.addFormArrayControls(value, result);
-			} else if (value instanceof FormControl) {
+			} else if (value instanceof UntypedFormControl) {
 				this.addFormControl(value, result);
 			}
 		});
 	}
 
-	private addFormArrayControls(formArray: FormArray, result: Array<FormControl>): void {
+	private addFormArrayControls(formArray: UntypedFormArray, result: Array<UntypedFormControl>): void {
 		formArray.controls.forEach((value) => {
-			if (value instanceof FormGroup) {
+			if (value instanceof UntypedFormGroup) {
 				this.addFormGroupControls(value, result);
-			} else if (value instanceof FormArray) {
+			} else if (value instanceof UntypedFormArray) {
 				this.addFormArrayControls(value, result);
-			} else if (value instanceof FormControl) {
+			} else if (value instanceof UntypedFormControl) {
 				this.addFormControl(value, result);
 			}
 		});
 	}
 
-	private getAllFormControls(): Array<FormControl> {
+	private getAllFormControls(): Array<UntypedFormControl> {
 		const result = [];
 		this.addFormGroupControls(this.formGroup, result);
 		return result;
 	}
 
-	private addFormControl(control: FormControl, result: Array<FormControl>): void {
+	private addFormControl(control: UntypedFormControl, result: Array<UntypedFormControl>): void {
 		result.push(control);
 	}
 
-	private disableInactiveFormControl(control: FormControl): void {
+	private disableInactiveFormControl(control: UntypedFormControl): void {
 		if (!this.activeControls.some((e) => e.formControl === control)) {
 			control.disable();
 		}
@@ -149,7 +149,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
 	trySubmit(): Promise<any> {
 		this.formGroup.markAllAsTouched();
-		const allControls: Array<FormControl> = this.getAllFormControls();
+		const allControls: Array<UntypedFormControl> = this.getAllFormControls();
 		const originalDisabledStates = allControls.map(e => {
 			return {control: e, disabled: e.disabled};
 		});
