@@ -41,6 +41,9 @@
 		&.d30-70 {
 			flex-basis: 30%;
 		}
+		&.d34-66 {
+			flex-basis: 34%;
+		}
 	}
 	color: $default-dark;
 	&.hasErrors {
@@ -68,6 +71,9 @@
 		&.d30-70 {
 			flex-basis: 70%;
 		}
+		&.d34-66 {
+			flex-basis: 66%;
+		}
 	}
 }
 
@@ -77,6 +83,9 @@
 		margin-left: 40%;
 		&.d30-70 {
 			margin-left: 30%;
+		}
+		&.d34-66 {
+			margin-left: 34%;
 		}
 	}
 }
