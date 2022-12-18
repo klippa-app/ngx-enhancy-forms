@@ -1,4 +1,4 @@
-import {Component, Directive, Input, OnDestroy, OnInit, Optional, SkipSelf} from '@angular/core';
+import {Component, Directive, Input, OnChanges, OnDestroy, OnInit, Optional, SimpleChanges, SkipSelf} from '@angular/core';
 import {AbstractControl, UntypedFormArray, UntypedFormControl, UntypedFormGroup} from '@angular/forms';
 import {FormElementComponent} from './form-element/form-element.component';
 import {isValueSet} from '../util/values';
@@ -19,7 +19,7 @@ export class SubFormDirective {
 	templateUrl: './form.component.html',
 	styleUrls: ['./form.component.scss'],
 })
-export class FormComponent implements OnInit, OnDestroy {
+export class FormComponent implements OnInit, OnDestroy, OnChanges {
 	@Input() public readOnly = false;
 	@Input() public showErrorMessages = true;
 	@Input() public errorMessageLocation: 'belowCaption' | 'rightOfCaption' = 'belowCaption';
@@ -55,6 +55,12 @@ export class FormComponent implements OnInit, OnDestroy {
 		}
 		if (isValueSet(this.patchValueInterceptor)) {
 			this.addSupportForPatchValueInterceptor();
+		}
+	}
+
+	ngOnChanges(simpleChanges: SimpleChanges): void {
+		if (simpleChanges.readOnly?.currentValue === true) {
+			this.activeControls.forEach(e => e.formControl.disable());
 		}
 	}
 
