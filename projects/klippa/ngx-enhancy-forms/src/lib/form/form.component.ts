@@ -20,6 +20,7 @@ export class SubFormDirective {
 	styleUrls: ['./form.component.scss'],
 })
 export class FormComponent implements OnInit, OnDestroy {
+	@Input() public readOnly = false;
 	@Input() public showErrorMessages = true;
 	@Input() public errorMessageLocation: 'belowCaption' | 'rightOfCaption' = 'belowCaption';
 	@Input() public formGroup: UntypedFormGroup;
@@ -97,6 +98,9 @@ export class FormComponent implements OnInit, OnDestroy {
 		this.activeControls.push({formControl, formElement});
 		if (this.parent) {
 			this.parent.registerControl(formControl, formElement);
+		}
+		if (this.readOnly) {
+			formControl.disable();
 		}
 	}
 

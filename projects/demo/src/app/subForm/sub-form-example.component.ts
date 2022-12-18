@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {UntypedFormControl, UntypedFormGroup} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 
 @Component({
 	selector: 'app-sub-form-example',
@@ -8,7 +8,7 @@ import {UntypedFormControl, UntypedFormGroup} from '@angular/forms';
 export class SubFormExampleComponent {
 
 	public myNestedForm = new UntypedFormGroup({
-		name: new UntypedFormControl('abc'),
+		name: new UntypedFormControl(null, Validators.required),
 	});
 
 }
