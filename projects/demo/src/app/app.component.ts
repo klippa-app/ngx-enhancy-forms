@@ -115,4 +115,8 @@ export class AppComponent {
 		await new Promise(resolve => setTimeout(resolve, 1000));
 		throw "some error"
 	}
+
+	blurry() {
+		console.log('blurr');
+	}
 }

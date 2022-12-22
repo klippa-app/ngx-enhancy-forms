@@ -8,7 +8,7 @@
 		[(ngModel)]="innerValue"
 		(input)="setInnerValueAndNotify($event.target.value)"
 		[placeholder]="placeholder ? placeholder : ''"
-		(blur)="touch()"
+		(blur)="touch(); onBlur.emit()"
 		[disabled]='disabled'
 	/>
 	<div class="clearIcon" *ngIf="clearable && innerValue?.length > 0" (click)="resetToNull()">×</div>

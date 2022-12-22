@@ -1,7 +1,7 @@
 <klp-form [formGroup]="myForm">
 	{{myForm.get('emails').value}}
 	<klp-form-element caption="Emails" spaceDistribution="34-66">
-		<klp-form-text-input formControlName="emails" [innerValueChangeInterceptor]="innerValueChangeInterceptor">
+		<klp-form-text-input formControlName="emails" [innerValueChangeInterceptor]="innerValueChangeInterceptor" (onBlur)="blurry()">
 		</klp-form-text-input>
 	</klp-form-element>
 	<klp-form-element caption="Yes or no" spaceDistribution="34-66">

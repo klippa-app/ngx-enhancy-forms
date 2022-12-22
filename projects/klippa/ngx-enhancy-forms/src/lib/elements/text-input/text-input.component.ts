@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {ValueAccessorBase} from '../value-accessor-base/value-accessor-base.component';
 
@@ -13,4 +13,5 @@ export class TextInputComponent extends ValueAccessorBase<string> {
 	@Input() type: 'text' | 'password' = 'text';
 	@Input() clearable = false;
 	@Input() icon: 'search';
+	@Output() onBlur = new EventEmitter<void>();
 }
