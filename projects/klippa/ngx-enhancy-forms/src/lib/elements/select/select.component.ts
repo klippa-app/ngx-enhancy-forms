@@ -54,6 +54,8 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	@Output() public onSearch = new EventEmitter<string>();
 	@Output() public onEndReached = new EventEmitter<void>();
 	@Output() public onOpened = new EventEmitter<void>();
+	@Output() public onBlur = new EventEmitter<void>();
+	@Output() public onClear = new EventEmitter<void>();
 	@ViewChild('ngSelect') ngSelect;
 	@ContentChild(KlpSelectOptionTemplateDirective, { read: TemplateRef }) customOptionTpl: TemplateRef<any>;
 

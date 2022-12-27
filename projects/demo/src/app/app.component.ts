@@ -35,6 +35,12 @@ export class AppComponent {
 	subForms = [];
 	options: AppSelectOptions = [
 		{id: 1, name: 'a111'},
+		{id: 2, name: 'iii'},
+		{id: 3, name: 'jjj'},
+		{id: 4, name: 'kkk'},
+		{id: 5, name: 'lll'},
+		{id: 6, name: 'mmm'},
+		{id: 7, name: 'nnn'}
 	];
 
 	constructor(private fb: UntypedFormBuilder) {
@@ -93,18 +99,16 @@ export class AppComponent {
 		this.show = !this.show;
 	}
 
+	public logSomething(): void {
+		console.log('logSomething');
+	}
+
 	search($event: string) {
 		console.log($event);
 	}
 
 	loadMore() {
 		console.log('load it');
-		setTimeout(() => {
-			this.options = [...this.options, {id: 4, name: 'iii'}, {id: 4, name: 'jjj'}, {id: 4, name: 'kkk'}, {id: 4, name: 'lll'}, {
-				id: 4,
-				name: 'mmm'
-			}, {id: 4, name: 'nnn'}];
-		}, 1000);
 	}
 
 	fileSelected($event: any) {
@@ -113,8 +117,8 @@ export class AppComponent {
 
 	slowClick = async () => {
 		await new Promise(resolve => setTimeout(resolve, 1000));
-		throw "some error"
-	}
+		throw 'some error';
+	};
 
 	blurry() {
 		console.log('blurr');

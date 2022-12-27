@@ -13,7 +13,7 @@
 		</klp-form-toggle>
 	</klp-form-element>
 	<klp-form-element caption="select something">
-		<klp-form-select [options]="options" formControlName="selector" (onSearch)="search($event)" (onEndReached)="loadMore()"></klp-form-select>
+		<klp-form-select [options]="options" formControlName="selector" (onSearch)="search($event)" (onEndReached)="loadMore()" (onBlur)="logSomething()"></klp-form-select>
 	</klp-form-element>
 	<klp-form-element>
 		<klp-form-text-input formControlName="emails"></klp-form-text-input>
