@@ -4,6 +4,7 @@
 			[(ngModel)]="innerValue"
 			(change)="setInnerValueAndNotify(innerValue); touch()"
 			[disabled]="disabled"
+			#nativeInputRef
 		/>
     <div class="checkboxVisual">
       <svg *ngIf="innerValue === true" version="1.1" viewBox="0 0 4.2333 4.2333" xmlns="http://www.w3.org/2000/svg">
