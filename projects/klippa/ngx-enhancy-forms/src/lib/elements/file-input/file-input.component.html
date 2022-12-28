@@ -5,7 +5,7 @@
 		</klp-form-button>
 		<input
 			type="file"
-			#fileInput
+			#nativeInputRef
 			(change)="onChange($event.target.files)"
 			[multiple]="multiple"
 			[disabled]="disabled"
