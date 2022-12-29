@@ -4,6 +4,7 @@
 		(input)="setInnerValueAndNotify($event.target.checked); touch()"
 		[disabled]="disabled"
 		[ngClass]="{showErrors: isInErrorState()}"
+	 #nativeInputRef
 	/>
 	<div class="toggleVisual"></div>
 </div>

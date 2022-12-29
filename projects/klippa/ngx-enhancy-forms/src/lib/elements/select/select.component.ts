@@ -119,4 +119,8 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 			}
 		});
 	}
+
+	public focus = (): void => {
+		this.ngSelect.focus();
+	}
 }

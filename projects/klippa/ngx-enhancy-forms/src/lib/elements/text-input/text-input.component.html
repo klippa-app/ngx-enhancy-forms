@@ -10,6 +10,7 @@
 		[placeholder]="placeholder ? placeholder : ''"
 		(blur)="touch(); onBlur.emit()"
 		[disabled]='disabled'
+		#nativeInputRef
 	/>
 	<div class="clearIcon" *ngIf="clearable && innerValue?.length > 0" (click)="resetToNull()">×</div>
 </div>

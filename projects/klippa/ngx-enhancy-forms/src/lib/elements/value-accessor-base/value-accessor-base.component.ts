@@ -1,5 +1,5 @@
 import {ControlContainer, ControlValueAccessor, UntypedFormControl} from '@angular/forms';
-import {Component, EventEmitter, Host, Input, OnDestroy, OnInit, Optional, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Host, Input, OnDestroy, OnInit, Optional, Output, ViewChild} from '@angular/core';
 import {FormElementComponent} from '../../form/form-element/form-element.component';
 import {isNullOrUndefined, isValueSet, stringIsSetAndFilled} from '../../util/values';
 import { arrayIsSetAndFilled } from '../../util/arrays';
@@ -32,6 +32,7 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 	@Input() public formControlName: string = null;
 	@Input() public formControl: UntypedFormControl = null;
 	@Output() public onTouch = new EventEmitter<void>();
+	@ViewChild('nativeInputRef') nativeInputRef: ElementRef;
 
 	private attachedFormControl: UntypedFormControl;
 	private validators: Array<string> = [];
@@ -131,5 +132,13 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 			return this.validators.includes(validatorName);
 		}
 		return false;
+	}
+
+	public focus = (): void => {
+		if (isValueSet(this.nativeInputRef?.nativeElement)){
+			this.nativeInputRef?.nativeElement?.focus();
+		}else {
+			throw new Error('the focus() method is not implemented in this element!');
+		}
 	}
 }
