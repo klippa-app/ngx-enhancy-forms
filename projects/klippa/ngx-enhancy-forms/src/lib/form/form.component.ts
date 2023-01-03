@@ -171,8 +171,8 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		const renderedButDisabledValues = this.getRenderedFieldValuesFormGroup(this.formGroup, false);
 		if (this.formGroup.valid) {
 			this.setDisabledStatesForAllControls(originalDisabledStates);
-			const merged = deepMerge(renderedAndEnabledValues, renderedButDisabledValues);
-			return Promise.resolve([formGroupValue, merged]);
+			const renderedValues = deepMerge(renderedAndEnabledValues, renderedButDisabledValues);
+			return Promise.resolve([formGroupValue, renderedValues]);
 		} else {
 			this.activeControls.find((e) => !e.formControl.valid)?.formElement?.scrollTo();
 			this.setDisabledStatesForAllControls(originalDisabledStates);

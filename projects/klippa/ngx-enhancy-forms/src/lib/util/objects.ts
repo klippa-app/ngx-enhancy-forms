@@ -13,8 +13,8 @@ function mergeArray(arrA: Array<any>, arrB: Array<any>): Array<any> {
 }
 
 export function deepMerge<
-	A extends Object | Array<any>,
-	B extends Object | Array<any>
+	A extends object | Array<any>,
+	B extends object | Array<any>
 >(objA: A, objB: B): A | B {
 	if (Array.isArray(objA) || Array.isArray(objB)) {
 		if (Array.isArray(objA) && Array.isArray(objB)) {

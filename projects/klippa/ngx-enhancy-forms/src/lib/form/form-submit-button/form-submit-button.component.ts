@@ -22,9 +22,9 @@ export class FormSubmitButtonComponent {
 	submitForm(): void {
 		this.parentForm
 			.trySubmit()
-			.then(([renderedAndEnabledValues, renderedButDisabledValues]) => {
+			.then(([renderedAndEnabledValues, renderedValues]) => {
 				this.isLoading = true;
-				const submitCallbackResult = this.submitCallback(renderedAndEnabledValues, renderedButDisabledValues);
+				const submitCallbackResult = this.submitCallback(renderedAndEnabledValues, renderedValues);
 				if (isNullOrUndefined(submitCallbackResult)) {
 					throw new Error('No promise is returned in your submit function.');
 				}
