@@ -2,6 +2,7 @@ import {Component, Directive, Input, OnChanges, OnDestroy, OnInit, Optional, Sim
 import {AbstractControl, FormArray, FormControl, FormGroup, UntypedFormArray, UntypedFormControl, UntypedFormGroup} from '@angular/forms';
 import {FormElementComponent} from './form-element/form-element.component';
 import {isValueSet} from '../util/values';
+import { deepMerge } from '../util/objects';
 
 export const invalidFieldsSymbol = Symbol('Not all fields are valid');
 
@@ -170,7 +171,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		const renderedButDisabledValues = this.getRenderedFieldValuesFormGroup(this.formGroup, false);
 		if (this.formGroup.valid) {
 			this.setDisabledStatesForAllControls(originalDisabledStates);
-			const merged = oliMerge(renderedAndEnabledValues, renderedButDisabledValues);
+			const merged = deepMerge(renderedAndEnabledValues, renderedButDisabledValues);
 			return Promise.resolve([formGroupValue, merged]);
 		} else {
 			this.activeControls.find((e) => !e.formControl.valid)?.formElement?.scrollTo();
