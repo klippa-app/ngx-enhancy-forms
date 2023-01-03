@@ -8,13 +8,16 @@ import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 export class SubFormExampleComponent implements OnInit {
 
 	public myNestedForm = new UntypedFormGroup({
-		name: new UntypedFormControl(null, Validators.required),
+		name: new UntypedFormControl(null),
 	});
 	readOnly = false;
 
 	ngOnInit() {
 		setTimeout(() => {
-			this.readOnly = true;
+			this.readOnly = Math.random() > 0.5;
+			if (Math.random() > 0.5) {
+				this.myNestedForm.get('name').setValue(`>${Math.random()}`);
+			}
 		}, 1000);
 	}
 

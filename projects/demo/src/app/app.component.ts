@@ -23,10 +23,12 @@ export class AppComponent {
 	isChecked: boolean = undefined;
 
 	public myForm = this.fb.group({
-		emails: ['', [Validators.required]],
+		emails: ['zaag'],
+		disabledButRendered: ['disabledButRendered'],
+		unrendered: ['unrendered'],
 		yesno: false,
 		yesno2: false,
-		selector: [null, [Validators.required]],
+		selector: [null],
 		subbies: this.fb.array([]),
 		groupie: this.fb.group({}),
 		oli: ['bob'],
@@ -44,6 +46,7 @@ export class AppComponent {
 	];
 
 	constructor(private fb: UntypedFormBuilder) {
+		this.myForm.get('disabledButRendered').disable();
 		setTimeout(() => {
 			this.groupedItems = [['a', 'b', 'c'], ['d', 'e']];
 		}, 2000);
@@ -65,8 +68,9 @@ export class AppComponent {
 		return this.myForm.get('groupie') as UntypedFormGroup;
 	}
 
-	public submitForm = async (values: any) => {
-		console.log(values);
+	public submitForm = async (enabledAndRendered: any, all: any) => {
+		console.log('enabledAndRendered', enabledAndRendered);
+		console.log('all', all);
 	};
 	myfile: any;
 	public innerValueChangeInterceptor = (prev, cur): Promise<void> => {

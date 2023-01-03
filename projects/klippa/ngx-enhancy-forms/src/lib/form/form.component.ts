@@ -1,5 +1,5 @@
 import {Component, Directive, Input, OnChanges, OnDestroy, OnInit, Optional, SimpleChanges, SkipSelf} from '@angular/core';
-import {AbstractControl, UntypedFormArray, UntypedFormControl, UntypedFormGroup} from '@angular/forms';
+import {AbstractControl, FormArray, FormControl, FormGroup, UntypedFormArray, UntypedFormControl, UntypedFormGroup} from '@angular/forms';
 import {FormElementComponent} from './form-element/form-element.component';
 import {isValueSet} from '../util/values';
 
@@ -165,15 +165,49 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		});
 		allControls.forEach(e => this.disableInactiveFormControl(e));
 		allControls.forEach(e => e.updateValueAndValidity());
-		const values = this.formGroup.value;
+		const formGroupValue = this.formGroup.value;
+		const renderedAndEnabledValues = this.getRenderedFieldValuesFormGroup(this.formGroup, true);
+		const renderedButDisabledValues = this.getRenderedFieldValuesFormGroup(this.formGroup, false);
 		if (this.formGroup.valid) {
 			this.setDisabledStatesForAllControls(originalDisabledStates);
-			return Promise.resolve(values);
+			const merged = oliMerge(renderedAndEnabledValues, renderedButDisabledValues);
+			return Promise.resolve([formGroupValue, merged]);
 		} else {
 			this.activeControls.find((e) => !e.formControl.valid)?.formElement?.scrollTo();
 			this.setDisabledStatesForAllControls(originalDisabledStates);
 			return Promise.reject(invalidFieldsSymbol);
 		}
+	}
+
+	private getRenderedFieldValuesFormGroup(formGroup: FormGroup, enabled: boolean, valueObject = {}): object {
+		Object.entries(formGroup.controls).forEach(([name, control]) => {
+			if (control instanceof FormControl && control.enabled === enabled && this.activeControls.some(e => e.formControl === control)) {
+				valueObject[name] = control.value;
+			} else if (control instanceof FormArray) {
+				valueObject[name] = [];
+				this.getRenderedFieldValuesFormArray(control, enabled, valueObject[name]);
+			} else if (control instanceof FormGroup) {
+				valueObject[name] = {};
+				this.getRenderedFieldValuesFormGroup(control, enabled, valueObject[name]);
+			}
+		});
+		return valueObject;
+	}
+
+	private getRenderedFieldValuesFormArray(formArray: FormArray, enabled: boolean, valueArray: Array<any>): void {
+		formArray.controls.forEach((control: AbstractControl) => {
+			if (control instanceof FormControl && control.enabled === enabled && this.activeControls.some(e => e.formControl === control)) {
+				valueArray.push(control.value);
+			} else if (control instanceof FormArray) {
+				const newArray = [];
+				valueArray.push(newArray);
+				this.getRenderedFieldValuesFormArray(control, enabled, newArray);
+			} else if (control instanceof FormGroup) {
+				const newObject = {};
+				valueArray.push(newObject);
+				this.getRenderedFieldValuesFormGroup(control, enabled, newObject);
+			}
+		});
 	}
 
 	private setDisabledStatesForAllControls(originalDisabledStates: Array<{ control: AbstractControl; disabled: boolean }>): void {
