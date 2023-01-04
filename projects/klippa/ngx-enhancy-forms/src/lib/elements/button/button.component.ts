@@ -31,7 +31,7 @@ export class ButtonComponent {
 	async onClick(event: Event) {
 		if (this.disabled) {
 			event.stopPropagation();
-			return
+			return;
 		}
 
 		if (isValueSet(this.clickCallback)) {

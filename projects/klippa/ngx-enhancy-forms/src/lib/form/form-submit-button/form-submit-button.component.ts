@@ -10,7 +10,7 @@ import {isNullOrUndefined} from '../../util/values';
 export class FormSubmitButtonComponent {
 	@Input() public isLoading = false;
 	@Input() fullWidth = false;
-	@Input() variant: 'greenFilled' | 'redFilled' = 'greenFilled';
+	@Input() variant: 'greenFilled' | 'redFilled' | 'greenOutlined' = 'greenFilled';
 	@Input() public submitCallback: (renderedAndEnabledValues: object, renderedButDisabledValues: object) => Promise<any>;
 
 	@HostBinding('class._fullWidth') get _() {
