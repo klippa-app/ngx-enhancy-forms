@@ -11,6 +11,8 @@ export class FormSubmitButtonComponent {
 	@Input() public isLoading = false;
 	@Input() fullWidth = false;
 	@Input() variant: 'greenFilled' | 'redFilled' | 'greenOutlined' = 'greenFilled';
+	@Input() public before: () => Promise<any> = () => Promise.resolve();
+	@Input() public after: () => Promise<any> = () => Promise.resolve();
 	@Input() public submitCallback: (renderedAndEnabledValues: object, renderedButDisabledValues: object) => Promise<any>;
 
 	@HostBinding('class._fullWidth') get _() {
@@ -19,7 +21,12 @@ export class FormSubmitButtonComponent {
 
 	constructor(@Host() @Optional() private parentForm: FormComponent) {}
 
-	submitForm(): void {
+	async submitForm(): Promise<void> {
+		try {
+			await this.before();
+		} catch (e) {
+			return;
+		}
 		this.parentForm
 			.trySubmit()
 			.then(([renderedAndEnabledValues, renderedValues]) => {
@@ -39,5 +46,6 @@ export class FormSubmitButtonComponent {
 				}
 				throw e;
 			});
+		await this.after();
 	}
 }

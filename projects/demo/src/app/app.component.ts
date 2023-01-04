@@ -23,7 +23,7 @@ export class AppComponent {
 	isChecked: boolean = undefined;
 
 	public myForm = this.fb.group({
-		emails: ['zaag'],
+		emails: [''],
 		disabledButRendered: ['disabledButRendered'],
 		unrendered: ['unrendered'],
 		yesno: false,
@@ -68,6 +68,16 @@ export class AppComponent {
 		return this.myForm.get('groupie') as UntypedFormGroup;
 	}
 
+	public beforeSubmit = async () => {
+		console.log('before');
+		if (Math.random() > 0.5) {
+			this.myForm.get('emails').setValidators(Validators.required);
+		}
+	};
+	public afterSubmit = async () => {
+		console.log('after');
+		this.myForm.get('emails').removeValidators(Validators.required);
+	};
 	public submitForm = async (enabledAndRendered: any, all: any) => {
 		console.log('enabledAndRendered', enabledAndRendered);
 		console.log('all', all);

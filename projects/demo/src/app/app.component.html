@@ -35,7 +35,7 @@
 		blaaaa
 		<app-sub-form-example></app-sub-form-example>
 	</klp-sub-form>
-	<klp-form-submit-button [submitCallback]="submitForm">
+	<klp-form-submit-button [before]="beforeSubmit" [after]="afterSubmit" [submitCallback]="submitForm">
 		Submit
 	</klp-form-submit-button>
 	<klp-form-button variant="redOutlined" size="large" [disabled]="true">Red</klp-form-button>
