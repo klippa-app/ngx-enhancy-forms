@@ -23,6 +23,7 @@ export class AppComponent {
 	isChecked: boolean = undefined;
 
 	public myForm = this.fb.group({
+		name: [''],
 		emails: [''],
 		disabledButRendered: ['disabledButRendered'],
 		unrendered: ['unrendered'],
@@ -49,6 +50,7 @@ export class AppComponent {
 		this.myForm.get('disabledButRendered').disable();
 		setTimeout(() => {
 			this.groupedItems = [['a', 'b', 'c'], ['d', 'e']];
+			this.myForm.get('name').setValidators(Validators.required);
 		}, 2000);
 	}
 

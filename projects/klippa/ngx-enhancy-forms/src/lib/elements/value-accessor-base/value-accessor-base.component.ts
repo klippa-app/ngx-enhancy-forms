@@ -35,7 +35,6 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 	@ViewChild('nativeInputRef') nativeInputRef: ElementRef;
 
 	private attachedFormControl: UntypedFormControl;
-	private validators: Array<string> = [];
 
 	constructor(
 		@Host() @Optional() protected parent: FormElementComponent,
@@ -58,14 +57,6 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 				this.disabled = this.attachedFormControl.disabled;
 			});
 			this.parent?.registerControl(this.attachedFormControl, this);
-			if (this.attachedFormControl?.validator) {
-				const vals = this.attachedFormControl.validator({} as any);
-				if (isValueSet(vals)) {
-					this.validators = Object.keys(vals);
-				} else {
-					this.validators = [];
-				}
-			}
 		}
 	}
 
@@ -128,8 +119,9 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 	}
 
 	hasValidator(validatorName: string): boolean {
-		if (arrayIsSetAndFilled(this.validators)) {
-			return this.validators.includes(validatorName);
+		const validators = Object.keys(this.attachedFormControl?.validator?.({} as any) ?? {});
+		if (arrayIsSetAndFilled(validators)) {
+			return validators.includes(validatorName);
 		}
 		return false;
 	}
