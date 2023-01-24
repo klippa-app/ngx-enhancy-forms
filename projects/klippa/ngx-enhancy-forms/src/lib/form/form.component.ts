@@ -44,13 +44,17 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 				if (typeof injectAt !== 'number') {
 					throw new Error(`cannot index FormArray with ${typeof injectAt}`);
 				}
-
+				if (injectInto.at(injectAt).disabled) {
+					this.formGroup.disable();
+				}
 				injectInto.setControl(injectAt, this.formGroup);
 			} else if (injectInto instanceof UntypedFormGroup) {
 				if (typeof injectAt !== 'string') {
 					throw new Error(`cannot index FormGroup with ${typeof injectAt}`);
 				}
-
+				if (injectInto.get(injectAt).disabled) {
+					this.formGroup.disable();
+				}
 				injectInto.setControl(injectAt, this.formGroup);
 			}
 		}

@@ -48,6 +48,7 @@ export class AppComponent {
 
 	constructor(private fb: UntypedFormBuilder) {
 		this.myForm.get('disabledButRendered').disable();
+		this.myForm.get('oli').disable();
 		setTimeout(() => {
 			this.groupedItems = [['a', 'b', 'c'], ['d', 'e']];
 			this.myForm.get('name').setValidators(Validators.required);
