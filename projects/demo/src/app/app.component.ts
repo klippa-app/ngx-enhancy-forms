@@ -32,7 +32,7 @@ export class AppComponent {
 		selector: [null],
 		subbies: this.fb.array([]),
 		groupie: this.fb.group({}),
-		oli: ['bob'],
+		oli: null,
 	});
 
 	subForms = [];
@@ -47,12 +47,22 @@ export class AppComponent {
 	];
 
 	constructor(private fb: UntypedFormBuilder) {
-		this.myForm.get('disabledButRendered').disable();
-		this.myForm.get('oli').disable();
+		this.myForm.patchValue({
+			oli: {
+				name: 'zaag'
+			}
+		});
 		setTimeout(() => {
-			this.groupedItems = [['a', 'b', 'c'], ['d', 'e']];
-			this.myForm.get('name').setValidators(Validators.required);
+			this.showSubForm = true;
 		}, 2000);
+
+		setTimeout(() => {
+			this.myForm.patchValue({
+				oli: {
+					name: 'zaag222'
+				}
+			});
+		}, 4000);
 	}
 
 	public get emails(): any[] {
@@ -136,6 +146,7 @@ export class AppComponent {
 		await new Promise(resolve => setTimeout(resolve, 1000));
 		throw 'some error';
 	};
+	showSubForm = false;
 
 	blurry() {
 		console.log('blurr');

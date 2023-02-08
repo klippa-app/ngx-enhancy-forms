@@ -47,7 +47,11 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 				if (injectInto.at(injectAt)?.disabled) {
 					this.formGroup.disable();
 				}
+				const valueBeforeInject = injectInto.at(injectAt)?.value;
 				injectInto.setControl(injectAt, this.formGroup);
+				if (isValueSet(valueBeforeInject)) {
+					this.formGroup.patchValue(valueBeforeInject);
+				}
 			} else if (injectInto instanceof UntypedFormGroup) {
 				if (typeof injectAt !== 'string') {
 					throw new Error(`cannot index FormGroup with ${typeof injectAt}`);
@@ -55,7 +59,11 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 				if (injectInto.get(injectAt)?.disabled) {
 					this.formGroup.disable();
 				}
+				const valueBeforeInject = injectInto.get(injectAt)?.value;
 				injectInto.setControl(injectAt, this.formGroup);
+				if (isValueSet(valueBeforeInject)) {
+					this.formGroup.patchValue(valueBeforeInject);
+				}
 			}
 		}
 		if (isValueSet(this.patchValueInterceptor)) {

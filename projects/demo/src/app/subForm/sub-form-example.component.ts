@@ -13,12 +13,7 @@ export class SubFormExampleComponent implements OnInit {
 	readOnly = false;
 
 	ngOnInit() {
-		setTimeout(() => {
-			this.readOnly = Math.random() > 0.5;
-			if (Math.random() > 0.5) {
-				this.myNestedForm.get('name').setValue(`>${Math.random()}`);
-			}
-		}, 1000);
+
 	}
 
 }
