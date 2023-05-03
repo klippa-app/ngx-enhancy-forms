@@ -1,0 +1,10 @@
+<label class="componentContainer">
+	<div class="radioContainer" *ngFor="let item of items">
+		<input type="radio"
+			[(ngModel)]="innerValue"
+			(change)="setInnerValueAndNotify(innerValue); touch()"
+			[disabled]="disabled"
+			#nativeInputRef
+		/>
+	</div>
+</label>
