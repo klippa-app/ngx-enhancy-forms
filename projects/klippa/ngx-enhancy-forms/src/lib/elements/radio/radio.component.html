@@ -1,11 +1,10 @@
-<label class="componentContainer">
-	<div class="radioContainer" *ngFor="let item of items">
-		<input type="radio"
-			[(ngModel)]="innerValue"
-			(change)="setInnerValueAndNotify(innerValue); touch()"
-			[disabled]="disabled"
-			#nativeInputRef
-		/>
-		{{caption}}
-	</div>
-</label>
+<div class="componentContainer" [class]="orientation">
+	<ng-container *ngFor="let option of options">
+		<div class="optionsContainer" (click)="setInnerValueAndNotify(option.id)">
+			<div class="radioContainer">
+				<span class="selected" *ngIf="innerValue === option.id"></span>
+			</div>
+			<div>{{option.name}}</div>
+		</div>
+	</ng-container>
+</div>

@@ -5,11 +5,39 @@
 	display: block;
 }
 
-input {
-	outline: none;
-	@include formControl();
+.componentContainer {
+	position: relative;
+	display: flex;
+	&.column {
+		flex-direction: column;
+	}
+	&.row {
+		flex-direction: row;
+	}
+}
+
+.optionsContainer {
+	display: flex;
+	margin-bottom: $spacing-tiny;
+	margin-right: $spacing-tiny;
+	flex-direction: row;
 }
 
 .radioContainer {
 	position: relative;
+	height: 20px;
+	width: 20px;
+	padding: 4px;
+	border-radius: 50%;
+	border: 2px solid $border-color;
+	margin-right: 10px;
 }
+
+.selected {
+	height: 100%;
+	width: 100%;
+	display: block;
+	border-radius: 100%;
+	background-color: $primary;
+}
+
