@@ -18,7 +18,7 @@ import {FormElementComponent} from './form/form-element/form-element.component';
 import {FormErrorComponent} from './form/form-error/form-error.component';
 import {FormSubmitButtonComponent} from './form/form-submit-button/form-submit-button.component';
 import {FormComponent, SubFormDirective} from './form/form.component';
-import {SortablejsModule} from 'ngx-sortablejs';
+import { SortablejsModule } from '@dustfoundation/ngx-sortablejs';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {DatePickerComponent} from './elements/date-picker/date-picker.component';
 import {DateTimePickerComponent} from './elements/date-time-picker/date-time-picker.component';
@@ -28,7 +28,6 @@ import {FileInputComponent} from './elements/file-input/file-input.component';
 import {SortableGroupedItemsComponent} from './elements/sortable-grouped-items/sortable-grouped-items.component';
 import {HourMinuteInputComponent} from './elements/hour-minute-input/hour-minute-input.component';
 import {RadioComponent} from './elements/radio/radio.component';
-
 
 @NgModule({
 	imports: [
@@ -64,7 +63,7 @@ import {RadioComponent} from './elements/radio/radio.component';
 		FormComponent,
 		SubFormDirective,
 		HourMinuteInputComponent,
-		RadioComponent
+		RadioComponent,
 	],
 	exports: [
 		ValueAccessorBase,
@@ -92,8 +91,7 @@ import {RadioComponent} from './elements/radio/radio.component';
 		FormComponent,
 		SubFormDirective,
 		HourMinuteInputComponent,
-		RadioComponent
-	]
+		RadioComponent,
+	],
 })
-export class NgxEnhancyFormsModule {
-}
+export class NgxEnhancyFormsModule {}

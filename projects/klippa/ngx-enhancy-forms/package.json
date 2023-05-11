@@ -1,17 +1,17 @@
 {
   "name": "@klippa/ngx-enhancy-forms",
-  "version": "14.0.0",
+  "version": "16.0.0",
   "publishConfig": {
     "access": "public"
   },
   "peerDependencies": {
-    "@angular/common": ">=10",
-    "@angular/core": ">=10",
+    "@angular/common": ">=16",
+    "@angular/core": ">=16",
     "@ng-select/ng-select": ">=9",
     "ngx-mat-datefns-date-adapter": ">=10",
     "date-fns": ">=2.29",
     "lodash-es": ">=4.17",
-    "ngx-sortablejs": ">=11.1",
+    "@dustfoundation/ngx-sortablejs": ">=15.0.0",
     "sortablejs": ">=1.15"
   },
   "dependencies": {

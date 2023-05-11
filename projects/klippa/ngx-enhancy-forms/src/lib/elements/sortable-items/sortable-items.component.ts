@@ -1,16 +1,31 @@
-import {Component, ContentChild, Input, OnInit, TemplateRef} from '@angular/core';
-import {NG_VALUE_ACCESSOR} from '@angular/forms';
-import {Options} from 'sortablejs';
-import {isValueSet} from '../../util/values';
-import {ValueAccessorBase} from '../value-accessor-base/value-accessor-base.component';
+import {
+	Component,
+	ContentChild,
+	Input,
+	OnInit,
+	TemplateRef,
+} from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Options } from 'sortablejs';
+import { isValueSet } from '../../util/values';
+import { ValueAccessorBase } from '../value-accessor-base/value-accessor-base.component';
 
 @Component({
 	selector: 'klp-form-sortable-items',
 	templateUrl: './sortable-items.component.html',
 	styleUrls: ['./sortable-items.component.scss'],
-	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: SortableItemsComponent, multi: true}],
+	providers: [
+		{
+			provide: NG_VALUE_ACCESSOR,
+			useExisting: SortableItemsComponent,
+			multi: true,
+		},
+	],
 })
-export class SortableItemsComponent extends ValueAccessorBase<Array<any>> implements OnInit {
+export class SortableItemsComponent
+	extends ValueAccessorBase<Array<any>>
+	implements OnInit
+{
 	@ContentChild(TemplateRef) template;
 	@Input() sortableItemSize: 'sm' | 'lg' = 'lg';
 	@Input() useCustomScroll = false;
@@ -21,9 +36,13 @@ export class SortableItemsComponent extends ValueAccessorBase<Array<any>> implem
 	ngOnInit(): void {
 		super.ngOnInit();
 		if (this.useCustomScroll) {
-			this.sortablejsOptions = {onUpdate: this.itemsOrderChanged, onMove: this.onItemDrag, onEnd: this.onEnd};
+			this.sortablejsOptions = {
+				onUpdate: this.itemsOrderChanged,
+				onMove: this.onItemDrag,
+				onEnd: this.onEnd,
+			};
 		} else {
-			this.sortablejsOptions = {onUpdate: this.itemsOrderChanged};
+			this.sortablejsOptions = { onUpdate: this.itemsOrderChanged };
 		}
 	}
 
