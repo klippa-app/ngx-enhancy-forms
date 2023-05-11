@@ -16,7 +16,7 @@ export enum ORIENTATION {
 })
 export class RadioComponent extends ValueAccessorBase<string>{
 	@Input() options: AppSelectOptions;
-	@Input() orientation: ORIENTATION = ORIENTATION.column;
-	@Input() variant: 'classic' | 'button' = 'button';
+	@Input() orientation: ORIENTATION = ORIENTATION.row;
+	@Input() variant: 'classic' | 'button' = 'classic';
 }
 

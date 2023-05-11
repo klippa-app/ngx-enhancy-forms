@@ -19,7 +19,7 @@
 		.optionContainer {
 			margin-bottom: $spacing-tiny;
 			&:last-child {
-				margin-bottom: 0px;
+				margin-bottom: 0;
 			}
 		}
 	}
@@ -46,6 +46,7 @@
 	align-items: center;
 
 	&.classic {
+		cursor: pointer;
 		.selectedRadioBtnContainer {
 			position: relative;
 			height: 20px;
@@ -53,7 +54,7 @@
 			padding: 4px;
 			border-radius: 50%;
 			border: 2px solid $border-color;
-			margin-right: 10px;
+			margin-right: $spacing-tiny;
 
 			.selected {
 				height: 100%;
@@ -69,15 +70,15 @@
 		position: relative;
 		cursor: pointer;
 		padding: 10px 14px;
-		margin-right: 0px;
+		margin-right: 0;
 		transition: all 0.3s ease-in-out;
-		color: #27bb5f;
-		border: 1px solid #27bb5f;
-		background-color: white;
+		color: $primary;
+		border: 1px solid $primary;
+		background-color: $default-white;
 
 		&.isSelected {
-			background: #27bb5f;
-			color: white;
+			background: $primary;
+			color: $default-white;
 		}
 	}
 }
