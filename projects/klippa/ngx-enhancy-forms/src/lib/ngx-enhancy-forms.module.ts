@@ -27,6 +27,7 @@ import {MultipleValueAccessorBase} from './elements/value-accessor-base/multiple
 import {FileInputComponent} from './elements/file-input/file-input.component';
 import {SortableGroupedItemsComponent} from './elements/sortable-grouped-items/sortable-grouped-items.component';
 import {HourMinuteInputComponent} from './elements/hour-minute-input/hour-minute-input.component';
+import {RadioComponent} from './elements/radio/radio.component';
 
 
 @NgModule({
@@ -62,7 +63,8 @@ import {HourMinuteInputComponent} from './elements/hour-minute-input/hour-minute
 		FormSubmitButtonComponent,
 		FormComponent,
 		SubFormDirective,
-		HourMinuteInputComponent
+		HourMinuteInputComponent,
+		RadioComponent
 	],
 	exports: [
 		ValueAccessorBase,
@@ -89,7 +91,8 @@ import {HourMinuteInputComponent} from './elements/hour-minute-input/hour-minute
 		FormSubmitButtonComponent,
 		FormComponent,
 		SubFormDirective,
-		HourMinuteInputComponent
+		HourMinuteInputComponent,
+		RadioComponent
 	]
 })
 export class NgxEnhancyFormsModule {

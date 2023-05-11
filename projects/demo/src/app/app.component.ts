@@ -33,6 +33,7 @@ export class AppComponent {
 		subbies: this.fb.array([]),
 		groupie: this.fb.group({}),
 		oli: null,
+		radioOption: null
 	});
 
 	subForms = [];
@@ -147,6 +148,20 @@ export class AppComponent {
 		throw 'some error';
 	};
 	showSubForm = false;
+	radioOptions: AppSelectOptions = [
+		{
+			id: '1',
+			name: '1st option',
+		},
+		{
+			id: '21',
+			name: '2nd option',
+		},
+		{
+			id: '241',
+			name: '3rd option',
+		}
+	];
 
 	blurry() {
 		console.log('blurr');

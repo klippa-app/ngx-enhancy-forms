@@ -6,6 +6,7 @@ export * from './lib/ngx-enhancy-forms.module';
 
 export * from './lib/elements/button/button.component';
 export * from './lib/elements/checkbox/checkbox.component';
+export * from './lib/elements/radio/radio.component';
 export * from './lib/elements/date-picker/date-picker.component';
 export * from './lib/elements/date-time-picker/date-time-picker.component';
 export * from './lib/elements/email/email-input.component';

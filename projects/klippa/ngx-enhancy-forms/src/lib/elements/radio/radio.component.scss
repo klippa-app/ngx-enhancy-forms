@@ -1,0 +1,79 @@
+@import '../../../style/themes/default/variables';
+@import '../../../style/mixins';
+
+:host {
+	display: block;
+}
+
+.componentContainer {
+	position: relative;
+	display: flex;
+
+	&.column {
+		flex-direction: column;
+		.optionContainer {
+			margin-bottom: $spacing-tiny;
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+	&.row {
+		flex-direction: row;
+		.optionContainer {
+			&:first-child {
+				border-radius: 6px 0 0 6px;
+			}
+
+			&:last-child {
+				border-radius: 0 6px 6px 0;
+			}
+		}
+	}
+}
+
+.optionContainer {
+	display: flex;
+	flex-direction: row;
+	margin-right: $spacing-tiny;
+	background: transparent;
+	border: none;
+	align-items: center;
+
+	&.classic {
+		cursor: pointer;
+		.selectedRadioBtnContainer {
+			position: relative;
+			height: 20px;
+			width: 20px;
+			padding: 4px;
+			border-radius: 50%;
+			border: 2px solid $border-color;
+			margin-right: $spacing-tiny;
+
+			.selected {
+				height: 100%;
+				width: 100%;
+				display: block;
+				border-radius: 100%;
+				background-color: $primary;
+			}
+		}
+	}
+
+	&.button {
+		position: relative;
+		cursor: pointer;
+		padding: 10px 14px;
+		margin-right: 0;
+		transition: all 0.3s ease-in-out;
+		color: $primary;
+		border: 1px solid $primary;
+		background-color: $default-white;
+
+		&.isSelected {
+			background: $primary;
+			color: $default-white;
+		}
+	}
+}
