@@ -1,10 +1,13 @@
 <div class="componentContainer" [class]="orientation">
 	<ng-container *ngFor="let option of options">
-		<button class="optionContainer" (click)="setInnerValueAndNotify(option.id)">
-			<div [ngClass]="variant">
+		<button class="optionContainer"
+			[ngClass]="{classic: variant === 'classic', button: variant === 'button', isSelected: innerValue === option.id}"
+			(click)="setInnerValueAndNotify(option.id)"
+		>
+			<div class="selectedRadioBtnContainer" *ngIf="variant === 'classic'">
 				<span class="selected" *ngIf="innerValue === option.id"></span>
 			</div>
-			<div>{{option.name}}</div>
+			<div class="caption">{{option.name}}</div>
 		</button>
 	</ng-container>
 </div>

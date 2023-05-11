@@ -153,11 +153,15 @@ export class AppComponent {
 	radioOptions: AppSelectOptions = [
 		{
 			id: '1',
-			name: 'hallo',
+			name: '1st option',
 		},
 		{
 			id: '21',
-			name: '3grhg4',
+			name: '2nd option',
+		},
+		{
+			id: '241',
+			name: '3rd option',
 		}
 	];
 

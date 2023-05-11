@@ -5,9 +5,14 @@
 	display: block;
 }
 
+.caption {
+	width: auto;
+}
+
 .componentContainer {
 	position: relative;
 	display: flex;
+	width: auto;
 
 	&.column {
 		flex-direction: column;
@@ -20,6 +25,15 @@
 	}
 	&.row {
 		flex-direction: row;
+		.optionContainer {
+			&:first-child {
+				border-radius: 6px 0 0 6px;
+			}
+
+			&:last-child {
+				border-radius: 0 6px 6px 0;
+			}
+		}
 	}
 }
 
@@ -30,25 +44,40 @@
 	background: transparent;
 	border: none;
 	align-items: center;
-}
 
-.classic {
-	position: relative;
-	height: 20px;
-	width: 20px;
-	padding: 4px;
-	border-radius: 50%;
-	border: 2px solid $border-color;
-	margin-right: 10px;
+	&.classic {
+		.selectedRadioBtnContainer {
+			position: relative;
+			height: 20px;
+			width: 20px;
+			padding: 4px;
+			border-radius: 50%;
+			border: 2px solid $border-color;
+			margin-right: 10px;
 
-	.selected {
-		height: 100%;
-		width: 100%;
-		display: block;
-		border-radius: 100%;
-		background-color: $primary;
+			.selected {
+				height: 100%;
+				width: 100%;
+				display: block;
+				border-radius: 100%;
+				background-color: $primary;
+			}
+		}
 	}
 
+	&.button {
+		position: relative;
+		cursor: pointer;
+		padding: 10px 14px;
+		margin-right: 0px;
+		transition: all 0.3s ease-in-out;
+		color: #27bb5f;
+		border: 1px solid #27bb5f;
+		background-color: white;
+
+		&.isSelected {
+			background: #27bb5f;
+			color: white;
+		}
+	}
 }
-
-
