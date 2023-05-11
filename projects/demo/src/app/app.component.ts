@@ -33,7 +33,7 @@ export class AppComponent {
 		subbies: this.fb.array([]),
 		groupie: this.fb.group({}),
 		oli: null,
-		radioOption: [null]
+		radioOption: null
 	});
 
 	subForms = [];
@@ -51,8 +51,7 @@ export class AppComponent {
 		this.myForm.patchValue({
 			oli: {
 				name: 'zaag'
-			},
-			radioOption: '1'
+			}
 		});
 		setTimeout(() => {
 			this.showSubForm = true;
@@ -149,7 +148,6 @@ export class AppComponent {
 		throw 'some error';
 	};
 	showSubForm = false;
-	myRadio = '21';
 	radioOptions: AppSelectOptions = [
 		{
 			id: '1',
