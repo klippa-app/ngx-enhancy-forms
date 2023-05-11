@@ -4,9 +4,9 @@ import { ValueAccessorBase } from '../value-accessor-base/value-accessor-base.co
 import { AppSelectOptions } from '@klippa/ngx-enhancy-forms';
 import { isValueSet } from '../../util/values';
 
-export enum ORIENTATION {
-	column = 'column',
-	row = 'row'
+export enum Orientation {
+	COLUMN = 'column',
+	ROW = 'row'
 }
 
 @Component({
@@ -17,7 +17,7 @@ export enum ORIENTATION {
 })
 export class RadioComponent extends ValueAccessorBase<string> implements AfterViewInit{
 	@Input() options: AppSelectOptions;
-	@Input() orientation: ORIENTATION = ORIENTATION.row;
+	@Input() orientation: Orientation = Orientation.ROW;
 	@Input() variant: 'classic' | 'button' = 'classic';
 
 	ngAfterViewInit(): void {
