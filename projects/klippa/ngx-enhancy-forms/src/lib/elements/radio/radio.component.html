@@ -1,10 +1,10 @@
 <div class="componentContainer" [class]="orientation">
 	<ng-container *ngFor="let option of options">
-		<div class="optionsContainer" (click)="setInnerValueAndNotify(option.id)">
-			<div class="radioContainer">
+		<button class="optionContainer" (click)="setInnerValueAndNotify(option.id)">
+			<div [ngClass]="variant">
 				<span class="selected" *ngIf="innerValue === option.id"></span>
 			</div>
 			<div>{{option.name}}</div>
-		</div>
+		</button>
 	</ng-container>
 </div>
