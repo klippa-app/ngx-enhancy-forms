@@ -1,13 +1,17 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
+import { Component, Input} from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessorBase } from '../value-accessor-base/value-accessor-base.component';
-import { AppSelectOptions } from '@klippa/ngx-enhancy-forms';
-import { isValueSet } from '../../util/values';
 
 export enum Orientation {
 	COLUMN = 'column',
 	ROW = 'row'
 }
+export type RadioOptions = Array<RadioOption>;
+export type RadioOption = {
+	id: any;
+	name: string;
+};
+
 
 @Component({
 	selector: 'klp-form-radio',
@@ -15,15 +19,9 @@ export enum Orientation {
 	styleUrls: ['./radio.component.scss'],
 	providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: RadioComponent, multi: true }],
 })
-export class RadioComponent extends ValueAccessorBase<string> implements AfterViewInit{
-	@Input() options: AppSelectOptions;
+export class RadioComponent extends ValueAccessorBase<string>{
+	@Input() options: RadioOptions;
 	@Input() orientation: Orientation = Orientation.ROW;
 	@Input() variant: 'classic' | 'button' = 'classic';
-
-	ngAfterViewInit(): void {
-		if (!isValueSet(this.innerValue) && isValueSet(this.options)) {
-			this.setInnerValueAndNotify(this.options[0].id);
-		}
-	}
 }
 

@@ -5,14 +5,9 @@
 	display: block;
 }
 
-.caption {
-	width: auto;
-}
-
 .componentContainer {
 	position: relative;
 	display: flex;
-	width: auto;
 
 	&.column {
 		flex-direction: column;

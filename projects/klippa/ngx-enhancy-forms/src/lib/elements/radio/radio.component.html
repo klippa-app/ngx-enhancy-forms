@@ -5,9 +5,9 @@
 			(click)="setInnerValueAndNotify(option.id)"
 		>
 			<div class="selectedRadioBtnContainer" *ngIf="variant === 'classic'">
-				<span class="selected" *ngIf="innerValue === option.id"></span>
+				<div class="selected" *ngIf="innerValue === option.id"></div>
 			</div>
-			<div class="caption">{{option.name}}</div>
+			<div>{{option.name}}</div>
 		</button>
 	</ng-container>
 </div>
