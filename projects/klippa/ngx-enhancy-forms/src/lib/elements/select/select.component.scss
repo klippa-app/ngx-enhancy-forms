@@ -46,6 +46,14 @@ ng-select.showErrors {
 :host ::ng-deep .ng-select .ng-has-value .ng-placeholder{
   display:none
 }
+:host ::ng-deep {
+	.ng-placeholder, .ng-value {
+		width: 0px;
+		flex-grow: 1;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+}
 :host ::ng-deep .ng-select .ng-select-container{
   display: flex;
   flex-direction: row;
