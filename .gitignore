@@ -1,5 +1,9 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+.devenv*
+.direnv*
+.envrc
+
 # compiled output
 /dist
 /tmp
@@ -46,3 +50,8 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Devenv
+.devenv*
+devenv.local.nix
+
