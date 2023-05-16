@@ -39,7 +39,7 @@ export class AppComponent {
 	subForms = [];
 	options: AppSelectOptions = [
 		{id: 1, name: 'a111'},
-		{id: 2, name: 'iii'},
+		{id: 2, name: 'looooong gekwhjg kehjw gkjehw gjkehw gjkh ghegkw egwhj ej wgklej gklej glkj gklj gljkl gewgjkew'},
 		{id: 3, name: 'jjj'},
 		{id: 4, name: 'kkk'},
 		{id: 5, name: 'lll'},

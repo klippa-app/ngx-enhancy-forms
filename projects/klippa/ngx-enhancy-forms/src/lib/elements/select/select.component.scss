@@ -47,11 +47,19 @@ ng-select.showErrors {
   display:none
 }
 :host ::ng-deep {
-	.ng-placeholder, .ng-value {
-		width: 0px;
-		flex-grow: 1;
-		overflow: hidden;
-		text-overflow: ellipsis;
+	.ng-select:not(.ng-select-multiple) {
+		.ng-placeholder, .ng-value {
+			width: 0px;
+			flex-grow: 1;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+	}
+
+	.ng-select.ng-select-multiple {
+		.ng-select-container .ng-value-container .ng-value {
+			white-space: initial;
+		}
 	}
 }
 :host ::ng-deep .ng-select .ng-select-container{
@@ -151,6 +159,7 @@ ng-select.showErrors {
 :host ::ng-deep .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-input{
   padding-bottom:3px;
   padding-left:3px
+
 }
 :host ::ng-deep ng-select.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder{
   top:5px;
