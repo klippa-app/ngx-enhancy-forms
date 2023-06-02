@@ -48,7 +48,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	@Input() multipleDisplayedAsAmount = false;
 	@Input() clearable = true;
 	@Input() truncateOptions = true;
-	@Input() public dropdownPosition: string;
+	@Input() public dropdownPosition: 'auto' | 'bottom' | 'top' | 'left' | 'right' = null;
 	@Input() public customSearchFn: (term: string, item: { id: string; name: string; description: string }) => boolean;
 	@Input() public footerElement: TemplateRef<any>;
 	@Output() public onSearch = new EventEmitter<string>();
@@ -60,6 +60,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	@ContentChild(KlpSelectOptionTemplateDirective, { read: TemplateRef }) customOptionTpl: TemplateRef<any>;
 
 	private lastItemIndexReached = -1;
+	public dropdownPositionToUse: 'auto' | 'bottom' | 'top' | 'left' | 'right' = 'bottom';
 
 	constructor(
 		@Optional() @Host() protected parent: FormElementComponent,
@@ -75,6 +76,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 		if (isValueSet(changes.options)) {
 			this.lastItemIndexReached = -1;
 		}
+		this.dropdownPositionToUse = this.dropdownPosition;
 	}
 
 	getDefaultTranslation(key: string): (x: any) => string {
@@ -106,6 +108,9 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	}
 
 	onOpen(): void {
+		if (this.orientation === 'horizontal' && !isValueSet(this.dropdownPosition)) {
+			this.determineDropdownPosition();
+		}
 		// waiting for the thing to render until we fire the event
 		setTimeout(() => {
 			this.onOpened.emit();
@@ -118,6 +123,37 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 				dropdownPanel.style.width = `${maxWidth + 40}px`;
 			}
 		});
+	}
+
+	private determineDropdownPosition(): void {
+		let current = this.elRef.nativeElement;
+		while (current.parentElement && !this.isLimitingContainer(current)) {
+			current = current.parentElement;
+		}
+		const topSpace = this.elRef.nativeElement.getBoundingClientRect().top - current.getBoundingClientRect().top;
+		const bottomSpace = current.clientHeight - topSpace;
+		if (bottomSpace >= 285) {
+			this.dropdownPositionToUse = 'bottom';
+		} else {
+			this.dropdownPositionToUse = 'top';
+		}
+	}
+
+	private isLimitingContainer(element: Element): boolean {
+		const style = getComputedStyle(element);
+		if (style.overflowY === 'auto') {
+			return true;
+		}
+		if (style.overflow === 'auto') {
+			return true;
+		}
+		if (style.overflowY === 'scroll') {
+			return true;
+		}
+		if (style.overflow === 'scroll') {
+			return true;
+		}
+		return false;
 	}
 
 	public focus = (): void => {

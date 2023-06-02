@@ -44,7 +44,10 @@ export class AppComponent {
 		{id: 4, name: 'kkk'},
 		{id: 5, name: 'lll'},
 		{id: 6, name: 'mmm'},
-		{id: 7, name: 'nnn'}
+		{id: 7, name: 'mmm'},
+		{id: 8, name: 'mmm'},
+		{id: 9, name: 'mmm'},
+		{id: 10, name: 'nnn'}
 	];
 
 	constructor(private fb: UntypedFormBuilder) {

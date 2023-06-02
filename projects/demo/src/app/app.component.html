@@ -1,52 +1,54 @@
 <klp-form [formGroup]="myForm">
-	<klp-form-element caption="Name" spaceDistribution="34-66">
-		<klp-form-text-input formControlName="name">
-		</klp-form-text-input>
-	</klp-form-element>
-	<klp-form-element caption="radioButtons" spaceDistribution="34-66">
-		<klp-form-radio formControlName="radioOption" [options]="radioOptions">
-		</klp-form-radio>
-	</klp-form-element>
-	{{myForm.get('emails').value}}
-	<klp-form-element caption="Emails" spaceDistribution="34-66">
-		<klp-form-text-input formControlName="emails" [innerValueChangeInterceptor]="innerValueChangeInterceptor" (onBlur)="blurry()">
-		</klp-form-text-input>
-	</klp-form-element>
-	<klp-form-element caption="disabledButRendered" spaceDistribution="34-66">
-		<klp-form-text-input formControlName="disabledButRendered" [innerValueChangeInterceptor]="innerValueChangeInterceptor" (onBlur)="blurry()">
-		</klp-form-text-input>
-	</klp-form-element>
-	<klp-form-element *ngIf="false" caption="unrendered" spaceDistribution="34-66">
-		<klp-form-text-input formControlName="unrendered" [innerValueChangeInterceptor]="innerValueChangeInterceptor" (onBlur)="blurry()">
-		</klp-form-text-input>
-	</klp-form-element>
-	<klp-form-element caption="Yes or no" spaceDistribution="34-66">
-		<klp-form-toggle formControlName="yesno">
-		</klp-form-toggle>
-	</klp-form-element>
-	<klp-form-element caption="Yes or no2">
-		<klp-form-toggle formControlName="yesno2">
-		</klp-form-toggle>
-	</klp-form-element>
-	<klp-form-element caption="select something">
-		<klp-form-select [options]="options" [multiple]="true" placeholder="Pick something will ya" formControlName="selector" (onSearch)="search($event)" (onEndReached)="loadMore()" (onBlur)="logSomething()"></klp-form-select>
-	</klp-form-element>
-	<klp-form-element>
-		<klp-form-text-input formControlName="emails"></klp-form-text-input>
-	</klp-form-element>
-	<ng-container *ngFor="let email of emails; index as idx">
-		<klp-sub-form [injectInto]="subbies" [at]="idx">
+	<div style="height: 500px; overflow: auto">
+		<klp-form-element caption="Name" spaceDistribution="34-66">
+			<klp-form-text-input formControlName="name">
+			</klp-form-text-input>
+		</klp-form-element>
+		<klp-form-element caption="radioButtons" spaceDistribution="34-66">
+			<klp-form-radio formControlName="radioOption" [options]="radioOptions">
+			</klp-form-radio>
+		</klp-form-element>
+		{{myForm.get('emails').value}}
+		<klp-form-element caption="Emails" spaceDistribution="34-66">
+			<klp-form-text-input formControlName="emails" [innerValueChangeInterceptor]="innerValueChangeInterceptor" (onBlur)="blurry()">
+			</klp-form-text-input>
+		</klp-form-element>
+		<klp-form-element caption="disabledButRendered" spaceDistribution="34-66">
+			<klp-form-text-input formControlName="disabledButRendered" [innerValueChangeInterceptor]="innerValueChangeInterceptor" (onBlur)="blurry()">
+			</klp-form-text-input>
+		</klp-form-element>
+		<klp-form-element *ngIf="false" caption="unrendered" spaceDistribution="34-66">
+			<klp-form-text-input formControlName="unrendered" [innerValueChangeInterceptor]="innerValueChangeInterceptor" (onBlur)="blurry()">
+			</klp-form-text-input>
+		</klp-form-element>
+		<klp-form-element caption="Yes or no" spaceDistribution="34-66">
+			<klp-form-toggle formControlName="yesno">
+			</klp-form-toggle>
+		</klp-form-element>
+		<klp-form-element caption="Yes or no2">
+			<klp-form-toggle formControlName="yesno2">
+			</klp-form-toggle>
+		</klp-form-element>
+		<klp-form-element caption="select something" style="margin-top: 200px; margin-bottom: 100px;">
+			<klp-form-select [options]="options" [multiple]="true" placeholder="Pick something will ya" formControlName="selector" (onSearch)="search($event)" (onEndReached)="loadMore()" (onBlur)="logSomething()"></klp-form-select>
+		</klp-form-element>
+		<klp-form-element>
+			<klp-form-text-input formControlName="emails"></klp-form-text-input>
+		</klp-form-element>
+		<ng-container *ngFor="let email of emails; index as idx">
+			<klp-sub-form [injectInto]="subbies" [at]="idx">
+				<app-sub-form-example></app-sub-form-example>
+			</klp-sub-form>
+		</ng-container>
+		<klp-sub-form *ngIf="showSubForm" [injectInto]="myForm" at="oli">
+			blaaaa
 			<app-sub-form-example></app-sub-form-example>
 		</klp-sub-form>
-	</ng-container>
-	<klp-sub-form *ngIf="showSubForm" [injectInto]="myForm" at="oli">
-		blaaaa
-		<app-sub-form-example></app-sub-form-example>
-	</klp-sub-form>
-	<klp-form-submit-button [before]="beforeSubmit" [after]="afterSubmit" [submitCallback]="submitForm">
-		Submit
-	</klp-form-submit-button>
-	<klp-form-button variant="redOutlined" size="large" [disabled]="true">Red</klp-form-button>
+		<klp-form-submit-button [before]="beforeSubmit" [after]="afterSubmit" [submitCallback]="submitForm">
+			Submit
+		</klp-form-submit-button>
+		<klp-form-button variant="redOutlined" size="large" [disabled]="true">Red</klp-form-button>
+	</div>
 </klp-form>
 
 <klp-form-select [options]="options" [multiple]="true"></klp-form-select>
