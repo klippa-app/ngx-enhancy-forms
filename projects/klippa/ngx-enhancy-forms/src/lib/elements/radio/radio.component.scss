@@ -9,7 +9,7 @@
 	position: relative;
 	display: flex;
 
-	&.column {
+	&.verticallyOriented {
 		flex-direction: column;
 		.optionContainer {
 			margin-bottom: $spacing-tiny;
@@ -18,7 +18,7 @@
 			}
 		}
 	}
-	&.row {
+	&.horizontallyOriented {
 		flex-direction: row;
 		.optionContainer {
 			&:first-child {

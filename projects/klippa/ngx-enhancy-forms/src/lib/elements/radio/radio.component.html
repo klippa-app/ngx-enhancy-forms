@@ -1,4 +1,4 @@
-<div class="componentContainer" [class]="orientation">
+<div class="componentContainer" [ngClass]="{'verticallyOriented': orientation === Orientation.COLUMN, 'horizontallyOriented': orientation === Orientation.ROW}">
 	<ng-container *ngFor="let option of options">
 		<button class="optionContainer"
 			[ngClass]="{classic: variant === 'classic', button: variant === 'button', isSelected: innerValue === option.id}"
