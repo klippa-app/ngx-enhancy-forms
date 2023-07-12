@@ -75,6 +75,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	ngOnChanges(changes: SimpleChanges): void {
 		if (isValueSet(changes.options)) {
 			this.lastItemIndexReached = -1;
+			this.setWidthBasedOnOptionsWidths();
 		}
 		this.dropdownPositionToUse = this.dropdownPosition;
 	}
@@ -114,15 +115,21 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 		// waiting for the thing to render until we fire the event
 		setTimeout(() => {
 			this.onOpened.emit();
-			if (this.truncateOptions === false) {
-				const widths: Array<number> = Array.from(this.elRef.nativeElement.querySelectorAll('.ng-option div')).map(
-					(e: any) => e.scrollWidth,
-				);
-				const maxWidth = Math.max(...widths);
-				const dropdownPanel = this.elRef.nativeElement.querySelector('ng-dropdown-panel');
+			this.setWidthBasedOnOptionsWidths();
+		});
+	}
+
+	private setWidthBasedOnOptionsWidths(): void {
+		if (this.truncateOptions === false) {
+			const widths: Array<number> = Array.from(this.elRef.nativeElement.querySelectorAll('.ng-option div')).map(
+				(e: any) => e.scrollWidth,
+			);
+			const maxWidth = Math.max(...widths);
+			const dropdownPanel = this.elRef.nativeElement.querySelector('ng-dropdown-panel');
+			if (dropdownPanel) {
 				dropdownPanel.style.width = `${maxWidth + 40}px`;
 			}
-		});
+		}
 	}
 
 	private determineDropdownPosition(): void {
