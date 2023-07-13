@@ -250,11 +250,14 @@ ng-select.showErrors {
   background-color:#fff;
   color:rgba(0,0,0,0.87);
 	padding: 8px 10px;
-
+	div {
+		white-space: nowrap;
+	}
+}
+:host .ng-select.truncateOptions ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option{
 	div {
 		overflow: hidden;
 		text-overflow: ellipsis;
-		white-space: nowrap;
 	}
 }
 :host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected{
