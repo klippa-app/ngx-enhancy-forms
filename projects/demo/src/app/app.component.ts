@@ -38,19 +38,22 @@ export class AppComponent {
 
 	subForms = [];
 	options: AppSelectOptions = [
-		{id: 1, name: 'a111'},
-		{id: 2, name: 'looooong gekwhjg kehjw gkjehw gjkehw gjkh ghegkw egwhj ej wgklej gklej glkj gklj gljkl gewgjkew'},
-		{id: 3, name: 'jjj'},
-		{id: 4, name: 'kkk'},
-		{id: 5, name: 'lll'},
-		{id: 6, name: 'mmm'},
-		{id: 7, name: 'mmm'},
-		{id: 8, name: 'mmm'},
-		{id: 9, name: 'mmm'},
-		{id: 10, name: 'nnn'}
+		{id: 1, name: 'dra'},
+		// {id: 2, name: 'looooong gekwhjg kehjw gkjehw gjkehw gjkh ghegkw egwhj ej wgklej gklej glkj gklj gljkl gewgjkew'},
+		// {id: 3, name: 'jjj'},
+		// {id: 4, name: 'kkk'},
+		// {id: 5, name: 'lll'},
+		// {id: 6, name: 'mmm'},
+		// {id: 7, name: 'mmm'},
+		// {id: 8, name: 'mmm'},
+		// {id: 9, name: 'mmm'},
+		// {id: 10, name: 'nnn'}
 	];
 
 	constructor(private fb: UntypedFormBuilder) {
+		setTimeout(() => {
+			this.options = [...this.options, {id : this.options.length, name: 'BLAAAAAAAAAAAAAAAAAAAAAAATBLAAAAAAAAAAAAAAAAAAAAAAATBLAAAAAAAAAAAAAAAAAAAAAAATBLAAAAAAAAAAAAAAAAAAAAAAATBLAAAAAAAAAAAAAAAAAAAAAAATBLAAAAAAAAAAAAAAA'}];
+		}, 1000);
 		this.myForm.patchValue({
 			oli: {
 				name: 'zaag'

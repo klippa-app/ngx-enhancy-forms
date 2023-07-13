@@ -121,14 +121,28 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 
 	private setWidthBasedOnOptionsWidths(): void {
 		if (this.truncateOptions === false) {
-			const widths: Array<number> = Array.from(this.elRef.nativeElement.querySelectorAll('.ng-option div')).map(
-				(e: any) => e.scrollWidth,
-			);
-			const maxWidth = Math.max(...widths);
-			const dropdownPanel = this.elRef.nativeElement.querySelector('ng-dropdown-panel');
-			if (dropdownPanel) {
-				dropdownPanel.style.width = `${maxWidth + 40}px`;
-			}
+			setTimeout(() => {
+				const widths: Array<number> = Array.from(this.elRef.nativeElement.querySelectorAll('.ng-option div')).map(
+					(e: any) => e.scrollWidth,
+				);
+				const maxWidth = Math.max(...widths);
+				const dropdownPanel = this.elRef.nativeElement.querySelector('ng-dropdown-panel');
+				if (dropdownPanel) {
+					dropdownPanel.style.width = `${maxWidth + 40}px`;
+				}
+
+				let current = this.elRef.nativeElement;
+				while (current.parentElement && !this.isLimitingContainer(current)) {
+					current = current.parentElement;
+				}
+
+				if (dropdownPanel) {
+					const overflow = dropdownPanel.getBoundingClientRect().left + maxWidth + 40 - current.clientWidth;
+					if (overflow > 0) {
+						dropdownPanel.style.left = `-${overflow}px`;
+					}
+				}
+			});
 		}
 	}
 
