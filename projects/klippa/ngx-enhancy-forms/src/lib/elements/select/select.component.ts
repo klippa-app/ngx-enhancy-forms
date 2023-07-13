@@ -137,9 +137,9 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 				}
 
 				if (dropdownPanel) {
-					const overflow = dropdownPanel.getBoundingClientRect().left + maxWidth + 40 - current.clientWidth;
-					if (overflow > 0) {
-						dropdownPanel.style.left = `-${overflow}px`;
+					const spaceLeft = (current.clientWidth + current.getBoundingClientRect().left) - (dropdownPanel.clientWidth + dropdownPanel.getBoundingClientRect().left) - 20;
+					if (spaceLeft < 0) {
+						dropdownPanel.style.left = `${spaceLeft}px`;
 					}
 				}
 			});

@@ -52,7 +52,7 @@ export class AppComponent {
 
 	constructor(private fb: UntypedFormBuilder) {
 		setTimeout(() => {
-			this.options = [...this.options, {id : this.options.length, name: 'BLAAAAAAAAAAAAAAAAAAAAAAATBLAAAAAAAAAAAAAAAAAAAAAAATBLAAAAAAAAAAAAAAAAAAAAAAATBLAAAAAAAAAAAAAAAAAAAAAAATBLAAAAAAAAAAAAAAAAAAAAAAATBLAAAAAAAAAAAAAAA'}];
+			this.options = [...this.options, {id : this.options.length, name: 'BLAAAAAAAAAAAAAAAAAAAAAAATBLAAAAAAAaaaaeghjwghwgkehwgkjehwjkghewkghe'}];
 		}, 1000);
 		this.myForm.patchValue({
 			oli: {
