@@ -262,6 +262,9 @@ ng-select.showErrors {
 		text-overflow: ellipsis;
 	}
 }
+:host .ng-select.withSeparatingLine ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option{
+	border-bottom: 1px solid #e3e3e3;
+}
 :host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected{
   color:#333;
   background-color:$color-marked;
