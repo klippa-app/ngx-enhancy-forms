@@ -102,6 +102,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 			this.onEndReached.emit();
 		}
 		this.lastItemIndexReached = Math.max(lastItemIndex, this.lastItemIndexReached);
+		this.setWidthBasedOnOptionsWidths();
 	}
 
 	searchQueryChanged(searchQuery: string): void {
@@ -128,7 +129,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 				const maxWidth = Math.max(...widths);
 				const dropdownPanel = this.elRef.nativeElement.querySelector('ng-dropdown-panel');
 				if (dropdownPanel) {
-					dropdownPanel.style.width = `${maxWidth + 40}px`;
+					dropdownPanel.style.width = `${Math.max(this.elRef.nativeElement.clientWidth, maxWidth + 40, dropdownPanel.getBoundingClientRect().width)}px`;
 				}
 
 				let current = this.elRef.nativeElement;
