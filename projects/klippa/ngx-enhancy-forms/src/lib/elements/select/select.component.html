@@ -19,6 +19,7 @@
 	[virtualScroll]="true"
 	(scroll)="onScroll($event.end)"
 	(open)="onOpen()"
+	(close)="onClose()"
 >
 	<ng-template let-item="item" ng-option-tmp>
 		<ng-container *ngIf="customOptionTpl" [ngTemplateOutlet]="customOptionTpl" [ngTemplateOutletContext]="{item: item}"></ng-container>

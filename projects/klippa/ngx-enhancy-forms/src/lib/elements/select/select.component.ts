@@ -55,6 +55,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	@Output() public onSearch = new EventEmitter<string>();
 	@Output() public onEndReached = new EventEmitter<void>();
 	@Output() public onOpened = new EventEmitter<void>();
+	@Output() public onClosed = new EventEmitter<void>();
 	@Output() public onBlur = new EventEmitter<void>();
 	@Output() public onClear = new EventEmitter<void>();
 	@ViewChild('ngSelect') ngSelect;
@@ -181,5 +182,9 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 
 	public focus = (): void => {
 		this.ngSelect.focus();
+	}
+
+	public onClose(): void {
+		this.onClosed.emit();
 	}
 }
