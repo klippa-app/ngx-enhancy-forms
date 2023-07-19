@@ -185,6 +185,9 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	}
 
 	public onClose(): void {
-		this.onClosed.emit();
+		// Give angular a second to render the closed situation before emitting the close event
+		setTimeout(() => {
+			this.onClosed.emit();
+		});
 	}
 }
