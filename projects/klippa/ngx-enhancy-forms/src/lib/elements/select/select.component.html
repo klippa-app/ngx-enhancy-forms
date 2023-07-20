@@ -13,6 +13,7 @@
 	(blur)="touch(); onBlur.emit()"
 	(clear)="onClear.emit()"
 	(search)="searchQueryChanged($event.term)"
+	[searchable]="searchable"
 	[dropdownPosition]="dropdownPositionToUse"
 	[searchFn]="customSearchFn"
 	[selectOnTab]="true"
