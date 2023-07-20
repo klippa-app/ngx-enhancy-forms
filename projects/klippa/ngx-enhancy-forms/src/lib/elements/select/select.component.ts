@@ -49,6 +49,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	@Input() clearable = true;
 	@Input() truncateOptions = true;
 	@Input() withSeparatingLine = false;
+	@Input() searchable = true;
 	@Input() public dropdownPosition: 'auto' | 'bottom' | 'top' | 'left' | 'right' = null;
 	@Input() public customSearchFn: (term: string, item: { id: string; name: string; description: string }) => boolean;
 	@Input() public footerElement: TemplateRef<any>;
