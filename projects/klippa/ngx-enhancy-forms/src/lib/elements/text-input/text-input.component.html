@@ -5,7 +5,7 @@
 	<input
 		[type]="type"
 		[(ngModel)]="innerValue"
-		[ngClass]="{showErrors: isInErrorState(), hasIcon: icon?.length > 0, hasClearButton: clearable, noBorder: !hasBorder}"
+		[ngClass]="{showErrors: isInErrorState(), hasIcon: icon?.length > 0, hasClearButton: clearable, noBorderLeft: !hasBorderLeft, noBorderRight: !hasBorderRight}"
 		(input)="setInnerValueAndNotify($event.target.value)"
 		[placeholder]="placeholder ? placeholder : ''"
 		(blur)="touch(); onBlur.emit()"

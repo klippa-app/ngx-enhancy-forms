@@ -30,8 +30,11 @@ input {
 	&.hasClearButton {
 		padding-right: $spacing-large;
 	}
-	&.noBorder {
-		border: none;
+	&.noBorderLeft {
+		border-left: none;
+	}
+	&.noBorderRight {
+		border-right: none;
 	}
 }
 
