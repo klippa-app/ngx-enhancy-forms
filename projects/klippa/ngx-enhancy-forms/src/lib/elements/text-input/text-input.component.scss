@@ -30,6 +30,9 @@ input {
 	&.hasClearButton {
 		padding-right: $spacing-large;
 	}
+	&.noBorder {
+		border: none;
+	}
 }
 
 .clearIcon {

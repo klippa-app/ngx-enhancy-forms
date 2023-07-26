@@ -4,8 +4,8 @@
 	</ng-container>
 	<input
 		[type]="type"
-		[ngClass]="{showErrors: isInErrorState(), hasIcon: icon?.length > 0, hasClearButton: clearable}"
 		[(ngModel)]="innerValue"
+		[ngClass]="{showErrors: isInErrorState(), hasIcon: icon?.length > 0, hasClearButton: clearable, noBorder: !hasBorder}"
 		(input)="setInnerValueAndNotify($event.target.value)"
 		[placeholder]="placeholder ? placeholder : ''"
 		(blur)="touch(); onBlur.emit()"

@@ -13,5 +13,6 @@ export class TextInputComponent extends ValueAccessorBase<string> {
 	@Input() type: 'text' | 'password' = 'text';
 	@Input() clearable = false;
 	@Input() icon: 'search';
+	@Input() hasBorder = true;
 	@Output() onBlur = new EventEmitter<void>();
 }
