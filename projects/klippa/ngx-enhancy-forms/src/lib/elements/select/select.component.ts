@@ -1,4 +1,5 @@
 import {
+	AfterViewInit,
 	Component,
 	ContentChild,
 	Directive,
@@ -40,8 +41,9 @@ export class KlpSelectOptionTemplateDirective {}
 	styleUrls: ['./select.component.scss'],
 	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: SelectComponent, multi: true}],
 })
-export class SelectComponent extends ValueAccessorBase<string | string[]> implements OnChanges{
+export class SelectComponent extends ValueAccessorBase<string | string[]> implements OnChanges, AfterViewInit{
 	@Input() placeholder: string;
+	@Input() prefix: string;
 	@Input() orientation: 'vertical' | 'horizontal' = 'horizontal';
 	@Input() options: AppSelectOptions;
 	@Input() multiple = false;
@@ -74,6 +76,20 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 		super(parent, controlContainer);
 	}
 
+	ngAfterViewInit(): void {
+		this.addPrefix();
+	}
+
+
+	private addPrefix(): void {
+		if (stringIsSetAndFilled(this.prefix)) {
+			const container = this.elRef.nativeElement.querySelector('.ng-select-container');
+			const newNode = document.createElement('div');
+			newNode.className = 'prefix';
+			newNode.innerText = this.prefix;
+			container.insertBefore(newNode, container.children[0]);
+		}
+	}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (isValueSet(changes.options)) {

@@ -29,9 +29,9 @@
 			<klp-form-toggle formControlName="yesno2">
 			</klp-form-toggle>
 		</klp-form-element>
-		<div style="width: 200px; margin-left: 500px;">
+		<div style="width: 400px; margin-left: 500px;">
 			<klp-form-element caption="select something" style="margin-top: 200px; margin-bottom: 100px;">
-				<klp-form-select [truncateOptions]="false" [options]="options" [multiple]="true" placeholder="Pick" formControlName="selector" (onSearch)="search($event)" (onEndReached)="loadMore()" (onBlur)="logSomething()"></klp-form-select>
+				<klp-form-select prefix="smeerpijp" [truncateOptions]="false" [options]="options" [multiple]="true" placeholder="Pick" formControlName="selector" (onSearch)="search($event)" (onEndReached)="loadMore()" (onBlur)="logSomething()"></klp-form-select>
 			</klp-form-element>
 		</div>
 		<klp-form-element>
