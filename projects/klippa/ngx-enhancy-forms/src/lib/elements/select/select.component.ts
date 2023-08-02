@@ -151,15 +151,18 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 					dropdownPanel.style.width = `${Math.max(this.elRef.nativeElement.clientWidth, maxWidth + 40, dropdownPanel.getBoundingClientRect().width)}px`;
 				}
 
-				let current = this.elRef.nativeElement;
-				while (current.parentElement && !this.isLimitingContainer(current)) {
-					current = current.parentElement;
+				let limitingParentContainer = this.elRef.nativeElement;
+				while (limitingParentContainer.parentElement && !this.isLimitingContainer(limitingParentContainer)) {
+					limitingParentContainer = limitingParentContainer.parentElement;
 				}
 
 				if (dropdownPanel) {
-					const spaceLeft = (current.clientWidth + current.getBoundingClientRect().left) - (dropdownPanel.clientWidth + dropdownPanel.getBoundingClientRect().left) - 20;
-					if (spaceLeft < 0) {
-						dropdownPanel.style.left = `${spaceLeft}px`;
+					const spaceInParent = limitingParentContainer.clientWidth;
+					const spaceLeftOfElRef = this.elRef?.nativeElement.getBoundingClientRect().left - limitingParentContainer.getBoundingClientRect().left;
+					const spaceRightOfElRef = spaceInParent - spaceLeftOfElRef;
+					const shiftToLeft = dropdownPanel?.clientWidth - spaceRightOfElRef + 20;
+					if (shiftToLeft > 0) {
+						dropdownPanel.style.left = `-${shiftToLeft}px`;
 					}
 				}
 			});
