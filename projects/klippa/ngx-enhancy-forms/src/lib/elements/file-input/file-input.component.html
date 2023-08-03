@@ -1,8 +1,5 @@
 <div class="componentContainer" [ngClass]="{fullParentSize: useFullParentSize}">
 	<div class="buttonContainer">
-		<klp-form-button class="uploadButton" [isLoading]="isLoading" (click)="uploadFileClicked()">
-			Upload a file
-		</klp-form-button>
 		<input
 			type="file"
 			#nativeInputRef
@@ -10,6 +7,9 @@
 			[multiple]="multiple"
 			[disabled]="disabled"
 		>
+		<klp-form-button class="uploadButton" [isLoading]="isLoading" (click)="uploadFileClicked()">
+			Upload a file
+		</klp-form-button>
 	</div>
 	<div class="fileName" *ngIf="!onlyShowUploadButton">
 		{{getFileNames()}}
