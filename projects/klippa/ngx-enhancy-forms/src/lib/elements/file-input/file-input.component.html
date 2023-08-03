@@ -1,15 +1,15 @@
 <div class="componentContainer" [ngClass]="{fullParentSize: useFullParentSize}">
 	<div class="buttonContainer">
+	<input
+  		type="file"
+  		#nativeInputRef
+  		(change)="onChange($event.target.files)"
+  		[multiple]="multiple"
+  		[disabled]="disabled"
+  	>
 		<klp-form-button class="uploadButton" [isLoading]="isLoading" (click)="uploadFileClicked()">
-			Upload a file
+				Upload a file
 		</klp-form-button>
-		<input
-			type="file"
-			#nativeInputRef
-			(change)="onChange($event.target.files)"
-			[multiple]="multiple"
-			[disabled]="disabled"
-		>
 	</div>
 	<div class="fileName" *ngIf="!onlyShowUploadButton">
 		{{getFileNames()}}
