@@ -39,10 +39,9 @@ export class FormElementComponent {
 	private input: ValueAccessorBase<any>;
 
 	constructor(
-		@Host() @Optional() private parent: FormComponent,
+		 @Optional() private parent: FormComponent,
 		@Inject(FORM_ERROR_MESSAGES) @Optional() private customMessages: CustomErrorMessages,
-	) {
-	}
+	) {}
 
 	public shouldShowErrorMessages(): boolean {
 		return this.parent?.showErrorMessages !== false;
