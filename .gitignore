@@ -46,3 +46,9 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Devenv
+.devenv*
+.direnv*
+devenv.local.nix
+.envrc
