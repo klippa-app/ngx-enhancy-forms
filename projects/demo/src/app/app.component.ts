@@ -23,6 +23,7 @@ export class AppComponent {
 	isChecked: boolean = undefined;
 
 	public myForm = this.fb.group({
+		deepInput: ['', Validators.required],
 		name: [''],
 		emails: [''],
 		disabledButRendered: ['disabledButRendered'],

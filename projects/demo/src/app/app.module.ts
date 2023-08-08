@@ -6,6 +6,7 @@ import {AppComponent} from './app.component';
 import {NgxEnhancyFormsModule} from '@klippa/ngx-enhancy-forms';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SubFormExampleComponent} from './subForm/sub-form-example.component';
+import DeepInputComponent from './deep-input/deep-input.component';
 
 @NgModule({
 	imports: [
@@ -18,6 +19,7 @@ import {SubFormExampleComponent} from './subForm/sub-form-example.component';
 	declarations: [
 		AppComponent,
 		SubFormExampleComponent,
+		DeepInputComponent,
 	],
 	providers: [],
 	bootstrap: [AppComponent]
