@@ -203,6 +203,9 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	public focus = (): void => {
 		this.ngSelect.focus();
 	}
+	public close = (): void => {
+		this.ngSelect.close();
+	}
 
 	public onClose(): void {
 		// Give angular a second to render the closed situation before emitting the close event
