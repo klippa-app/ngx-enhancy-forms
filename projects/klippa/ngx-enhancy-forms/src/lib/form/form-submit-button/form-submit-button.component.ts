@@ -1,6 +1,14 @@
 import { Component, Host, HostBinding, Input, Optional } from '@angular/core';
 import {FormComponent, invalidFieldsSymbol} from '../form.component';
 import {isNullOrUndefined} from '../../util/values';
+import { ButtonVariant } from '../../elements/button/button.component';
+
+export type SubmitButtonVariant = Extract<ButtonVariant,
+	| 'greenFilled'
+	| 'redFilled'
+	| 'greenOutlined'
+	| 'white'
+>;
 
 @Component({
 	selector: 'klp-form-submit-button',
@@ -10,7 +18,7 @@ import {isNullOrUndefined} from '../../util/values';
 export class FormSubmitButtonComponent {
 	@Input() public isLoading = false;
 	@Input() fullWidth = false;
-	@Input() variant: 'greenFilled' | 'redFilled' | 'greenOutlined' = 'greenFilled';
+	@Input() variant: SubmitButtonVariant = 'greenFilled';
 	@Input() public before: () => Promise<any> = () => Promise.resolve();
 	@Input() public after: () => Promise<any> = () => Promise.resolve();
 	@Input() public submitCallback: (renderedAndEnabledValues: object, renderedButDisabledValues: object) => Promise<any>;

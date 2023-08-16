@@ -1,21 +1,22 @@
 import { Component, HostBinding, Input } from '@angular/core';
 import {isValueSet} from "../../util/values";
 
-@Component({
-	selector: 'klp-form-button',
-	templateUrl: './button.component.html',
-	styleUrls: ['./button.component.scss'],
-})
-export class ButtonComponent {
-	@Input() variant:
-		| 'white'
+export type ButtonVariant = 'white'
 		| 'greenFilled'
 		| 'greenOutlined'
 		| 'greenLink'
 		| 'contextMenuItem'
 		| 'redFilled'
 		| 'redOutlined'
-		| 'orangeFilled' = 'white';
+		| 'orangeFilled';
+
+@Component({
+	selector: 'klp-form-button',
+	templateUrl: './button.component.html',
+	styleUrls: ['./button.component.scss'],
+})
+export class ButtonComponent {
+	@Input() variant: ButtonVariant = 'white';
 	@Input() size: 'small' | 'medium' | 'large' = 'medium';
 	@Input() fullWidth = false;
 	@Input() hasBorder = true;
