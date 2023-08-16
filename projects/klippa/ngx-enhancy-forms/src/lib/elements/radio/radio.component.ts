@@ -2,10 +2,8 @@ import { Component, Input} from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessorBase } from '../value-accessor-base/value-accessor-base.component';
 
-export enum Orientation {
-	COLUMN = 'column',
-	ROW = 'row'
-}
+export type RadioVariant = 'classic' | 'button';
+export type RadioOrientation = 'column' | 'row';
 export type RadioOptions = Array<RadioOption>;
 export type RadioOption = {
 	id: any;
@@ -21,8 +19,7 @@ export type RadioOption = {
 })
 export class RadioComponent extends ValueAccessorBase<string>{
 	@Input() options: RadioOptions;
-	@Input() orientation: Orientation = Orientation.ROW;
-	@Input() variant: 'classic' | 'button' = 'classic';
-	public Orientation = Orientation;
+	@Input() orientation: RadioOrientation = 'row';
+	@Input() variant: RadioVariant = 'classic';
 }
 
