@@ -61,7 +61,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	@Output() public onClosed = new EventEmitter<void>();
 	@Output() public onBlur = new EventEmitter<void>();
 	@Output() public onClear = new EventEmitter<void>();
-	@Output() public onEnterKey = new EventEmitter<void>();
+	@Output() public onEnterKey = new EventEmitter<string>();
 	@ViewChild('ngSelect') ngSelect;
 	@ContentChild(KlpSelectOptionTemplateDirective, { read: TemplateRef }) customOptionTpl: TemplateRef<any>;
 
@@ -84,7 +84,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 
 	private keyListener = (e) => {
 		if (e.key === 'Enter') {
-			this.onEnterKey.emit();
+			this.onEnterKey.emit(e.target.value);
 		}
 	}
 
