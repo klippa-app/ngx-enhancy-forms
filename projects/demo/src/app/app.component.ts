@@ -173,4 +173,8 @@ export class AppComponent {
 	blurry() {
 		console.log('blurr');
 	}
+
+	enterKeyPressed() {
+		console.log('kek');
+	}
 }

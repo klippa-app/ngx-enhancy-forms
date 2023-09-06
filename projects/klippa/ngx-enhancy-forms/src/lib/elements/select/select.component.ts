@@ -9,7 +9,7 @@ import {
 	Inject,
 	InjectionToken,
 	Input,
-	OnChanges,
+	OnChanges, OnDestroy,
 	Optional,
 	Output,
 	SimpleChanges,
@@ -41,7 +41,7 @@ export class KlpSelectOptionTemplateDirective {}
 	styleUrls: ['./select.component.scss'],
 	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: SelectComponent, multi: true}],
 })
-export class SelectComponent extends ValueAccessorBase<string | string[]> implements OnChanges, AfterViewInit{
+export class SelectComponent extends ValueAccessorBase<string | string[]> implements OnChanges, AfterViewInit, OnDestroy{
 	@Input() placeholder: string;
 	@Input() prefix: string;
 	@Input() orientation: 'vertical' | 'horizontal' = 'horizontal';
@@ -61,6 +61,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	@Output() public onClosed = new EventEmitter<void>();
 	@Output() public onBlur = new EventEmitter<void>();
 	@Output() public onClear = new EventEmitter<void>();
+	@Output() public onEnterKey = new EventEmitter<string>();
 	@ViewChild('ngSelect') ngSelect;
 	@ContentChild(KlpSelectOptionTemplateDirective, { read: TemplateRef }) customOptionTpl: TemplateRef<any>;
 
@@ -78,8 +79,14 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 
 	ngAfterViewInit(): void {
 		this.addPrefix();
+		this.elRef.nativeElement.querySelector('input').addEventListener('keydown', this.keyListener);
 	}
 
+	private keyListener = (e) => {
+		if (e.key === 'Enter') {
+			this.onEnterKey.emit(e.target.value);
+		}
+	}
 
 	private addPrefix(): void {
 		if (stringIsSetAndFilled(this.prefix)) {
@@ -212,5 +219,10 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 		setTimeout(() => {
 			this.onClosed.emit();
 		});
+	}
+
+	ngOnDestroy(): void {
+		super.ngOnDestroy();
+		this.elRef.nativeElement?.querySelector('input')?.removeEventListener('keydown', this.keyListener);
 	}
 }
