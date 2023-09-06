@@ -37,12 +37,12 @@
 	flex: 0 0 auto;
 	padding-right: $spacing-medium;
 	&.percentageSpacing {
-		flex: 0 0 40%;
+		flex: 40;
 		&.d30-70 {
-			flex-basis: 30%;
+			flex: 30;
 		}
 		&.d34-66 {
-			flex-basis: 34%;
+			flex: 34;
 		}
 	}
 	color: $default-dark;
@@ -67,12 +67,12 @@
 .inputContainer {
 	flex: 1;
 	&.percentageSpacing {
-		flex: 0 0 60%;
+		flex: 60;
 		&.d30-70 {
-			flex-basis: 70%;
+			flex: 70;
 		}
 		&.d34-66 {
-			flex-basis: 66%;
+			flex: 66;
 		}
 	}
 }
