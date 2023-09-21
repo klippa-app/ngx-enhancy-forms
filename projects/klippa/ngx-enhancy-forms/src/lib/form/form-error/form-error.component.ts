@@ -10,7 +10,6 @@ import {ErrorTypes} from "../../types";
 })
 export class FormErrorComponent implements OnInit {
 	@Input() error: ErrorTypes;
-	@Input() showErrorValueAsMessage: boolean = false;
 	public showError = false;
 	@ViewChild('contentRef') public contentRef: ElementRef;
 	constructor(@Host() @Optional() private parent: FormElementComponent) {}

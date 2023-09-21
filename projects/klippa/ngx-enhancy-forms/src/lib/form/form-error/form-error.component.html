@@ -1,4 +1,4 @@
 <ng-template #contentRef>
-	<ng-content *ngIf="!showErrorValueAsMessage"></ng-content>
-	<div *ngIf="showErrorValueAsMessage">{{getErrorValueMessage()}}</div>
+	<ng-content *ngIf="error !== 'async'"></ng-content>
+	<div *ngIf="error === 'async'">{{getErrorValueMessage()}}</div>
 </ng-template>

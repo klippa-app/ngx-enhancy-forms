@@ -26,7 +26,7 @@ export class AppComponent {
 
 	public myForm = this.fb.group({
 		deepInput: ['', Validators.required],
-		name: ['', (c) => ({aap: 'noot'})],
+		name: ['', [], () => Promise.resolve({async: 'something async'}) ],
 		emails: [''],
 		disabledButRendered: ['disabledButRendered'],
 		unrendered: ['unrendered'],
