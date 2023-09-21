@@ -10,6 +10,7 @@ import {ErrorTypes} from "../../types";
 })
 export class FormErrorComponent implements OnInit {
 	@Input() error: ErrorTypes;
+	@Input() showErrorValueAsMessage: boolean = false;
 	public showError = false;
 	@ViewChild('contentRef') public contentRef: ElementRef;
 	constructor(@Host() @Optional() private parent: FormElementComponent) {}
@@ -26,5 +27,9 @@ export class FormErrorComponent implements OnInit {
 				throw new Error('You added a Form Error component without an attached Form Control');
 			}
 		});
+	}
+
+	public getErrorValueMessage(): string {
+		return this.parent.getAttachedControl().errors[this.error];
 	}
 }

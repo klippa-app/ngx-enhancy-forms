@@ -1,3 +1,4 @@
 <ng-template #contentRef>
-	<ng-content></ng-content>
+	<ng-content *ngIf="!showErrorValueAsMessage"></ng-content>
+	<div *ngIf="showErrorValueAsMessage">{{getErrorValueMessage()}}</div>
 </ng-template>

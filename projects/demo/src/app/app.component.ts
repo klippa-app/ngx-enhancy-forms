@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
-import {AppSelectOptions} from '@klippa/ngx-enhancy-forms';
+import {AppSelectOptions, SelectComponent} from '@klippa/ngx-enhancy-forms';
 
 @Component({
 	selector: 'app-root',
@@ -8,6 +8,8 @@ import {AppSelectOptions} from '@klippa/ngx-enhancy-forms';
 	styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
+	@ViewChild('selectThing') selectComponent: SelectComponent;
 
 	testDate: Array<Date> = [
 		'2022-07-06T00:00:00Z',
@@ -24,7 +26,7 @@ export class AppComponent {
 
 	public myForm = this.fb.group({
 		deepInput: ['', Validators.required],
-		name: [''],
+		name: ['', (c) => ({aap: 'noot'})],
 		emails: [''],
 		disabledButRendered: ['disabledButRendered'],
 		unrendered: ['unrendered'],
@@ -169,6 +171,7 @@ export class AppComponent {
 			name: '3rd option',
 		}
 	];
+	myValue: any;
 
 	blurry() {
 		console.log('blurr');
@@ -176,5 +179,12 @@ export class AppComponent {
 
 	enterKeyPressed() {
 		console.log('kek');
+	}
+
+	addOption($event: string) {
+		console.log($event);
+		this.options = [...this.options, {id: $event, name: $event}];
+		this.myValue = [...(this.myValue ?? []), $event];
+		this.selectComponent.close();
 	}
 }
