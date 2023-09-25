@@ -16,18 +16,18 @@ export type SubmitButtonVariant = Extract<ButtonVariant,
 	styleUrls: ['./form-submit-button.component.scss'],
 })
 export class FormSubmitButtonComponent {
-	@Input() public isLoading = false;
-	@Input() fullWidth = false;
-	@Input() variant: SubmitButtonVariant = 'greenFilled';
-	@Input() public before: () => Promise<any> = () => Promise.resolve();
-	@Input() public after: () => Promise<any> = () => Promise.resolve();
-	@Input() public submitCallback: (renderedAndEnabledValues: object, renderedButDisabledValues: object) => Promise<any>;
 
 	@HostBinding('class._fullWidth') get _() {
 		return this.fullWidth;
 	}
 
 	constructor(@Host() @Optional() private parentForm: FormComponent) {}
+	@Input() public isLoading = false;
+	@Input() fullWidth = false;
+	@Input() variant: SubmitButtonVariant = 'greenFilled';
+	@Input() public submitCallback: (renderedAndEnabledValues: object, renderedButDisabledValues: object) => Promise<any>;
+	@Input() public before: () => Promise<any> = () => Promise.resolve();
+	@Input() public after: () => Promise<any> = () => Promise.resolve();
 
 	async submitForm(): Promise<void> {
 		try {
@@ -35,25 +35,19 @@ export class FormSubmitButtonComponent {
 		} catch (e) {
 			return;
 		}
-		this.parentForm
-			.trySubmit()
-			.then(([renderedAndEnabledValues, renderedValues]) => {
-				this.isLoading = true;
-				const submitCallbackResult = this.submitCallback(renderedAndEnabledValues, renderedValues);
-				if (isNullOrUndefined(submitCallbackResult)) {
-					throw new Error('No promise is returned in your submit function.');
-				}
-				return submitCallbackResult.then(() => (this.isLoading = false)).catch((e) => {
-					this.isLoading = false;
-					throw e;
-				});
-			})
-			.catch((e) => {
-				if (e === invalidFieldsSymbol) {
-					return; // swallow the error, the framework will scroll to the field that needs attention
-				}
-				throw e;
-			});
+
+		try {
+			const [renderedAndEnabledValues, renderedValues] = await this.parentForm.trySubmit();
+			this.isLoading = true;
+			await this.submitCallback(renderedAndEnabledValues, renderedValues)
+				.finally(() => this.isLoading = false);
+		} catch (e) {
+			if (e === invalidFieldsSymbol) {
+				return;
+			}
+			throw e;
+		}
+
 		await this.after();
 	}
 }
