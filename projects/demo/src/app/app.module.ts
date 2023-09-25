@@ -9,12 +9,17 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SubFormExampleComponent} from './subForm/sub-form-example.component';
 import DeepInputComponent from './deep-input/deep-input.component';
 import { DemoComponent } from './demo/demo.component';
+import { OnSubmitErrorsComponent } from './on-submit-errors/on-submit-errors.component';
 
 const routes: Routes = [
 	{
 		path: '',
 		pathMatch: 'full',
 		component: DemoComponent,
+	},
+	{
+		path: 'submit-errors',
+		component: OnSubmitErrorsComponent,
 	}
 ];
 
@@ -32,6 +37,7 @@ const routes: Routes = [
 		SubFormExampleComponent,
 		DeepInputComponent,
 		DemoComponent,
+		OnSubmitErrorsComponent,
 	],
 	providers: [],
 	bootstrap: [AppComponent]

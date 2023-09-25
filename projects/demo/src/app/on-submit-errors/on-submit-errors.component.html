@@ -1,0 +1,9 @@
+<klp-form [formGroup]="form">
+	<klp-form-element caption="Name">
+		<klp-form-text-input formControlName="name"></klp-form-text-input>
+	</klp-form-element>
+	<klp-sub-form [injectInto]="form" at="nested">
+		<app-sub-form-example></app-sub-form-example>
+	</klp-sub-form>
+	<klp-form-submit-button [submitCallback]="onSubmit">submit</klp-form-submit-button>
+</klp-form>
