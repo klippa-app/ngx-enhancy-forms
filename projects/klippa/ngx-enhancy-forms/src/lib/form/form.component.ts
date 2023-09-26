@@ -181,6 +181,32 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		const formGroupValue = this.formGroup.value;
 		const renderedAndEnabledValues = this.getRenderedFieldValuesFormGroup(this.formGroup, true);
 		const renderedButDisabledValues = this.getRenderedFieldValuesFormGroup(this.formGroup, false);
+
+		return new Promise((resolve, reject) => {
+			if (this.formGroup.pending) {
+				const sub = this.formGroup.statusChanges.subscribe((res) => {
+					if (res !== 'PENDING') {
+						sub.unsubscribe();
+						this.handleSubmission(originalDisabledStates, renderedAndEnabledValues, renderedButDisabledValues, formGroupValue)
+						.then(resolve)
+						.catch(reject);
+					}
+				});
+			} else {
+				this.handleSubmission(originalDisabledStates, renderedAndEnabledValues, renderedButDisabledValues, formGroupValue)
+				.then(resolve)
+				.catch(reject);
+			}
+		});
+
+	}
+
+	private handleSubmission(
+		originalDisabledStates: Array<{ control: FormControl<any>; disabled: boolean }>,
+		renderedAndEnabledValues: Record<any, any>,
+		renderedButDisabledValues: Record<any, any>,
+		formGroupValue): Promise<any>
+	{
 		if (this.formGroup.invalid) {
 			this.activeControls.find((e) => !e.formControl.valid)?.formElement?.scrollTo();
 			this.setDisabledStatesForAllControls(originalDisabledStates);
