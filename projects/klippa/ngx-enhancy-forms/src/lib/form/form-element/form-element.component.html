@@ -1,5 +1,5 @@
 <ng-template #errorRef>
-	<div *ngIf="shouldShowErrorMessages() && getErrorToShow()" class="errorContainer" [ngClass]="{hasCaption: caption || captionRef, 'd30-70': spaceDistribution === '30-70', 'd34-66': spaceDistribution === '34-66'}">
+	<div *ngIf="shouldShowErrorMessages() && getErrorToShow()" class="errorContainer" [ngClass]="{hasCaption: caption || captionRef, 'd30-70': spaceDistribution === '30-70', 'd34-66': spaceDistribution === '34-66'}" [klpWithTooltip]="getErrorLocation() === 'rightOfCaption'">
 		<div *ngIf="showDefaultError('min')">{{substituteParameters(getErrorMessage("min"), {min: attachedControl.errors.min.min})}}</div>
 		<div *ngIf="showDefaultError('max')">{{substituteParameters(getErrorMessage("max"), {max: attachedControl.errors.max.max})}}</div>
 		<div *ngIf="showDefaultError('required')">{{getErrorMessage("required")}}</div>
