@@ -30,7 +30,7 @@
 			<ng-container [ngTemplateOutlet]="captionRef"></ng-container>
 			<div *ngIf="isRequired()">&nbsp;*</div>
 		</div>
-		<div *ngIf="!captionRef">{{caption}}<span *ngIf="isRequired()">&nbsp;*</span></div>
+		<div *ngIf="!captionRef" class="captionText">{{caption}}<span *ngIf="isRequired()">&nbsp;*</span></div>
 		<div class="rightOfCaptionError">
 			<ng-container *ngIf="direction === 'vertical' && getErrorLocation() === 'rightOfCaption'" [ngTemplateOutlet]="errorRef"></ng-container>
 		</div>

@@ -52,11 +52,17 @@
 	&.withErrorRightOfCaption {
 		display: flex;
 		justify-content: space-between;
-		gap: $spacing-huge;
+		gap: $spacing-normal;
+		.captionText {
+			flex: 0 1 auto;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
 		.rightOfCaptionError {
 			font-weight: normal;
 			overflow: hidden;
-			* {
+			::ng-deep * {
 				white-space: nowrap;
 				overflow: hidden;
 				text-overflow: ellipsis;

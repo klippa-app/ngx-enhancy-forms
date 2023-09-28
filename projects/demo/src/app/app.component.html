@@ -1,12 +1,14 @@
-<klp-form [formGroup]="myForm">
+<klp-form [formGroup]="myForm" errorMessageLocation="rightOfCaption">
 	<div style="height: 500px; overflow: auto">
 		<app-deep-input>
 		</app-deep-input>
-		<klp-form-element caption="Name" spaceDistribution="34-66">
-			<klp-form-text-input formControlName="name" [hasBorderLeft]="false" [hasBorderRight]="false">
-			</klp-form-text-input>
-			<klp-form-error error="async"></klp-form-error>
-		</klp-form-element>
+		<div style="width: 200px">
+			<klp-form-element caption="Name Je weet erfjwefwewkfjew" spaceDistribution="34-66" direction="vertical">
+				<klp-form-text-input formControlName="name">
+				</klp-form-text-input>
+				<klp-form-error error="async"></klp-form-error>
+			</klp-form-element>
+		</div>
 		<klp-form-element caption="radioButtons" spaceDistribution="34-66">
 			<klp-form-radio formControlName="radioOption" [options]="radioOptions">
 			</klp-form-radio>
