@@ -37,6 +37,9 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 	}
 
 	ngOnInit(): void {
+		if (isValueSet(this.patchValueInterceptor)) {
+			this.addSupportForPatchValueInterceptor();
+		}
 		if (isValueSet(this.parent) && isValueSet(this.subFormPlaceholder)) {
 			const injectInto = this.subFormPlaceholder.injectInto;
 			const injectAt = this.subFormPlaceholder.at;
@@ -65,9 +68,6 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 				}
 				injectInto.setControl(injectAt, this.formGroup);
 			}
-		}
-		if (isValueSet(this.patchValueInterceptor)) {
-			this.addSupportForPatchValueInterceptor();
 		}
 	}
 
