@@ -20,6 +20,8 @@ export class WithTooltipDirective {
 			this.div.style.zIndex = '2';
 			this.div.style.color = '#515365';
 			this.div.style.position = 'fixed';
+			this.div.style.left = `${el.nativeElement.getBoundingClientRect().x}px`;
+			this.div.style.top = `${el.nativeElement.getBoundingClientRect().y}px`;
 			this.div.style.transform = 'translate(-25%, calc(-100% - 0.3rem))';
 			this.div.style.backgroundColor = 'white';
 			this.div.style.border = '1px solid black';
@@ -32,6 +34,8 @@ export class WithTooltipDirective {
 			this.triangle = document.createElement('div');
 			this.triangle.style.zIndex = '1';
 			this.triangle.style.position = 'fixed';
+			this.triangle.style.left = `${el.nativeElement.getBoundingClientRect().x}px`;
+			this.triangle.style.top = `${el.nativeElement.getBoundingClientRect().y}px`;
 			this.triangle.style.transform = 'translate(1rem, calc(-100% + 0.1rem))';
 			this.triangle.style.width = '0';
 			this.triangle.style.height = '0';
@@ -41,7 +45,6 @@ export class WithTooltipDirective {
 			el.nativeElement.prepend(this.triangle);
 		});
 		el.nativeElement.addEventListener('mouseout', () => {
-			return;
 			try {
 				el.nativeElement.removeChild(this.div);
 			} catch (ex) {}
