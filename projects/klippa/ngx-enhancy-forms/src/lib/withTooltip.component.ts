@@ -37,7 +37,7 @@ export class WithTooltipDirective {
 			this.triangle = document.createElement('div');
 			this.triangle.style.zIndex = '1';
 			this.triangle.style.position = 'fixed';
-			this.triangle.style.left = `${el.nativeElement.getBoundingClientRect().x + (el.nativeElement.getBoundingClientRect().width / 2)}px`;
+			this.triangle.style.left = `calc(${el.nativeElement.getBoundingClientRect().x + el.nativeElement.getBoundingClientRect().width}px - 3rem)`;
 			this.triangle.style.top = `${el.nativeElement.getBoundingClientRect().y}px`;
 			this.triangle.style.transform = `translate(-50%, calc(-100% + 0.1rem))`;
 			this.triangle.style.width = '0';
