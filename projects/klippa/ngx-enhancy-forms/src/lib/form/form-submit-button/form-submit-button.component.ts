@@ -26,7 +26,7 @@ export class FormSubmitButtonComponent {
 	@Input() public before: () => Promise<any> = () => Promise.resolve();
 	@Input() public after: () => Promise<any> = () => Promise.resolve();
 
-	private renderError = (e: FormValidationError) => {
+	private setValidationError = (e: FormValidationError) => {
 		this.parentForm.formGroup.get(e.path)?.setErrors({ message: { value: e.message }});
 	}
 
@@ -40,9 +40,9 @@ export class FormSubmitButtonComponent {
 				.finally(() => this.isLoading = false);
 		} catch (e) {
 			if (e === invalidFieldsSymbol) {
-				return;
+				return; // swallow the error, the framework will scroll to the field that needs attention
 			}
-			this.handleError(e).forEach(this.renderError);
+			this.handleError(e).forEach(this.setValidationError);
 			return;
 		}
 
