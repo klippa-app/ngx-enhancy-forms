@@ -55,3 +55,6 @@ Thumbs.db
 # direnv / nix
 .direnv/*
 .envrc
+
+# @olistrik
+.vimignore

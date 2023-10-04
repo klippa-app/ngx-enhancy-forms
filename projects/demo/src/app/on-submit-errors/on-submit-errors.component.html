@@ -5,5 +5,5 @@
 	<klp-sub-form [injectInto]="form" at="nested">
 		<app-sub-form-example></app-sub-form-example>
 	</klp-sub-form>
-	<klp-form-submit-button [submitCallback]="onSubmit">submit</klp-form-submit-button>
+	<klp-form-submit-button [before]="beforeSubmit" [submitCallback]="onSubmit">submit</klp-form-submit-button>
 </klp-form>
