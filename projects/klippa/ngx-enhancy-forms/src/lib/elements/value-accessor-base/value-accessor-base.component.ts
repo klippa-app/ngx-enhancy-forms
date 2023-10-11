@@ -31,6 +31,7 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 	// we support both providing just the formControlName and the full formControl
 	@Input() public formControlName: string = null;
 	@Input() public formControl: UntypedFormControl = null;
+	@Input() public inErrorState = false;
 	@Output() public onTouch = new EventEmitter<void>();
 	@ViewChild('nativeInputRef') nativeInputRef: ElementRef;
 
@@ -61,6 +62,9 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 	}
 
 	isInErrorState(): boolean {
+		if (this.inErrorState) {
+			return true;
+		}
 		return this.attachedFormControl && this.attachedFormControl.status === 'INVALID' && this.attachedFormControl.touched;
 	}
 

@@ -48,15 +48,27 @@
 	color: $default-dark;
 	&.hasErrors {
 		color: $default-warning;
+		&.withErrorRightOfCaption .rightOfCaptionError {
+			display: block;
+		}
 	}
 	&.withErrorRightOfCaption {
 		display: flex;
 		justify-content: space-between;
-		gap: $spacing-huge;
+		gap: $spacing-normal;
+		.captionText {
+			flex: 1 2 auto;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
 		.rightOfCaptionError {
+			display: none;
 			font-weight: normal;
 			overflow: hidden;
-			* {
+			flex: 1 1 auto;
+			text-align: right;
+			::ng-deep * {
 				white-space: nowrap;
 				overflow: hidden;
 				text-overflow: ellipsis;

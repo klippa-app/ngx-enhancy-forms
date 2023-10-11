@@ -24,11 +24,14 @@ export * from './lib/elements/hour-minute-input/hour-minute-input.component';
 export * from './lib/elements/value-accessor-base/value-accessor-base.component';
 export * from './lib/elements/value-accessor-base/multiple-value-accessor-base.component';
 
+export * from './lib/withTooltip.component';
+
 export * from './lib/form/form.component';
 export * from './lib/form/form-caption/form-caption.component';
 export * from './lib/form/form-element/form-element.component';
 export * from './lib/form/form-error/form-error.component';
 export * from './lib/form/form-submit-button/form-submit-button.component';
+export * from './lib/form/form-validation-error/form-validation-error';
 
 export * from './lib/validators/dateValidator';
 
