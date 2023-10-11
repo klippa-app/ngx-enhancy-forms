@@ -1,4 +1,5 @@
 import { isArray } from 'lodash';
+import { Newable } from './classes';
 import { isValueSet } from './values';
 
 export function removeDuplicatesFromArraysWithComparator(comparator: (e1: any, e2: any) => boolean, ...arrays: any[]): any {
@@ -49,3 +50,8 @@ export function splitArrayByCondition<T>(value: Array<T>, condition: (current: T
 		return acc;
 	}, [[]]);
 }
+
+export function isArrayOf<T>(arr: Array<T | any>, kind: Newable<T>): arr is Array<T> {
+	return arr.reduce((acc, val) => acc && val instanceof kind, true);
+}
+
