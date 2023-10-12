@@ -43,6 +43,7 @@
 	}">
 		<ng-container *ngIf="errorMessageAsTooltip && shouldShowErrorMessages() && getErrorToShow()">
 			<div class="errorTooltipTriangle"></div>
+			<div class="errorTooltipTriangleWhite"></div>
 			<div class="errorTooltip">
 				<ng-container [ngTemplateOutlet]="errorRef"></ng-container>
 			</div>

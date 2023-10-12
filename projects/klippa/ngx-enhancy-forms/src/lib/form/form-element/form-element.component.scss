@@ -76,6 +76,7 @@
 		}
 	}
 }
+$triangleSize: 12px;
 .inputContainer {
 	position: relative;
 	flex: 1;
@@ -87,9 +88,21 @@
 		transform: translate(-50%, calc(-100% + 0.1rem));
 		width: 0px;
 		height: 0px;
-		border-left: 0.8rem solid transparent;
-		border-right: 0.8rem solid transparent;
-		border-top: 0.8rem solid rgba(255, 128, 0, 0.125);
+		border-left: $triangleSize solid transparent;
+		border-right: $triangleSize solid transparent;
+		border-top: $triangleSize solid rgba(255, 128, 0, 0.125);
+	}
+	.errorTooltipTriangleWhite {
+		z-index: 3;
+		position: absolute;
+		display: none;
+		right: 0px;
+		transform: translate(-50%, calc(-100% + 0.1rem - 2px));
+		width: 0px;
+		height: 0px;
+		border-left: $triangleSize solid transparent;
+		border-right: $triangleSize solid transparent;
+		border-top: $triangleSize solid white;
 	}
 	.errorTooltip {
 		position: absolute;
@@ -113,7 +126,7 @@
 		}
 	}
 	&:hover {
-		.errorTooltip, .errorTooltipTriangle {
+		.errorTooltip, .errorTooltipTriangle, .errorTooltipTriangleWhite {
 			display: block;
 		}
 	}
