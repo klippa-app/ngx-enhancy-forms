@@ -49,10 +49,10 @@ export class WithTooltipDirective {
 		});
 		el.nativeElement.addEventListener('mouseout', () => {
 			try {
-				el.nativeElement.removeChild(this.div);
+				// el.nativeElement.removeChild(this.div);
 			} catch (ex) {}
 			try {
-				el.nativeElement.removeChild(this.triangle);
+				// el.nativeElement.removeChild(this.triangle);
 			} catch (ex) {}
 		});
 	}

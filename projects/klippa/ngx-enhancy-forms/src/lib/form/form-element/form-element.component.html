@@ -1,5 +1,5 @@
 <ng-template #errorRef>
-	<div *ngIf="shouldShowErrorMessages() && getErrorToShow()" class="errorContainer" [ngClass]="{hasCaption: caption || captionRef, 'd30-70': spaceDistribution === '30-70', 'd34-66': spaceDistribution === '34-66'}" [klpWithTooltip]="getErrorLocation() === 'rightOfCaption'">
+	<div *ngIf="shouldShowErrorMessages() && getErrorToShow()" class="errorContainer" [ngClass]="{hasCaption: caption || captionRef, 'd30-70': spaceDistribution === '30-70', 'd34-66': spaceDistribution === '34-66'}" [klpWithTooltip]="!errorMessageAsTooltip && getErrorLocation() === 'rightOfCaption'">
 		<div *ngIf="showDefaultError('min')">{{substituteParameters(getErrorMessage("min"), {min: attachedControl.errors.min.min})}}</div>
 		<div *ngIf="showDefaultError('max')">{{substituteParameters(getErrorMessage("max"), {max: attachedControl.errors.max.max})}}</div>
 		<div *ngIf="showDefaultError('required')">{{getErrorMessage("required")}}</div>
@@ -14,7 +14,7 @@
 	</div>
 </ng-template>
 
-<ng-container *ngIf="direction === 'horizontal'" [ngTemplateOutlet]="errorRef"></ng-container>
+<ng-container *ngIf="direction === 'horizontal' && !errorMessageAsTooltip" [ngTemplateOutlet]="errorRef"></ng-container>
 
 <div class="componentContainer" [ngClass]="{hasCaption: caption || captionRef, vertical: direction === 'vertical', reverseOrder: swapInputAndCaption}" #internalComponentRef>
 	<div class="caption" *ngIf="caption || captionRef"
@@ -32,15 +32,21 @@
 		</div>
 		<div *ngIf="!captionRef" class="captionText">{{caption}}<span *ngIf="isRequired()">&nbsp;*</span></div>
 		<div class="rightOfCaptionError">
-			<ng-container *ngIf="direction === 'vertical' && getErrorLocation() === 'rightOfCaption'" [ngTemplateOutlet]="errorRef"></ng-container>
+			<ng-container *ngIf="direction === 'vertical' && getErrorLocation() === 'rightOfCaption' && !errorMessageAsTooltip" [ngTemplateOutlet]="errorRef"></ng-container>
 		</div>
 	</div>
-	<ng-container *ngIf="direction === 'vertical' && getErrorLocation() === 'belowCaption'" [ngTemplateOutlet]="errorRef"></ng-container>
+	<ng-container *ngIf="direction === 'vertical' && getErrorLocation() === 'belowCaption' && !errorMessageAsTooltip" [ngTemplateOutlet]="errorRef"></ng-container>
 	<div class="inputContainer" [ngClass]="{
 		percentageSpacing: captionSpacing === 'percentages',
 		'd30-70': spaceDistribution === '30-70',
 		'd34-66': spaceDistribution === '34-66'
 	}">
+		<ng-container *ngIf="errorMessageAsTooltip && shouldShowErrorMessages() && getErrorToShow()">
+			<div class="errorTooltipTriangle"></div>
+			<div class="errorTooltip">
+				<ng-container [ngTemplateOutlet]="errorRef"></ng-container>
+			</div>
+		</ng-container>
 		<ng-content></ng-content>
 	</div>
 </div>
