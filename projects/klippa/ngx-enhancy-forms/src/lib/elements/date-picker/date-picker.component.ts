@@ -19,6 +19,7 @@ export class DatePickerComponent extends MultipleValueAccessorBase<string | type
 	@Input() public maxDate: Date = undefined;
 	@Input() public sameMonthOnly = false;
 	@Input() public format = 'dd-MM-yyyy';
+	@Input() public outputFormat = 'yyyy-MM-dd';
 	@Input() public placeholder: string;
 	@Input() public clearable = false;
 
@@ -40,9 +41,9 @@ export class DatePickerComponent extends MultipleValueAccessorBase<string | type
 			super.writeValue(this.multiple ? [] : null);
 		} else {
 			if (Array.isArray(value)) {
-				this.dateValue = value.map((e) => parse(e, 'yyyy-MM-dd', new Date()));
+				this.dateValue = value.map((e) => parse(e, this.outputFormat, new Date()));
 			} else {
-				this.dateValue = parse(value, 'yyyy-MM-dd', new Date());
+				this.dateValue = parse(value, this.outputFormat, new Date());
 			}
 			super.writeValue(value);
 		}
@@ -57,9 +58,9 @@ export class DatePickerComponent extends MultipleValueAccessorBase<string | type
 		} else {
 			this.dateValue = value;
 			if (Array.isArray(value)) {
-				this.setInnerValueAndNotify(value.map((e) => dateFormat(e, 'yyyy-MM-dd')));
+				this.setInnerValueAndNotify(value.map((e) => dateFormat(e, this.outputFormat)));
 			} else {
-				this.setInnerValueAndNotify(dateFormat(value, 'yyyy-MM-dd'));
+				this.setInnerValueAndNotify(dateFormat(value, this.outputFormat));
 			}
 		}
 	}
