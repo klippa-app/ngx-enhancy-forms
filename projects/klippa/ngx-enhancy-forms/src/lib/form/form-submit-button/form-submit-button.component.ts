@@ -16,7 +16,7 @@ export type SubmitButtonVariant = Extract<ButtonVariant,
 	styleUrls: ['./form-submit-button.component.scss'],
 })
 export class FormSubmitButtonComponent {
-	private parentForm = inject(FormComponent, {host: true, optional: true});
+	private parentForm = inject(FormComponent, {optional: true});
 	private handleError = inject(KLP_FORM_ERROR_HANDLER, {optional: true}) ?? DefaultErrorHandler;
 
 	@Input() public isLoading = false;
