@@ -76,8 +76,60 @@
 		}
 	}
 }
+$triangleSize: 12px;
 .inputContainer {
+	position: relative;
 	flex: 1;
+	.errorTooltipTriangle {
+		z-index: 1;
+		position: absolute;
+		display: none;
+		right: 0px;
+		transform: translate(-50%, calc(-100% + 0.1rem));
+		width: 0px;
+		height: 0px;
+		border-left: $triangleSize solid transparent;
+		border-right: $triangleSize solid transparent;
+		border-top: $triangleSize solid rgba(255, 128, 0, 0.125);
+	}
+	.errorTooltipTriangleWhite {
+		z-index: 3;
+		position: absolute;
+		display: none;
+		right: 0px;
+		transform: translate(-50%, calc(-100% + 0.1rem - 2px));
+		width: 0px;
+		height: 0px;
+		border-left: $triangleSize solid transparent;
+		border-right: $triangleSize solid transparent;
+		border-top: $triangleSize solid white;
+	}
+	.errorTooltip {
+		position: absolute;
+		top: -0.6rem;
+		right: 0;
+		display: none;
+
+		z-index: 2;
+		color: rgb(81, 83, 101);
+		transform: translateY(-100%);
+		max-width: 20rem;
+		white-space: break-spaces;
+		background-color: white;
+		border: 1px solid rgba(255, 128, 0, 0.125);
+		box-shadow: rgba(255, 128, 0, 0.125) 2px 3px 10px 0px;
+		padding: 0.3rem 0.5rem;
+		box-sizing: border-box;
+		border-radius: 3px;
+		.errorContainer {
+			margin-left: initial;
+		}
+	}
+	&:hover {
+		.errorTooltip, .errorTooltipTriangle, .errorTooltipTriangleWhite {
+			display: block;
+		}
+	}
 	&.percentageSpacing {
 		flex: 60;
 		&.d30-70 {

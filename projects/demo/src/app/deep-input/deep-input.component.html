@@ -1,6 +1,9 @@
-<ng-container [formGroup]="fg.form">
-	<klp-form-element caption="deep input">
-		<klp-form-text-input formControlName="deepInput">
-		</klp-form-text-input>
-	</klp-form-element>
-</ng-container>
+<div style="margin-top: 100px;">
+	<ng-container [formGroup]="fg.form">
+		<klp-form-element caption="deep input" [errorMessageAsTooltip]="true">
+			<klp-form-text-input formControlName="deepInput">
+			</klp-form-text-input>
+		</klp-form-element>
+	</ng-container>
+
+</div>
