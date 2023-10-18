@@ -9,7 +9,7 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2020",
+    "target": "ES2022",
     "module": "es2020",
     "lib": [
       "es2019",
@@ -20,6 +20,7 @@
       "@klippa/ngx-enhancy-forms": [
         "projects/klippa/ngx-enhancy-forms/src/public-api.ts"
       ]
-    }
+    },
+    "useDefineForClassFields": false
   }
 }
