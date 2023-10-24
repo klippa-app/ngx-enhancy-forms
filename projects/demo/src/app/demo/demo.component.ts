@@ -29,6 +29,10 @@ export class DemoComponent {
 				}
 			});
 		}, 4000);
+
+		setTimeout(() => {
+			this.myForm.get('name').enable();
+		}, 1000);
 	}
 
 	public get emails(): any[] {

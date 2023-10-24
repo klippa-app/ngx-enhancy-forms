@@ -121,6 +121,12 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		if (this.readOnly) {
 			formControl.disable();
 		}
+		const enableFn: (opts?: { onlySelf?: boolean; emitEvent?: boolean }) => void = formControl.enable;
+		formControl.enable = (opts?: { onlySelf?: boolean; emitEvent?: boolean }) => {
+			if (!this.readOnly) {
+				enableFn.call(formControl, opts);
+			}
+		};
 	}
 
 	public unregisterControl(formControl: UntypedFormControl): void {
