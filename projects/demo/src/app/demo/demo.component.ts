@@ -75,7 +75,7 @@ export class DemoComponent {
 				return Promise.resolve({async: 'something'});
 			}
 		],
-		emails: [''],
+		emails: ['', Validators.required],
 		disabledButRendered: ['disabledButRendered'],
 		unrendered: ['unrendered'],
 		yesno: false,
