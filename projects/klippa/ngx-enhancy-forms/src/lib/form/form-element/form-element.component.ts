@@ -1,16 +1,17 @@
-import {Component, Directive, ElementRef, Host, Inject, InjectionToken, Input, OnInit, Optional, ViewChild} from '@angular/core';
-import {AbstractControl, FormArray, UntypedFormControl, FormGroup} from '@angular/forms';
-import {FormComponent} from '../form.component';
+import {Component, ElementRef, Inject, InjectionToken, Input, Optional, ViewChild} from '@angular/core';
+import {AbstractControl, UntypedFormControl} from '@angular/forms';
+import {ValueAccessorBase} from '../../elements/value-accessor-base/value-accessor-base.component';
 import {CustomErrorMessages, FormErrorMessages} from '../../types';
-import { ValueAccessorBase } from '../../elements/value-accessor-base/value-accessor-base.component';
-import { isValueSet } from '../../util/values';
+import {isValueSet} from '../../util/values';
+import {FormComponent} from '../form.component';
+
 
 export const FORM_ERROR_MESSAGES = new InjectionToken<CustomErrorMessages>('form.error.messages');
 
 export const DEFAULT_ERROR_MESSAGES: FormErrorMessages = {
 	min: 'Use a number larger than %min%',
 	max: 'Use a number smaller than %max%',
-	required: 'This field is required',
+	required: 'Required',
 	email: 'Use a valid email address',
 	minLength: 'Has to be longer than %minLength% character(s)',
 	maxLength: 'Has to be shorter than %maxLength% character(s)',
