@@ -1,3 +1,4 @@
+la
 <div class="componentContainer">
 	<ng-container *ngIf="icon?.length > 0">
 		<i class="ti-search" *ngIf="icon === 'search'"></i>
@@ -6,7 +7,7 @@
 		[type]="type"
 		[(ngModel)]="innerValue"
 		[ngClass]="{showErrors: isInErrorState(), hasIcon: icon?.length > 0, hasClearButton: clearable, noBorderLeft: !hasBorderLeft, noBorderRight: !hasBorderRight}"
-		(input)="setInnerValueAndNotify($event.target.value)"
+		(input)="onValueChange($event.target.value)"
 		[placeholder]="placeholder ? placeholder : ''"
 		(blur)="touch(); onBlur.emit()"
 		[disabled]='disabled'

@@ -78,6 +78,7 @@ export class DemoComponent {
 		emails: ['', Validators.required],
 		disabledButRendered: ['disabledButRendered'],
 		unrendered: ['unrendered'],
+		testing: '',
 		yesno: false,
 		yesno2: false,
 		selector: [null],

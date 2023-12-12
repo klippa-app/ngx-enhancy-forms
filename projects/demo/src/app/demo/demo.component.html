@@ -27,6 +27,10 @@
 			<klp-form-text-input formControlName="unrendered" [innerValueChangeInterceptor]="innerValueChangeInterceptor" (onBlur)="blurry()">
 			</klp-form-text-input>
 		</klp-form-element>
+		<klp-form-element caption="TESTING Debouncing" spaceDistribution="34-66">
+			<klp-form-text-input [debounceMs]="300" formControlName="testing">
+			</klp-form-text-input>
+		</klp-form-element>
 		<klp-form-element caption="Yes or no" spaceDistribution="34-66">
 			<klp-form-toggle formControlName="yesno">
 			</klp-form-toggle>
