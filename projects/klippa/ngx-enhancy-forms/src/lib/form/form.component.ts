@@ -1,4 +1,15 @@
-import {Component, Directive, Input, OnChanges, OnDestroy, OnInit, Optional, SimpleChanges, SkipSelf} from '@angular/core';
+import {
+	Component,
+	Directive, EventEmitter,
+	Input,
+	OnChanges,
+	OnDestroy,
+	OnInit,
+	Optional,
+	Output,
+	SimpleChanges,
+	SkipSelf
+} from '@angular/core';
 import {AbstractControl, FormArray, FormControl, FormGroup, UntypedFormArray, UntypedFormControl, UntypedFormGroup} from '@angular/forms';
 import {FormElementComponent} from './form-element/form-element.component';
 import {isValueSet} from '../util/values';
@@ -26,6 +37,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 	@Input() public errorMessageLocation: 'belowCaption' | 'rightOfCaption' = 'belowCaption';
 	@Input() public formGroup: UntypedFormGroup;
 	@Input() public patchValueInterceptor: (values: any) => Promise<any>;
+	@Output() public onInjected = new EventEmitter<void>();
 
 	// we keep track of what form controls are actually rendered. Only those count when looking at form validation
 	private activeControls: Array<{
@@ -55,6 +67,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 					this.formGroup.patchValue(valueBeforeInject);
 				}
 				injectInto.setControl(injectAt, this.formGroup);
+				this.onInjected.emit();
 			} else if (injectInto instanceof UntypedFormGroup) {
 				if (typeof injectAt !== 'string') {
 					throw new Error(`cannot index FormGroup with ${typeof injectAt}`);
@@ -67,6 +80,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 					this.formGroup.patchValue(valueBeforeInject);
 				}
 				injectInto.setControl(injectAt, this.formGroup);
+				this.onInjected.emit();
 			}
 		}
 	}
