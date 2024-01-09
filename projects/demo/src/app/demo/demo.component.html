@@ -59,7 +59,9 @@
 	</div>
 </klp-form>
 
-<klp-form-select [options]="options" [multiple]="true" [truncateOptions]="false"></klp-form-select>
+<div style="width: 400px; margin-left: 500px;">
+	<klp-form-select [options]="options" [multiple]="true" [truncateOptions]="false" dropdownAlignment="right"></klp-form-select>
+</div>
 {{testDate}}
 <klp-form-date-time-picker [(ngModel)]="testDate" [multiple]="true" [disabled]="true"></klp-form-date-time-picker>
 <klp-form-checkbox [(ngModel)]="isChecked"></klp-form-checkbox>

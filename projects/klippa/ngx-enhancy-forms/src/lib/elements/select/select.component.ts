@@ -53,6 +53,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	@Input() withSeparatingLine = false;
 	@Input() searchable = true;
 	@Input() public dropdownPosition: 'auto' | 'bottom' | 'top' | 'left' | 'right' = null;
+	@Input() public dropdownAlignment: 'left' | 'right' = 'left';
 	@Input() public customSearchFn: (term: string, item: { id: string; name: string; description: string }) => boolean;
 	@Input() public footerElement: TemplateRef<any>;
 	@Output() public onSearch = new EventEmitter<string>();
@@ -168,7 +169,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 					const spaceInParent = limitingParentContainer.clientWidth;
 					const spaceLeftOfElRef = this.elRef?.nativeElement.getBoundingClientRect().left - limitingParentContainer.getBoundingClientRect().left;
 					const spaceRightOfElRef = spaceInParent - spaceLeftOfElRef;
-					if (spaceRightOfElRef < dropdownPanel?.clientWidth) {
+					if (this.dropdownAlignment === 'right' || spaceRightOfElRef < dropdownPanel?.clientWidth) {
 						dropdownPanel.style.right = `0px`;
 					}
 				}
