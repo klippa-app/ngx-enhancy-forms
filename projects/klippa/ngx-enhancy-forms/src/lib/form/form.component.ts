@@ -37,7 +37,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 	@Input() public errorMessageLocation: 'belowCaption' | 'rightOfCaption' = 'belowCaption';
 	@Input() public formGroup: UntypedFormGroup;
 	@Input() public patchValueInterceptor: (values: any) => Promise<any>;
-	@Output() public onInjected = new EventEmitter<void>();
+	@Output() public onInjected = new EventEmitter<Record<string, any>>();
 
 	// we keep track of what form controls are actually rendered. Only those count when looking at form validation
 	private activeControls: Array<{
@@ -67,7 +67,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 					this.formGroup.patchValue(valueBeforeInject);
 				}
 				injectInto.setControl(injectAt, this.formGroup);
-				this.onInjected.emit();
+				this.onInjected.emit(valueBeforeInject);
 			} else if (injectInto instanceof UntypedFormGroup) {
 				if (typeof injectAt !== 'string') {
 					throw new Error(`cannot index FormGroup with ${typeof injectAt}`);
@@ -80,7 +80,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 					this.formGroup.patchValue(valueBeforeInject);
 				}
 				injectInto.setControl(injectAt, this.formGroup);
-				this.onInjected.emit();
+				this.onInjected.emit(valueBeforeInject);
 			}
 		}
 	}
