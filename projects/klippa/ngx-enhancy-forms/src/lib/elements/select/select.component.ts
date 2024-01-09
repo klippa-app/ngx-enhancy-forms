@@ -66,7 +66,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	@ContentChild(KlpSelectOptionTemplateDirective, { read: TemplateRef }) customOptionTpl: TemplateRef<any>;
 
 	private lastItemIndexReached = -1;
-	public dropdownPositionToUse: 'auto' | 'bottom' | 'top' = 'bottom';
+	public dropdownPositionToUse: 'auto' | 'bottom' | 'top' | 'left' | 'right' = 'bottom';
 
 	constructor(
 		@Optional() @Host() protected parent: FormElementComponent,
@@ -103,9 +103,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 			this.lastItemIndexReached = -1;
 			this.setWidthBasedOnOptionsWidths();
 		}
-		if (this.dropdownPosition === 'top' || this.dropdownPosition === 'bottom' || this.dropdownPosition === 'auto') {
-			this.dropdownPositionToUse = this.dropdownPosition;
-		}
+		this.dropdownPositionToUse = this.dropdownPosition;
 	}
 
 	getDefaultTranslation(key: string): (x: any) => string {
@@ -170,8 +168,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 					const spaceInParent = limitingParentContainer.clientWidth;
 					const spaceLeftOfElRef = this.elRef?.nativeElement.getBoundingClientRect().left - limitingParentContainer.getBoundingClientRect().left;
 					const spaceRightOfElRef = spaceInParent - spaceLeftOfElRef;
-					const spaceNeeded = dropdownPanel?.clientWidth ?? 0;
-					if (this.dropdownPosition === 'right' || spaceRightOfElRef < spaceNeeded) {
+					if (spaceRightOfElRef < dropdownPanel?.clientWidth) {
 						dropdownPanel.style.right = `0px`;
 					}
 				}
