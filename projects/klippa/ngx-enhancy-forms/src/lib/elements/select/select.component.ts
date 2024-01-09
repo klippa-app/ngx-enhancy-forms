@@ -155,6 +155,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 				const maxWidth = Math.max(...widths);
 				const dropdownPanel = this.elRef.nativeElement.querySelector('ng-dropdown-panel');
 				if (dropdownPanel) {
+					dropdownPanel.style.minWidth = `${this.elRef.nativeElement.clientWidth}px`;
 					dropdownPanel.style.width = `${Math.max(this.elRef.nativeElement.clientWidth, maxWidth + 40, dropdownPanel.getBoundingClientRect().width)}px`;
 				}
 
@@ -167,9 +168,8 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 					const spaceInParent = limitingParentContainer.clientWidth;
 					const spaceLeftOfElRef = this.elRef?.nativeElement.getBoundingClientRect().left - limitingParentContainer.getBoundingClientRect().left;
 					const spaceRightOfElRef = spaceInParent - spaceLeftOfElRef;
-					const shiftToLeft = dropdownPanel?.clientWidth - spaceRightOfElRef + 20;
-					if (shiftToLeft > 0) {
-						dropdownPanel.style.left = `-${shiftToLeft}px`;
+					if (spaceRightOfElRef < dropdownPanel?.clientWidth) {
+						dropdownPanel.style.right = `0px`;
 					}
 				}
 			});
