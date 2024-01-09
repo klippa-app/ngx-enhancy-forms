@@ -1,6 +1,6 @@
 {
   "name": "@klippa/ngx-enhancy-forms",
-  "version": "14.10.4",
+  "version": "14.10.5",
   "publishConfig": {
     "access": "public"
   },
