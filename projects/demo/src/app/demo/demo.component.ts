@@ -90,7 +90,7 @@ export class DemoComponent {
 	subForms = [];
 	options: AppSelectOptions = [
 		{id: 1, name: 'dra'},
-		{id: 2, name: 'looooong gekwhjg kehjw gkjehw gjkehw gjkh ghegkw egwhj ej wgklej gklej glkj gklj gljkl gewgjkew'},
+		{id: 2, name: 'looooong gekwhjg kehjw gkjehw gjkehw gjkh ghegkw egwhj ej wgklej gklej glkj gklj gljkl gewgjkew gewgjkew gewgjkew gewgjkew'},
 		{id: 3, name: 'jjj'},
 		{id: 4, name: 'kkk'},
 		{id: 5, name: 'lll'},

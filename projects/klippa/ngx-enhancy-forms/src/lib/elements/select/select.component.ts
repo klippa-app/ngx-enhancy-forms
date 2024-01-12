@@ -206,14 +206,18 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 				const pickerWidth = this.elRef.nativeElement.getBoundingClientRect().width;
 				const dropdownPanelWidth = dropdownPanel.getBoundingClientRect().width;
 
-				const limitingParentContainer = [...this.getAllLimitingContainers(), document.documentElement][0];
-				const spaceInParent = limitingParentContainer.clientWidth;
-				const spaceLeftOfElRef = this.elRef.nativeElement.getBoundingClientRect().left - limitingParentContainer.getBoundingClientRect().left;
-				const spaceRightOfElRef = spaceInParent - spaceLeftOfElRef;
-				if (this.dropdownAlignment === 'right' || spaceRightOfElRef < dropdownPanel?.clientWidth) {
-					const difference = dropdownPanelWidth - pickerWidth;
-					this.dropdownPanelOffsetX = -difference;
+				const spaceLeftOfElRef = this.elRef.nativeElement.getBoundingClientRect().left;
+				const spaceRightOfElRef = window.innerWidth - (this.elRef.nativeElement.getBoundingClientRect().width + spaceLeftOfElRef);
+				const extraNeededSpace = dropdownPanelWidth - pickerWidth;
+				if (this.dropdownAlignment === 'right') {
+					if (extraNeededSpace > spaceLeftOfElRef) {
+						this.dropdownPanelOffsetX = -spaceLeftOfElRef + 10;
+					} else {
+						this.dropdownPanelOffsetX = -extraNeededSpace;
+					}
 					this.setPanelOffsets();
+				} else if (extraNeededSpace > spaceRightOfElRef) {
+					this.dropdownPanelOffsetX = -extraNeededSpace + spaceRightOfElRef - 20;
 				}
 			}
 		}
@@ -239,8 +243,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	}
 
 	private determineDropdownPosition(): void {
-		const bottomSpace = window.innerHeight - this.elRef.nativeElement.offsetTop + window.scrollY;
-		console.log(bottomSpace);
+		const bottomSpace = window.innerHeight - this.elRef.nativeElement.getBoundingClientRect().top;
 		if (bottomSpace >= 300) {
 			this.dropdownPositionToUse = 'bottom';
 		} else {
