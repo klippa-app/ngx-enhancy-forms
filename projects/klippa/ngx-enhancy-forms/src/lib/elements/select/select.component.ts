@@ -214,10 +214,10 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 					} else {
 						this.dropdownPanelOffsetX = -extraNeededSpace;
 					}
-					this.setPanelOffsets();
 				} else if (extraNeededSpace > spaceRightOfElRef) {
 					this.dropdownPanelOffsetX = -extraNeededSpace + spaceRightOfElRef - 20;
 				}
+				this.setPanelOffsets();
 			}
 		}
 	}
