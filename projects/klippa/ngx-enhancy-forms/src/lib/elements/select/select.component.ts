@@ -219,7 +219,6 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 					this.dropdownPanelOffsetX = -extraNeededSpace + spaceRightOfElRef - 20;
 				}
 			}
-			this.elRef.nativeElement.querySelector('ng-select').style.overflow = 'initial';
 		}
 	}
 
