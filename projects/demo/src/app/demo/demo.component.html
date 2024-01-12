@@ -1,6 +1,6 @@
 
 <klp-form [formGroup]="myForm" errorMessageLocation="rightOfCaption" [readOnly]="false">
-	<div style="height: 500px; overflow: auto">
+	<div style="height: 920px; overflow: auto">
 		<app-deep-input>
 		</app-deep-input>
 		<div style="width: 200px">
@@ -35,11 +35,7 @@
 			<klp-form-toggle formControlName="yesno2">
 			</klp-form-toggle>
 		</klp-form-element>
-		<div style="width: 400px; margin-left: 300px;">
-			<klp-form-element caption="select something" style="margin-top: 200px; margin-bottom: 100px;">
-				<klp-form-select prefix="smeerpijp" [truncateOptions]="false" [options]="options" [multiple]="true" placeholder="Pick" formControlName="selector" (onSearch)="search($event)" (onEndReached)="loadMore()" (onBlur)="logSomething()" (onEnterKey)="enterKeyPressed()"></klp-form-select>
-			</klp-form-element>
-		</div>
+
 		<klp-form-element>
 			<klp-form-text-input formControlName="emails"></klp-form-text-input>
 		</klp-form-element>
@@ -56,6 +52,12 @@
 			Submit
 		</klp-form-submit-button>
 		<klp-form-button variant="redOutlined" size="large" [disabled]="true">Red</klp-form-button>
+
+		<div style="width: 400px; margin-left: 300px;">
+			<klp-form-element caption="select something" style="margin-top: 200px; margin-bottom: 100px;">
+				<klp-form-select prefix="smeerpijp" [truncateOptions]="false" [options]="options" [multiple]="true" placeholder="Pick" formControlName="selector" (onSearch)="search($event)" (onEndReached)="loadMore()" (onBlur)="logSomething()" (onEnterKey)="enterKeyPressed()"></klp-form-select>
+			</klp-form-element>
+		</div>
 	</div>
 </klp-form>
 

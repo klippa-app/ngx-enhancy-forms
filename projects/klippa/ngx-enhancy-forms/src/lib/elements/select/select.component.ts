@@ -160,7 +160,6 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 		if (!this.truncateOptions) {
 			this.setFixedDropdownPanelPosition();
 			[...this.getAllLimitingContainers(), window].forEach(e => e.addEventListener('scroll', this.setFixedDropdownPanelPosition));
-			// window.addEventListener('scroll', this.setFixedDropdownPanelPosition);
 		}
 	}
 
@@ -220,6 +219,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 					this.dropdownPanelOffsetX = -extraNeededSpace + spaceRightOfElRef - 20;
 				}
 			}
+			this.elRef.nativeElement.querySelector('ng-select').style.overflow = 'initial';
 		}
 	}
 
