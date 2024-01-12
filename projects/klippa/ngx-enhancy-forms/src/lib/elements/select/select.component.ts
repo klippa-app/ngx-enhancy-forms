@@ -251,7 +251,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 
 	private determineDropdownPosition(): void {
 		const bottomSpace = window.innerHeight - this.elRef.nativeElement.getBoundingClientRect().top;
-		if (bottomSpace >= 300) {
+		if (bottomSpace >= 330) {
 			this.dropdownPositionToUse = 'bottom';
 		} else {
 			this.dropdownPositionToUse = 'top';
