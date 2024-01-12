@@ -181,12 +181,15 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	}
 
 	private setFixedDropdownPanelPosition = () => {
+		const dropdownPanel = this.elRef.nativeElement.querySelector('ng-dropdown-panel');
+		dropdownPanel.style.visibility = 'initial';
+		if (this.orientation === 'vertical') {
+			return;
+		}
 		const difference = this.anchorAbsolute.getBoundingClientRect().top - this.anchorFixed.getBoundingClientRect().top;
 		this.dropdownPanelOffsetY = difference;
 
-		const dropdownPanel = this.elRef.nativeElement.querySelector('ng-dropdown-panel');
 		dropdownPanel.style.position = 'fixed';
-		dropdownPanel.style.visibility = 'initial';
 		this.setPanelOffsets();
 	};
 
@@ -238,7 +241,12 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 		const dropdownPanel = this.elRef.nativeElement.querySelector('ng-dropdown-panel');
 		const scrollPositionOffset = `translate(${this.dropdownPanelOffsetX}px, ${this.dropdownPanelOffsetY}px)`;
 		const dropdownPositionOffset = this.dropdownPositionToUse === 'top' ? `translateY(-100%) translateY(1px)` : '';
-		dropdownPanel.style.transform = [scrollPositionOffset, dropdownPositionOffset].join(' ');
+		if (this.orientation === 'vertical') {
+			dropdownPanel.style.transformOrigin = 'top left';
+			dropdownPanel.style.transform = `rotate(90deg) translateY(-${this.elRef.nativeElement.getBoundingClientRect().width}px)`;
+		} else {
+			dropdownPanel.style.transform = [scrollPositionOffset, dropdownPositionOffset].join(' ');
+		}
 	}
 
 	private determineDropdownPosition(): void {

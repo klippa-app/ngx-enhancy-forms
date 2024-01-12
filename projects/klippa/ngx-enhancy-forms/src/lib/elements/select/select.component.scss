@@ -265,6 +265,10 @@ ng-select.showErrors {
 	::ng-deep .ng-dropdown-panel {
 		visibility: hidden;
 	}
+
+	&.verticalOrientation {
+		overflow: initial;
+	}
 }
 :host .ng-select.withSeparatingLine ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option{
 	border-bottom: 1px solid #e3e3e3;
