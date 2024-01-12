@@ -35,7 +35,7 @@
 			<klp-form-toggle formControlName="yesno2">
 			</klp-form-toggle>
 		</klp-form-element>
-		<div style="width: 400px; margin-left: 500px;">
+		<div style="width: 400px; margin-left: 300px;">
 			<klp-form-element caption="select something" style="margin-top: 200px; margin-bottom: 100px;">
 				<klp-form-select prefix="smeerpijp" [truncateOptions]="false" [options]="options" [multiple]="true" placeholder="Pick" formControlName="selector" (onSearch)="search($event)" (onEndReached)="loadMore()" (onBlur)="logSomething()" (onEnterKey)="enterKeyPressed()"></klp-form-select>
 			</klp-form-element>
@@ -59,9 +59,19 @@
 	</div>
 </klp-form>
 
-<div style="width: 400px; margin-left: 500px;">
+<div style="width: 650px; margin-left: 100px; overflow: scroll; height: 500px;">
+	some cool stuff here <br />
+	some cool stuff here <br />
+	some cool stuff here <br />
+	some cool stuff here <br />
+	some cool stuff here <br />
+	some cool stuff here <br />
+	some cool stuff here <br />
+	some cool stuff here <br />
+	some cool stuff here <br />
 	<klp-form-select [options]="options" [multiple]="true" [truncateOptions]="false" dropdownAlignment="right"></klp-form-select>
 </div>
+<klp-form-select [options]="options" [multiple]="true" [truncateOptions]="false" dropdownAlignment="right"></klp-form-select>
 {{testDate}}
 <klp-form-date-time-picker [(ngModel)]="testDate" [multiple]="true" [disabled]="true"></klp-form-date-time-picker>
 <klp-form-checkbox [(ngModel)]="isChecked"></klp-form-checkbox>

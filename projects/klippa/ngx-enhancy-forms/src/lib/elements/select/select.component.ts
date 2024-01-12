@@ -20,6 +20,7 @@ import {ControlContainer, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {ValueAccessorBase} from '../value-accessor-base/value-accessor-base.component';
 import {FormElementComponent} from '../../form/form-element/form-element.component';
 import {isValueSet, stringIsSetAndFilled} from '../../util/values';
+import {awaitableForNextCycle} from "../../util/angular";
 
 export type AppSelectOptions = Array<AppSelectOption>;
 export type AppSelectOption = {
@@ -68,6 +69,11 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 
 	private lastItemIndexReached = -1;
 	public dropdownPositionToUse: 'auto' | 'bottom' | 'top' | 'left' | 'right' = 'bottom';
+	private isOpen: boolean = false;
+	private dropdownPanelOffsetX = 0;
+	private dropdownPanelOffsetY = 0;
+	private anchorAbsolute: HTMLDivElement;
+	private anchorFixed: HTMLDivElement;
 
 	constructor(
 		@Optional() @Host() protected parent: FormElementComponent,
@@ -136,55 +142,106 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 		this.onSearch.emit(searchQuery);
 	}
 
-	onOpen(): void {
+	async onOpen(): Promise<void> {
+		this.isOpen = true;
+
 		if (this.orientation === 'horizontal' && !isValueSet(this.dropdownPosition)) {
 			this.determineDropdownPosition();
 		}
+
+		if (!this.truncateOptions) {
+			this.createAnchors();
+		}
 		// waiting for the thing to render until we fire the event
-		setTimeout(() => {
-			this.onOpened.emit();
-			this.setWidthBasedOnOptionsWidths();
-		});
+		await awaitableForNextCycle();
+		this.onOpened.emit();
+
+		await this.setWidthBasedOnOptionsWidths();
+		if (!this.truncateOptions) {
+			this.setFixedDropdownPanelPosition();
+			[...this.getAllLimitingContainers(), window].forEach(e => e.addEventListener('scroll', this.setFixedDropdownPanelPosition));
+			// window.addEventListener('scroll', this.setFixedDropdownPanelPosition);
+		}
 	}
 
-	private setWidthBasedOnOptionsWidths(): void {
-		if (this.truncateOptions === false) {
-			setTimeout(() => {
-				const widths: Array<number> = Array.from(this.elRef.nativeElement.querySelectorAll('.ng-option div')).map(
-					(e: any) => e.scrollWidth,
-				);
-				const maxWidth = Math.max(...widths);
-				const dropdownPanel = this.elRef.nativeElement.querySelector('ng-dropdown-panel');
-				if (dropdownPanel) {
-					dropdownPanel.style.minWidth = `${this.elRef.nativeElement.clientWidth}px`;
-					dropdownPanel.style.width = `${Math.max(this.elRef.nativeElement.clientWidth, maxWidth + 40, dropdownPanel.getBoundingClientRect().width)}px`;
-				}
-
-				let limitingParentContainer = this.elRef.nativeElement;
-				while (limitingParentContainer.parentElement && !this.isLimitingContainer(limitingParentContainer)) {
-					limitingParentContainer = limitingParentContainer.parentElement;
-				}
-
-				if (dropdownPanel) {
-					const spaceInParent = limitingParentContainer.clientWidth;
-					const spaceLeftOfElRef = this.elRef?.nativeElement.getBoundingClientRect().left - limitingParentContainer.getBoundingClientRect().left;
-					const spaceRightOfElRef = spaceInParent - spaceLeftOfElRef;
-					if (this.dropdownAlignment === 'right' || spaceRightOfElRef < dropdownPanel?.clientWidth) {
-						dropdownPanel.style.right = `0px`;
-					}
-				}
-			});
+	private createAnchors(): void {
+		this.anchorAbsolute = document.createElement('div');
+		if (this.dropdownPositionToUse === 'top') {
+			this.elRef.nativeElement.prepend(this.anchorAbsolute);
+		} else {
+			this.elRef.nativeElement.appendChild(this.anchorAbsolute);
 		}
+
+		this.anchorFixed = document.createElement('div');
+		this.anchorFixed.style.position = 'fixed';
+		this.elRef.nativeElement.appendChild(this.anchorFixed);
+	}
+	private removeAnchors(): void {
+		this.elRef.nativeElement.removeChild(this.anchorAbsolute);
+		this.elRef.nativeElement.removeChild(this.anchorFixed);
+	}
+
+	private setFixedDropdownPanelPosition = () => {
+		const difference = this.anchorAbsolute.getBoundingClientRect().top - this.anchorFixed.getBoundingClientRect().top;
+		this.dropdownPanelOffsetY = difference;
+
+		const dropdownPanel = this.elRef.nativeElement.querySelector('ng-dropdown-panel');
+		dropdownPanel.style.position = 'fixed';
+		dropdownPanel.style.visibility = 'initial';
+		this.setPanelOffsets();
+	};
+
+	private async setWidthBasedOnOptionsWidths(): Promise<void> {
+		if (this.truncateOptions === false) {
+			await awaitableForNextCycle();
+			const widths: Array<number> = Array.from(this.elRef.nativeElement.querySelectorAll('.ng-option div')).map(
+				(e: any) => e.scrollWidth,
+			);
+			const maxWidth = Math.max(...widths);
+			const dropdownPanel = this.elRef.nativeElement.querySelector('ng-dropdown-panel');
+			if (dropdownPanel) {
+				dropdownPanel.style.minWidth = `${this.elRef.nativeElement.clientWidth}px`;
+				dropdownPanel.style.width = `${Math.max(this.elRef.nativeElement.clientWidth, maxWidth + 40, dropdownPanel.getBoundingClientRect().width)}px`;
+				await awaitableForNextCycle();
+				const pickerWidth = this.elRef.nativeElement.getBoundingClientRect().width;
+				const dropdownPanelWidth = dropdownPanel.getBoundingClientRect().width;
+
+				const limitingParentContainer = [...this.getAllLimitingContainers(), document.documentElement][0];
+				const spaceInParent = limitingParentContainer.clientWidth;
+				const spaceLeftOfElRef = this.elRef.nativeElement.getBoundingClientRect().left - limitingParentContainer.getBoundingClientRect().left;
+				const spaceRightOfElRef = spaceInParent - spaceLeftOfElRef;
+				if (this.dropdownAlignment === 'right' || spaceRightOfElRef < dropdownPanel?.clientWidth) {
+					const difference = dropdownPanelWidth - pickerWidth;
+					this.dropdownPanelOffsetX = -difference;
+					this.setPanelOffsets();
+				}
+			}
+		}
+	}
+
+	private getAllLimitingContainers(): Array<HTMLElement> {
+		const result = [];
+		let current = this.elRef.nativeElement;
+		while (current.parentElement) {
+			if (this.isLimitingContainer(current.parentElement)) {
+				result.push(current.parentElement);
+			}
+			current = current.parentElement;
+		}
+		return result;
+	}
+
+	private setPanelOffsets(): void {
+		const dropdownPanel = this.elRef.nativeElement.querySelector('ng-dropdown-panel');
+		const scrollPositionOffset = `translate(${this.dropdownPanelOffsetX}px, ${this.dropdownPanelOffsetY}px)`;
+		const dropdownPositionOffset = this.dropdownPositionToUse === 'top' ? `translateY(-100%) translateY(1px)` : '';
+		dropdownPanel.style.transform = [scrollPositionOffset, dropdownPositionOffset].join(' ');
 	}
 
 	private determineDropdownPosition(): void {
-		let current = this.elRef.nativeElement;
-		while (current.parentElement && !this.isLimitingContainer(current)) {
-			current = current.parentElement;
-		}
-		const topSpace = this.elRef.nativeElement.getBoundingClientRect().top - current.getBoundingClientRect().top;
-		const bottomSpace = current.clientHeight - topSpace;
-		if (bottomSpace >= 285) {
+		const bottomSpace = window.innerHeight - this.elRef.nativeElement.offsetTop + window.scrollY;
+		console.log(bottomSpace);
+		if (bottomSpace >= 300) {
 			this.dropdownPositionToUse = 'bottom';
 		} else {
 			this.dropdownPositionToUse = 'top';
@@ -216,8 +273,13 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	}
 
 	public onClose(): void {
+		[...this.getAllLimitingContainers(), window].forEach(e => e.removeEventListener('scroll', this.setFixedDropdownPanelPosition));
 		// Give angular a second to render the closed situation before emitting the close event
 		setTimeout(() => {
+			this.isOpen = false;
+			if (!this.truncateOptions) {
+				this.removeAnchors();
+			}
 			this.onClosed.emit();
 		});
 	}
