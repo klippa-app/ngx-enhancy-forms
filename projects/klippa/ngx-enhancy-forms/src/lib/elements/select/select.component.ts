@@ -105,15 +105,16 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 		}
 	}
 
-	ngOnChanges(changes: SimpleChanges): void {
+	async ngOnChanges(changes: SimpleChanges): Promise<void> {
 		if (isValueSet(changes.options)) {
 			this.lastItemIndexReached = -1;
-			this.setWidthBasedOnOptionsWidths();
-			if (!this.truncateOptions) {
-				this.setFixedDropdownPanelPosition();
-			}
+			// waiting for the thing to render until we fire the event
+			await awaitableForNextCycle();
+			await this.setWidthBasedOnOptionsWidths();
 		}
-		this.dropdownPositionToUse = this.dropdownPosition;
+		if (changes.dropdownPosition) {
+			this.dropdownPositionToUse = this.dropdownPosition;
+		}
 	}
 
 	getDefaultTranslation(key: string): (x: any) => string {

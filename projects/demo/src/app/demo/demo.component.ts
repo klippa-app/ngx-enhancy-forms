@@ -11,8 +11,8 @@ export class DemoComponent {
 
 	constructor(private fb: UntypedFormBuilder) {
 		setTimeout(() => {
-			// this.options = [...this.options, {id : this.options.length, name: 'BLAAAAAAAAAAAAAAAAAAAAAAAT'}];
-		}, 1000);
+			this.options = [...this.options, {id : this.options.length, name: 'BLAAAAAAAAAAAAAAAAAAAAAAAT'}];
+		}, 5000);
 		this.myForm.patchValue({
 			oli: {
 				name: 'zaag'
