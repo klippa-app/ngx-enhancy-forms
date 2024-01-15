@@ -109,6 +109,9 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 		if (isValueSet(changes.options)) {
 			this.lastItemIndexReached = -1;
 			this.setWidthBasedOnOptionsWidths();
+			if (!this.truncateOptions) {
+				this.setFixedDropdownPanelPosition();
+			}
 		}
 		this.dropdownPositionToUse = this.dropdownPosition;
 	}
