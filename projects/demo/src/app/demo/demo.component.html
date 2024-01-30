@@ -55,13 +55,20 @@
 
 		<div style="width: 400px; margin-left: 300px;">
 			<klp-form-element caption="select something" style="margin-top: 200px; margin-bottom: 100px;">
-				<klp-form-select prefix="smeerpijp" [truncateOptions]="false" [options]="options" [multiple]="true" placeholder="Pick" formControlName="selector" (onSearch)="search($event)" (onEndReached)="loadMore()" (onBlur)="logSomething()" (onEnterKey)="enterKeyPressed()"></klp-form-select>
+				<klp-form-select [truncateOptions]="false" [options]="options" [multiple]="true" placeholder="Pick" formControlName="selector" (onSearch)="search($event)" (onEndReached)="loadMore()" (onBlur)="logSomething()" (onEnterKey)="enterKeyPressed()">
+					<ng-template klpSelectOptionTpl let-item="item">
+						<div style="display: flex; justify-content: space-between; height: 200px; border: 2px solid black; width: 100%;">
+							<div>{{item.name.substring(0, 30)}}</div>
+							<div>{{item.name.substring(0, 30)}}</div>
+						</div>
+					</ng-template>
+				</klp-form-select>
 			</klp-form-element>
 		</div>
 	</div>
 </klp-form>
 
-<div style="width: 650px; margin-left: 1200px; overflow: scroll; height: 500px;">
+<div style="width: 650px; margin-left: 100px; overflow: scroll; height: 500px;">
 	some cool stuff here <br />
 	some cool stuff here <br />
 	some cool stuff here <br />

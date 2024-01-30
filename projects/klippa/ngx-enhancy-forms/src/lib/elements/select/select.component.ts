@@ -200,14 +200,20 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	private async setWidthBasedOnOptionsWidths(): Promise<void> {
 		if (this.truncateOptions === false) {
 			await awaitableForNextCycle();
-			const widths: Array<number> = Array.from(this.elRef.nativeElement.querySelectorAll('.ng-option > *')).map(
+			const optionRefs: Array<HTMLElement> = Array.from(this.elRef.nativeElement.querySelectorAll('.ng-option > *'));
+			const widths: Array<number> = optionRefs.map(
 				(e: any) => e.scrollWidth,
 			);
 			const maxWidth = Math.max(...widths);
 			const dropdownPanel = this.elRef.nativeElement.querySelector('ng-dropdown-panel');
 			if (dropdownPanel) {
+				const firstOption = this.elRef.nativeElement.querySelector('.ng-option');
+				let padding = 0;
+				if (firstOption) {
+					padding = parseInt(getComputedStyle(firstOption).paddingLeft, 10) + parseInt(getComputedStyle(firstOption).paddingRight, 10);
+				}
 				dropdownPanel.style.minWidth = `${this.elRef.nativeElement.clientWidth}px`;
-				dropdownPanel.style.width = `${Math.max(this.elRef.nativeElement.clientWidth, maxWidth + 40, dropdownPanel.getBoundingClientRect().width)}px`;
+				dropdownPanel.style.width = `${Math.max(this.elRef.nativeElement.clientWidth, maxWidth + padding, dropdownPanel.getBoundingClientRect().width)}px`;
 				await awaitableForNextCycle();
 				const pickerWidth = this.elRef.nativeElement.getBoundingClientRect().width;
 				const dropdownPanelWidth = dropdownPanel.getBoundingClientRect().width;
@@ -286,7 +292,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	public open = (): void => {
 		this.ngSelect.open();
 	}
-	
+
 	public close = (): void => {
 		this.ngSelect.close();
 	}
