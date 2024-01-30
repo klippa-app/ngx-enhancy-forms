@@ -200,7 +200,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	private async setWidthBasedOnOptionsWidths(): Promise<void> {
 		if (this.truncateOptions === false) {
 			await awaitableForNextCycle();
-			const widths: Array<number> = Array.from(this.elRef.nativeElement.querySelectorAll('.ng-option div')).map(
+			const widths: Array<number> = Array.from(this.elRef.nativeElement.querySelectorAll('.ng-option > *')).map(
 				(e: any) => e.scrollWidth,
 			);
 			const maxWidth = Math.max(...widths);
