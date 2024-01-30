@@ -282,6 +282,11 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	public focus = (): void => {
 		this.ngSelect.focus();
 	}
+
+	public open = (): void => {
+		this.ngSelect.open();
+	}
+	
 	public close = (): void => {
 		this.ngSelect.close();
 	}
