@@ -12,5 +12,8 @@
 		[disabled]='disabled'
 		#nativeInputRef
 	/>
-	<div class="clearIcon" *ngIf="clearable && innerValue?.length > 0" (click)="resetToNull()">×</div>
+	<div class="tail">
+		<ng-container [ngTemplateOutlet]="getTailTpl()"></ng-container>
+		<div class="clearIcon" *ngIf="clearable && innerValue?.length > 0" (click)="resetToNull()">×</div>
+	</div>
 </div>

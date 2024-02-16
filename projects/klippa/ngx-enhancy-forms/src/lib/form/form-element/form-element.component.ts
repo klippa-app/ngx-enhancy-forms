@@ -1,9 +1,21 @@
-import {Component, ElementRef, Inject, InjectionToken, Input, Optional, ViewChild} from '@angular/core';
-import {AbstractControl, UntypedFormControl} from '@angular/forms';
+import {
+	AfterViewInit,
+	Component,
+	ContentChild,
+	ElementRef,
+	Inject,
+	InjectionToken,
+	Input,
+	Optional,
+	TemplateRef,
+	ViewChild
+} from '@angular/core';
+import {AbstractControl, NG_VALUE_ACCESSOR, UntypedFormControl} from '@angular/forms';
 import {ValueAccessorBase} from '../../elements/value-accessor-base/value-accessor-base.component';
 import {CustomErrorMessages, FormErrorMessages} from '../../types';
 import {isValueSet} from '../../util/values';
 import {FormComponent} from '../form.component';
+import {awaitableForNextCycle} from "../../util/angular";
 
 
 export const FORM_ERROR_MESSAGES = new InjectionToken<CustomErrorMessages>('form.error.messages');
@@ -25,7 +37,7 @@ export const DEFAULT_ERROR_MESSAGES: FormErrorMessages = {
 	templateUrl: './form-element.component.html',
 	styleUrls: ['./form-element.component.scss'],
 })
-export class FormElementComponent {
+export class FormElementComponent implements AfterViewInit {
 	public attachedControl: AbstractControl;
 	@Input() public caption: string;
 	@Input() public direction: 'horizontal' | 'vertical' = 'horizontal';
@@ -34,6 +46,9 @@ export class FormElementComponent {
 	@Input() public swapInputAndCaption: boolean = false;
 	@Input() public errorMessageAsTooltip: boolean = false;
 	@ViewChild('internalComponentRef') public internalComponentRef: ElementRef;
+	@ViewChild('tailTpl') public tailTpl: TemplateRef<any>;
+	@ContentChild(NG_VALUE_ACCESSOR) fieldInput: ValueAccessorBase<any>;
+
 
 	public captionRef: ElementRef;
 	public errorMessages: FormErrorMessages = DEFAULT_ERROR_MESSAGES;
@@ -41,9 +56,15 @@ export class FormElementComponent {
 	private input: ValueAccessorBase<any>;
 
 	constructor(
-		 @Optional() private parent: FormComponent,
+		@Optional() private parent: FormComponent,
 		@Inject(FORM_ERROR_MESSAGES) @Optional() private customMessages: CustomErrorMessages,
-	) {}
+	) {
+	}
+
+	async ngAfterViewInit(): Promise<void> {
+		await awaitableForNextCycle();
+		this.fieldInput?.setTailTpl(this.tailTpl);
+	}
 
 	public shouldShowErrorMessages(): boolean {
 		return this.parent?.showErrorMessages !== false;

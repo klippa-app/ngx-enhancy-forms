@@ -80,28 +80,28 @@
 		}
 	}
 }
-$triangleSize: 12px;
+$triangleSize: 8px;
 .inputContainer {
 	position: relative;
 	flex: 1;
 	.errorTooltipTriangle {
 		z-index: 1;
 		position: absolute;
-		display: none;
+		//display: none;
 		right: 0px;
-		transform: translate(-50%, calc(-100% + 0.1rem));
+		transform: translate(-0.15rem, calc(-100% - 0.1rem)) scaleX(0.8);
 		width: 0px;
 		height: 0px;
 		border-left: $triangleSize solid transparent;
 		border-right: $triangleSize solid transparent;
-		border-top: $triangleSize solid rgba(255, 128, 0, 0.125);
+		border-top: $triangleSize solid rgba(0, 0, 0, 0.13);
 	}
 	.errorTooltipTriangleWhite {
 		z-index: 3;
 		position: absolute;
-		display: none;
+		//display: none;
 		right: 0px;
-		transform: translate(-50%, calc(-100% + 0.1rem - 2px));
+		transform: translate(-0.15rem, calc(-100% - 0.1rem - 2px)) scaleX(0.8);
 		width: 0px;
 		height: 0px;
 		border-left: $triangleSize solid transparent;
@@ -120,8 +120,8 @@ $triangleSize: 12px;
 		max-width: 20rem;
 		white-space: break-spaces;
 		background-color: white;
-		border: 1px solid rgba(255, 128, 0, 0.125);
-		box-shadow: rgba(255, 128, 0, 0.125) 2px 3px 10px 0px;
+		border: 1px solid rgba(0, 0, 0, 0.13);
+		box-shadow: rgba(0, 0, 0, 0.13) 2px 3px 10px 0px;
 		padding: 0.3rem 0.5rem;
 		box-sizing: border-box;
 		border-radius: 3px;
@@ -158,5 +158,29 @@ $triangleSize: 12px;
 		&.d34-66 {
 			margin-left: calc(34% + $spacing-medium);
 		}
+	}
+}
+
+.errContainer {
+	position: relative;
+	.errTooltip {
+		//display: none;
+		position: absolute;
+		top: -0.6rem;
+		right: -$spacing-small;
+		background: white;
+		transform: translateY(-100%);
+		width: 12rem;
+		white-space: break-spaces;
+		padding: 0.4rem 0.6rem;
+		border-radius: 0.4rem;
+		border: 1px solid rgba(0, 0, 0, 0.13);
+		box-shadow: rgba(0, 0, 0, 0.13) 2px 3px 10px 0px;
+		.errorContainer {
+			color: initial;
+		}
+	}
+	&:hover .errTooltip {
+		display: block;
 	}
 }

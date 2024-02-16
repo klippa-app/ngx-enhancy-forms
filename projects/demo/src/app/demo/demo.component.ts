@@ -72,7 +72,7 @@ export class DemoComponent {
 				if (e.value?.length > 2) {
 					return Promise.resolve();
 				}
-				return Promise.resolve({async: 'something'});
+				return Promise.resolve({async: 'Iban number does not match with the attachment'});
 			}
 		],
 		emails: ['', Validators.required],

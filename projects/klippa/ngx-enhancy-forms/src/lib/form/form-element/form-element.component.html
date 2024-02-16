@@ -14,6 +14,22 @@
 	</div>
 </ng-template>
 
+<ng-template #errorRef2>
+	<div>
+		<div *ngIf="showDefaultError('min')">{{substituteParameters(getErrorMessage("min"), {min: attachedControl.errors.min.min})}}</div>
+		<div *ngIf="showDefaultError('max')">{{substituteParameters(getErrorMessage("max"), {max: attachedControl.errors.max.max})}}</div>
+		<div *ngIf="showDefaultError('required')">{{getErrorMessage("required")}}</div>
+		<div *ngIf="showDefaultError('email')">{{getErrorMessage("email")}}</div>
+		<div *ngIf="showDefaultError('minlength')">{{substituteParameters(getErrorMessage("minLength"), {minLength: attachedControl.errors.minlength.requiredLength})}}</div>
+		<div *ngIf="showDefaultError('maxlength')">{{substituteParameters(getErrorMessage("maxLength"), {maxLength: attachedControl.errors.maxlength.requiredLength})}}</div>
+		<div *ngIf="showDefaultError('pattern')">{{getErrorMessage("pattern")}}</div>
+		<div *ngIf="showDefaultError('MatchPassword')">{{getErrorMessage("matchPassword")}}</div>
+		<div *ngIf="showDefaultError('date')">{{getErrorMessage("date")}}</div>
+		<div *ngIf="showDefaultError('message')">{{attachedControl.errors.message.value}}</div>
+		<div [ngTemplateOutlet]="getCustomErrorHandler(getErrorToShow())?.templateRef"></div>
+	</div>
+</ng-template>
+
 <ng-container *ngIf="direction === 'horizontal' && !errorMessageAsTooltip" [ngTemplateOutlet]="errorRef"></ng-container>
 
 <div class="componentContainer" [ngClass]="{hasCaption: caption || captionRef, vertical: direction === 'vertical', reverseOrder: swapInputAndCaption}" #internalComponentRef>
@@ -53,3 +69,14 @@
 		<ng-content></ng-content>
 	</div>
 </div>
+
+<ng-template #tailTpl>
+	<div class="errContainer">
+		<div class="errorTooltipTriangle"></div>
+		<div class="errorTooltipTriangleWhite"></div>
+		<div class="errTooltip">
+			<ng-container [ngTemplateOutlet]="errorRef2"></ng-container>
+		</div>
+		<klp-form-warning-icon variant="fill"></klp-form-warning-icon>
+	</div>
+</ng-template>
