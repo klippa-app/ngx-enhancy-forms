@@ -45,6 +45,10 @@
 			flex: 34;
 		}
 	}
+	&.fixedInputWidth {
+		flex: 1 1 0px;
+		overflow: hidden;
+	}
 	color: $default-dark;
 	&.hasErrors {
 		color: $default-warning;
@@ -138,6 +142,9 @@ $triangleSize: 12px;
 		&.d34-66 {
 			flex: 66;
 		}
+	}
+	&.fixedInputWidth {
+		flex: 0 0 auto;
 	}
 }
 

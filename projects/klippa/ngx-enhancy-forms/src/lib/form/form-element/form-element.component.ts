@@ -30,7 +30,7 @@ export class FormElementComponent {
 	@Input() public caption: string;
 	@Input() public direction: 'horizontal' | 'vertical' = 'horizontal';
 	@Input() public captionSpacing: 'percentages' | 'none' = 'percentages';
-	@Input() public spaceDistribution: '40-60' | '34-66' | '30-70' = '40-60';
+	@Input() public spaceDistribution: '40-60' | '34-66' | '30-70' | 'fixedInputWidth' = '40-60';
 	@Input() public swapInputAndCaption: boolean = false;
 	@Input() public errorMessageAsTooltip: boolean = false;
 	@ViewChild('internalComponentRef') public internalComponentRef: ElementRef;

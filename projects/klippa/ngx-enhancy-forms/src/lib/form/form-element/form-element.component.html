@@ -20,9 +20,10 @@
 	<div class="caption" *ngIf="caption || captionRef"
 		[ngClass]="{
 			hasErrors: getErrorToShow() && attachedControl.touched,
-			percentageSpacing: captionSpacing === 'percentages',
+			percentageSpacing: captionSpacing === 'percentages' && spaceDistribution !== 'fixedInputWidth',
 			'd30-70': spaceDistribution === '30-70',
 			'd34-66': spaceDistribution === '34-66',
+			'fixedInputWidth': spaceDistribution === 'fixedInputWidth',
 			withErrorRightOfCaption: getErrorLocation() === 'rightOfCaption'
 		}"
 	>
@@ -37,9 +38,10 @@
 	</div>
 	<ng-container *ngIf="direction === 'vertical' && getErrorLocation() === 'belowCaption' && !errorMessageAsTooltip" [ngTemplateOutlet]="errorRef"></ng-container>
 	<div class="inputContainer" [ngClass]="{
-		percentageSpacing: captionSpacing === 'percentages',
+		percentageSpacing: captionSpacing === 'percentages' && spaceDistribution !== 'fixedInputWidth',
 		'd30-70': spaceDistribution === '30-70',
-		'd34-66': spaceDistribution === '34-66'
+		'd34-66': spaceDistribution === '34-66',
+		'fixedInputWidth': spaceDistribution === 'fixedInputWidth'
 	}">
 		<ng-container *ngIf="errorMessageAsTooltip && shouldShowErrorMessages() && getErrorToShow()">
 			<div class="errorTooltipTriangle"></div>
