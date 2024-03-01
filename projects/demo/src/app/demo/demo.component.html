@@ -1,11 +1,11 @@
 
-<klp-form [formGroup]="myForm" errorMessageLocation="rightOfCaption" [readOnly]="false">
+<klp-form [formGroup]="myForm" [warnings]="getWarnings()" errorMessageLocation="rightOfCaption" [readOnly]="false">
 	<div style="height: 920px; overflow: auto">
 		<app-deep-input>
 		</app-deep-input>
 		<div style="width: 300px">
 			<klp-form-element caption="Name Je weet erfjwefwewkfjew" spaceDistribution="34-66" direction="vertical">
-				<klp-form-text-input formControlName="name" [clearable]="true" #i>
+				<klp-form-text-input formControlName="name" [clearable]="true">
 				</klp-form-text-input>
 				<klp-form-error error="async"></klp-form-error>
 			</klp-form-element>

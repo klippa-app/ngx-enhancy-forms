@@ -13,7 +13,7 @@ import {
 import {AbstractControl, NG_VALUE_ACCESSOR, UntypedFormControl} from '@angular/forms';
 import {ValueAccessorBase} from '../../elements/value-accessor-base/value-accessor-base.component';
 import {CustomErrorMessages, FormErrorMessages} from '../../types';
-import {isValueSet} from '../../util/values';
+import {isValueSet, stringIsSetAndFilled} from '../../util/values';
 import {FormComponent} from '../form.component';
 import {awaitableForNextCycle} from "../../util/angular";
 
@@ -43,17 +43,19 @@ export class FormElementComponent implements AfterViewInit {
 	@Input() public direction: 'horizontal' | 'vertical' = 'horizontal';
 	@Input() public captionSpacing: 'percentages' | 'none' = 'percentages';
 	@Input() public spaceDistribution: '40-60' | '34-66' | '30-70' | 'fixedInputWidth' = '40-60';
-	@Input() public swapInputAndCaption: boolean = false;
-	@Input() public errorMessageAsTooltip: boolean = false;
+	@Input() public swapInputAndCaption = false;
+	@Input() public errorMessageAsTooltip = false;
 	@ViewChild('internalComponentRef') public internalComponentRef: ElementRef;
 	@ViewChild('tailTpl') public tailTpl: TemplateRef<any>;
+	@ViewChild('captionDummyForSpaceCalculation') public captionDummyForSpaceCalculation: ElementRef;
 	@ContentChild(NG_VALUE_ACCESSOR) fieldInput: ValueAccessorBase<any>;
 
 
-	public captionRef: ElementRef;
+	public captionRef: TemplateRef<any>;
 	public errorMessages: FormErrorMessages = DEFAULT_ERROR_MESSAGES;
 	public customErrorHandlers: Array<{ error: string; templateRef: ElementRef }> = [];
 	private input: ValueAccessorBase<any>;
+	private errorMessageTruncated: boolean;
 
 	constructor(
 		@Optional() private parent: FormComponent,
@@ -80,6 +82,9 @@ export class FormElementComponent implements AfterViewInit {
 		this.attachedControl = formControl;
 		this.parent.registerControl(formControl, this);
 		this.input = input;
+		this.attachedControl.statusChanges.subscribe((e) => {
+			console.log(this.caption, e);
+		});
 	}
 
 	public unregisterControl(formControl: UntypedFormControl): void {
@@ -99,15 +104,26 @@ export class FormElementComponent implements AfterViewInit {
 		this.customErrorHandlers.push({error, templateRef});
 	}
 
-	public registerCaption(templateRef: ElementRef): void {
+	public registerCaption(templateRef: TemplateRef<any>): void {
 		this.captionRef = templateRef;
 	}
 
-	getErrorToShow(): string {
-		if (this.attachedControl?.touched === true && this.attachedControl?.errors) {
-			return Object.keys(this.attachedControl?.errors)[0];
+	getWarningToShow(): string {
+		return this.parent?.getWarningToShow(this.attachedControl);
+	}
+
+	getErrorToShow(forCalculation: boolean = false): string {
+		const firstError = Object.keys(this.attachedControl?.errors ?? {})[0];
+		if (forCalculation) {
+			return firstError;
 		}
-		return null;
+		if (this.attachedControl?.touched !== true) {
+			return null;
+		}
+		if (!this.attachedControl?.errors)  {
+			return null;
+		}
+		return firstError;
 	}
 
 	getCustomErrorHandler(error: string): { error: string; templateRef: ElementRef } {
@@ -148,5 +164,45 @@ export class FormElementComponent implements AfterViewInit {
 
 	public getErrorLocation(): 'belowCaption' | 'rightOfCaption' {
 		return this.parent?.errorMessageLocation ?? 'belowCaption';
+	}
+
+	public shouldShowErrorTooltip(): boolean {
+		if (stringIsSetAndFilled(this.getErrorToShow())) {
+			return false;
+		}
+		if (stringIsSetAndFilled(this.getWarningToShow())) {
+			return true;
+		}
+		return false;
+	}
+
+	public hasRightOfCaptionError(): boolean {
+		if (this.errorMessageAsTooltip) {
+			return false;
+		}
+		if (this.direction !== 'vertical' || this.getErrorLocation() !== 'rightOfCaption') {
+			return false;
+		}
+		return true;
+	}
+
+	public isErrorMessageTruncated(): boolean {
+		return this.errorMessageTruncated;
+	}
+
+	public setErrorMessageIsTruncated(): boolean {
+		if (this.errorMessageAsTooltip) {
+			return false;
+		}
+		if (this.direction !== 'vertical' || this.getErrorLocation() !== 'rightOfCaption') {
+			return  false;
+		}
+		const errorElement = this.captionDummyForSpaceCalculation?.nativeElement?.querySelectorAll('.rightOfCaptionError .errorContainer *');
+		if (isValueSet(errorElement)) {
+			this.errorMessageTruncated = [...errorElement].some(e => e.scrollWidth > e.clientWidth);
+		} else {
+			this.errorMessageTruncated = false;
+		}
+		return true;
 	}
 }

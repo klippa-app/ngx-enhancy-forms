@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, UntypedFormArray, UntypedFormGroup, Validators} from '@angular/forms';
 import {AppSelectOptions, SelectComponent} from '@klippa/ngx-enhancy-forms';
 
 @Component({
@@ -9,7 +9,7 @@ import {AppSelectOptions, SelectComponent} from '@klippa/ngx-enhancy-forms';
 })
 export class DemoComponent {
 
-	constructor(private fb: UntypedFormBuilder) {
+	constructor(private fb: FormBuilder) {
 		setTimeout(() => {
 			this.options = [...this.options, {id : this.options.length, name: 'BLAAAAAAAAAAAAAAAAAAAAAAAT'}];
 		}, 5000);
@@ -67,13 +67,17 @@ export class DemoComponent {
 
 	public myForm = this.fb.group({
 		deepInput: ['', Validators.required],
-		name: ['', [],
+		name: ['', [
 			(e) => {
+				console.log(e);
+				return null;
+			}],
+			[(e) => {
 				if (e.value?.length > 2) {
 					return Promise.resolve();
 				}
-				return Promise.resolve({async: 'Iban number does not match with the attachment'});
-			}
+				return Promise.resolve({async: ' aapaaa aapaaa aapaaa'});
+			}]
 		],
 		emails: ['', Validators.required],
 		disabledButRendered: ['disabledButRendered'],
@@ -196,5 +200,11 @@ export class DemoComponent {
 		this.options = [...this.options, {id: $event, name: $event}];
 		this.myValue = [...(this.myValue ?? []), $event];
 		this.selectComponent.close();
+	}
+
+	getWarnings(): Map<AbstractControl, string> {
+		const result = new Map<AbstractControl, string>();
+		// result.set(this.myForm.get('name'), 'This is a warning about your name');
+		return result;
 	}
 }

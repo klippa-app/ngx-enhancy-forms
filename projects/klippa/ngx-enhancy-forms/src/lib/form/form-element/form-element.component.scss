@@ -29,6 +29,13 @@
 		}
 	}
 }
+
+// used to calculate how much space we have for rending an error message
+.captionDummyForSpaceCalculation {
+	//height: 10px;
+	//overflow: hidden;
+}
+
 .captionRefContainer {
 	display: flex;
 }
@@ -51,7 +58,6 @@
 	}
 	color: $default-dark;
 	&.hasErrors {
-		color: $default-warning;
 		&.withErrorRightOfCaption .rightOfCaptionError {
 			display: block;
 		}
@@ -68,9 +74,10 @@
 		}
 		.rightOfCaptionError {
 			display: none;
+			max-width: 40%;
 			font-weight: normal;
 			overflow: hidden;
-			flex: 1 1 auto;
+			flex: 1 0 auto;
 			text-align: right;
 			::ng-deep * {
 				white-space: nowrap;
@@ -84,10 +91,24 @@ $triangleSize: 8px;
 .inputContainer {
 	position: relative;
 	flex: 1;
+	.errorTooltipContainer {
+		position: relative;
+		&.alwaysOpen {
+			.errorTooltipTriangle, .errorTooltipTriangleWhite, .errorTooltip {
+				display: block;
+			}
+			.closeBtn {
+				display: block;
+			}
+			.errorTooltip {
+				padding-right: 1.4rem;
+			}
+		}
+	}
 	.errorTooltipTriangle {
+		display: none;
 		z-index: 1;
 		position: absolute;
-		//display: none;
 		right: 0px;
 		transform: translate(-0.15rem, calc(-100% - 0.1rem)) scaleX(0.8);
 		width: 0px;
@@ -97,9 +118,9 @@ $triangleSize: 8px;
 		border-top: $triangleSize solid rgba(0, 0, 0, 0.13);
 	}
 	.errorTooltipTriangleWhite {
+		display: none;
 		z-index: 3;
 		position: absolute;
-		//display: none;
 		right: 0px;
 		transform: translate(-0.15rem, calc(-100% - 0.1rem - 2px)) scaleX(0.8);
 		width: 0px;
@@ -109,27 +130,33 @@ $triangleSize: 8px;
 		border-top: $triangleSize solid white;
 	}
 	.errorTooltip {
+		display: none;
 		position: absolute;
 		top: -0.6rem;
-		right: 0;
-		display: none;
-
-		z-index: 2;
-		color: rgb(81, 83, 101);
+		right: -$spacing-small;
+		background: white;
 		transform: translateY(-100%);
-		max-width: 20rem;
+		width: 12rem;
 		white-space: break-spaces;
-		background-color: white;
+		padding: 0.4rem 0.6rem;
+		border-radius: 0.4rem;
 		border: 1px solid rgba(0, 0, 0, 0.13);
 		box-shadow: rgba(0, 0, 0, 0.13) 2px 3px 10px 0px;
-		padding: 0.3rem 0.5rem;
-		box-sizing: border-box;
-		border-radius: 3px;
-		.errorContainer {
-			margin-left: initial;
+		.closeBtn {
+			display: none;
+			position: absolute;
+			top: 0.2rem;
+			right: 0.2rem;
+			padding: 0.2rem 0.4rem;
+			cursor: pointer;
+			color: $default-gray-dark;
+			font-size: 1rem;
+			&:hover {
+				color: $default-dark;
+			}
 		}
 	}
-	&:hover {
+	&:hover .errorTooltipContainer {
 		.errorTooltip, .errorTooltipTriangle, .errorTooltipTriangleWhite {
 			display: block;
 		}
@@ -158,29 +185,5 @@ $triangleSize: 8px;
 		&.d34-66 {
 			margin-left: calc(34% + $spacing-medium);
 		}
-	}
-}
-
-.errContainer {
-	position: relative;
-	.errTooltip {
-		//display: none;
-		position: absolute;
-		top: -0.6rem;
-		right: -$spacing-small;
-		background: white;
-		transform: translateY(-100%);
-		width: 12rem;
-		white-space: break-spaces;
-		padding: 0.4rem 0.6rem;
-		border-radius: 0.4rem;
-		border: 1px solid rgba(0, 0, 0, 0.13);
-		box-shadow: rgba(0, 0, 0, 0.13) 2px 3px 10px 0px;
-		.errorContainer {
-			color: initial;
-		}
-	}
-	&:hover .errTooltip {
-		display: block;
 	}
 }

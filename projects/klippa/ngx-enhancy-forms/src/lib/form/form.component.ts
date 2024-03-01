@@ -36,6 +36,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 	@Input() public showErrorMessages = true;
 	@Input() public errorMessageLocation: 'belowCaption' | 'rightOfCaption' = 'belowCaption';
 	@Input() public formGroup: UntypedFormGroup;
+	@Input() public warnings: Map<AbstractControl, string> = new Map<AbstractControl, string>();
 	@Input() public patchValueInterceptor: (values: any) => Promise<any>;
 	@Output() public onInjected = new EventEmitter<Record<string, any>>();
 
@@ -192,6 +193,10 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 
 	public getFormElementByFormControl(control: UntypedFormControl): FormElementComponent {
 		return this.activeControls.find((e) => e.formControl === control)?.formElement;
+	}
+
+	public getWarningToShow(control: AbstractControl): string {
+		return this.warnings.get(control);
 	}
 
 	trySubmit(): Promise<any> {

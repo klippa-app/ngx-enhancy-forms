@@ -1,4 +1,4 @@
-import { Component, ElementRef, Host, OnInit, Optional, ViewChild } from '@angular/core';
+import {Component, ElementRef, Host, OnInit, Optional, TemplateRef, ViewChild} from '@angular/core';
 import {FormElementComponent} from "../form-element/form-element.component";
 import {isNullOrUndefined} from "../../util/values";
 
@@ -8,7 +8,7 @@ import {isNullOrUndefined} from "../../util/values";
 	styleUrls: ['./form-caption.component.scss'],
 })
 export class FormCaptionComponent implements OnInit {
-	@ViewChild('contentRef') public contentRef: ElementRef;
+	@ViewChild('contentRef') public contentRef: TemplateRef<any>;
 
 	constructor(@Host() @Optional() private parent: FormElementComponent) {}
 
