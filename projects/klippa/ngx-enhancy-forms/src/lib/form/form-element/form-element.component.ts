@@ -70,6 +70,10 @@ export class FormElementComponent {
 		return this.attachedControl;
 	}
 
+	public getAttachedInput(): ValueAccessorBase<any> {
+		return this.input;
+	}
+
 	public registerErrorHandler(error: string, templateRef: ElementRef): void {
 		this.customErrorHandlers.push({error, templateRef});
 	}

@@ -190,6 +190,10 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		}
 	}
 
+	public getFormElementByFormControl(control: UntypedFormControl): FormElementComponent {
+		return this.activeControls.find((e) => e.formControl === control)?.formElement;
+	}
+
 	trySubmit(): Promise<any> {
 		this.formGroup.markAllAsTouched();
 		const allControls: Array<UntypedFormControl> = this.getAllFormControls();
