@@ -30,10 +30,13 @@
 	}
 }
 
-// used to calculate how much space we have for rending an error message
-.captionDummyForSpaceCalculation {
-	//height: 10px;
-	//overflow: hidden;
+// used to calculate how much space we have for rendering an error message
+.captionDummyForSpaceCalculation .caption.withErrorRightOfCaption {
+	height: 0px;
+	overflow: hidden;
+	.rightOfCaptionError {
+		display: block;
+	}
 }
 
 .captionRefContainer {
@@ -57,11 +60,6 @@
 		overflow: hidden;
 	}
 	color: $default-dark;
-	&.hasErrors {
-		&.withErrorRightOfCaption .rightOfCaptionError {
-			display: block;
-		}
-	}
 	&.withErrorRightOfCaption {
 		display: flex;
 		justify-content: space-between;
@@ -74,6 +72,9 @@
 		}
 		.rightOfCaptionError {
 			display: none;
+			&.errorFullyVisible {
+				display: block;
+			}
 			max-width: 40%;
 			font-weight: normal;
 			overflow: hidden;
@@ -104,6 +105,9 @@ $triangleSize: 8px;
 				padding-right: 1.4rem;
 			}
 		}
+		klp-form-warning-icon {
+			cursor: pointer;
+		}
 	}
 	.errorTooltipTriangle {
 		display: none;
@@ -131,6 +135,10 @@ $triangleSize: 8px;
 	}
 	.errorTooltip {
 		display: none;
+		&.noPointerEvents {
+			pointer-events: none;
+		}
+		word-wrap: break-word;
 		position: absolute;
 		top: -0.6rem;
 		right: -$spacing-small;

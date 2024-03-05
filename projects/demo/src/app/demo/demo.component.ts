@@ -59,7 +59,6 @@ export class DemoComponent {
 		'2022-07-21T00:00:00Z',
 		'2022-07-27T15:00:00Z',
 	].map(e => {
-		console.log(e);
 		return new Date(e);
 	});
 	show = false;
@@ -67,16 +66,21 @@ export class DemoComponent {
 
 	public myForm = this.fb.group({
 		deepInput: ['', Validators.required],
-		name: ['', [
-			(e) => {
-				console.log(e);
-				return null;
-			}],
+		name: ['', [Validators.required, Validators.minLength(4)],
 			[(e) => {
-				if (e.value?.length > 2) {
+				if (e.value?.length > 5) {
 					return Promise.resolve();
 				}
-				return Promise.resolve({async: ' aapaaa aapaaa aapaaa'});
+				if (e.value?.length > 4) {
+					return Promise.resolve({async: 'baapaaa aaaaaaapaaaaaaapaaaaaaap'});
+				}
+				if (e.value?.length > 3) {
+					return Promise.resolve({async: 'caapaaa aaaaaaap'});
+				}
+				if (e.value?.length > 2) {
+					return Promise.resolve({async: 'daapaaa aaaaaaap aaaaap'});
+				}
+				return Promise.resolve({async: 'aapaaa '});
 			}]
 		],
 		emails: ['', Validators.required],
@@ -204,7 +208,7 @@ export class DemoComponent {
 
 	getWarnings(): Map<AbstractControl, string> {
 		const result = new Map<AbstractControl, string>();
-		// result.set(this.myForm.get('name'), 'This is a warning about your name');
+		result.set(this.myForm.get('name'), 'This is a warning about your name');
 		return result;
 	}
 }

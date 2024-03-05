@@ -89,6 +89,7 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 
 	touch(): void {
 		this.touched.forEach((f) => f());
+		this.onTouch.emit();
 	}
 
 	writeValue(value: T): void {

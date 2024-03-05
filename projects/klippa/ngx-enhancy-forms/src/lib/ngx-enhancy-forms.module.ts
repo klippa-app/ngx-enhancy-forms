@@ -30,6 +30,7 @@ import {HourMinuteInputComponent} from './elements/hour-minute-input/hour-minute
 import {RadioComponent} from './elements/radio/radio.component';
 import {WithTooltipDirective} from "./withTooltip.component";
 import {WarningIconComponent} from "./warning-icon/warning-icon.component";
+import {ElementIsTruncatedCbComponent} from "./elementIsTruncatedCb.component";
 
 
 @NgModule({
@@ -69,6 +70,7 @@ import {WarningIconComponent} from "./warning-icon/warning-icon.component";
 		RadioComponent,
 		WithTooltipDirective,
 		WarningIconComponent,
+		ElementIsTruncatedCbComponent,
 	],
 	exports: [
 		ValueAccessorBase,
@@ -98,6 +100,7 @@ import {WarningIconComponent} from "./warning-icon/warning-icon.component";
 		HourMinuteInputComponent,
 		RadioComponent,
 		WithTooltipDirective,
+		ElementIsTruncatedCbComponent,
 	]
 })
 export class NgxEnhancyFormsModule {

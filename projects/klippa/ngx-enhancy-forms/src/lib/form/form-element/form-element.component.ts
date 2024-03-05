@@ -50,12 +50,12 @@ export class FormElementComponent implements AfterViewInit {
 	@ViewChild('captionDummyForSpaceCalculation') public captionDummyForSpaceCalculation: ElementRef;
 	@ContentChild(NG_VALUE_ACCESSOR) fieldInput: ValueAccessorBase<any>;
 
-
 	public captionRef: TemplateRef<any>;
 	public errorMessages: FormErrorMessages = DEFAULT_ERROR_MESSAGES;
-	public customErrorHandlers: Array<{ error: string; templateRef: ElementRef }> = [];
+	public customErrorHandlers: Array<{ error: string; templateRef: TemplateRef<any> }> = [];
 	private input: ValueAccessorBase<any>;
-	private errorMessageTruncated: boolean;
+	public errorFullyVisible: boolean;
+	private popupState: 'lockedOpen' | 'lockedClosed' | 'onHover' = 'onHover';
 
 	constructor(
 		@Optional() private parent: FormComponent,
@@ -66,6 +66,9 @@ export class FormElementComponent implements AfterViewInit {
 	async ngAfterViewInit(): Promise<void> {
 		await awaitableForNextCycle();
 		this.fieldInput?.setTailTpl(this.tailTpl);
+		this.fieldInput?.onTouch.asObservable().subscribe((e) => {
+			this.determinePopupState();
+		});
 	}
 
 	public shouldShowErrorMessages(): boolean {
@@ -82,9 +85,31 @@ export class FormElementComponent implements AfterViewInit {
 		this.attachedControl = formControl;
 		this.parent.registerControl(formControl, this);
 		this.input = input;
+
+
 		this.attachedControl.statusChanges.subscribe((e) => {
-			console.log(this.caption, e);
+			// console.log(this.caption, e);
+			// console.log(e);
+			// console.log(this.getErrorToShow());
+			this.determinePopupState();
+			// console.log(this.getWarningToShow());
 		});
+		this.determinePopupState();
+	}
+
+	private determinePopupState(): void {
+		// console.log(this.getErrorToShow());
+		if (stringIsSetAndFilled(this.getErrorToShow())) {
+			this.popupState = 'onHover';
+			console.log('error');
+			return;
+		}
+		if (stringIsSetAndFilled(this.getWarningToShow())) {
+			this.popupState = 'lockedOpen';
+			console.log('warning');
+			return;
+		}
+		console.log('valid');
 	}
 
 	public unregisterControl(formControl: UntypedFormControl): void {
@@ -100,7 +125,7 @@ export class FormElementComponent implements AfterViewInit {
 		return this.input;
 	}
 
-	public registerErrorHandler(error: string, templateRef: ElementRef): void {
+	public registerErrorHandler(error: string, templateRef: TemplateRef<any>): void {
 		this.customErrorHandlers.push({error, templateRef});
 	}
 
@@ -112,11 +137,8 @@ export class FormElementComponent implements AfterViewInit {
 		return this.parent?.getWarningToShow(this.attachedControl);
 	}
 
-	getErrorToShow(forCalculation: boolean = false): string {
+	getErrorToShow(): string {
 		const firstError = Object.keys(this.attachedControl?.errors ?? {})[0];
-		if (forCalculation) {
-			return firstError;
-		}
 		if (this.attachedControl?.touched !== true) {
 			return null;
 		}
@@ -126,7 +148,7 @@ export class FormElementComponent implements AfterViewInit {
 		return firstError;
 	}
 
-	getCustomErrorHandler(error: string): { error: string; templateRef: ElementRef } {
+	getCustomErrorHandler(error: string): { error: string; templateRef: TemplateRef<any> } {
 		return this.customErrorHandlers.find((e) => e.error === error);
 	}
 
@@ -166,9 +188,16 @@ export class FormElementComponent implements AfterViewInit {
 		return this.parent?.errorMessageLocation ?? 'belowCaption';
 	}
 
-	public shouldShowErrorTooltip(): boolean {
-		if (stringIsSetAndFilled(this.getErrorToShow())) {
+	public shouldShowErrorTooltipOpened(): boolean {
+		return this.popupState === 'lockedOpen';
+	}
+
+	public hasHoverableErrorTooltip(): boolean {
+		if (this.popupState !== 'onHover') {
 			return false;
+		}
+		if (stringIsSetAndFilled(this.getErrorToShow())) {
+			return !this.errorFullyVisible;
 		}
 		if (stringIsSetAndFilled(this.getWarningToShow())) {
 			return true;
@@ -186,23 +215,26 @@ export class FormElementComponent implements AfterViewInit {
 		return true;
 	}
 
-	public isErrorMessageTruncated(): boolean {
-		return this.errorMessageTruncated;
+	public setErrorMessageIsTruncated = (isTruncated: boolean) => {
+		this.errorFullyVisible = !isTruncated;
 	}
 
-	public setErrorMessageIsTruncated(): boolean {
-		if (this.errorMessageAsTooltip) {
-			return false;
+	public shouldShowWarningPopup(): boolean {
+		return stringIsSetAndFilled(this.getWarningToShow());
+	}
+
+	public closePopup(): void {
+		this.popupState = 'onHover';
+	}
+
+	public togglePopup(): void {
+		if (this.errorFullyVisible) {
+			return;
 		}
-		if (this.direction !== 'vertical' || this.getErrorLocation() !== 'rightOfCaption') {
-			return  false;
-		}
-		const errorElement = this.captionDummyForSpaceCalculation?.nativeElement?.querySelectorAll('.rightOfCaptionError .errorContainer *');
-		if (isValueSet(errorElement)) {
-			this.errorMessageTruncated = [...errorElement].some(e => e.scrollWidth > e.clientWidth);
+		if (this.popupState === 'lockedOpen') {
+			this.popupState = 'onHover';
 		} else {
-			this.errorMessageTruncated = false;
+			this.popupState = 'lockedOpen';
 		}
-		return true;
 	}
 }
