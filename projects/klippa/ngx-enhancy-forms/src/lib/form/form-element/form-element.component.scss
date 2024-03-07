@@ -3,20 +3,23 @@
 	display: block;
 }
 .componentContainer {
-	display: flex;
-	align-items: center;
-	min-height: 42px;
-	&:not(.hasCaption) {
+	&:not(.hasCaption) .captionInputAndError{
 		display: block;
 		.inputContainer {
 			margin-top: 0;
 		}
 	}
-	&.reverseOrder {
+	&.hasCaption .errorAboveInputContainer .spacer {
+		display: block;
+	}
+	&.reverseOrder .captionInputAndError{
 		flex-direction: row-reverse;
 		justify-content: flex-end;
 	}
-	&.vertical {
+	&.horizontal .captionInputAndError{
+		gap: 1rem;
+	}
+	&.vertical .captionInputAndError{
 		display: block;
 		.inputContainer {
 			margin-top: $spacing-tiny;
@@ -24,9 +27,79 @@
 		.errorContainer {
 			margin-left: 0;
 		}
-		.caption {
-			padding-right: 0;
+	}
+
+	&.d40-60 {
+		.errorAboveInputContainer {
+			.spacer {
+				flex: 40 1 0px;
+			}
+			.errorContainer {
+				flex: 60 1 0px;
+			}
 		}
+		.caption {
+			flex: 40 1 0px;
+		}
+		.inputContainer {
+			flex: 60 1 0px;
+		}
+	}
+	&.d34-66 {
+		.errorAboveInputContainer {
+			.spacer {
+				flex: 34 1 0px;
+			}
+			.errorContainer {
+				flex: 66 1 0px;
+			}
+		}
+		.caption {
+			flex: 34 1 0px;
+		}
+		.inputContainer {
+			flex: 66 1 0px;
+		}
+	}
+	&.d30-70 {
+		.errorAboveInputContainer {
+			.spacer {
+				flex: 30 1 0px;
+			}
+			.errorContainer {
+				flex: 70 1 0px;
+			}
+		}
+		.caption {
+			flex: 30 1 0px;
+		}
+		.inputContainer {
+			flex: 70 1 0px;
+		}
+	}
+
+	&.fixedInputWidth {
+		.caption {
+			flex: 1 1 0px;
+			overflow: hidden;
+		}
+		.inputContainer {
+			flex: 0 0 auto;
+		}
+	}
+}
+
+.captionInputAndError {
+	display: flex;
+	align-items: center;
+	min-height: 42px;
+}
+
+.errorAboveInputContainer {
+	display: flex;
+	gap: 1rem;
+	.spacer {
+		display: none;
 	}
 }
 
@@ -45,21 +118,17 @@
 .caption {
 	font-weight: bold;
 	flex: 0 0 auto;
-	padding-right: $spacing-medium;
 	&.percentageSpacing {
-		flex: 40;
+		flex: 40 1 0px;
 		&.d30-70 {
-			flex: 30;
+			flex: 30 1 0px;
 		}
 		&.d34-66 {
-			flex: 34;
+			flex: 34 1 0px;
 		}
 	}
-	&.fixedInputWidth {
-		flex: 1 1 0px;
-		overflow: hidden;
-	}
 	color: $default-dark;
+	overflow: hidden;
 	&.withErrorRightOfCaption {
 		display: flex;
 		justify-content: space-between;
@@ -169,29 +238,8 @@ $triangleSize: 8px;
 			display: block;
 		}
 	}
-	&.percentageSpacing {
-		flex: 60;
-		&.d30-70 {
-			flex: 70;
-		}
-		&.d34-66 {
-			flex: 66;
-		}
-	}
-	&.fixedInputWidth {
-		flex: 0 0 auto;
-	}
 }
 
 .errorContainer {
 	color: $default-warning;
-	&.hasCaption {
-		margin-left: calc(40% + $spacing-medium);
-		&.d30-70 {
-			margin-left: calc(30% + $spacing-medium);
-		}
-		&.d34-66 {
-			margin-left: calc(34% + $spacing-medium);
-		}
-	}
 }

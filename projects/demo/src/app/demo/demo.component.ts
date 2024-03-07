@@ -64,25 +64,33 @@ export class DemoComponent {
 	show = false;
 	isChecked: boolean = undefined;
 
+	private nameConfig = ['', [Validators.required, Validators.minLength(4)],
+		[(e) => {
+			if (e.value?.length > 5) {
+				return Promise.resolve();
+			}
+			if (e.value?.length > 4) {
+				return Promise.resolve({async: 'baapaaa aaaaaaapaaaaaaapaaaaaaap'});
+			}
+			if (e.value?.length > 3) {
+				return Promise.resolve({async: 'caapaaa aaaaaaap'});
+			}
+			if (e.value?.length > 2) {
+				return Promise.resolve({async: 'daapaaa aaaaaaap aaaaap'});
+			}
+			return Promise.resolve({async: 'aapaaa '});
+		}]
+	];
+
 	public myForm = this.fb.group({
 		deepInput: ['', Validators.required],
-		name: ['', [Validators.required, Validators.minLength(4)],
-			[(e) => {
-				if (e.value?.length > 5) {
-					return Promise.resolve();
-				}
-				if (e.value?.length > 4) {
-					return Promise.resolve({async: 'baapaaa aaaaaaapaaaaaaapaaaaaaap'});
-				}
-				if (e.value?.length > 3) {
-					return Promise.resolve({async: 'caapaaa aaaaaaap'});
-				}
-				if (e.value?.length > 2) {
-					return Promise.resolve({async: 'daapaaa aaaaaaap aaaaap'});
-				}
-				return Promise.resolve({async: 'aapaaa '});
-			}]
-		],
+		name: this.nameConfig,
+		name2: this.nameConfig,
+		name3: this.nameConfig,
+		name4: this.nameConfig,
+		name5: this.nameConfig,
+		name6: this.nameConfig,
+		name7: this.nameConfig,
 		emails: ['', Validators.required],
 		disabledButRendered: ['disabledButRendered'],
 		unrendered: ['unrendered'],
@@ -209,6 +217,7 @@ export class DemoComponent {
 	getWarnings(): Map<AbstractControl, string> {
 		const result = new Map<AbstractControl, string>();
 		result.set(this.myForm.get('name'), 'This is a warning about your name');
+		result.set(this.myForm.get('name5'), 'This is a warning about your name5');
 		return result;
 	}
 }

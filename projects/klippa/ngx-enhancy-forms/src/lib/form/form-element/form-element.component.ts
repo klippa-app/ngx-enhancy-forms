@@ -88,28 +88,20 @@ export class FormElementComponent implements AfterViewInit {
 
 
 		this.attachedControl.statusChanges.subscribe((e) => {
-			// console.log(this.caption, e);
-			// console.log(e);
-			// console.log(this.getErrorToShow());
 			this.determinePopupState();
-			// console.log(this.getWarningToShow());
 		});
 		this.determinePopupState();
 	}
 
 	private determinePopupState(): void {
-		// console.log(this.getErrorToShow());
 		if (stringIsSetAndFilled(this.getErrorToShow())) {
 			this.popupState = 'onHover';
-			console.log('error');
 			return;
 		}
 		if (stringIsSetAndFilled(this.getWarningToShow())) {
 			this.popupState = 'lockedOpen';
-			console.log('warning');
 			return;
 		}
-		console.log('valid');
 	}
 
 	public unregisterControl(formControl: UntypedFormControl): void {
@@ -193,6 +185,9 @@ export class FormElementComponent implements AfterViewInit {
 	}
 
 	public hasHoverableErrorTooltip(): boolean {
+		if (!this.hasRightOfCaptionError() && !this.errorMessageAsTooltip) {
+			return false;
+		}
 		if (this.popupState !== 'onHover') {
 			return false;
 		}
@@ -228,6 +223,9 @@ export class FormElementComponent implements AfterViewInit {
 	}
 
 	public togglePopup(): void {
+		if (!this.hasRightOfCaptionError()) {
+			return;
+		}
 		if (this.errorFullyVisible) {
 			return;
 		}

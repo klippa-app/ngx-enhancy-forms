@@ -1,13 +1,41 @@
 
 <klp-form [formGroup]="myForm" [warnings]="getWarnings()" errorMessageLocation="rightOfCaption" [readOnly]="false">
-	<div style="height: 920px; overflow: auto">
-		<app-deep-input>
+	<div style="height: 920px; overflow: auto;">
+		<app-deep-input  *ngIf="false" >
 		</app-deep-input>
-		<div style="width: 300px">
+		<div style="width: 555px; margin-top: 5rem; margin-bottom: 10rem;">
 			<klp-form-element caption="Name Je weet erfjwefwewkfjew" spaceDistribution="34-66" direction="vertical">
 				<klp-form-text-input formControlName="name" [clearable]="true">
 				</klp-form-text-input>
 				<klp-form-error error="async"></klp-form-error>
+			</klp-form-element>
+
+			<klp-form-element caption="Name aap noot mies" spaceDistribution="30-70" direction="horizontal">
+				<klp-form-text-input formControlName="name2" [clearable]="true">
+				</klp-form-text-input>
+				<klp-form-error error="async"></klp-form-error>
+			</klp-form-element>
+
+			<klp-form-element caption="Name" spaceDistribution="40-60" direction="horizontal">
+				<klp-form-text-input formControlName="name3" [clearable]="true">
+				</klp-form-text-input>
+				<klp-form-error error="async"></klp-form-error>
+			</klp-form-element>
+
+			<klp-form-element caption="Name vertical" direction="vertical">
+				<klp-form-text-input formControlName="name4" [clearable]="true">
+				</klp-form-text-input>
+				<klp-form-error error="async"></klp-form-error>
+			</klp-form-element>
+
+			<klp-form-element [errorMessageAsTooltip]="true">
+				<klp-form-text-input formControlName="name5" [clearable]="true">
+				</klp-form-text-input>
+				<klp-form-error error="async"></klp-form-error>
+			</klp-form-element>
+
+			<klp-form-element caption="Yes or no?" spaceDistribution="fixedInputWidth">
+				<klp-form-toggle formControlName="yesno"></klp-form-toggle>
 			</klp-form-element>
 		</div>
 		<klp-form-element caption="radioButtons" spaceDistribution="34-66">
@@ -28,8 +56,7 @@
 			</klp-form-text-input>
 		</klp-form-element>
 		<klp-form-element caption="Yes or no" spaceDistribution="34-66">
-			<klp-form-toggle formControlName="yesno">
-			</klp-form-toggle>
+			<klp-form-toggle formControlName="yesno"></klp-form-toggle>
 		</klp-form-element>
 		<klp-form-element caption="Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2" spaceDistribution="fixedInputWidth">
 			<klp-form-toggle formControlName="yesno2">
