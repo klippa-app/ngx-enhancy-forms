@@ -25,6 +25,7 @@ export * from './lib/elements/value-accessor-base/value-accessor-base.component'
 export * from './lib/elements/value-accessor-base/multiple-value-accessor-base.component';
 
 export * from './lib/withTooltip.component';
+export * from './lib/elementIsTruncatedCb.component';
 
 export * from './lib/form/form.component';
 export * from './lib/form/form-caption/form-caption.component';
