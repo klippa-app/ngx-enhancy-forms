@@ -65,6 +65,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	@Output() public onClear = new EventEmitter<void>();
 	@Output() public onEnterKey = new EventEmitter<string>();
 	@ViewChild('ngSelect') ngSelect;
+	@ViewChild('tailRef') tailRef: ElementRef;
 	@ContentChild(KlpSelectOptionTemplateDirective, { read: TemplateRef }) customOptionTpl: TemplateRef<any>;
 
 	private lastItemIndexReached = -1;
@@ -86,12 +87,22 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 
 	ngAfterViewInit(): void {
 		this.addPrefix();
+		this.addTail();
 		this.elRef.nativeElement.querySelector('input').addEventListener('keydown', this.keyListener);
 	}
 
 	private keyListener = (e) => {
 		if (e.key === 'Enter') {
 			this.onEnterKey.emit(e.target.value);
+
+		}
+	}
+
+	private addTail(): void {
+		if (this.tailRef) {
+			const container = this.elRef.nativeElement.querySelector('.ng-select-container');
+			const arrowWrapper = this.elRef.nativeElement.querySelector('.ng-arrow-wrapper');
+			container.insertBefore(this.tailRef.nativeElement, arrowWrapper);
 		}
 	}
 

@@ -31,6 +31,9 @@
 				[startAt]="openPickerOnDate"
 			></mat-datepicker>
 		</mat-form-field>
+		<div class="tail">
+			<ng-container [ngTemplateOutlet]="getTailTpl()"></ng-container>
+		</div>
 	</div>
 	<div class="timeContainer" *ngIf="showTimeInput" [ngClass]="{disabled: disabled}">
 		<input maxlength="2" placeholder="__" [disabled]="disabled" [(ngModel)]="hours" (ngModelChange)="notifyNewDate()" (blur)="formatTime(); touchHours()">

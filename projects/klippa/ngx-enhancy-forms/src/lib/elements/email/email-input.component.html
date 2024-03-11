@@ -1,10 +1,16 @@
-<input
-	type="email"
-	class="form-control"
-	[(ngModel)]="innerValue"
-	(input)="setInnerValueAndNotify($event.target.value)"
-	[placeholder]="placeholder"
-	(blur)="touch()"
-	[disabled]="disabled"
-	#nativeInputRef
-/>
+<div class="componentContainer">
+	<input
+		type="email"
+		class="form-control"
+		[(ngModel)]="innerValue"
+		(input)="setInnerValueAndNotify($event.target.value)"
+		[placeholder]="placeholder"
+		(blur)="touch()"
+		[disabled]="disabled"
+		[ngClass]="{showErrors: isInErrorState()}"
+		#nativeInputRef
+	/>
+	<div class="tail">
+		<ng-container [ngTemplateOutlet]="getTailTpl()"></ng-container>
+	</div>
+</div>

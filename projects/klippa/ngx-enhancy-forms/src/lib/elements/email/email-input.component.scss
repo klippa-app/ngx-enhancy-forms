@@ -9,7 +9,19 @@ input {
   outline: none;
   @include formControl();
 }
-
+.componentContainer {
+	position: relative;
+}
 .showErrors {
   border-color: $default-warning;
+	padding-right: 2rem;
+}
+.tail {
+	position: absolute;
+	right: $spacing-small;
+	display: flex;
+	align-items: center;
+	top: 0px;
+	bottom: 0px;
+	gap: $spacing-small;
 }

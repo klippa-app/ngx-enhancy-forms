@@ -1,5 +1,8 @@
-<div class="componentContainer" [ngClass]="{disabled: disabled}">
+<div class="componentContainer" [ngClass]="{disabled: disabled}" [ngClass]="{showErrors: isInErrorState()}">
 	<input class="hourInput" maxlength="4" [placeholder]="placeholders[0]" [disabled]="disabled" [(ngModel)]="hours" (blur)="formatHours(); formatTime(); touchHours(); notifyNewTime()" (ngModelChange)="notifyNewTime()" #nativeInputRef>
 	<div class="divider">:</div>
 	<input maxlength="2" [placeholder]="placeholders[1]" [disabled]="disabled" [(ngModel)]="minutes" (blur)="formatMinutes(); formatTime(); touchMinutes(); notifyNewTime()" (ngModelChange)="notifyNewTime()">
+	<div class="tail">
+		<ng-container [ngTemplateOutlet]="getTailTpl()"></ng-container>
+	</div>
 </div>

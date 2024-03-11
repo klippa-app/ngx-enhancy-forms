@@ -14,10 +14,8 @@ export class ElementIsTruncatedCbComponent implements AfterViewInit {
 
 	ngAfterViewInit(): void {
 		if (!isValueSet(this.elementIsTruncatedCb)) {
-			console.log('nope');
 			return;
 		}
-		console.log('yes');
 
 		this.elementRef.nativeElement.addEventListener('DOMCharacterDataModified', (event) => {
 			if (isValueSet(event.target.wholeText)) {
@@ -25,10 +23,6 @@ export class ElementIsTruncatedCbComponent implements AfterViewInit {
 			}
 		}, false);
 		this.checkForTruncation();
-	}
-
-	ngOnDestroy() {
-		console.log('destroyed');
 	}
 
 	private async checkForTruncation(): Promise<void> {

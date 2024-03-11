@@ -13,6 +13,9 @@
 	display: flex;
 	align-items: center;
 	border: $border-default;
+	&.showErrors {
+		border-color: $default-warning;
+	}
 	&.disabled {
 		background: $default-disabled-background;
 		cursor: not-allowed;
@@ -33,4 +36,7 @@
 	.divider {
 		margin: 0 $spacing-tiny;
 	}
+}
+.tail {
+	margin-left: 0.4rem;
 }

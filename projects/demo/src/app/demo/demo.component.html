@@ -1,9 +1,9 @@
 
 <klp-form [formGroup]="myForm" [warnings]="getWarnings()" errorMessageLocation="rightOfCaption" [readOnly]="false">
-	<div style="height: 920px; overflow: auto;">
+	<div style="height: 520px; overflow: auto; display: flex; gap: 30px">
 		<app-deep-input  *ngIf="false" >
 		</app-deep-input>
-		<div style="width: 555px; margin-top: 5rem; margin-bottom: 10rem;">
+		<div style="flex: 1 1 0px; margin-top: 5rem; margin-bottom: 10rem;">
 			<klp-form-element caption="Name Je weet erfjwefwewkfjew" spaceDistribution="34-66" direction="vertical">
 				<klp-form-text-input formControlName="name" [clearable]="true">
 				</klp-form-text-input>
@@ -38,6 +38,29 @@
 				<klp-form-toggle formControlName="yesno"></klp-form-toggle>
 			</klp-form-element>
 		</div>
+		<div style="flex: 3 1 0px; margin-top: 5rem; margin-bottom: 10rem; max-width: 250px">
+			<klp-form-element caption="Pick me" direction="vertical">
+				<klp-form-select [truncateOptions]="false" [options]="options" formControlName="picker"></klp-form-select>
+			</klp-form-element>
+
+			<klp-form-element caption="A nice date" direction="vertical">
+				<klp-form-date-time-picker formControlName="date"></klp-form-date-time-picker>
+			</klp-form-element>
+
+			<klp-form-element caption="Time" direction="vertical">
+				<klp-form-hour-minute-input formControlName="hourMinute"></klp-form-hour-minute-input>
+			</klp-form-element>
+
+			<klp-form-element caption="Email" direction="vertical">
+				<klp-form-email-input formControlName="email"></klp-form-email-input>
+			</klp-form-element>
+
+			<klp-form-element caption="file" direction="vertical">
+				<klp-form-file-input formControlName="file"></klp-form-file-input>
+			</klp-form-element>
+		</div>
+	</div>
+	<div>
 		<klp-form-element caption="radioButtons" spaceDistribution="34-66">
 			<klp-form-radio formControlName="radioOption" [options]="radioOptions">
 			</klp-form-radio>

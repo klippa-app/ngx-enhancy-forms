@@ -11,6 +11,9 @@
 .componentContainer {
 	display: flex;
 	align-items: center;
+	&.showErrors ::ng-deep button {
+		border-color: $default-warning;
+	}
 	&.fullParentSize {
 		height: 100%;
 		justify-content: center;
@@ -22,6 +25,13 @@
 	.buttonContainer {
 		flex: 0 0 auto;
 	}
+}
+.innerButton {
+	display: flex;
+	align-items: center;
+}
+.tail {
+	margin-left: 0.4rem;
 }
 input {
 	position: absolute;
