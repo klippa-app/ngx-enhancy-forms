@@ -44,6 +44,7 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 	@Input() public formControlName: string = null;
 	@Input() public formControl: UntypedFormControl = null;
 	@Input() public inErrorState = false;
+	@Input() getTailTplFn: () => TemplateRef<any>;
 	@Output() public onTouch = new EventEmitter<void>();
 	@ViewChild('nativeInputRef') nativeInputRef: ElementRef;
 
@@ -156,6 +157,9 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 		this.tailTpl = tpl;
 	}
 	public getTailTpl = (): TemplateRef<any> => {
+		if (isValueSet(this.getTailTplFn)) {
+			return this.getTailTplFn();
+		}
 		return this.tailTpl;
 	}
 }
