@@ -5,6 +5,7 @@
 }
 
 .componentContainer {
+	position: relative;
 	&.showErrors {
 		::ng-deep {
 			klp-form-date-time-picker {
@@ -15,4 +16,12 @@
 			}
 		}
 	}
+}
+.tail {
+	position: absolute;
+	right: $spacing-small;
+	display: flex;
+	align-items: center;
+	top: 0px;
+	bottom: 0px;
 }
