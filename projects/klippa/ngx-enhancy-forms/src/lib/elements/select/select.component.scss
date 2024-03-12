@@ -97,7 +97,8 @@ ng-select.showErrors {
 	overflow: hidden;
 }
 :host ::ng-deep .ng-select .ng-select-container .ng-value-container .ng-placeholder{
-  color:#aaa
+  color:#aaa;
+	max-width: 100%;
 }
 :host ::ng-deep .ng-select.ng-select-single .ng-select-container{
   height:42px;
