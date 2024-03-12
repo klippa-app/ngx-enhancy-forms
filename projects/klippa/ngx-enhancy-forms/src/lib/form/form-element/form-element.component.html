@@ -77,9 +77,11 @@
 			<div class="errorTooltipTriangle"></div>
 			<div class="errorTooltipTriangleWhite"></div>
 			<div class="errorTooltip" [ngClass]="{noPointerEvents: !shouldShowErrorTooltipOpened()}">
-				<i class="closeBtn" (click)="closePopup();">×</i>
-				<ng-container *ngIf="getErrorToShow()" [ngTemplateOutlet]="errorRef"></ng-container>
-				<div *ngIf="!getErrorToShow() && shouldShowWarningPopup()">{{getWarningToShow()}}</div>
+				<div class="errorTooltipInner">
+					<i class="closeBtn" (click)="closePopup();">×</i>
+					<ng-container *ngIf="getErrorToShow()" [ngTemplateOutlet]="errorRef"></ng-container>
+					<div *ngIf="!getErrorToShow() && shouldShowWarningPopup()">{{getWarningToShow()}}</div>
+				</div>
 			</div>
 		</ng-container>
 		<klp-form-warning-icon variant="fill" *ngIf="getErrorToShow()" (click)="togglePopup()"></klp-form-warning-icon>

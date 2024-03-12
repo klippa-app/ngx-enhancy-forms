@@ -11,7 +11,7 @@ export class DemoComponent {
 	public formWarnings = new Map<AbstractControl, string>();
 	constructor(private fb: FormBuilder) {
 
-		this.formWarnings.set(this.myForm.get('name'), 'This is a warning about your name');
+		// this.formWarnings.set(this.myForm.get('name'), 'This is a warning about your name');
 		setTimeout(() => {
 			// this.formWarnings.delete(this.myForm.get('name'));
 		}, 1500);
@@ -20,7 +20,7 @@ export class DemoComponent {
 			// this.formWarnings = new Map<AbstractControl, string>([
 			// 	[this.myForm.get('name'), 'This is a ewgewgewgewname'],
 			// ]);
-			this.formWarnings.set(this.myForm.get('name'), 'another');
+			// this.formWarnings.set(this.myForm.get('name'), 'another');
 		}, 2500);
 
 		// setTimeout(() => {

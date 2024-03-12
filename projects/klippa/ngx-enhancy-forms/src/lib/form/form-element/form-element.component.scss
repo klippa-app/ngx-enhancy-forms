@@ -128,7 +128,6 @@
 		}
 	}
 	color: $default-dark;
-	overflow: hidden;
 	&.withErrorRightOfCaption {
 		display: flex;
 		justify-content: space-between;
@@ -165,12 +164,12 @@ $triangleSize: 8px;
 		position: relative;
 		&.alwaysOpen {
 			.errorTooltipTriangle, .errorTooltipTriangleWhite, .errorTooltip {
-				display: block;
+				display: flex;
 			}
 			.closeBtn {
 				display: block;
 			}
-			.errorTooltip {
+			.errorTooltipInner {
 				padding-right: 1.4rem;
 			}
 		}
@@ -204,21 +203,17 @@ $triangleSize: 8px;
 	}
 	.errorTooltip {
 		display: none;
+		justify-content: flex-end;
 		&.noPointerEvents {
 			pointer-events: none;
 		}
-		word-wrap: break-word;
 		position: absolute;
 		top: -0.6rem;
 		right: -$spacing-small;
-		background: white;
+
 		transform: translateY(-100%);
-		width: 12rem;
-		white-space: break-spaces;
-		padding: 0.4rem 0.6rem;
-		border-radius: 0.4rem;
-		border: 1px solid rgba(0, 0, 0, 0.13);
-		box-shadow: rgba(0, 0, 0, 0.13) 2px 3px 10px 0px;
+		width: 20rem;
+
 		.closeBtn {
 			display: none;
 			position: absolute;
@@ -233,9 +228,16 @@ $triangleSize: 8px;
 			}
 		}
 	}
+	.errorTooltipInner {
+		background: white;
+		padding: 0.4rem 0.6rem;
+		border-radius: 0.4rem;
+		border: 1px solid rgba(0, 0, 0, 0.13);
+		box-shadow: rgba(0, 0, 0, 0.13) 2px 3px 10px 0px;
+	}
 	&:hover .errorTooltipContainer {
 		.errorTooltip, .errorTooltipTriangle, .errorTooltipTriangleWhite {
-			display: block;
+			display: flex;
 		}
 	}
 }
