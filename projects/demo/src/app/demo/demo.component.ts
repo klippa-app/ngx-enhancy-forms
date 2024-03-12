@@ -3,36 +3,49 @@ import {AbstractControl, FormBuilder, UntypedFormArray, UntypedFormGroup, Valida
 import {AppSelectOptions, SelectComponent} from '@klippa/ngx-enhancy-forms';
 
 @Component({
-  selector: 'app-demo',
-  templateUrl: './demo.component.html',
-  styleUrls: ['./demo.component.scss']
+	selector: 'app-demo',
+	templateUrl: './demo.component.html',
+	styleUrls: ['./demo.component.scss']
 })
 export class DemoComponent {
-
+	public formWarnings = new Map<AbstractControl, string>();
 	constructor(private fb: FormBuilder) {
+
+		this.formWarnings.set(this.myForm.get('name'), 'This is a warning about your name');
 		setTimeout(() => {
-			this.options = [...this.options, {id : this.options.length, name: 'BLAAAAAAAAAAAAAAAAAAAAAAAT'}];
-		}, 5000);
-		this.myForm.patchValue({
-			oli: {
-				name: 'zaag'
-			}
-		});
-		setTimeout(() => {
-			this.showSubForm = true;
-		}, 2000);
+			// this.formWarnings.delete(this.myForm.get('name'));
+		}, 1500);
 
 		setTimeout(() => {
-			this.myForm.patchValue({
-				oli: {
-					name: 'zaag222'
-				}
-			});
-		}, 4000);
+			// this.formWarnings = new Map<AbstractControl, string>([
+			// 	[this.myForm.get('name'), 'This is a ewgewgewgewname'],
+			// ]);
+			this.formWarnings.set(this.myForm.get('name'), 'another');
+		}, 2500);
 
-		setTimeout(() => {
-			this.myForm.get('name').enable();
-		}, 1000);
+		// setTimeout(() => {
+		// 	this.options = [...this.options, {id : this.options.length, name: 'BLAAAAAAAAAAAAAAAAAAAAAAAT'}];
+		// }, 5000);
+		// this.myForm.patchValue({
+		// 	oli: {
+		// 		name: 'zaag'
+		// 	}
+		// });
+		// setTimeout(() => {
+		// 	this.showSubForm = true;
+		// }, 2000);
+		//
+		// setTimeout(() => {
+		// 	this.myForm.patchValue({
+		// 		oli: {
+		// 			name: 'zaag222'
+		// 		}
+		// 	});
+		// }, 4000);
+		//
+		// setTimeout(() => {
+		// 	this.myForm.get('name').enable();
+		// }, 1000);
 	}
 
 	public get emails(): any[] {
@@ -91,7 +104,7 @@ export class DemoComponent {
 		name5: this.nameConfig,
 		name6: this.nameConfig,
 		name7: this.nameConfig,
-		picker: [null, Validators.required],
+		picker: [null, [Validators.required, Validators.max(-1)]],
 		date: [null, Validators.required],
 		hourMinute: [null, Validators.required],
 		email: [null, Validators.required],
@@ -217,12 +230,5 @@ export class DemoComponent {
 		this.options = [...this.options, {id: $event, name: $event}];
 		this.myValue = [...(this.myValue ?? []), $event];
 		this.selectComponent.close();
-	}
-
-	getWarnings(): Map<AbstractControl, string> {
-		const result = new Map<AbstractControl, string>();
-		result.set(this.myForm.get('name'), 'This is a warning about your name');
-		result.set(this.myForm.get('name5'), 'This is a warning about your name5');
-		return result;
 	}
 }

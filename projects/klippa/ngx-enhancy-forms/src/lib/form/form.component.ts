@@ -90,6 +90,9 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		if (simpleChanges.readOnly?.currentValue === true) {
 			this.activeControls.forEach(e => e.formControl.disable());
 		}
+		if (isValueSet(simpleChanges.warnings?.currentValue)) {
+			this.patchFormWarningsMap();
+		}
 	}
 
 	ngOnDestroy(): void {
@@ -106,6 +109,25 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 				injectInto.setControl(injectAt, new FormControl());
 			}
 		}
+	}
+
+	private patchFormWarningsMap(): void {
+		const setFn = this.warnings.set;
+		this.warnings.set = (key: AbstractControl, value: string): Map<AbstractControl, string> => {
+			const prevVal = this.warnings.get(key);
+			const result = setFn.call(this.warnings, key, value);
+			if (prevVal !== value) {
+				this.getFormElementByFormControl(key)?.determinePopupState();
+			}
+			return result;
+		};
+
+		const deleteFn = this.warnings.delete;
+		this.warnings.delete = (key: AbstractControl): boolean => {
+			const result = deleteFn.call(this.warnings, key);
+			this.getFormElementByFormControl(key)?.determinePopupState();
+			return result;
+		};
 	}
 
 	private addSupportForPatchValueInterceptor(): void {
@@ -191,7 +213,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		}
 	}
 
-	public getFormElementByFormControl(control: UntypedFormControl): FormElementComponent {
+	public getFormElementByFormControl(control: AbstractControl): FormElementComponent {
 		return this.activeControls.find((e) => e.formControl === control)?.formElement;
 	}
 

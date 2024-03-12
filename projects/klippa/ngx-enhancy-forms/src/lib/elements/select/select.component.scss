@@ -64,21 +64,18 @@ ng-select.showErrors {
 }
 :host ::ng-deep .ng-select .ng-select-container{
   display: flex;
+	gap: 0.4rem;
   flex-direction: row;
   background-color:#fff;
-  border-radius:4px;
-  border:1px solid #ccc;
   min-height:42px;
   align-items:center;
 
   background-clip: padding-box;
-  background-color: #fff;
   border: 1px solid #e6ecf5;
   border-radius: 2px;
   box-shadow: none;
   box-sizing: border-box;
   color: #888da8;
-  font-size: 1rem;
   font-size: 14px;
   line-height: 1.5;
   margin: 0;
@@ -107,8 +104,8 @@ ng-select.showErrors {
 }
 :host ::ng-deep .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-input{
   left:0;
-  padding-left:10px;
-  padding-right:50px;
+  padding-left: 10px;
+  padding-right: 4.5rem;
   top:5px;
 }
 :host ::ng-deep .ng-select.ng-select-multiple.ng-select-disabled>.ng-select-container .ng-value-container .ng-value{
@@ -169,7 +166,8 @@ ng-select.showErrors {
 }
 
 :host ::ng-deep .ng-select .ng-clear-wrapper{
-  color:#999
+  color:#999;
+	width: initial;
 }
 :host ::ng-deep .ng-select .ng-clear-wrapper .ng-clear:hover{
   color:$default-danger;
@@ -179,8 +177,7 @@ ng-select.showErrors {
   padding-top:5px
 }
 :host ::ng-deep .ng-select .ng-arrow-wrapper{
-  padding-right:5px;
-  width:25px
+
 }
 :host ::ng-deep .ng-select .ng-arrow-wrapper:hover .ng-arrow{
   border-top-color:#666
@@ -335,8 +332,4 @@ ng-select.showErrors {
 			border-top-right-radius: 2px;
 		}
 	}
-}
-
-.tail {
-	margin-right: 0.4rem;
 }

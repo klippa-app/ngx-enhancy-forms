@@ -15,7 +15,7 @@ import {ValueAccessorBase} from '../../elements/value-accessor-base/value-access
 import {CustomErrorMessages, FormErrorMessages} from '../../types';
 import {isValueSet, stringIsSetAndFilled} from '../../util/values';
 import {FormComponent} from '../form.component';
-import {awaitableForNextCycle} from "../../util/angular";
+import {awaitableForNextCycle} from '../../util/angular';
 
 
 export const FORM_ERROR_MESSAGES = new InjectionToken<CustomErrorMessages>('form.error.messages');
@@ -93,7 +93,7 @@ export class FormElementComponent implements AfterViewInit {
 		this.determinePopupState();
 	}
 
-	private determinePopupState(): void {
+	public determinePopupState(): void {
 		if (stringIsSetAndFilled(this.getErrorToShow())) {
 			this.popupState = 'onHover';
 			return;
@@ -102,6 +102,7 @@ export class FormElementComponent implements AfterViewInit {
 			this.popupState = 'lockedOpen';
 			return;
 		}
+		this.popupState = 'onHover';
 	}
 
 	public unregisterControl(formControl: UntypedFormControl): void {
