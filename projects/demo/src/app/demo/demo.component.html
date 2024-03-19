@@ -61,8 +61,8 @@
 		</div>
 	</div>
 	<div>
-		<klp-form-element caption="radioButtons" spaceDistribution="34-66">
-			<klp-form-radio formControlName="radioOption" [options]="radioOptions">
+		<klp-form-element caption="radioButtons" spaceDistribution="34-66" verticalAlignment="top">
+			<klp-form-radio formControlName="radioOption" [options]="radioOptions" orientation="column">
 			</klp-form-radio>
 		</klp-form-element>
 		{{myForm.get('emails').value}}

@@ -10,6 +10,7 @@ export type RadioOptions = Array<RadioOption>;
 export type RadioOption = {
 	id: any;
 	name: string;
+	description?: string;
 };
 
 

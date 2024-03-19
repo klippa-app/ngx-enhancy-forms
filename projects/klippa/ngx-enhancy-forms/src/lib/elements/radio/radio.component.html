@@ -4,10 +4,15 @@
 			[ngClass]="{classic: variant === 'classic', button: variant === 'button', isSelected: innerValue === option.id}"
 			(click)="setInnerValueAndNotify(option.id)"
 		>
-			<div class="selectedRadioBtnContainer" *ngIf="variant === 'classic'">
-				<div class="selected" *ngIf="innerValue === option.id"></div>
+			<div class="radioAndName">
+				<div class="selectedRadioBtnContainer" *ngIf="variant === 'classic'">
+					<div class="selected" *ngIf="innerValue === option.id"></div>
+				</div>
+				<div class="nameAndDescription">
+					<div>{{option.name}}</div>
+					<div class="description" *ngIf="option.description">{{option.description}}</div>
+				</div>
 			</div>
-			<div>{{option.name}}</div>
 		</button>
 	</ng-container>
 </div>

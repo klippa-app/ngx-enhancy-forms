@@ -33,8 +33,6 @@
 }
 
 .optionContainer {
-	display: flex;
-	flex-direction: row;
 	margin-right: $spacing-tiny;
 	background: transparent;
 	border: none;
@@ -43,6 +41,7 @@
 	&.classic {
 		cursor: pointer;
 		.selectedRadioBtnContainer {
+			flex: 0 0 auto;
 			position: relative;
 			height: 20px;
 			width: 20px;
@@ -76,4 +75,18 @@
 			color: $default-white;
 		}
 	}
+}
+
+.radioAndName {
+	display: flex;
+	flex-direction: row;
+	gap: 0.2rem;
+}
+.nameAndDescription {
+	text-align: left;
+	line-height: 1.1rem;
+}
+.description {
+	margin-top: 0.2rem;
+	opacity: 0.6;
 }

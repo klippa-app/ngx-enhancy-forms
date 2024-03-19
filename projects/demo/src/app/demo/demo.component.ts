@@ -154,6 +154,7 @@ export class DemoComponent {
 		{
 			id: '1',
 			name: '1st option',
+			description: 'look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!'
 		},
 		{
 			id: '21',

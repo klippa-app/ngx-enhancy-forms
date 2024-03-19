@@ -4,6 +4,7 @@
 		hasCaption: caption || captionRef,
 		vertical: direction === 'vertical',
 		horizontal: direction === 'horizontal',
+		topAlignment: verticalAlignment === 'top',
 		reverseOrder: swapInputAndCaption,
 		hasErrors: getErrorToShow() && attachedControl.touched,
 		percentageSpacing: captionSpacing === 'percentages' && spaceDistribution !== 'fixedInputWidth',

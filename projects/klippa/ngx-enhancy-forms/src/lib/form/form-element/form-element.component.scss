@@ -28,6 +28,9 @@
 			margin-left: 0;
 		}
 	}
+	&.topAlignment .captionInputAndError {
+		align-items: flex-start;
+	}
 
 	&.d40-60 {
 		.errorAboveInputContainer {
