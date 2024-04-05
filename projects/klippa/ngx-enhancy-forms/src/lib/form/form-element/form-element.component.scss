@@ -121,6 +121,7 @@
 .caption {
 	font-weight: bold;
 	flex: 0 0 auto;
+	overflow: hidden;
 	&.percentageSpacing {
 		flex: 40 1 0px;
 		&.d30-70 {
@@ -179,6 +180,16 @@ $triangleSize: 8px;
 		klp-form-warning-icon {
 			cursor: pointer;
 		}
+		.absoluteAnchor {
+			position: absolute;
+		}
+		.fixedAnchor {
+			position: fixed;
+		}
+		// using a fixed wrapper here to avoid the overflow hidden properties of a parent container, which could cut off the message tooltip
+		.fixedWrapper {
+			position: fixed;
+		}
 	}
 	.errorTooltipTriangle {
 		display: none;
@@ -212,7 +223,7 @@ $triangleSize: 8px;
 		}
 		position: absolute;
 		top: -0.6rem;
-		right: -$spacing-small;
+		right: -$spacing-large;
 
 		transform: translateY(-100%);
 		width: 20rem;

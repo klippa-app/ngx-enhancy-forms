@@ -16,6 +16,7 @@ import {CustomErrorMessages, FormErrorMessages} from '../../types';
 import {isValueSet, stringIsSetAndFilled} from '../../util/values';
 import {FormComponent} from '../form.component';
 import {awaitableForNextCycle} from '../../util/angular';
+import {getAllLimitingContainers} from '../../util/dom';
 
 
 export const FORM_ERROR_MESSAGES = new InjectionToken<CustomErrorMessages>('form.error.messages');
@@ -49,6 +50,9 @@ export class FormElementComponent implements AfterViewInit {
 	@ViewChild('internalComponentRef') public internalComponentRef: ElementRef;
 	@ViewChild('tailTpl') public tailTpl: TemplateRef<any>;
 	@ViewChild('captionDummyForSpaceCalculation') public captionDummyForSpaceCalculation: ElementRef;
+	@ViewChild('absoluteAnchor') public absoluteAnchor: ElementRef;
+	@ViewChild('fixedAnchor') public fixedAnchor: ElementRef;
+	@ViewChild('fixedWrapper') public fixedWrapper: ElementRef;
 	@ContentChild(NG_VALUE_ACCESSOR) fieldInput: ValueAccessorBase<any>;
 
 	public captionRef: TemplateRef<any>;
@@ -61,6 +65,7 @@ export class FormElementComponent implements AfterViewInit {
 	constructor(
 		@Optional() private parent: FormComponent,
 		@Inject(FORM_ERROR_MESSAGES) @Optional() private customMessages: CustomErrorMessages,
+		private elRef: ElementRef,
 	) {
 	}
 
@@ -70,6 +75,8 @@ export class FormElementComponent implements AfterViewInit {
 		this.fieldInput?.onTouch.asObservable().subscribe((e) => {
 			this.determinePopupState();
 		});
+
+		[...getAllLimitingContainers(this.elRef.nativeElement), window].forEach(e => e.addEventListener('scroll', this.setErrorTooltipOffset));
 	}
 
 	public shouldShowErrorMessages(): boolean {
@@ -136,7 +143,7 @@ export class FormElementComponent implements AfterViewInit {
 		if (this.attachedControl?.touched !== true) {
 			return null;
 		}
-		if (!this.attachedControl?.errors)  {
+		if (!this.attachedControl?.errors) {
 			return null;
 		}
 		return firstError;
@@ -161,7 +168,7 @@ export class FormElementComponent implements AfterViewInit {
 		}
 	}
 
-	scrollTo(): void{
+	scrollTo(): void {
 		this.internalComponentRef.nativeElement.scrollIntoView(true);
 		// to give some breathing room, we scroll 100px more to the top
 		this.getScrollableParent(this.internalComponentRef.nativeElement)?.scrollBy(0, -100);
@@ -237,4 +244,14 @@ export class FormElementComponent implements AfterViewInit {
 			this.popupState = 'lockedOpen';
 		}
 	}
+
+	public setErrorTooltipOffset = (): void => {
+		if (this.popupState !== 'lockedOpen' && this.popupState !== 'onHover') {
+			return;
+		}
+		const popupOffsetY = this.absoluteAnchor?.nativeElement.getBoundingClientRect().top - this.fixedAnchor?.nativeElement.getBoundingClientRect().top;
+		if (this.fixedWrapper?.nativeElement) {
+			this.fixedWrapper.nativeElement.style.transform = `translateY(${popupOffsetY}px)`;
+		}
+	};
 }

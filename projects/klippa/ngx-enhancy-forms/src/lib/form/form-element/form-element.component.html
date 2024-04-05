@@ -25,7 +25,7 @@
 		</div>
 		<ng-container [ngTemplateOutlet]="captionTpl"></ng-container>
 		<ng-container *ngIf="direction === 'vertical' && getErrorLocation() === 'belowCaption' && !errorMessageAsTooltip" [ngTemplateOutlet]="errorRef"></ng-container>
-		<div class="inputContainer">
+		<div class="inputContainer" (mouseenter)="setErrorTooltipOffset()">
 			<ng-container *ngIf="errorMessageAsTooltip && shouldShowErrorMessages() && getErrorToShow()">
 				<div class="errorTooltipTriangle"></div>
 				<div class="errorTooltipTriangleWhite"></div>
@@ -77,13 +77,19 @@
 		<ng-container *ngIf="hasHoverableErrorTooltip() || shouldShowErrorTooltipOpened()">
 			<div class="errorTooltipTriangle"></div>
 			<div class="errorTooltipTriangleWhite"></div>
-			<div class="errorTooltip" [ngClass]="{noPointerEvents: !shouldShowErrorTooltipOpened()}">
-				<div class="errorTooltipInner">
-					<i class="closeBtn" (click)="closePopup();">×</i>
-					<ng-container *ngIf="getErrorToShow()" [ngTemplateOutlet]="errorRef"></ng-container>
-					<div *ngIf="!getErrorToShow() && shouldShowWarningPopup()">{{getWarningToShow()}}</div>
+
+			<div class="absoluteAnchor" #absoluteAnchor></div>
+			<div class="fixedAnchor" #fixedAnchor></div>
+			<div class="fixedWrapper" #fixedWrapper>
+				<div class="errorTooltip" [ngClass]="{noPointerEvents: !shouldShowErrorTooltipOpened()}">
+					<div class="errorTooltipInner">
+						<i class="closeBtn" (click)="closePopup();">×</i>
+						<ng-container *ngIf="getErrorToShow()" [ngTemplateOutlet]="errorRef"></ng-container>
+						<div *ngIf="!getErrorToShow() && shouldShowWarningPopup()">{{getWarningToShow()}}</div>
+					</div>
 				</div>
 			</div>
+
 		</ng-container>
 		<klp-form-warning-icon variant="fill" *ngIf="getErrorToShow()" (click)="togglePopup()"></klp-form-warning-icon>
 		<klp-form-warning-icon variant="line" *ngIf="!getErrorToShow() && getWarningToShow()" (click)="togglePopup()"></klp-form-warning-icon>
