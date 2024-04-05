@@ -232,7 +232,7 @@ export class FormElementComponent implements AfterViewInit {
 	}
 
 	public togglePopup(): void {
-		if (!this.hasRightOfCaptionError()) {
+		if (!this.errorMessageAsTooltip && !this.hasRightOfCaptionError()) {
 			return;
 		}
 		if (this.errorFullyVisible) {
