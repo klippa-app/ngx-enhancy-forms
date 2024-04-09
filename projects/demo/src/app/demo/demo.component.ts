@@ -150,11 +150,26 @@ export class DemoComponent {
 	];
 	kers: any;
 	showSubForm = false;
-	radioOptions: AppSelectOptions = [
+	radioOptionsClassic: AppSelectOptions = [
 		{
 			id: '1',
 			name: '1st option',
 			description: 'look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!look at this super cute description!'
+		},
+		{
+			id: '21',
+			name: '2nd option',
+		},
+		{
+			id: '241',
+			name: '3rd option',
+		}
+	];
+	radioOptionsButton: AppSelectOptions = [
+		{
+			id: '1',
+			name: '1st option',
+			description: '1nd option'
 		},
 		{
 			id: '21',
