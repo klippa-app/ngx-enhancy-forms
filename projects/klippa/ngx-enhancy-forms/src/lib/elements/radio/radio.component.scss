@@ -58,6 +58,13 @@
 				background-color: $primary;
 			}
 		}
+		.description {
+			color: $default-dark;
+			opacity: 1;
+		}
+		.nameAndDescription {
+			color: $default-text-color;
+		}
 	}
 
 	&.button {
@@ -85,9 +92,8 @@
 .nameAndDescription {
 	text-align: left;
 	line-height: 1.1rem;
-	color: $default-dark
 }
 .description {
 	margin-top: 0.2rem;
-	color: $default-text-color;
+	opacity: 0.6;
 }
