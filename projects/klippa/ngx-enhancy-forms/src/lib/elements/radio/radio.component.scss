@@ -59,11 +59,11 @@
 			}
 		}
 		.description {
-			color: $default-dark;
 			opacity: 1;
+			color: $default-text-color;
 		}
 		.nameAndDescription {
-			color: $default-text-color;
+			color: $default-dark;
 		}
 	}
 
