@@ -9,7 +9,8 @@
 		>
 		<klp-form-button class="uploadButton" [isLoading]="isLoading" [disabled]="disabled" (click)="uploadFileClicked()">
 			<div class="innerButton">
-				{{buttonText}}
+				<span *ngIf="buttonText">{{buttonText}}</span>
+				<div *ngIf="!buttonText"><ng-content></ng-content></div>
 				<div class="tail">
 					<ng-container [ngTemplateOutlet]="getTailTpl()"></ng-container>
 				</div>
