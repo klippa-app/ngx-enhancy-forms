@@ -24,7 +24,6 @@ export class WithTooltipDirective {
 			if (el.nativeElement.innerText.trim().length < 1) {
 				return;
 			}
-			console.log(el.nativeElement.offsetWidth, el.nativeElement.scrollWidth);
 			if (el.nativeElement.offsetWidth >= el.nativeElement.scrollWidth) {
 				return;
 			}
