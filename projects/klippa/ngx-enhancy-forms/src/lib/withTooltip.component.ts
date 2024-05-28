@@ -21,6 +21,13 @@ export class WithTooltipDirective {
 			if (!stringIsSetAndFilled(this.klpWithTooltip)) {
 				return;
 			}
+			if (el.nativeElement.innerText.trim().length < 1) {
+				return;
+			}
+			console.log(el.nativeElement.offsetWidth, el.nativeElement.scrollWidth);
+			if (el.nativeElement.offsetWidth >= el.nativeElement.scrollWidth) {
+				return;
+			}
 			if (getComputedStyle(el.nativeElement).position === 'static') {
 				el.nativeElement.style.position = 'relative';
 			}
