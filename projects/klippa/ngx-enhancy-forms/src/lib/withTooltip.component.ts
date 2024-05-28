@@ -1,6 +1,12 @@
 import {Directive, ElementRef, Input} from "@angular/core";
+import {stringIsSetAndFilled} from "./util/values";
 
 const triangleSize = '12px';
+
+const colors = {
+	orange: { noAlpha: 'rgb(255, 128, 0)', withAlpha: 'rgba(255, 128, 0, 0.1254901961)'},
+	black: { noAlpha: 'rgb(40, 40, 40)', withAlpha: 'rgba(40, 40, 40, 0.1254901961)'},
+};
 
 @Directive({
 	selector: '[klpWithTooltip]'
@@ -9,10 +15,10 @@ export class WithTooltipDirective {
 	private div: HTMLElement;
 	private triangle: HTMLElement;
 	private triangleWhite: HTMLElement;
-	@Input() klpWithTooltip = true;
+	@Input() klpWithTooltip: 'orange'| 'black' = 'orange';
 	constructor(el: ElementRef) {
 		el.nativeElement.addEventListener('mouseenter', () => {
-			if (!this.klpWithTooltip) {
+			if (!stringIsSetAndFilled(this.klpWithTooltip)) {
 				return;
 			}
 			if (getComputedStyle(el.nativeElement).position === 'static') {
@@ -21,7 +27,7 @@ export class WithTooltipDirective {
 
 			this.div = document.createElement('div');
 			this.div.style.zIndex = '2';
-			this.div.style.color = '#ff8000';
+			this.div.style.color = `${colors[this.klpWithTooltip].noAlpha}`;
 			this.div.style.position = 'fixed';
 			this.div.style.left = `${el.nativeElement.getBoundingClientRect().x}px`;
 			this.div.style.top = `${el.nativeElement.getBoundingClientRect().y}px`;
@@ -29,8 +35,8 @@ export class WithTooltipDirective {
 			this.div.style.maxWidth = '200px';
 			this.div.style.whiteSpace = 'break-spaces';
 			this.div.style.backgroundColor = 'white';
-			this.div.style.border = '1px solid rgba(255, 128, 0, 0.1254901961)';
-			this.div.style.boxShadow = `2px 3px 10px 0px rgba(255, 128, 0, 0.1254901961)`;
+			this.div.style.border = `1px solid ${colors[this.klpWithTooltip].withAlpha}`;
+			this.div.style.boxShadow = `2px 3px 10px 0px ${colors[this.klpWithTooltip].withAlpha}`;
 			this.div.style.padding = '0.3rem 0.5rem';
 			this.div.style.boxSizing = 'border-box';
 			this.div.style.borderRadius = '3px';
@@ -47,7 +53,7 @@ export class WithTooltipDirective {
 			this.triangle.style.height = '0';
 			this.triangle.style.borderLeft = `${triangleSize} solid transparent`;
 			this.triangle.style.borderRight = `${triangleSize} solid transparent`;
-			this.triangle.style.borderTop = `${triangleSize} solid rgba(255, 128, 0, 0.1254901961)`;
+			this.triangle.style.borderTop = `${triangleSize} solid ${colors[this.klpWithTooltip].withAlpha}`;
 			el.nativeElement.prepend(this.triangle);
 
 			this.triangleWhite = document.createElement('div');
