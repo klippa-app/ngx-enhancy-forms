@@ -16,12 +16,14 @@ export class WithTooltipDirective {
 	private triangle: HTMLElement;
 	private triangleWhite: HTMLElement;
 	@Input() klpWithTooltip: 'orange'| 'black' = 'orange';
+	@Input() tooltipText: string;
 	constructor(el: ElementRef) {
 		el.nativeElement.addEventListener('mouseenter', () => {
+			const textToDisplay = this.tooltipText || el.nativeElement.innerText.trim();
 			if (!stringIsSetAndFilled(this.klpWithTooltip)) {
 				return;
 			}
-			if (el.nativeElement.innerText.trim().length < 1) {
+			if (textToDisplay.length < 1) {
 				return;
 			}
 			if (el.nativeElement.offsetWidth >= el.nativeElement.scrollWidth) {
@@ -46,7 +48,7 @@ export class WithTooltipDirective {
 			this.div.style.padding = '0.3rem 0.5rem';
 			this.div.style.boxSizing = 'border-box';
 			this.div.style.borderRadius = '3px';
-			this.div.textContent = el.nativeElement.innerText;
+			this.div.textContent = textToDisplay;
 			el.nativeElement.prepend(this.div);
 
 			this.triangle = document.createElement('div');
