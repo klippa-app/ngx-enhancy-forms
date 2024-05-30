@@ -26,8 +26,14 @@ export class WithTooltipDirective {
 			if (textToDisplay.length < 1) {
 				return;
 			}
-			if (el.nativeElement.offsetWidth >= el.nativeElement.scrollWidth) {
-				return;
+			if (stringIsSetAndFilled(this.tooltipText)) {
+				if (this.tooltipText === el.nativeElement.innerText) {
+					return;
+				}
+			} else {
+				if (el.nativeElement.offsetWidth >= el.nativeElement.scrollWidth) {
+					return;
+				}
 			}
 			if (getComputedStyle(el.nativeElement).position === 'static') {
 				el.nativeElement.style.position = 'relative';
