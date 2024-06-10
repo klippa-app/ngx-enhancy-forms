@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, TemplateRef, ViewChild} from '@angular/core';
 import {AbstractControl, FormBuilder, UntypedFormArray, UntypedFormGroup, Validators} from '@angular/forms';
 import {AppSelectOptions, SelectComponent} from '@klippa/ngx-enhancy-forms';
 
@@ -8,11 +8,13 @@ import {AppSelectOptions, SelectComponent} from '@klippa/ngx-enhancy-forms';
 	styleUrls: ['./demo.component.scss']
 })
 export class DemoComponent {
-	public formWarnings = new Map<AbstractControl, string>();
+	@ViewChild('myFancyTemplate') myFancyTemplate: TemplateRef<any>;
+	public formWarnings = new Map<AbstractControl, string | TemplateRef<any>>();
 	constructor(private fb: FormBuilder) {
 
 		setTimeout(() => {
-		this.formWarnings.set(this.myForm.get('name'), 'This is a warning about your name');
+		// this.formWarnings.set(this.myForm.get('name'), 'This is a warning about your name');
+		this.formWarnings.set(this.myForm.get('name'), this.myFancyTemplate);
 			// this.formWarnings.delete(this.myForm.get('name'));
 		}, 1500);
 

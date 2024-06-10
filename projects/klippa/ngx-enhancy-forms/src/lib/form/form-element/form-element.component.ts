@@ -106,7 +106,7 @@ export class FormElementComponent implements AfterViewInit {
 			this.popupState = 'onHover';
 			return;
 		}
-		if (stringIsSetAndFilled(this.getWarningToShow())) {
+		if (isValueSet(this.getWarningToShow())) {
 			this.popupState = 'lockedOpen';
 			return;
 		}
@@ -134,8 +134,19 @@ export class FormElementComponent implements AfterViewInit {
 		this.captionRef = templateRef;
 	}
 
-	getWarningToShow(): string {
+	public getWarningToShow(): string | TemplateRef<any> {
 		return this.parent?.getWarningToShow(this.attachedControl);
+	}
+
+	public getWarningToShowAsTemplateRef(): TemplateRef<any> {
+		if (this.parent?.getWarningToShow(this.attachedControl) instanceof TemplateRef) {
+			return this.parent?.getWarningToShow(this.attachedControl) as TemplateRef<any>;
+		}
+		throw new Error('Warning is not a TemplateRef');
+	}
+
+	public getWarningToShowIsTemplateRef(): boolean {
+		return this.getWarningToShow() instanceof TemplateRef;
 	}
 
 	getErrorToShow(): string {
@@ -203,7 +214,7 @@ export class FormElementComponent implements AfterViewInit {
 		if (stringIsSetAndFilled(this.getErrorToShow())) {
 			return !this.errorFullyVisible;
 		}
-		if (stringIsSetAndFilled(this.getWarningToShow())) {
+		if (isValueSet(this.getWarningToShow())) {
 			return true;
 		}
 		return false;
@@ -224,7 +235,7 @@ export class FormElementComponent implements AfterViewInit {
 	}
 
 	public shouldShowWarningPopup(): boolean {
-		return stringIsSetAndFilled(this.getWarningToShow());
+		return isValueSet(this.getWarningToShow());
 	}
 
 	public closePopup(): void {

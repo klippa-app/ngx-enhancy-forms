@@ -85,7 +85,10 @@
 					<div class="errorTooltipInner">
 						<i class="closeBtn" (click)="closePopup();">×</i>
 						<ng-container *ngIf="getErrorToShow()" [ngTemplateOutlet]="errorRef"></ng-container>
-						<div *ngIf="!getErrorToShow() && shouldShowWarningPopup()">{{getWarningToShow()}}</div>
+						<div *ngIf="!getErrorToShow() && shouldShowWarningPopup()">
+							<ng-container *ngIf="getWarningToShowIsTemplateRef()" [ngTemplateOutlet]="getWarningToShowAsTemplateRef()"></ng-container>
+							<span *ngIf="!getWarningToShowIsTemplateRef()">{{getWarningToShow()}}</span>
+						</div>
 					</div>
 				</div>
 			</div>

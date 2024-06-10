@@ -8,7 +8,7 @@ import {
 	Optional,
 	Output,
 	SimpleChanges,
-	SkipSelf
+	SkipSelf, TemplateRef
 } from '@angular/core';
 import {AbstractControl, FormArray, FormControl, FormGroup, UntypedFormArray, UntypedFormControl, UntypedFormGroup} from '@angular/forms';
 import {FormElementComponent} from './form-element/form-element.component';
@@ -36,7 +36,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 	@Input() public showErrorMessages = true;
 	@Input() public errorMessageLocation: 'belowCaption' | 'rightOfCaption' = 'belowCaption';
 	@Input() public formGroup: UntypedFormGroup;
-	@Input() public warnings: Map<AbstractControl, string> = new Map<AbstractControl, string>();
+	@Input() public warnings: Map<AbstractControl, string | TemplateRef<any>> = new Map<AbstractControl, string | TemplateRef<any>>();
 	@Input() public patchValueInterceptor: (values: any) => Promise<any>;
 	@Output() public onInjected = new EventEmitter<Record<string, any>>();
 
@@ -217,7 +217,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		return this.activeControls.find((e) => e.formControl === control)?.formElement;
 	}
 
-	public getWarningToShow(control: AbstractControl): string {
+	public getWarningToShow(control: AbstractControl): string | TemplateRef<any> {
 		return this.warnings.get(control);
 	}
 
