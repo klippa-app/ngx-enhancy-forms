@@ -31,6 +31,7 @@ import {RadioComponent} from './elements/radio/radio.component';
 import {WithTooltipDirective} from "./withTooltip.component";
 import {WarningIconComponent} from "./warning-icon/warning-icon.component";
 import {ElementIsTruncatedCbComponent} from "./elementIsTruncatedCb.component";
+import {OnRenderDirective} from "./onRender.component";
 
 
 @NgModule({
@@ -69,6 +70,7 @@ import {ElementIsTruncatedCbComponent} from "./elementIsTruncatedCb.component";
 		HourMinuteInputComponent,
 		RadioComponent,
 		WithTooltipDirective,
+		OnRenderDirective,
 		WarningIconComponent,
 		ElementIsTruncatedCbComponent,
 	],
@@ -100,6 +102,7 @@ import {ElementIsTruncatedCbComponent} from "./elementIsTruncatedCb.component";
 		HourMinuteInputComponent,
 		RadioComponent,
 		WithTooltipDirective,
+		OnRenderDirective,
 		ElementIsTruncatedCbComponent,
 	]
 })
