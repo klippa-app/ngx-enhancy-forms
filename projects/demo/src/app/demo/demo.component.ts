@@ -14,9 +14,9 @@ export class DemoComponent {
 
 		setTimeout(() => {
 		// this.formWarnings.set(this.myForm.get('name'), 'This is a warning about your name');
-		this.formWarnings.set(this.myForm.get('name'), this.myFancyTemplate);
+		this.formWarnings.set(this.myForm.get('picker'), this.myFancyTemplate);
 			// this.formWarnings.delete(this.myForm.get('name'));
-		}, 1500);
+		}, 200);
 
 		setTimeout(() => {
 			// this.formWarnings = new Map<AbstractControl, string>([
