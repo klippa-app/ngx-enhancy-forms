@@ -2,6 +2,7 @@ import {Directive, ElementRef, Input} from "@angular/core";
 import {stringIsSetAndFilled} from "./util/values";
 
 const triangleSize = '12px';
+const zIndexStart = 99999999;
 
 const colors = {
 	orange: { noAlpha: 'rgb(255, 128, 0)', withAlpha: 'rgba(255, 128, 0, 0.1254901961)'},
@@ -40,7 +41,7 @@ export class WithTooltipDirective {
 			}
 
 			this.div = document.createElement('div');
-			this.div.style.zIndex = '2';
+			this.div.style.zIndex = `${zIndexStart + 2}`;
 			this.div.style.color = `${colors[this.klpWithTooltip].noAlpha}`;
 			this.div.style.position = 'fixed';
 			this.div.style.left = `${el.nativeElement.getBoundingClientRect().x}px`;
@@ -58,7 +59,7 @@ export class WithTooltipDirective {
 			el.nativeElement.prepend(this.div);
 
 			this.triangle = document.createElement('div');
-			this.triangle.style.zIndex = '1';
+			this.triangle.style.zIndex = `${zIndexStart + 1}`;
 			this.triangle.style.position = 'fixed';
 			this.triangle.style.left = `calc(${el.nativeElement.getBoundingClientRect().x + el.nativeElement.getBoundingClientRect().width}px - 2rem)`;
 			this.triangle.style.top = `${el.nativeElement.getBoundingClientRect().y}px`;
@@ -71,7 +72,7 @@ export class WithTooltipDirective {
 			el.nativeElement.prepend(this.triangle);
 
 			this.triangleWhite = document.createElement('div');
-			this.triangleWhite.style.zIndex = '3';
+			this.triangleWhite.style.zIndex = `${zIndexStart + 3}`;
 			this.triangleWhite.style.position = 'fixed';
 			this.triangleWhite.style.left = `calc(${el.nativeElement.getBoundingClientRect().x + el.nativeElement.getBoundingClientRect().width}px - 2rem)`;
 			this.triangleWhite.style.top = `${el.nativeElement.getBoundingClientRect().y}px`;
@@ -83,6 +84,7 @@ export class WithTooltipDirective {
 			this.triangleWhite.style.borderTop = `${triangleSize} solid white`;
 			el.nativeElement.prepend(this.triangleWhite);
 		});
+
 		el.nativeElement.addEventListener('mouseout', () => {
 			try {
 				el.nativeElement.removeChild(this.div);
