@@ -68,6 +68,7 @@
 		<div *ngIf="showDefaultError('MatchPassword')">{{getErrorMessage("matchPassword")}}</div>
 		<div *ngIf="showDefaultError('date')">{{getErrorMessage("date")}}</div>
 		<div *ngIf="showDefaultError('message')">{{attachedControl.errors.message.value}}</div>
+		<div *ngIf="showDefaultError('formLevel')">{{getErrorMessage("formLevel")}}</div>
 		<div [ngTemplateOutlet]="getCustomErrorHandler(getErrorToShow())?.templateRef"></div>
 	</div>
 </ng-template>

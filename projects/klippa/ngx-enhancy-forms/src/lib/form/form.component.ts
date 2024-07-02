@@ -37,6 +37,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 	@Input() public errorMessageLocation: 'belowCaption' | 'rightOfCaption' = 'belowCaption';
 	@Input() public formGroup: UntypedFormGroup;
 	@Input() public warnings: Map<AbstractControl, string | TemplateRef<any>> = new Map<AbstractControl, string | TemplateRef<any>>();
+	@Input() public errors: Map<AbstractControl, string> = new Map<AbstractControl, string>();
 	@Input() public patchValueInterceptor: (values: any) => Promise<any>;
 	@Output() public onInjected = new EventEmitter<Record<string, any>>();
 
@@ -93,6 +94,9 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		if (isValueSet(simpleChanges.warnings?.currentValue)) {
 			this.patchFormWarningsMap();
 		}
+		if (isValueSet(simpleChanges.errors?.currentValue)) {
+			this.patchFormErrorsMap();
+		}
 	}
 
 	ngOnDestroy(): void {
@@ -125,6 +129,29 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		const deleteFn = this.warnings.delete;
 		this.warnings.delete = (key: AbstractControl): boolean => {
 			const result = deleteFn.call(this.warnings, key);
+			this.getFormElementByFormControl(key)?.determinePopupState();
+			return result;
+		};
+	}
+
+	private patchFormErrorsMap(): void {
+		const setFn = this.errors.set;
+		this.errors.set = (key: AbstractControl, value: string): Map<AbstractControl, string> => {
+			const prevVal = this.errors.get(key);
+			const result = setFn.call(this.errors, key, value);
+			key.setErrors({ ...key.errors, formLevel: value});
+			if (prevVal !== value) {
+				this.getFormElementByFormControl(key)?.determinePopupState();
+			}
+			return result;
+		};
+
+		const deleteFn = this.errors.delete;
+		this.errors.delete = (key: AbstractControl): boolean => {
+			const newErrorsObject = key.errors;
+			delete newErrorsObject.formLevel;
+			key.setErrors(newErrorsObject);
+			const result = deleteFn.call(this.errors, key);
 			this.getFormElementByFormControl(key)?.determinePopupState();
 			return result;
 		};

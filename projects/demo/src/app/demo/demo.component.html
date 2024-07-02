@@ -193,3 +193,18 @@ some cool stuff here <br />
 <ng-template #myFancyTemplate>
 	This can be <span style="color: red;">ANYTHING</span>. <span style="color: green; font-weight: bold; font-size: 1.2rem;">Look at me me, i am BOLD AND GREEN</span>
 </ng-template>
+
+simple form with form level errors
+
+<klp-form [formGroup]="simpleFormWithFormLevelErrors" [errors]="formErrors" errorMessageLocation="rightOfCaption">
+	<klp-form-element caption="First name" spaceDistribution="34-66" direction="vertical">
+		<klp-form-text-input formControlName="firstName" [clearable]="true">
+		</klp-form-text-input>
+	</klp-form-element>
+	<klp-form-element caption="Last name" spaceDistribution="34-66" direction="vertical">
+		<klp-form-text-input formControlName="lastName" [clearable]="true">
+		</klp-form-text-input>
+	</klp-form-element>
+
+	<klp-form-submit-button [submitCallback]="saveSimple">Save</klp-form-submit-button>
+</klp-form>

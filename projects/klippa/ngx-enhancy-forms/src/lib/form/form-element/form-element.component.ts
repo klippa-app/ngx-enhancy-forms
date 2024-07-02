@@ -193,6 +193,9 @@ export class FormElementComponent implements AfterViewInit {
 	}
 
 	getErrorMessage(key: keyof FormErrorMessages): string {
+		if (key === 'formLevel') {
+			return this.attachedControl.errors?.formLevel;
+		}
 		return this.customMessages?.[key]?.() ?? this.errorMessages[key];
 	}
 

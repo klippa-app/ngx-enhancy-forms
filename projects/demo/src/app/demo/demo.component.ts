@@ -10,6 +10,7 @@ import {AppSelectOptions, SelectComponent} from '@klippa/ngx-enhancy-forms';
 export class DemoComponent {
 	@ViewChild('myFancyTemplate') myFancyTemplate: TemplateRef<any>;
 	public formWarnings = new Map<AbstractControl, string | TemplateRef<any>>();
+	public formErrors = new Map<AbstractControl, string>();
 	constructor(private fb: FormBuilder) {
 
 		setTimeout(() => {
@@ -79,7 +80,7 @@ export class DemoComponent {
 	show = false;
 	isChecked: boolean = undefined;
 
-	private nameConfig = ['', [Validators.required, Validators.minLength(4)],
+	private nameConfig = ['', [],
 		[(e) => {
 			if (e.value?.length > 5) {
 				return Promise.resolve();
@@ -93,7 +94,7 @@ export class DemoComponent {
 			if (e.value?.length > 2) {
 				return Promise.resolve({async: 'daapaaa aaaaaaap aaaaap'});
 			}
-			return Promise.resolve({async: 'aapaaa '});
+			return Promise.resolve({});
 		}]
 	];
 
@@ -121,6 +122,11 @@ export class DemoComponent {
 		groupie: this.fb.group({}),
 		oli: null,
 		radioOption: null
+	});
+
+	public simpleFormWithFormLevelErrors = this.fb.group({
+		firstName: ['', [Validators.required]],
+		lastName: [''],
 	});
 
 	subForms = [];
@@ -234,6 +240,19 @@ export class DemoComponent {
 		await new Promise(resolve => setTimeout(resolve, 1000));
 		throw new Error('some error');
 	}
+	public saveSimple = async () => {
+		console.log('saving simple form');
+		console.log(this.simpleFormWithFormLevelErrors.get('firstName').errors);
+		this.formErrors.clear();
+		await new Promise((resolve, reject) => {
+			setTimeout(resolve, 1200);
+		});
+		if (new Date().getMilliseconds() > 500) {
+			this.formErrors.set(this.simpleFormWithFormLevelErrors.get('firstName'), 'Your first name is not cool enough');
+		}
+		this.formErrors.set(this.simpleFormWithFormLevelErrors.get('lastName'), 'Your last name makes no sense');
+		console.log(this.simpleFormWithFormLevelErrors.get('firstName').errors);
+	};
 
 	blurry() {
 		console.log('blurr');
