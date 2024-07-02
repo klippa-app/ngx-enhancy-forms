@@ -254,10 +254,6 @@ export class DemoComponent {
 		console.log(this.simpleFormWithFormLevelErrors.get('firstName').errors);
 	};
 
-	onRenderFn = (a) => {
-		console.log(a);
-	};
-
 	blurry() {
 		console.log('blurr');
 	}
