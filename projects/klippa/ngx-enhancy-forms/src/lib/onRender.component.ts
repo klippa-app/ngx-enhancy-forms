@@ -1,14 +1,29 @@
-import {AfterViewInit, Directive, Input} from "@angular/core";
+import {
+	AfterViewInit,
+	Component,
+	ComponentRef,
+	Directive, ElementRef,
+	Host, Inject, inject, InjectionToken,
+	Injector,
+	Input,
+	OnInit,
+	Optional,
+	Self,
+	SkipSelf, ViewContainerRef
+} from "@angular/core";
 import {runNextRenderCycle} from "./util/angular";
-
 
 @Directive({
 	selector: '[onRenderFn]'
 })
 export class OnRenderDirective implements AfterViewInit {
-	@Input() onRenderFn: () => any;
+	constructor(@Host() @Self() @Optional() private hostComponent: any) {
+	}
+	@Input() onRenderFn: (a: any) => any;
 
 	ngAfterViewInit(): void {
-		runNextRenderCycle(() => this.onRenderFn());
+		console.log(this.hostComponent);
+		// const component1 = this.injector.get<any>();
+		runNextRenderCycle(() => this.onRenderFn(1));
 	}
 }

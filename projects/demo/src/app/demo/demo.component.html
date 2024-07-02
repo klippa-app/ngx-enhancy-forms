@@ -1,5 +1,5 @@
 
-<klp-form [formGroup]="myForm" [warnings]="formWarnings" errorMessageLocation="rightOfCaption" [readOnly]="false">
+<klp-form [formGroup]="myForm" [warnings]="formWarnings" errorMessageLocation="rightOfCaption" [readOnly]="false" [onRenderFn]="onRenderFn">
 	<div style="height: 520px; overflow: auto; display: flex; gap: 30px">
 		<app-deep-input  *ngIf="false" >
 		</app-deep-input>
