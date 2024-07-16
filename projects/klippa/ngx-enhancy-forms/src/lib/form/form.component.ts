@@ -1,4 +1,15 @@
-import {Component, Directive, Input, OnChanges, OnDestroy, OnInit, Optional, SimpleChanges, SkipSelf} from '@angular/core';
+import {
+	Component,
+	Directive, EventEmitter,
+	Input,
+	OnChanges,
+	OnDestroy,
+	OnInit,
+	Optional,
+	Output,
+	SimpleChanges,
+	SkipSelf, TemplateRef
+} from '@angular/core';
 import {AbstractControl, FormArray, FormControl, FormGroup, UntypedFormArray, UntypedFormControl, UntypedFormGroup} from '@angular/forms';
 import {FormElementComponent} from './form-element/form-element.component';
 import {isValueSet} from '../util/values';
@@ -25,7 +36,10 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 	@Input() public showErrorMessages = true;
 	@Input() public errorMessageLocation: 'belowCaption' | 'rightOfCaption' = 'belowCaption';
 	@Input() public formGroup: UntypedFormGroup;
+	@Input() public warnings: Map<AbstractControl, string | TemplateRef<any>> = new Map<AbstractControl, string | TemplateRef<any>>();
+	@Input() public errors: Map<AbstractControl, string> = new Map<AbstractControl, string>();
 	@Input() public patchValueInterceptor: (values: any) => Promise<any>;
+	@Output() public onInjected = new EventEmitter<Record<string, any>>();
 
 	// we keep track of what form controls are actually rendered. Only those count when looking at form validation
 	private activeControls: Array<{
@@ -55,6 +69,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 					this.formGroup.patchValue(valueBeforeInject);
 				}
 				injectInto.setControl(injectAt, this.formGroup);
+				this.onInjected.emit(valueBeforeInject);
 			} else if (injectInto instanceof UntypedFormGroup) {
 				if (typeof injectAt !== 'string') {
 					throw new Error(`cannot index FormGroup with ${typeof injectAt}`);
@@ -67,6 +82,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 					this.formGroup.patchValue(valueBeforeInject);
 				}
 				injectInto.setControl(injectAt, this.formGroup);
+				this.onInjected.emit(valueBeforeInject);
 			}
 		}
 	}
@@ -74,6 +90,12 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 	ngOnChanges(simpleChanges: SimpleChanges): void {
 		if (simpleChanges.readOnly?.currentValue === true) {
 			this.activeControls.forEach(e => e.formControl.disable());
+		}
+		if (isValueSet(simpleChanges.warnings?.currentValue)) {
+			this.patchFormWarningsMap();
+		}
+		if (isValueSet(simpleChanges.errors?.currentValue)) {
+			this.patchFormErrorsMap();
 		}
 	}
 
@@ -83,14 +105,56 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 			const injectAt = this.subFormPlaceholder.at;
 			if (injectInto instanceof UntypedFormArray) {
 				const idx = injectInto.controls.findIndex(e => e === this.formGroup);
-				injectInto.removeAt(idx);
+				injectInto.setControl(idx, new FormControl());
 			} else if (injectInto instanceof UntypedFormGroup) {
 				if (typeof injectAt !== 'string') {
 					throw new Error(`cannot index FormGroup with ${typeof injectAt}`);
 				}
-				injectInto.removeControl(injectAt);
+				injectInto.setControl(injectAt, new FormControl());
 			}
 		}
+	}
+
+	private patchFormWarningsMap(): void {
+		const setFn = this.warnings.set;
+		this.warnings.set = (key: AbstractControl, value: string): Map<AbstractControl, string> => {
+			const prevVal = this.warnings.get(key);
+			const result = setFn.call(this.warnings, key, value);
+			if (prevVal !== value) {
+				this.getFormElementByFormControl(key)?.determinePopupState();
+			}
+			return result;
+		};
+
+		const deleteFn = this.warnings.delete;
+		this.warnings.delete = (key: AbstractControl): boolean => {
+			const result = deleteFn.call(this.warnings, key);
+			this.getFormElementByFormControl(key)?.determinePopupState();
+			return result;
+		};
+	}
+
+	private patchFormErrorsMap(): void {
+		const setFn = this.errors.set;
+		this.errors.set = (key: AbstractControl, value: string): Map<AbstractControl, string> => {
+			const prevVal = this.errors.get(key);
+			const result = setFn.call(this.errors, key, value);
+			key.setErrors({ ...key.errors, formLevel: value});
+			if (prevVal !== value) {
+				this.getFormElementByFormControl(key)?.determinePopupState();
+			}
+			return result;
+		};
+
+		const deleteFn = this.errors.delete;
+		this.errors.delete = (key: AbstractControl): boolean => {
+			const newErrorsObject = key.errors;
+			delete newErrorsObject.formLevel;
+			key.setErrors(newErrorsObject);
+			const result = deleteFn.call(this.errors, key);
+			this.getFormElementByFormControl(key)?.determinePopupState();
+			return result;
+		};
 	}
 
 	private addSupportForPatchValueInterceptor(): void {
@@ -121,6 +185,12 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		if (this.readOnly) {
 			formControl.disable();
 		}
+		const enableFn: (opts?: { onlySelf?: boolean; emitEvent?: boolean }) => void = formControl.enable;
+		formControl.enable = (opts?: { onlySelf?: boolean; emitEvent?: boolean }) => {
+			if (!this.readOnly) {
+				enableFn.call(formControl, opts);
+			}
+		};
 	}
 
 	public unregisterControl(formControl: UntypedFormControl): void {
@@ -168,6 +238,14 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		if (!this.activeControls.some((e) => e.formControl === control)) {
 			control.disable();
 		}
+	}
+
+	public getFormElementByFormControl(control: AbstractControl): FormElementComponent {
+		return this.activeControls.find((e) => e.formControl === control)?.formElement;
+	}
+
+	public getWarningToShow(control: AbstractControl): string | TemplateRef<any> {
+		return this.warnings.get(control);
 	}
 
 	trySubmit(): Promise<any> {

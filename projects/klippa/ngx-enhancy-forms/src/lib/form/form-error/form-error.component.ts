@@ -1,4 +1,4 @@
-import { Component, ElementRef, Host, Input, OnInit, Optional, ViewChild } from '@angular/core';
+import {Component, Host, Input, OnInit, Optional, TemplateRef, ViewChild} from '@angular/core';
 import {FormElementComponent} from "../form-element/form-element.component";
 import {isNullOrUndefined} from "../../util/values";
 import {ErrorTypes} from "../../types";
@@ -11,7 +11,7 @@ import {ErrorTypes} from "../../types";
 export class FormErrorComponent implements OnInit {
 	@Input() error: ErrorTypes;
 	public showError = false;
-	@ViewChild('contentRef') public contentRef: ElementRef;
+	@ViewChild('contentRef') public contentRef: TemplateRef<any>;
 	constructor(@Host() @Optional() private parent: FormElementComponent) {}
 
 	ngOnInit(): void {

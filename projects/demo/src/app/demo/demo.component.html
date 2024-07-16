@@ -1,17 +1,88 @@
 
-<klp-form [formGroup]="myForm" errorMessageLocation="rightOfCaption">
-	<div style="height: 500px; overflow: auto">
-		<app-deep-input>
+<klp-form [formGroup]="myForm" [warnings]="formWarnings" errorMessageLocation="rightOfCaption" [readOnly]="false">
+	<div style="height: 520px; overflow: auto; display: flex; gap: 30px">
+		<app-deep-input  *ngIf="false" >
 		</app-deep-input>
-		<div style="width: 200px">
-			<klp-form-element caption="Name Je weet erfjwefwewkfjew" spaceDistribution="34-66" direction="vertical">
-				<klp-form-text-input formControlName="name">
+
+		<div style="flex: 1 1 0px; margin-top: 5rem; margin-bottom: 10rem; margin-left: 20rem; max-width: 16rem;">
+			<klp-form-element caption="Name Je weet erfjwefwewkfjewerfjwefjewerfjwefwewkfjewerfjwefjew" spaceDistribution="34-66" direction="vertical">
+				<klp-form-text-input formControlName="name" [clearable]="true">
 				</klp-form-text-input>
 				<klp-form-error error="async"></klp-form-error>
 			</klp-form-element>
+
+			<klp-form-element caption="Name aap noot mies" spaceDistribution="30-70" direction="horizontal">
+				<klp-form-text-input formControlName="name2" [clearable]="true">
+				</klp-form-text-input>
+				<klp-form-error error="async"></klp-form-error>
+			</klp-form-element>
+
+			<klp-form-element caption="Name" spaceDistribution="40-60" direction="horizontal">
+				<klp-form-text-input formControlName="name3" [clearable]="true">
+				</klp-form-text-input>
+				<klp-form-error error="async"></klp-form-error>
+			</klp-form-element>
+
+			<klp-form-element caption="Name vertical" direction="vertical">
+				<klp-form-text-input formControlName="name4" [clearable]="true">
+				</klp-form-text-input>
+				<klp-form-error error="async"></klp-form-error>
+			</klp-form-element>
+
+			<klp-form-element [errorMessageAsTooltip]="true">
+				<klp-form-text-input formControlName="name5" [clearable]="true">
+				</klp-form-text-input>
+				<klp-form-error error="async"></klp-form-error>
+			</klp-form-element>
+
+			<klp-form-element caption="Yes or no?" spaceDistribution="fixedInputWidth">
+				<klp-form-toggle formControlName="yesno"></klp-form-toggle>
+			</klp-form-element>
 		</div>
-		<klp-form-element caption="radioButtons" spaceDistribution="34-66">
-			<klp-form-radio formControlName="radioOption" [options]="radioOptions">
+		<div style="flex: 3 1 0px; margin-top: 15rem; margin-bottom: 10rem; max-width: 250px">
+			<klp-form-element caption="Pick mePick mePick mePick me" direction="vertical">
+				<klp-form-select [truncateOptions]="false" [options]="options" dropdownPosition="top" formControlName="picker" [multiple]="true"></klp-form-select>
+			</klp-form-element>
+
+			<klp-form-element caption="A nice date" direction="vertical">
+				<klp-form-date-picker formControlName="date"></klp-form-date-picker>
+			</klp-form-element>
+
+			<klp-form-element caption="Time" direction="vertical">
+				<klp-form-hour-minute-input formControlName="hourMinute"></klp-form-hour-minute-input>
+			</klp-form-element>
+
+			<klp-form-element caption="Email" direction="vertical">
+				<klp-form-email-input formControlName="email"></klp-form-email-input>
+			</klp-form-element>
+
+			<klp-form-element caption="file" direction="vertical">
+				<klp-form-file-input formControlName="file" >
+					there is the file input with ng content
+				</klp-form-file-input>
+			</klp-form-element>
+<!--			<klp-form-element caption="file" direction="vertical">-->
+<!--				<klp-form-file-input formControlName="file" [buttonText]="'this one is with button text'">-->
+<!--				</klp-form-file-input>-->
+<!--			</klp-form-element>-->
+		</div>
+	</div>
+
+	<klp-form-button klpWithTooltip="black" tooltipText="Shalalalalala">
+		I am a small piece of text
+	</klp-form-button>
+
+	<div>
+		<klp-form-element caption="radioButtons classic" spaceDistribution="34-66" verticalAlignment="top">
+			<klp-form-radio formControlName="radioOption" [options]="radioOptionsClassic" orientation="column">
+			</klp-form-radio>
+		</klp-form-element>
+		<klp-form-element caption="radioButtons button" spaceDistribution="34-66" verticalAlignment="top">
+			<klp-form-radio formControlName="radioOption" [options]="radioOptionsButton" orientation="column" variant="button">
+			</klp-form-radio>
+		</klp-form-element>
+		<klp-form-element caption="radioButtons button" spaceDistribution="34-66" verticalAlignment="top">
+			<klp-form-radio formControlName="radioOption" [options]="radioOptionsButton"  variant="button">
 			</klp-form-radio>
 		</klp-form-element>
 		{{myForm.get('emails').value}}
@@ -28,18 +99,13 @@
 			</klp-form-text-input>
 		</klp-form-element>
 		<klp-form-element caption="Yes or no" spaceDistribution="34-66">
-			<klp-form-toggle formControlName="yesno">
-			</klp-form-toggle>
+			<klp-form-toggle formControlName="yesno"></klp-form-toggle>
 		</klp-form-element>
-		<klp-form-element caption="Yes or no2">
+		<klp-form-element caption="Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2Yes or no2" spaceDistribution="fixedInputWidth">
 			<klp-form-toggle formControlName="yesno2">
 			</klp-form-toggle>
 		</klp-form-element>
-		<div style="width: 400px; margin-left: 500px;">
-			<klp-form-element caption="select something" style="margin-top: 200px; margin-bottom: 100px;">
-				<klp-form-select prefix="smeerpijp" [truncateOptions]="false" [options]="options" [multiple]="true" placeholder="Pick" formControlName="selector" (onSearch)="search($event)" (onEndReached)="loadMore()" (onBlur)="logSomething()" (onEnterKey)="enterKeyPressed()"></klp-form-select>
-			</klp-form-element>
-		</div>
+
 		<klp-form-element>
 			<klp-form-text-input formControlName="emails"></klp-form-text-input>
 		</klp-form-element>
@@ -56,10 +122,35 @@
 			Submit
 		</klp-form-submit-button>
 		<klp-form-button variant="redOutlined" size="large" [disabled]="true">Red</klp-form-button>
+
+		<div style="width: 400px; margin-left: 300px;">
+			<klp-form-element caption="select something" style="margin-top: 200px; margin-bottom: 100px;">
+				<klp-form-select [truncateOptions]="false" [options]="options" [multiple]="true" placeholder="Pick" formControlName="selector" (onSearch)="search($event)" (onEndReached)="loadMore()" (onBlur)="logSomething()" (onEnterKey)="enterKeyPressed()">
+					<ng-template klpSelectOptionTpl let-item="item">
+						<div style="display: flex; justify-content: space-between; height: 200px; border: 2px solid black; width: 100%;">
+							<div>{{item.name.substring(0, 30)}}</div>
+							<div>{{item.name.substring(0, 30)}}</div>
+						</div>
+					</ng-template>
+				</klp-form-select>
+			</klp-form-element>
+		</div>
 	</div>
 </klp-form>
 
-<klp-form-select [options]="options" [multiple]="true"></klp-form-select>
+<div style="width: 650px; margin-left: 100px; overflow: scroll; height: 500px;">
+	some cool stuff here <br />
+	some cool stuff here <br />
+	some cool stuff here <br />
+	some cool stuff here <br />
+	some cool stuff here <br />
+	some cool stuff here <br />
+	some cool stuff here <br />
+	some cool stuff here <br />
+	some cool stuff here wutu <br />
+	<klp-form-select [options]="options" [multiple]="true" [truncateOptions]="false" dropdownAlignment="right" dropdownPosition="top"></klp-form-select>
+</div>
+<klp-form-select [options]="options" [multiple]="true" [truncateOptions]="false" dropdownAlignment="right"></klp-form-select>
 {{testDate}}
 <klp-form-date-time-picker [(ngModel)]="testDate" [multiple]="true" [disabled]="true"></klp-form-date-time-picker>
 <klp-form-checkbox [(ngModel)]="isChecked"></klp-form-checkbox>
@@ -81,10 +172,39 @@
 	</ng-template>
 </klp-form-select>
 
-<div style="width: 300px; position: absolute">
-	<klp-form-select [options]="staticOptions" orientation="vertical"></klp-form-select>
-</div>
-
 <klp-form-button [clickCallback]="slowClick">
 	async button
 </klp-form-button>
+
+<div style="width: 300px; position: absolute">
+	<klp-form-select [options]="staticOptions" [truncateOptions]="true" orientation="vertical"></klp-form-select>
+</div>
+
+some cool stuff here <br />
+some cool stuff here <br />
+some cool stuff here <br />
+some cool stuff here <br />
+some cool stuff here <br />
+some cool stuff here <br />
+some cool stuff here <br />
+some cool stuff here <br />
+some cool stuff here <br />
+
+<ng-template #myFancyTemplate>
+	This can be <span style="color: red;">ANYTHING</span>. <span style="color: green; font-weight: bold; font-size: 1.2rem;">Look at me me, i am BOLD AND GREEN</span>
+</ng-template>
+
+simple form with form level errors
+
+<klp-form [formGroup]="simpleFormWithFormLevelErrors" [errors]="formErrors" errorMessageLocation="rightOfCaption">
+	<klp-form-element caption="First name" spaceDistribution="34-66" direction="vertical">
+		<klp-form-text-input formControlName="firstName" [clearable]="true">
+		</klp-form-text-input>
+	</klp-form-element>
+	<klp-form-element caption="Last name" spaceDistribution="34-66" direction="vertical">
+		<klp-form-text-input formControlName="lastName" [clearable]="true">
+		</klp-form-text-input>
+	</klp-form-element>
+
+	<klp-form-submit-button [submitCallback]="saveSimple">Save</klp-form-submit-button>
+</klp-form>

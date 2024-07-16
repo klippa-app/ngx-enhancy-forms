@@ -15,6 +15,7 @@ export class FileInputComponent extends MultipleValueAccessorBase<File> {
 	@Input() clearable = false;
 	@Input() onlyShowUploadButton = false;
 	@Input() useFullParentSize = false;
+	@Input() buttonText: string;
 	@ViewChild('nativeInputRef') nativeInputRef: ElementRef<HTMLInputElement>;
 
 	public onChange(files: FileList): void {

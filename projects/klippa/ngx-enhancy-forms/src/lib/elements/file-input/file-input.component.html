@@ -1,4 +1,4 @@
-<div class="componentContainer" [ngClass]="{fullParentSize: useFullParentSize}">
+<div class="componentContainer" [ngClass]="{fullParentSize: useFullParentSize, showErrors: isInErrorState()}">
 	<div class="buttonContainer">
 		<input
 			type="file"
@@ -7,8 +7,14 @@
 			[multiple]="multiple"
 			[disabled]="disabled"
 		>
-		<klp-form-button class="uploadButton" [isLoading]="isLoading" (click)="uploadFileClicked()">
-			Upload a file
+		<klp-form-button class="uploadButton" [isLoading]="isLoading" [disabled]="disabled" (click)="uploadFileClicked()">
+			<div class="innerButton">
+				<span *ngIf="buttonText">{{buttonText}}</span>
+				<div *ngIf="!buttonText"><ng-content></ng-content></div>
+				<div class="tail">
+					<ng-container [ngTemplateOutlet]="getTailTpl()"></ng-container>
+				</div>
+			</div>
 		</klp-form-button>
 	</div>
 	<div class="fileName" *ngIf="!onlyShowUploadButton">

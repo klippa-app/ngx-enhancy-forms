@@ -29,6 +29,9 @@ import {SortableGroupedItemsComponent} from './elements/sortable-grouped-items/s
 import {HourMinuteInputComponent} from './elements/hour-minute-input/hour-minute-input.component';
 import {RadioComponent} from './elements/radio/radio.component';
 import {WithTooltipDirective} from "./withTooltip.component";
+import {WarningIconComponent} from "./warning-icon/warning-icon.component";
+import {ElementIsTruncatedCbComponent} from "./elementIsTruncatedCb.component";
+import {OnRenderDirective} from "./onRender.component";
 
 @NgModule({
 	imports: [
@@ -66,6 +69,9 @@ import {WithTooltipDirective} from "./withTooltip.component";
 		HourMinuteInputComponent,
 		RadioComponent,
 		WithTooltipDirective,
+		OnRenderDirective,
+		WarningIconComponent,
+		ElementIsTruncatedCbComponent,
 	],
 	exports: [
 		ValueAccessorBase,
@@ -95,6 +101,8 @@ import {WithTooltipDirective} from "./withTooltip.component";
 		HourMinuteInputComponent,
 		RadioComponent,
 		WithTooltipDirective,
-	],
+		OnRenderDirective,
+		ElementIsTruncatedCbComponent,
+	]
 })
 export class NgxEnhancyFormsModule {}

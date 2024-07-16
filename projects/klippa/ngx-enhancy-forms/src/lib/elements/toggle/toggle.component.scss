@@ -9,6 +9,7 @@ $height: 20px;
 }
 .componentContainer {
 	position: relative;
+	padding-right: 6px;
 }
 .nativeCheckbox {
 	position: absolute;
@@ -18,6 +19,7 @@ $height: 20px;
 	width: $width;
 	height: $height;
 	cursor: pointer;
+	margin: 0;
 }
 
 .toggleVisual {

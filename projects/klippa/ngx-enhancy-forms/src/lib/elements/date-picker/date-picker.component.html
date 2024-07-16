@@ -13,4 +13,7 @@
 		[showTimeInput]="false"
 		(onTouch)="touch()"
 	></klp-form-date-time-picker>
+	<div class="tail">
+		<ng-container [ngTemplateOutlet]="getTailTpl()"></ng-container>
+	</div>
 </div>

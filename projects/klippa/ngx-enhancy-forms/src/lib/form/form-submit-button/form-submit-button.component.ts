@@ -25,6 +25,7 @@ export class FormSubmitButtonComponent {
 	@Input() public submitCallback: (renderedAndEnabledValues: object, renderedButDisabledValues: object) => Promise<any>;
 	@Input() public before: () => Promise<any> = () => Promise.resolve();
 	@Input() public after: () => Promise<any> = () => Promise.resolve();
+	@Input() public disabled: boolean = false;
 
 	private setValidationError = (e: FormValidationError) => {
 		this.parentForm.formGroup.get(e.path)?.setErrors({ message: { value: e.message }});

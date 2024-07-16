@@ -10,6 +10,7 @@ export interface FormErrorMessages {
 	pattern: string;
 	matchPassword: string;
 	date: string;
+	formLevel?: string;
 }
 
 export type CustomErrorMessages = Record<keyof FormErrorMessages, () => string>;

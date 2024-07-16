@@ -30,20 +30,30 @@ input {
 	&.hasClearButton {
 		padding-right: $spacing-large;
 	}
+
 	&.noBorderLeft {
 		border-left: none;
 	}
+
 	&.noBorderRight {
 		border-right: none;
 	}
 }
 
-.clearIcon {
+.tail {
 	position: absolute;
 	right: $spacing-small;
-	top: 7px;
-	font-size: 18px;
-	cursor: pointer;
+	display: flex;
+	align-items: center;
+	top: 0px;
+	bottom: 0px;
+	gap: $spacing-small;
+
+	.clearIcon {
+		transform: translateY(-2px);
+		font-size: 18px;
+		cursor: pointer;
+	}
 }
 
 .showErrors {

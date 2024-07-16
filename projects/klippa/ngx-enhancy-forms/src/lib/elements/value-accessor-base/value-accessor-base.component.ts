@@ -1,5 +1,17 @@
 import {ControlContainer, ControlValueAccessor, UntypedFormControl} from '@angular/forms';
-import {Component, ElementRef, EventEmitter, Host, Input, OnDestroy, OnInit, Optional, Output, ViewChild} from '@angular/core';
+import {
+	Component,
+	ElementRef,
+	EventEmitter,
+	Host,
+	Input,
+	OnDestroy,
+	OnInit,
+	Optional,
+	Output,
+	TemplateRef,
+	ViewChild
+} from '@angular/core';
 import {FormElementComponent} from '../../form/form-element/form-element.component';
 import {isNullOrUndefined, isValueSet, stringIsSetAndFilled} from '../../util/values';
 import { arrayIsSetAndFilled } from '../../util/arrays';
@@ -32,10 +44,12 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 	@Input() public formControlName: string = null;
 	@Input() public formControl: UntypedFormControl = null;
 	@Input() public inErrorState = false;
+	@Input() getTailTplFn: () => TemplateRef<any>;
 	@Output() public onTouch = new EventEmitter<void>();
 	@ViewChild('nativeInputRef') nativeInputRef: ElementRef;
 
 	private attachedFormControl: UntypedFormControl;
+	private tailTpl: TemplateRef<any>;
 
 	constructor(
 		@Host() @Optional() protected parent: FormElementComponent,
@@ -76,6 +90,7 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 
 	touch(): void {
 		this.touched.forEach((f) => f());
+		this.onTouch.emit();
 	}
 
 	writeValue(value: T): void {
@@ -136,5 +151,15 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 		}else {
 			throw new Error('the focus() method is not implemented in this element!');
 		}
+	}
+
+	public setTailTpl = (tpl: TemplateRef<any>): void => {
+		this.tailTpl = tpl;
+	}
+	public getTailTpl = (): TemplateRef<any> => {
+		if (isValueSet(this.getTailTplFn)) {
+			return this.getTailTplFn();
+		}
+		return this.tailTpl;
 	}
 }

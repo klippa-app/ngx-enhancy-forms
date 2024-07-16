@@ -1,7 +1,7 @@
 <klp-form-button
 		[variant]="variant"
 		(click)="submitForm()"
-		[disabled]="isLoading"
+		[disabled]="isLoading || disabled"
 		[isLoading]="isLoading"
 		[fullWidth]="fullWidth"
 		type="submit"

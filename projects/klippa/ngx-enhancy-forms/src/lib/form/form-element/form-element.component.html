@@ -1,5 +1,63 @@
-<ng-template #errorRef>
-	<div *ngIf="shouldShowErrorMessages() && getErrorToShow()" class="errorContainer" [ngClass]="{hasCaption: caption || captionRef, 'd30-70': spaceDistribution === '30-70', 'd34-66': spaceDistribution === '34-66'}" [klpWithTooltip]="!errorMessageAsTooltip && getErrorLocation() === 'rightOfCaption'">
+<div
+	class="componentContainer"
+	[ngClass]="{
+		hasCaption: caption || captionRef,
+		vertical: direction === 'vertical',
+		horizontal: direction === 'horizontal',
+		topAlignment: verticalAlignment === 'top',
+		reverseOrder: swapInputAndCaption,
+		hasErrors: getErrorToShow() && attachedControl.touched,
+		percentageSpacing: captionSpacing === 'percentages' && spaceDistribution !== 'fixedInputWidth',
+		'd40-60': spaceDistribution === '40-60',
+		'd30-70': spaceDistribution === '30-70',
+		'd34-66': spaceDistribution === '34-66',
+		'fixedInputWidth': spaceDistribution === 'fixedInputWidth'
+	}"
+>
+	<div class="errorAboveInputContainer" *ngIf="direction === 'horizontal' && !errorMessageAsTooltip">
+		<div class="spacer"></div>
+		<ng-container [ngTemplateOutlet]="errorRef"></ng-container>
+	</div>
+
+	<div class="captionInputAndError" #internalComponentRef>
+		<div class="captionDummyForSpaceCalculation" #captionDummyForSpaceCalculation *ngIf="hasRightOfCaptionError()">
+			<ng-container [ngTemplateOutlet]="captionTpl" [ngTemplateOutletContext]="{forCalculation: true}"></ng-container>
+		</div>
+		<ng-container [ngTemplateOutlet]="captionTpl"></ng-container>
+		<ng-container *ngIf="direction === 'vertical' && getErrorLocation() === 'belowCaption' && !errorMessageAsTooltip" [ngTemplateOutlet]="errorRef"></ng-container>
+		<div class="inputContainer" (mouseenter)="setErrorTooltipOffset()">
+			<ng-container *ngIf="errorMessageAsTooltip && shouldShowErrorMessages() && getErrorToShow()">
+				<div class="errorTooltipTriangle"></div>
+				<div class="errorTooltipTriangleWhite"></div>
+				<div class="errorTooltip">
+					<ng-container [ngTemplateOutlet]="errorRef"></ng-container>
+				</div>
+			</ng-container>
+			<ng-content></ng-content>
+		</div>
+	</div>
+</div>
+
+<ng-template #captionTpl let-forCalculation="forCalculation">
+	<div class="caption"
+		*ngIf="caption || captionRef"
+		[ngClass]="{
+			withErrorRightOfCaption: getErrorLocation() === 'rightOfCaption'
+		}"
+	>
+		<div *ngIf="captionRef" class="captionRefContainer">
+			<ng-container [ngTemplateOutlet]="captionRef"></ng-container>
+			<div *ngIf="isRequired()">&nbsp;*</div>
+		</div>
+		<div *ngIf="!captionRef" class="captionText">{{caption}}<span *ngIf="isRequired()">&nbsp;*</span></div>
+		<div class="rightOfCaptionError" *ngIf="hasRightOfCaptionError()" [ngClass]="{errorFullyVisible: errorFullyVisible}">
+			<ng-container [ngTemplateOutlet]="errorRef" [ngTemplateOutletContext]="{forCalculation: forCalculation}"></ng-container>
+		</div>
+	</div>
+</ng-template>
+
+<ng-template #errorRef let-forCalculation="forCalculation">
+	<div *ngIf="shouldShowErrorMessages() && getErrorToShow()" class="errorContainer" [elementIsTruncatedCb]="forCalculation ? setErrorMessageIsTruncated : null" [ngClass]="{horizontal: direction === 'horizontal', hasCaption: caption || captionRef, 'd30-70': spaceDistribution === '30-70', 'd34-66': spaceDistribution === '34-66'}">
 		<div *ngIf="showDefaultError('min')">{{substituteParameters(getErrorMessage("min"), {min: attachedControl.errors.min.min})}}</div>
 		<div *ngIf="showDefaultError('max')">{{substituteParameters(getErrorMessage("max"), {max: attachedControl.errors.max.max})}}</div>
 		<div *ngIf="showDefaultError('required')">{{getErrorMessage("required")}}</div>
@@ -10,44 +68,34 @@
 		<div *ngIf="showDefaultError('MatchPassword')">{{getErrorMessage("matchPassword")}}</div>
 		<div *ngIf="showDefaultError('date')">{{getErrorMessage("date")}}</div>
 		<div *ngIf="showDefaultError('message')">{{attachedControl.errors.message.value}}</div>
+		<div *ngIf="showDefaultError('formLevel')">{{getErrorMessage("formLevel")}}</div>
 		<div [ngTemplateOutlet]="getCustomErrorHandler(getErrorToShow())?.templateRef"></div>
 	</div>
 </ng-template>
 
-<ng-container *ngIf="direction === 'horizontal' && !errorMessageAsTooltip" [ngTemplateOutlet]="errorRef"></ng-container>
-
-<div class="componentContainer" [ngClass]="{hasCaption: caption || captionRef, vertical: direction === 'vertical', reverseOrder: swapInputAndCaption}" #internalComponentRef>
-	<div class="caption" *ngIf="caption || captionRef"
-		[ngClass]="{
-			hasErrors: getErrorToShow() && attachedControl.touched,
-			percentageSpacing: captionSpacing === 'percentages',
-			'd30-70': spaceDistribution === '30-70',
-			'd34-66': spaceDistribution === '34-66',
-			withErrorRightOfCaption: getErrorLocation() === 'rightOfCaption'
-		}"
-	>
-		<div *ngIf="captionRef" class="captionRefContainer">
-			<ng-container [ngTemplateOutlet]="captionRef"></ng-container>
-			<div *ngIf="isRequired()">&nbsp;*</div>
-		</div>
-		<div *ngIf="!captionRef" class="captionText">{{caption}}<span *ngIf="isRequired()">&nbsp;*</span></div>
-		<div class="rightOfCaptionError">
-			<ng-container *ngIf="direction === 'vertical' && getErrorLocation() === 'rightOfCaption' && !errorMessageAsTooltip" [ngTemplateOutlet]="errorRef"></ng-container>
-		</div>
-	</div>
-	<ng-container *ngIf="direction === 'vertical' && getErrorLocation() === 'belowCaption' && !errorMessageAsTooltip" [ngTemplateOutlet]="errorRef"></ng-container>
-	<div class="inputContainer" [ngClass]="{
-		percentageSpacing: captionSpacing === 'percentages',
-		'd30-70': spaceDistribution === '30-70',
-		'd34-66': spaceDistribution === '34-66'
-	}">
-		<ng-container *ngIf="errorMessageAsTooltip && shouldShowErrorMessages() && getErrorToShow()">
+<ng-template #tailTpl>
+	<div class="errorTooltipContainer" [ngClass]="{alwaysOpen: shouldShowErrorTooltipOpened()}">
+		<ng-container *ngIf="hasHoverableErrorTooltip() || shouldShowErrorTooltipOpened()">
 			<div class="errorTooltipTriangle"></div>
 			<div class="errorTooltipTriangleWhite"></div>
-			<div class="errorTooltip">
-				<ng-container [ngTemplateOutlet]="errorRef"></ng-container>
+
+			<div class="absoluteAnchor" #absoluteAnchor></div>
+			<div class="fixedAnchor" #fixedAnchor [onRenderFn]="setErrorTooltipOffset"></div>
+			<div class="fixedWrapper" #fixedWrapper>
+				<div class="errorTooltip" [ngClass]="{noPointerEvents: !shouldShowErrorTooltipOpened()}">
+					<div class="errorTooltipInner">
+						<i class="closeBtn" (click)="closePopup();">×</i>
+						<ng-container *ngIf="getErrorToShow()" [ngTemplateOutlet]="errorRef"></ng-container>
+						<div *ngIf="!getErrorToShow() && shouldShowWarningPopup()">
+							<ng-container *ngIf="getWarningToShowIsTemplateRef()" [ngTemplateOutlet]="getWarningToShowAsTemplateRef()"></ng-container>
+							<span *ngIf="!getWarningToShowIsTemplateRef()">{{getWarningToShow()}}</span>
+						</div>
+					</div>
+				</div>
 			</div>
+
 		</ng-container>
-		<ng-content></ng-content>
+		<klp-form-warning-icon variant="fill" *ngIf="getErrorToShow()" (click)="togglePopup()"></klp-form-warning-icon>
+		<klp-form-warning-icon variant="line" *ngIf="!getErrorToShow() && getWarningToShow()" (click)="togglePopup()"></klp-form-warning-icon>
 	</div>
-</div>
+</ng-template>

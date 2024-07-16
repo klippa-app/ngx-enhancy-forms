@@ -16,4 +16,7 @@ export class SubFormExampleComponent implements OnInit {
 
 	}
 
+	onInjected() {
+		console.log('I AM INJECTED NOW!');
+	}
 }

@@ -6,7 +6,7 @@
 	[items]="options"
 	[clearable]="clearable"
 	[(ngModel)]="innerValue"
-	[ngClass]="{showErrors: isInErrorState(), verticalOrientation: orientation === 'vertical', truncateOptions: truncateOptions, withSeparatingLine: withSeparatingLine}"
+	[ngClass]="{showErrors: isInErrorState(), verticalOrientation: orientation === 'vertical', truncateOptions: truncateOptions, nonTruncatedOptions: !truncateOptions, withSeparatingLine: withSeparatingLine}"
 	(change)="setInnerValueAndNotify(innerValue)"
 	[multiple]="multiple"
 	[disabled]="disabled"
@@ -42,3 +42,12 @@
 		<ng-container [ngTemplateOutlet]="footerElement"></ng-container>
 	</ng-template>
 </ng-select>
+
+<div class="tail" #tailRef>
+	<ng-container [ngTemplateOutlet]="getTailTpl()"></ng-container>
+</div>
+<!-- I need this mock to reserve the space. I cant use the normal tail because that opens the dropdown from ng-select -->
+<!-- I have no idea how to avoid that -->
+<div class="tailMock" #tailMockRef>
+	<ng-container [ngTemplateOutlet]="getTailTpl()"></ng-container>
+</div>
