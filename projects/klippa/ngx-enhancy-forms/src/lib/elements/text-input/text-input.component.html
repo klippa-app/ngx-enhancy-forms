@@ -15,8 +15,8 @@
 	<div class="tail">
 		<ng-container [ngTemplateOutlet]="getTailTpl()"></ng-container>
 		<div class="clearIcon" *ngIf="clearable && innerValue?.length > 0" (click)="resetToNull()">×</div>
-		<button class="peakBtn" (click)="togglePeakPassword()" *ngIf="passwordPeakIcon && type === 'password'">
-			<ng-container [ngTemplateOutlet]="passwordPeakIcon"></ng-container>
+		<button class="peakBtn" (click)="togglePeakPassword()" *ngIf="passwordPeekIcon && type === 'password'">
+			<ng-container [ngTemplateOutlet]="passwordPeekIcon"></ng-container>
 		</button>
 	</div>
 </div>
