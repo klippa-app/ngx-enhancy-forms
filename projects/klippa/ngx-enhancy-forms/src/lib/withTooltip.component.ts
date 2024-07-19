@@ -65,6 +65,7 @@ export class WithTooltipDirective implements OnChanges{
 			if (stringIsSetAndFilled(textToDisplay)) {
 				this.div.textContent = textToDisplay;
 			} else if (this.templateInstance) {
+				this.div.style.maxWidth = 'none';
 				this.div.style.visibility = 'hidden';
 				this.div.appendChild(this.templateInstance);
 				setTimeout(() => {
