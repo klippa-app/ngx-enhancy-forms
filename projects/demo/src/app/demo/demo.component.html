@@ -11,6 +11,13 @@
 				<klp-form-error error="async"></klp-form-error>
 			</klp-form-element>
 
+			<klp-form-element caption="Password" spaceDistribution="34-66" direction="vertical">
+				<klp-form-text-input type="password" formControlName="name" [clearable]="true" [passwordPeakIcon]="peakIcon">
+				</klp-form-text-input>
+				<ng-template #peakIcon>E</ng-template>
+				<klp-form-error error="async"></klp-form-error>
+			</klp-form-element>
+
 			<klp-form-element caption="Name aap noot mies" spaceDistribution="30-70" direction="horizontal">
 				<klp-form-text-input formControlName="name2" [clearable]="true">
 				</klp-form-text-input>
