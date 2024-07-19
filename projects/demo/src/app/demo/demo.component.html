@@ -72,6 +72,14 @@
 		I am a small piece of text
 	</klp-form-button>
 
+	<klp-form-button klpWithTooltip="black" [tooltipTemplate]="tooltipTpl">
+		Tooltip with template
+		<ng-template #tooltipTpl>
+			<div style="color: white; backgroundColor: #123456;">kers</div>
+		</ng-template>
+	</klp-form-button>
+
+
 	<div>
 		<klp-form-element caption="radioButtons classic" spaceDistribution="34-66" verticalAlignment="top">
 			<klp-form-radio formControlName="radioOption" [options]="radioOptionsClassic" orientation="column">
@@ -208,3 +216,4 @@ simple form with form level errors
 
 	<klp-form-submit-button [submitCallback]="saveSimple">Save</klp-form-submit-button>
 </klp-form>
+

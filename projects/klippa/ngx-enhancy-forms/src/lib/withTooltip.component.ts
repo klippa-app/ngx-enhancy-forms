@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Input} from "@angular/core";
+import {Directive, ElementRef, Input, OnChanges, SimpleChanges, TemplateRef} from "@angular/core";
 import {stringIsSetAndFilled} from "./util/values";
 
 const triangleSize = '12px';
@@ -12,25 +12,32 @@ const colors = {
 @Directive({
 	selector: '[klpWithTooltip]'
 })
-export class WithTooltipDirective {
+export class WithTooltipDirective implements OnChanges{
 	private div: HTMLElement;
 	private triangle: HTMLElement;
 	private triangleWhite: HTMLElement;
 	@Input() klpWithTooltip: 'orange'| 'black' = 'orange';
 	@Input() tooltipText: string;
-	constructor(el: ElementRef) {
+	@Input() tooltipTemplate: TemplateRef<any>;
+	private templateInstance: HTMLElement;
+	constructor(private el: ElementRef) {
 		el.nativeElement.addEventListener('mouseenter', () => {
-			const textToDisplay = this.tooltipText || el.nativeElement.innerText.trim();
+			let textToDisplay: string;
+			if (!this.templateInstance) {
+				textToDisplay = this.tooltipText || el.nativeElement.innerText.trim();
+			}
 			if (!stringIsSetAndFilled(this.klpWithTooltip)) {
 				return;
 			}
-			if (textToDisplay.length < 1) {
+			if (!stringIsSetAndFilled(textToDisplay) && !this.tooltipTemplate) {
 				return;
 			}
 			if (stringIsSetAndFilled(this.tooltipText)) {
 				if (this.tooltipText === el.nativeElement.innerText) {
 					return;
 				}
+			} else if (this.tooltipTemplate) {
+				// no need to check here, just render the template
 			} else {
 				if (el.nativeElement.offsetWidth >= el.nativeElement.scrollWidth) {
 					return;
@@ -55,7 +62,17 @@ export class WithTooltipDirective {
 			this.div.style.padding = '0.3rem 0.5rem';
 			this.div.style.boxSizing = 'border-box';
 			this.div.style.borderRadius = '3px';
-			this.div.textContent = textToDisplay;
+			if (stringIsSetAndFilled(textToDisplay)) {
+				this.div.textContent = textToDisplay;
+			} else if (this.templateInstance) {
+				this.div.style.visibility = 'hidden';
+				this.div.appendChild(this.templateInstance);
+				setTimeout(() => {
+					const color = getComputedStyle(this.templateInstance).backgroundColor || getComputedStyle(this.templateInstance).background;
+					this.div.style.backgroundColor = color;
+					this.div.style.visibility = 'visible';
+				});
+			}
 			el.nativeElement.prepend(this.div);
 
 			this.triangle = document.createElement('div');
@@ -81,7 +98,18 @@ export class WithTooltipDirective {
 			this.triangleWhite.style.height = '0';
 			this.triangleWhite.style.borderLeft = `${triangleSize} solid transparent`;
 			this.triangleWhite.style.borderRight = `${triangleSize} solid transparent`;
-			this.triangleWhite.style.borderTop = `${triangleSize} solid white`;
+
+			if (stringIsSetAndFilled(textToDisplay)) {
+				this.triangleWhite.style.borderTop = `${triangleSize} solid white`;
+			} else if (this.templateInstance) {
+				this.div.style.visibility = 'hidden';
+				setTimeout(() => {
+					const color = getComputedStyle(this.templateInstance).backgroundColor || getComputedStyle(this.templateInstance).background;
+					this.triangleWhite.style.borderTop = `${triangleSize} solid ${color}`;
+					this.div.style.visibility = 'visible';
+				});
+			}
+
 			el.nativeElement.prepend(this.triangleWhite);
 		});
 
@@ -96,5 +124,12 @@ export class WithTooltipDirective {
 				el.nativeElement.removeChild(this.triangleWhite);
 			} catch (ex) {}
 		});
+	}
+
+	public ngOnChanges(simpleChanges: SimpleChanges): void {
+		if (simpleChanges.tooltipTemplate?.currentValue) {
+			const viewRef = this.tooltipTemplate.createEmbeddedView(null);
+			this.templateInstance = viewRef.rootNodes[0];
+		}
 	}
 }
