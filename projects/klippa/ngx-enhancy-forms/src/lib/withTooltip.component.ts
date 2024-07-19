@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Input, OnChanges, SimpleChanges, TemplateRef} from "@angular/core";
+import {ApplicationRef, Directive, ElementRef, Input, OnChanges, SimpleChanges, TemplateRef} from "@angular/core";
 import {stringIsSetAndFilled} from "./util/values";
 
 const triangleSize = '12px';
@@ -20,7 +20,7 @@ export class WithTooltipDirective implements OnChanges{
 	@Input() tooltipText: string;
 	@Input() tooltipTemplate: TemplateRef<any>;
 	private templateInstance: HTMLElement;
-	constructor(private el: ElementRef) {
+	constructor(private el: ElementRef, private appRef: ApplicationRef) {
 		el.nativeElement.addEventListener('mouseenter', () => {
 			let textToDisplay: string;
 			if (!this.templateInstance) {
@@ -130,6 +130,7 @@ export class WithTooltipDirective implements OnChanges{
 	public ngOnChanges(simpleChanges: SimpleChanges): void {
 		if (simpleChanges.tooltipTemplate?.currentValue) {
 			const viewRef = this.tooltipTemplate.createEmbeddedView(null);
+			this.appRef.attachView(viewRef);
 			this.templateInstance = viewRef.rootNodes[0];
 		}
 	}

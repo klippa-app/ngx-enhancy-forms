@@ -12,6 +12,7 @@ import { DemoComponent } from './demo/demo.component';
 import { OnSubmitErrorsComponent } from './on-submit-errors/on-submit-errors.component';
 import { CustomFormComponent } from './custom-form-component/custom-form.component';
 import { MySuperFormComponent } from './custom-form-component/my-super-form/my-super-form.component';
+import SimpleComponent from "./simple-comp/simple.component";
 
 const routes: Routes = [
 	{
@@ -46,6 +47,7 @@ const routes: Routes = [
 		OnSubmitErrorsComponent,
 		CustomFormComponent,
 		MySuperFormComponent,
+		SimpleComponent,
 	],
 	providers: [],
 	bootstrap: [AppComponent]
