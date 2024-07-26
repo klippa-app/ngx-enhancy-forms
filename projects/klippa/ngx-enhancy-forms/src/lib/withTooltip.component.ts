@@ -19,6 +19,7 @@ export class WithTooltipDirective implements OnChanges{
 	@Input() klpWithTooltip: 'orange'| 'black' = 'orange';
 	@Input() tooltipText: string;
 	@Input() tooltipTemplate: TemplateRef<any>;
+	@Input() position: 'top' | 'bottom' = 'top';
 	private templateInstance: HTMLElement;
 	constructor(private el: ElementRef, private appRef: ApplicationRef) {
 		el.nativeElement.addEventListener('mouseenter', () => {
@@ -52,8 +53,13 @@ export class WithTooltipDirective implements OnChanges{
 			this.div.style.color = `${colors[this.klpWithTooltip].noAlpha}`;
 			this.div.style.position = 'fixed';
 			this.div.style.left = `${el.nativeElement.getBoundingClientRect().x}px`;
-			this.div.style.top = `${el.nativeElement.getBoundingClientRect().y}px`;
-			this.div.style.transform = `translate(calc(-100% + ${el.nativeElement.getBoundingClientRect().width}px), calc(-100% - 0.3rem))`;
+			if (this.position === 'top') {
+				this.div.style.top = `${el.nativeElement.getBoundingClientRect().y}px`;
+				this.div.style.transform = `translate(calc(-100% + ${el.nativeElement.getBoundingClientRect().width}px), calc(-100% - 0.3rem))`;
+			} else if (this.position === 'bottom') {
+				this.div.style.top = `${el.nativeElement.getBoundingClientRect().y + el.nativeElement.getBoundingClientRect().height}px`;
+				this.div.style.transform = `translate(calc(-100% + ${el.nativeElement.getBoundingClientRect().width}px), calc(0% + 0.3rem))`;
+			}
 			this.div.style.maxWidth = '200px';
 			this.div.style.whiteSpace = 'break-spaces';
 			this.div.style.backgroundColor = 'white';
@@ -80,8 +86,13 @@ export class WithTooltipDirective implements OnChanges{
 			this.triangle.style.zIndex = `${zIndexStart + 1}`;
 			this.triangle.style.position = 'fixed';
 			this.triangle.style.left = `calc(${el.nativeElement.getBoundingClientRect().x + el.nativeElement.getBoundingClientRect().width}px - 2rem)`;
-			this.triangle.style.top = `${el.nativeElement.getBoundingClientRect().y}px`;
-			this.triangle.style.transform = `translate(-50%, calc(-100% + 0.1rem))`;
+			if (this.position === 'top') {
+				this.triangle.style.top = `${el.nativeElement.getBoundingClientRect().y}px`;
+				this.triangle.style.transform = `translate(-50%, calc(-100% + 0.1rem))`;
+			} else if (this.position === 'bottom') {
+				this.triangle.style.top = `${el.nativeElement.getBoundingClientRect().y + el.nativeElement.getBoundingClientRect().height}px`;
+				this.triangle.style.transform = `translate(-50%, 0rem) rotate(180deg)`;
+			}
 			this.triangle.style.width = '0';
 			this.triangle.style.height = '0';
 			this.triangle.style.borderLeft = `${triangleSize} solid transparent`;
@@ -93,8 +104,13 @@ export class WithTooltipDirective implements OnChanges{
 			this.triangleWhite.style.zIndex = `${zIndexStart + 3}`;
 			this.triangleWhite.style.position = 'fixed';
 			this.triangleWhite.style.left = `calc(${el.nativeElement.getBoundingClientRect().x + el.nativeElement.getBoundingClientRect().width}px - 2rem)`;
-			this.triangleWhite.style.top = `${el.nativeElement.getBoundingClientRect().y}px`;
-			this.triangleWhite.style.transform = `translate(-50%, calc(-100% + 0.1rem - 2px))`;
+			if (this.position === 'top') {
+				this.triangleWhite.style.top = `${el.nativeElement.getBoundingClientRect().y}px`;
+				this.triangleWhite.style.transform = `translate(-50%, calc(-100% + 0.1rem - 2px))`;
+			} else if (this.position === 'bottom') {
+				this.triangleWhite.style.top = `${el.nativeElement.getBoundingClientRect().y + el.nativeElement.getBoundingClientRect().height}px`;
+				this.triangleWhite.style.transform = `translate(-50%, -2px) rotate(180deg)`;
+			}
 			this.triangleWhite.style.width = '0';
 			this.triangleWhite.style.height = '0';
 			this.triangleWhite.style.borderLeft = `${triangleSize} solid transparent`;
