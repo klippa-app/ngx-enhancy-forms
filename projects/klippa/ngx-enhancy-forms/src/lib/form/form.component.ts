@@ -286,7 +286,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		formGroupValue): Promise<any>
 	{
 		if (this.formGroup.invalid) {
-			this.activeControls.find((e) => !e.formControl.valid)?.formElement?.scrollTo();
+			this.activeControls.find((e) => e.formControl.invalid)?.formElement?.scrollTo();
 			this.setDisabledStatesForAllControls(originalDisabledStates);
 			return Promise.reject(invalidFieldsSymbol);
 		} else {
