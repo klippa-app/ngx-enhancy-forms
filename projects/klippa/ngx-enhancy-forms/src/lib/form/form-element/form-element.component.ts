@@ -180,23 +180,17 @@ export class FormElementComponent implements AfterViewInit {
 		}
 	}
 
-	getPageOffset(elem): number {
-		let topOffset = elem.getBoundingClientRect().top;
-
-		while (elem !== document.documentElement) {
-			elem = elem.parentElement;
-			topOffset += elem.scrollTop;
-		}
-		return topOffset;
-	}
-
 	scrollTo(): void {
 		const parent = this.getScrollableParent(this.internalComponentRef.nativeElement);
-		const pageOffsetElement = this.getPageOffset(this.internalComponentRef.nativeElement);
-		const pageOffsetParent = parent === window.document.documentElement ? 0 : this.getPageOffset(parent);
+		const parentTop = parent === window.document.documentElement ? 0 : parent.getBoundingClientRect().top;
+		const elementTop = this.internalComponentRef.nativeElement.getBoundingClientRect().top;
+		const parentScrollTop = parent.scrollTop;
+		const answer = elementTop - parentTop + parentScrollTop;
+		console.log('answer', parentTop, elementTop, parentScrollTop, answer);
+		console.log(parent, this.internalComponentRef.nativeElement);
 
 		parent.scrollTo({
-			top: pageOffsetElement - pageOffsetParent - 30,
+			top: answer - 30,
 			behavior: 'smooth'
 		});
 	}
