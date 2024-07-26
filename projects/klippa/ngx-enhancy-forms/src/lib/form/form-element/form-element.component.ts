@@ -169,20 +169,36 @@ export class FormElementComponent implements AfterViewInit {
 	}
 
 	getScrollableParent(node): any {
-		if (node == null) {
-			return null;
+		if (node === window.document.documentElement) {
+			return window.document.documentElement;
 		}
-		if (node.scrollHeight > node.clientHeight) {
+		const overflowY = getComputedStyle(node).overflowY;
+		if (node.clientHeight < node.scrollHeight && (overflowY === 'auto' || overflowY === 'scroll')) {
 			return node;
 		} else {
 			return this.getScrollableParent(node.parentNode);
 		}
 	}
 
+	getPageOffset(elem): number {
+		let topOffset = elem.getBoundingClientRect().top;
+
+		while (elem !== document.documentElement) {
+			elem = elem.parentElement;
+			topOffset += elem.scrollTop;
+		}
+		return topOffset;
+	}
+
 	scrollTo(): void {
-		this.internalComponentRef.nativeElement.scrollIntoView(true);
-		// to give some breathing room, we scroll 100px more to the top
-		this.getScrollableParent(this.internalComponentRef.nativeElement)?.scrollBy(0, -100);
+		const parent = this.getScrollableParent(this.internalComponentRef.nativeElement);
+		const pageOffsetElement = this.getPageOffset(this.internalComponentRef.nativeElement);
+		const pageOffsetParent = parent === window.document.documentElement ? 0 : this.getPageOffset(parent);
+
+		parent.scrollTo({
+			top: pageOffsetElement - pageOffsetParent - 30,
+			behavior: 'smooth'
+		});
 	}
 
 	isRequired(): boolean {
