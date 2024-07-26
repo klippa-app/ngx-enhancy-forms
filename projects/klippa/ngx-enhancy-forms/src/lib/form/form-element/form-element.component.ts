@@ -186,8 +186,6 @@ export class FormElementComponent implements AfterViewInit {
 		const elementTop = this.internalComponentRef.nativeElement.getBoundingClientRect().top;
 		const parentScrollTop = parent.scrollTop;
 		const answer = elementTop - parentTop + parentScrollTop;
-		console.log('answer', parentTop, elementTop, parentScrollTop, answer);
-		console.log(parent, this.internalComponentRef.nativeElement);
 
 		parent.scrollTo({
 			top: answer - 30,
