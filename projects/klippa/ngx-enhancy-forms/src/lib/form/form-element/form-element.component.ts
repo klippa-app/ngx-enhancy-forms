@@ -15,7 +15,6 @@ import {ValueAccessorBase} from '../../elements/value-accessor-base/value-access
 import {CustomErrorMessages, FormErrorMessages} from '../../types';
 import {isValueSet, stringIsSetAndFilled} from '../../util/values';
 import {FormComponent} from '../form.component';
-import {awaitableForNextCycle} from '../../util/angular';
 import {getAllLimitingContainers} from '../../util/dom';
 import {Subscription} from "rxjs";
 
@@ -74,8 +73,6 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 	}
 
 	async ngAfterViewInit(): Promise<void> {
-		await awaitableForNextCycle();
-		this.fieldInput?.setTailTpl(this.tailTpl);
 		const subscription = this.fieldInput?.onTouch.asObservable().subscribe(() => {
 			this.determinePopupState();
 		});
@@ -109,6 +106,7 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 
 	public determinePopupState(): void {
 		const prevState = this.popupState;
+		this.initializeTailTpl();
 		if (stringIsSetAndFilled(this.getErrorToShow())) {
 			this.popupState = 'onHover';
 		} else if (isValueSet(this.getWarningToShow())) {
@@ -306,5 +304,13 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 
 	ngOnDestroy(): void {
 		this.subscriptions.forEach(e => e.unsubscribe());
+	}
+
+	private initializeTailTpl(): void {
+		if (stringIsSetAndFilled(this.getErrorToShow()) || isValueSet(this.getWarningToShow())) {
+			if (!isValueSet(this.fieldInput?.getTailTpl())) {
+				this.fieldInput?.setTailTpl(this.tailTpl);
+			}
+		}
 	}
 }
