@@ -34,6 +34,8 @@ export const DEFAULT_ERROR_MESSAGES: FormErrorMessages = {
 	date: 'Enter a valid date',
 };
 
+type PopupState = 'onHover' | 'lockedOpen';
+
 @Component({
 	selector: 'klp-form-element',
 	templateUrl: './form-element.component.html',
@@ -61,7 +63,7 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 	public customErrorHandlers: Array<{ error: string; templateRef: TemplateRef<any> }> = [];
 	private input: ValueAccessorBase<any>;
 	public errorFullyVisible: boolean;
-	private popupState: 'lockedOpen' | 'lockedClosed' | 'onHover' = 'onHover';
+	private popupState: PopupState = 'onHover';
 	private subscriptions: Array<Subscription> = [];
 
 	constructor(
@@ -80,8 +82,6 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 		if (isValueSet(subscription))  {
 			this.subscriptions.push(subscription);
 		}
-
-		[...getAllLimitingContainers(this.elRef.nativeElement), window].forEach(e => e.addEventListener('scroll', this.setErrorTooltipOffset));
 	}
 
 	public shouldShowErrorMessages(): boolean {
@@ -108,15 +108,32 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 	}
 
 	public determinePopupState(): void {
+		const prevState = this.popupState;
 		if (stringIsSetAndFilled(this.getErrorToShow())) {
 			this.popupState = 'onHover';
-			return;
-		}
-		if (isValueSet(this.getWarningToShow())) {
+		} else if (isValueSet(this.getWarningToShow())) {
 			this.popupState = 'lockedOpen';
+		} else {
+			this.popupState = 'onHover';
+		}
+
+		this.setUpErrorTooltipListeners(prevState, this.popupState);
+	}
+
+	private setUpErrorTooltipListeners(prev: PopupState, current: PopupState): void {
+		if (prev === current) {
 			return;
 		}
-		this.popupState = 'onHover';
+		const containers = [...getAllLimitingContainers(this.elRef.nativeElement), window];
+		if (current === 'lockedOpen') {
+			containers.forEach(e => {
+				e.addEventListener('scroll', this.setErrorTooltipOffset);
+			});
+		} else {
+			containers.forEach(e => {
+				e.removeEventListener('scroll', this.setErrorTooltipOffset);
+			});
+		}
 	}
 
 	public unregisterControl(formControl: UntypedFormControl): void {
@@ -256,7 +273,9 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 	}
 
 	public closePopup(): void {
+		const prevState = this.popupState;
 		this.popupState = 'onHover';
+		this.setUpErrorTooltipListeners(prevState, this.popupState);
 	}
 
 	public togglePopup(): void {
@@ -266,11 +285,13 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 		if (this.errorFullyVisible) {
 			return;
 		}
+		const prevState = this.popupState;
 		if (this.popupState === 'lockedOpen') {
 			this.popupState = 'onHover';
 		} else {
 			this.popupState = 'lockedOpen';
 		}
+		this.setUpErrorTooltipListeners(prevState, this.popupState);
 	}
 
 	public setErrorTooltipOffset = (): void => {
