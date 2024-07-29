@@ -5,7 +5,7 @@ import {
 	ElementRef,
 	Inject,
 	InjectionToken,
-	Input,
+	Input, OnDestroy,
 	Optional,
 	TemplateRef,
 	ViewChild
@@ -17,6 +17,7 @@ import {isValueSet, stringIsSetAndFilled} from '../../util/values';
 import {FormComponent} from '../form.component';
 import {awaitableForNextCycle} from '../../util/angular';
 import {getAllLimitingContainers} from '../../util/dom';
+import {Subscription} from "rxjs";
 
 
 export const FORM_ERROR_MESSAGES = new InjectionToken<CustomErrorMessages>('form.error.messages');
@@ -38,7 +39,7 @@ export const DEFAULT_ERROR_MESSAGES: FormErrorMessages = {
 	templateUrl: './form-element.component.html',
 	styleUrls: ['./form-element.component.scss'],
 })
-export class FormElementComponent implements AfterViewInit {
+export class FormElementComponent implements AfterViewInit, OnDestroy {
 	public attachedControl: AbstractControl;
 	@Input() public caption: string;
 	@Input() public direction: 'horizontal' | 'vertical' = 'horizontal';
@@ -61,6 +62,7 @@ export class FormElementComponent implements AfterViewInit {
 	private input: ValueAccessorBase<any>;
 	public errorFullyVisible: boolean;
 	private popupState: 'lockedOpen' | 'lockedClosed' | 'onHover' = 'onHover';
+	private subscriptions: Array<Subscription> = [];
 
 	constructor(
 		@Optional() private parent: FormComponent,
@@ -72,9 +74,12 @@ export class FormElementComponent implements AfterViewInit {
 	async ngAfterViewInit(): Promise<void> {
 		await awaitableForNextCycle();
 		this.fieldInput?.setTailTpl(this.tailTpl);
-		this.fieldInput?.onTouch.asObservable().subscribe((e) => {
+		const subscription = this.fieldInput?.onTouch.asObservable().subscribe(() => {
 			this.determinePopupState();
 		});
+		if (isValueSet(subscription))  {
+			this.subscriptions.push(subscription);
+		}
 
 		[...getAllLimitingContainers(this.elRef.nativeElement), window].forEach(e => e.addEventListener('scroll', this.setErrorTooltipOffset));
 	}
@@ -95,9 +100,10 @@ export class FormElementComponent implements AfterViewInit {
 		this.input = input;
 
 
-		this.attachedControl.statusChanges.subscribe((e) => {
+		const subscription = this.attachedControl.statusChanges.subscribe(() => {
 			this.determinePopupState();
 		});
+		this.subscriptions.push(subscription);
 		this.determinePopupState();
 	}
 
@@ -276,4 +282,8 @@ export class FormElementComponent implements AfterViewInit {
 			this.fixedWrapper.nativeElement.style.transform = `translateY(${popupOffsetY}px)`;
 		}
 	};
+
+	ngOnDestroy(): void {
+		this.subscriptions.forEach(e => e.unsubscribe());
+	}
 }
