@@ -11,6 +11,13 @@
 				<klp-form-error error="async"></klp-form-error>
 			</klp-form-element>
 
+			<klp-form-element caption="Password" spaceDistribution="34-66" direction="vertical">
+				<klp-form-text-input type="password" formControlName="name" [clearable]="true" [passwordPeekIcon]="peekIcon">
+				</klp-form-text-input>
+				<ng-template #peekIcon>E</ng-template>
+				<klp-form-error error="async"></klp-form-error>
+			</klp-form-element>
+
 			<klp-form-element caption="Name aap noot mies" spaceDistribution="30-70" direction="horizontal">
 				<klp-form-text-input formControlName="name2" [clearable]="true">
 				</klp-form-text-input>
@@ -35,8 +42,8 @@
 				<klp-form-error error="async"></klp-form-error>
 			</klp-form-element>
 
-			<klp-form-element caption="Yes or no?" spaceDistribution="fixedInputWidth">
-				<klp-form-toggle formControlName="yesno"></klp-form-toggle>
+			<klp-form-element caption="Yes or no toggle?" spaceDistribution="fixedInputWidth">
+				<klp-form-toggle formControlName="yesno" [transparentBackground]="false"></klp-form-toggle>
 			</klp-form-element>
 		</div>
 		<div style="flex: 3 1 0px; margin-top: 15rem; margin-bottom: 10rem; max-width: 250px">
@@ -71,6 +78,14 @@
 	<klp-form-button klpWithTooltip="black" tooltipText="Shalalalalala">
 		I am a small piece of text
 	</klp-form-button>
+
+	<klp-form-button klpWithTooltip="black" [tooltipTemplate]="tooltipTpl" position="bottom" style="margin-left: 300px">
+		Tooltip with template
+		<ng-template #tooltipTpl>
+			<app-simple></app-simple>
+		</ng-template>
+	</klp-form-button>
+
 
 	<div>
 		<klp-form-element caption="radioButtons classic" spaceDistribution="34-66" verticalAlignment="top">
@@ -208,3 +223,4 @@ simple form with form level errors
 
 	<klp-form-submit-button [submitCallback]="saveSimple">Save</klp-form-submit-button>
 </klp-form>
+

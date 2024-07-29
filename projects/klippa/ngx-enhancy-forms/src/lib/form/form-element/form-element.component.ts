@@ -5,7 +5,7 @@ import {
 	ElementRef,
 	Inject,
 	InjectionToken,
-	Input,
+	Input, OnDestroy,
 	Optional,
 	TemplateRef,
 	ViewChild
@@ -17,6 +17,7 @@ import {isValueSet, stringIsSetAndFilled} from '../../util/values';
 import {FormComponent} from '../form.component';
 import {awaitableForNextCycle} from '../../util/angular';
 import {getAllLimitingContainers} from '../../util/dom';
+import {Subscription} from "rxjs";
 
 
 export const FORM_ERROR_MESSAGES = new InjectionToken<CustomErrorMessages>('form.error.messages');
@@ -33,12 +34,14 @@ export const DEFAULT_ERROR_MESSAGES: FormErrorMessages = {
 	date: 'Enter a valid date',
 };
 
+type PopupState = 'onHover' | 'lockedOpen';
+
 @Component({
 	selector: 'klp-form-element',
 	templateUrl: './form-element.component.html',
 	styleUrls: ['./form-element.component.scss'],
 })
-export class FormElementComponent implements AfterViewInit {
+export class FormElementComponent implements AfterViewInit, OnDestroy {
 	public attachedControl: AbstractControl;
 	@Input() public caption: string;
 	@Input() public direction: 'horizontal' | 'vertical' = 'horizontal';
@@ -60,7 +63,8 @@ export class FormElementComponent implements AfterViewInit {
 	public customErrorHandlers: Array<{ error: string; templateRef: TemplateRef<any> }> = [];
 	private input: ValueAccessorBase<any>;
 	public errorFullyVisible: boolean;
-	private popupState: 'lockedOpen' | 'lockedClosed' | 'onHover' = 'onHover';
+	private popupState: PopupState = 'onHover';
+	private subscriptions: Array<Subscription> = [];
 
 	constructor(
 		@Optional() private parent: FormComponent,
@@ -72,11 +76,12 @@ export class FormElementComponent implements AfterViewInit {
 	async ngAfterViewInit(): Promise<void> {
 		await awaitableForNextCycle();
 		this.fieldInput?.setTailTpl(this.tailTpl);
-		this.fieldInput?.onTouch.asObservable().subscribe((e) => {
+		const subscription = this.fieldInput?.onTouch.asObservable().subscribe(() => {
 			this.determinePopupState();
 		});
-
-		[...getAllLimitingContainers(this.elRef.nativeElement), window].forEach(e => e.addEventListener('scroll', this.setErrorTooltipOffset));
+		if (isValueSet(subscription))  {
+			this.subscriptions.push(subscription);
+		}
 	}
 
 	public shouldShowErrorMessages(): boolean {
@@ -95,22 +100,40 @@ export class FormElementComponent implements AfterViewInit {
 		this.input = input;
 
 
-		this.attachedControl.statusChanges.subscribe((e) => {
+		const subscription = this.attachedControl.statusChanges.subscribe(() => {
 			this.determinePopupState();
 		});
+		this.subscriptions.push(subscription);
 		this.determinePopupState();
 	}
 
 	public determinePopupState(): void {
+		const prevState = this.popupState;
 		if (stringIsSetAndFilled(this.getErrorToShow())) {
 			this.popupState = 'onHover';
-			return;
-		}
-		if (isValueSet(this.getWarningToShow())) {
+		} else if (isValueSet(this.getWarningToShow())) {
 			this.popupState = 'lockedOpen';
+		} else {
+			this.popupState = 'onHover';
+		}
+
+		this.setUpErrorTooltipListeners(prevState, this.popupState);
+	}
+
+	private setUpErrorTooltipListeners(prev: PopupState, current: PopupState): void {
+		if (prev === current) {
 			return;
 		}
-		this.popupState = 'onHover';
+		const containers = [...getAllLimitingContainers(this.elRef.nativeElement), window];
+		if (current === 'lockedOpen') {
+			containers.forEach(e => {
+				e.addEventListener('scroll', this.setErrorTooltipOffset);
+			});
+		} else {
+			containers.forEach(e => {
+				e.removeEventListener('scroll', this.setErrorTooltipOffset);
+			});
+		}
 	}
 
 	public unregisterControl(formControl: UntypedFormControl): void {
@@ -169,10 +192,11 @@ export class FormElementComponent implements AfterViewInit {
 	}
 
 	getScrollableParent(node): any {
-		if (node == null) {
-			return null;
+		if (node === window.document.documentElement) {
+			return window.document.documentElement;
 		}
-		if (node.scrollHeight > node.clientHeight) {
+		const overflowY = getComputedStyle(node).overflowY;
+		if (node.clientHeight < node.scrollHeight && (overflowY === 'auto' || overflowY === 'scroll')) {
 			return node;
 		} else {
 			return this.getScrollableParent(node.parentNode);
@@ -180,9 +204,16 @@ export class FormElementComponent implements AfterViewInit {
 	}
 
 	scrollTo(): void {
-		this.internalComponentRef.nativeElement.scrollIntoView(true);
-		// to give some breathing room, we scroll 100px more to the top
-		this.getScrollableParent(this.internalComponentRef.nativeElement)?.scrollBy(0, -100);
+		const parent = this.getScrollableParent(this.internalComponentRef.nativeElement);
+		const parentTop = parent === window.document.documentElement ? 0 : parent.getBoundingClientRect().top;
+		const elementTop = this.internalComponentRef.nativeElement.getBoundingClientRect().top;
+		const parentScrollTop = parent.scrollTop;
+		const answer = elementTop - parentTop + parentScrollTop;
+
+		parent.scrollTo({
+			top: answer - 30,
+			behavior: 'smooth'
+		});
 	}
 
 	isRequired(): boolean {
@@ -242,7 +273,9 @@ export class FormElementComponent implements AfterViewInit {
 	}
 
 	public closePopup(): void {
+		const prevState = this.popupState;
 		this.popupState = 'onHover';
+		this.setUpErrorTooltipListeners(prevState, this.popupState);
 	}
 
 	public togglePopup(): void {
@@ -252,11 +285,13 @@ export class FormElementComponent implements AfterViewInit {
 		if (this.errorFullyVisible) {
 			return;
 		}
+		const prevState = this.popupState;
 		if (this.popupState === 'lockedOpen') {
 			this.popupState = 'onHover';
 		} else {
 			this.popupState = 'lockedOpen';
 		}
+		this.setUpErrorTooltipListeners(prevState, this.popupState);
 	}
 
 	public setErrorTooltipOffset = (): void => {
@@ -268,4 +303,8 @@ export class FormElementComponent implements AfterViewInit {
 			this.fixedWrapper.nativeElement.style.transform = `translateY(${popupOffsetY}px)`;
 		}
 	};
+
+	ngOnDestroy(): void {
+		this.subscriptions.forEach(e => e.unsubscribe());
+	}
 }

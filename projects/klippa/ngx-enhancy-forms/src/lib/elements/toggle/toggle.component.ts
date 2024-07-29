@@ -9,4 +9,5 @@ import {ValueAccessorBase} from '../value-accessor-base/value-accessor-base.comp
 	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: ToggleComponent, multi: true}],
 })
 export class ToggleComponent extends ValueAccessorBase<boolean> {
+	@Input() transparentBackground = true;
 }

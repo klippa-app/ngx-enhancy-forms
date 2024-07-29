@@ -3,7 +3,7 @@
 		<i class="ti-search" *ngIf="icon === 'search'"></i>
 	</ng-container>
 	<input
-		[type]="type"
+		[type]="getType()"
 		[(ngModel)]="innerValue"
 		[ngClass]="{showErrors: isInErrorState(), hasIcon: icon?.length > 0, hasClearButton: clearable, noBorderLeft: !hasBorderLeft, noBorderRight: !hasBorderRight}"
 		(input)="setInnerValueAndNotify($event.target.value)"
@@ -15,5 +15,8 @@
 	<div class="tail">
 		<ng-container [ngTemplateOutlet]="getTailTpl()"></ng-container>
 		<div class="clearIcon" *ngIf="clearable && innerValue?.length > 0" (click)="resetToNull()">×</div>
+		<button class="peakBtn" (click)="togglePeakPassword()" *ngIf="passwordPeekIcon && type === 'password'">
+			<ng-container [ngTemplateOutlet]="passwordPeekIcon"></ng-container>
+		</button>
 	</div>
 </div>
