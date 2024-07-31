@@ -1,5 +1,5 @@
 
-<klp-form [formGroup]="myForm" [warnings]="formWarnings" errorMessageLocation="rightOfCaption" [readOnly]="false">
+<klp-form [formGroup]="myForm" [warnings]="formWarnings" errorMessageLocation="rightOfCaption" [readOnly]="false" allowSubmitOn="buttonOnly">
 	<div style="height: 520px; overflow: auto; display: flex; gap: 30px">
 		<app-deep-input  *ngIf="false" >
 		</app-deep-input>
@@ -211,7 +211,7 @@ some cool stuff here <br />
 
 simple form with form level errors
 
-<klp-form [formGroup]="simpleFormWithFormLevelErrors" [errors]="formErrors" errorMessageLocation="rightOfCaption">
+<klp-form [formGroup]="simpleFormWithFormLevelErrors" [errors]="formErrors" errorMessageLocation="rightOfCaption" allowSubmitOn="buttonOnly">
 	<klp-form-element caption="First name" spaceDistribution="34-66" direction="vertical">
 		<klp-form-text-input formControlName="firstName" [clearable]="true">
 		</klp-form-text-input>
