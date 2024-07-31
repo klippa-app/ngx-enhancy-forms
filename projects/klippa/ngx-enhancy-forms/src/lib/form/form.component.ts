@@ -39,6 +39,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 	@Input() public warnings: Map<AbstractControl, string | TemplateRef<any>> = new Map<AbstractControl, string | TemplateRef<any>>();
 	@Input() public errors: Map<AbstractControl, string> = new Map<AbstractControl, string>();
 	@Input() public patchValueInterceptor: (values: any) => Promise<any>;
+	@Input() public allowSubmitOn: 'buttonAndEnter' | 'buttonOnly' = 'buttonAndEnter';
 	@Output() public onInjected = new EventEmitter<Record<string, any>>();
 
 	// we keep track of what form controls are actually rendered. Only those count when looking at form validation
