@@ -18,7 +18,7 @@ import {FormElementComponent} from './form/form-element/form-element.component';
 import {FormErrorComponent} from './form/form-error/form-error.component';
 import {FormSubmitButtonComponent} from './form/form-submit-button/form-submit-button.component';
 import {FormComponent, SubFormDirective} from './form/form.component';
-import {SortablejsModule} from 'ngx-sortablejs';
+import { SortablejsModule } from '@dustfoundation/ngx-sortablejs';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {DatePickerComponent} from './elements/date-picker/date-picker.component';
 import {DateTimePickerComponent} from './elements/date-time-picker/date-time-picker.component';
@@ -32,7 +32,6 @@ import {WithTooltipDirective} from "./withTooltip.component";
 import {WarningIconComponent} from "./warning-icon/warning-icon.component";
 import {ElementIsTruncatedCbComponent} from "./elementIsTruncatedCb.component";
 import {OnRenderDirective} from "./onRender.component";
-
 
 @NgModule({
 	imports: [
@@ -106,5 +105,4 @@ import {OnRenderDirective} from "./onRender.component";
 		ElementIsTruncatedCbComponent,
 	]
 })
-export class NgxEnhancyFormsModule {
-}
+export class NgxEnhancyFormsModule {}
