@@ -69,7 +69,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 				if (isValueSet(valueBeforeInject)) {
 					this.formGroup.patchValue(valueBeforeInject, { emitEvent: false });
 				}
-				injectInto.setControl(injectAt, this.formGroup);
+				injectInto.setControl(injectAt, this.formGroup, {emitEvent: false});
 				this.onInjected.emit(valueBeforeInject);
 			} else if (injectInto instanceof UntypedFormGroup) {
 				if (typeof injectAt !== 'string') {
@@ -82,7 +82,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 				if (isValueSet(valueBeforeInject)) {
 					this.formGroup.patchValue(valueBeforeInject, {emitEvent: false});
 				}
-				injectInto.setControl(injectAt, this.formGroup);
+				injectInto.setControl(injectAt, this.formGroup, {emitEvent: false});
 				this.onInjected.emit(valueBeforeInject);
 			}
 		}
