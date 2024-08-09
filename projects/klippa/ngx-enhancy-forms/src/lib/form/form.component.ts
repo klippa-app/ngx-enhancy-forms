@@ -67,7 +67,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 				}
 				const valueBeforeInject = injectInto.at(injectAt)?.value;
 				if (isValueSet(valueBeforeInject)) {
-					this.formGroup.patchValue(valueBeforeInject);
+					this.formGroup.patchValue(valueBeforeInject, { emitEvent: false });
 				}
 				injectInto.setControl(injectAt, this.formGroup);
 				this.onInjected.emit(valueBeforeInject);
@@ -80,7 +80,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 				}
 				const valueBeforeInject = injectInto.get(injectAt)?.value;
 				if (isValueSet(valueBeforeInject)) {
-					this.formGroup.patchValue(valueBeforeInject);
+					this.formGroup.patchValue(valueBeforeInject, {emitEvent: false});
 				}
 				injectInto.setControl(injectAt, this.formGroup);
 				this.onInjected.emit(valueBeforeInject);
