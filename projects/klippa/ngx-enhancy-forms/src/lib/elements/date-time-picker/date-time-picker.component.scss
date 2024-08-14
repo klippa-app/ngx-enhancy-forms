@@ -8,9 +8,11 @@
 		mat-form-field {
 			display: block;
 			height: 100%;
+			/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
 			.mat-form-field-label {
 				color: $default-gray-faded-dark;
 			}
+			/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
 			&.mat-focused .mat-form-field-label {
 				color: $default-gray-faded-dark;
 			}
@@ -18,24 +20,31 @@
 		.mat-datepicker-toggle-active {
 			color: $default-gray-dark;
 		}
+		/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
 		.mat-form-field-wrapper {
 			padding-bottom: 0;
 		}
+		/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
 		.mat-form-field-flex {
 			flex-direction: row-reverse;
 		}
+		/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
 		.mat-form-field-infix {
 			border-top: none;
 			width: auto;
 		}
+		/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
+		/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
 		.mat-form-field-suffix {
 			margin-right: $spacing-small;
 			&:hover {
+				/* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
 				.mat-button-focus-overlay {
 					opacity: 0.1;
 				}
 			}
 		}
+		/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
 		.mat-form-field-underline {
 			display: none;
 		}
