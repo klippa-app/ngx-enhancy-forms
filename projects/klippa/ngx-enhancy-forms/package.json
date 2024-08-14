@@ -1,13 +1,13 @@
 {
   "name": "@klippa/ngx-enhancy-forms",
-  "version": "17.22.1",
+  "version": "18.22.1",
   "publishConfig": {
     "access": "public"
   },
   "peerDependencies": {
-    "@angular/common": ">=17",
-    "@angular/core": ">=17",
-    "@ng-select/ng-select": ">=12",
+    "@angular/common": ">=18",
+    "@angular/core": ">=18",
+    "@ng-select/ng-select": ">=13",
     "ngx-mat-datefns-date-adapter": ">=10",
     "date-fns": ">=2.29",
     "lodash-es": ">=4.17",
