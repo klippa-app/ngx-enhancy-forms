@@ -1826,10 +1826,10 @@
   resolved "https://registry.yarnpkg.com/@msgpackr-extract/msgpackr-extract-win32-x64/-/msgpackr-extract-win32-x64-3.0.3.tgz#0aa5502d547b57abfc4ac492de68e2006e417242"
   integrity sha512-x0fWaQtYp4E6sktbsdAqnehxDgEc/VwM7uLsRCYWaiGu0ykYdZPiS8zCWdnjHwyiumousxfBm4SO31eXqwEZhQ==
 
-"@ng-select/ng-select@^12.0.7":
-  version "12.0.7"
-  resolved "https://registry.yarnpkg.com/@ng-select/ng-select/-/ng-select-12.0.7.tgz#c3cb0b2a701c405a3b2e3ed40b1d081e0795b763"
-  integrity sha512-Eht1zlLP0DJxiXcKnq3aY/EJ8odomgU0hM0BJoPY6oX3XFHndtFtdPxlZfhVtQn+FwyDEh7306rRx6digxVssA==
+"@ng-select/ng-select@^13.7.0":
+  version "13.7.0"
+  resolved "https://registry.yarnpkg.com/@ng-select/ng-select/-/ng-select-13.7.0.tgz#f8cef490af1e6ee4ef601c7e15f6441e7fa4fdeb"
+  integrity sha512-GMNu3bLYxWAbgy9pXZ4RgnWp/cxRcrWRQdxLLyg8p9gMCLpim1p4TXR8laXJKK25MKG/LEaWgs+90yCVOoWgZA==
   dependencies:
     tslib "^2.3.1"
 
