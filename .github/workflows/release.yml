@@ -17,7 +17,7 @@ jobs:
           registry-url: https://registry.npmjs.org
           always-auth: true
       - run: yarn install
-      - run: yarn build:prod
+      - run: ng build @klippa/ngx-enhancy-forms --configuration=production
       - run: yarn publish ./dist/klippa/ngx-enhancy-forms
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
