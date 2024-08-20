@@ -5,49 +5,76 @@
 	display: block;
 	// patching some styling in the native material date picker so it is inline with our own styling
 	::ng-deep {
-		mat-form-field {
+		.mat-mdc-form-field {
 			display: block;
 			height: 100%;
-			/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
-			.mat-form-field-label {
-				color: $default-gray-faded-dark;
-			}
-			/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
-			&.mat-focused .mat-form-field-label {
-				color: $default-gray-faded-dark;
-			}
-		}
-		.mat-datepicker-toggle-active {
-			color: $default-gray-dark;
-		}
-		/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
-		.mat-form-field-wrapper {
-			padding-bottom: 0;
-		}
-		/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
-		.mat-form-field-flex {
-			flex-direction: row-reverse;
-		}
-		/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
-		.mat-form-field-infix {
-			border-top: none;
-			width: auto;
-		}
-		/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
-		/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
-		.mat-form-field-suffix {
-			margin-right: $spacing-small;
-			&:hover {
-				/* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
-				.mat-button-focus-overlay {
-					opacity: 0.1;
+			.mat-mdc-text-field-wrapper, .mat-mdc-text-field-wrapper:hover .mat-mdc-form-field-focus-overlay {
+				background-color: unset;
+
+				&:hover {
+					background-color: unset;
 				}
 			}
+
+			.mat-mdc-form-field-infix, .mat-mdc-form-field-infix {
+				padding-top: 8px;
+				padding-bottom: 8px;
+				min-height: 40px;
+				font-size: 14px;
+				color: #888da8;
+			}
+
+			.mat-mdc-form-field-icon-suffix {
+				height: 100%;
+			}
+
+
+			.mat-mdc-icon-button {
+				padding: 5px 0 0 0;
+				height: 36px;
+				margin-right: 6px;
+				width: 36px;
+				color: $default-gray-faded-dark;
+					span {
+						height: 42px;
+						width: 42px;
+						top: 50%;
+						left: 50%;
+						transform: translate(-50%, -50%);
+					}
+			}
+
+			.mat-mdc-form-field-subscript-wrapper {
+				display: none
+			}
+
+			.mdc-line-ripple::before, .mdc-line-ripple::after {
+				display: none;
+			}
+
+			.mat-mdc-form-field-label {
+				color: $default-gray-faded-dark;
+			}
+			&.mat-mdc-focused, .mat-mdc-form-field-label {
+				color: $default-gray-faded-dark;
+			}
 		}
-		/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
-		.mat-form-field-underline {
-			display: none;
+
+		.mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-text-field__input,
+		.mat-mdc-form-field-input-control, .mdc-text-field__input {
+			color: #888da8;
 		}
+		.mat-mdc-form-field-has-icon-suffix .mat-mdc-text-field-wrapper {
+			padding: 0;
+		}
+		.mat-mdc-datepicker-toggle-active {
+			color: $default-gray-dark;
+		}
+
+		.mat-mdc-form-field-flex {
+			flex-direction: row-reverse;
+		}
+
 		.daysSelectedCaption {
 			cursor: pointer;
 			&.disabled {
@@ -56,6 +83,11 @@
 		}
 		.inputForMultipleDays {
 			display: none;
+		}
+
+		.mat-mdc-form-field.mat-focused, .mat-mdc-form-field-focus-overlay {
+			opacity: unset;
+			background-color: unset;
 		}
 	}
 }
@@ -96,7 +128,6 @@
 	}
 	.dateContainer {
 		flex: 1 1 auto;
-		padding: 6px;
 		background: $default-white;
 		border: $border-default;
 		display: flex;
