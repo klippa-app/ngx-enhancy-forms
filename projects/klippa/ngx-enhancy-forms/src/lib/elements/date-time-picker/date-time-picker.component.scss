@@ -22,6 +22,7 @@
 				min-height: 40px;
 				font-size: 14px;
 				color: #888da8;
+				width: 100%;
 			}
 
 			.mat-mdc-form-field-icon-suffix {
@@ -97,7 +98,8 @@
 	position: relative;
 	border-radius: 2px;
 	color: #888da8;
-	.placeholderForMultipleSelection {
+	.placeholderForMultipleSelection,
+	.placeholderForSelection {
 		color: $default-gray-faded-dark;
 	}
 	&.showErrors {
