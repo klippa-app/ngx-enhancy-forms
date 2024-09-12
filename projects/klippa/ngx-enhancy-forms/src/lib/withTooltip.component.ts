@@ -1,4 +1,11 @@
-import {ApplicationRef, Directive, ElementRef, Input, OnChanges, SimpleChanges, TemplateRef} from "@angular/core";
+import {
+	ApplicationRef,
+	Directive,
+	ElementRef,
+	EmbeddedViewRef,
+	Input,
+	TemplateRef
+} from "@angular/core";
 import {stringIsSetAndFilled} from "./util/values";
 
 const triangleSize = '12px';
@@ -12,7 +19,7 @@ const colors = {
 @Directive({
 	selector: '[klpWithTooltip]'
 })
-export class WithTooltipDirective implements OnChanges{
+export class WithTooltipDirective {
 	private div: HTMLElement;
 	private triangle: HTMLElement;
 	private triangleWhite: HTMLElement;
@@ -21,8 +28,12 @@ export class WithTooltipDirective implements OnChanges{
 	@Input() tooltipTemplate: TemplateRef<any>;
 	@Input() position: 'top' | 'bottom' = 'top';
 	private templateInstance: HTMLElement;
+	private viewRefForTemplate: EmbeddedViewRef<any>;
 	constructor(private el: ElementRef, private appRef: ApplicationRef) {
 		el.nativeElement.addEventListener('mouseenter', () => {
+			if (this.tooltipTemplate) {
+				this.hookUpTemplate();
+			}
 			let textToDisplay: string;
 			if (!this.templateInstance) {
 				textToDisplay = this.tooltipText || el.nativeElement.innerText.trim();
@@ -131,6 +142,9 @@ export class WithTooltipDirective implements OnChanges{
 		});
 
 		el.nativeElement.addEventListener('mouseleave', () => {
+			if (this.tooltipTemplate) {
+				this.cleanUpTemplate();
+			}
 			try {
 				el.nativeElement.removeChild(this.div);
 			} catch (ex) {}
@@ -143,11 +157,14 @@ export class WithTooltipDirective implements OnChanges{
 		});
 	}
 
-	public ngOnChanges(simpleChanges: SimpleChanges): void {
-		if (simpleChanges.tooltipTemplate?.currentValue) {
-			const viewRef = this.tooltipTemplate.createEmbeddedView(null);
-			this.appRef.attachView(viewRef);
-			this.templateInstance = viewRef.rootNodes[0];
-		}
+	public hookUpTemplate(): void {
+		this.viewRefForTemplate = this.tooltipTemplate.createEmbeddedView(null);
+		this.appRef.attachView(this.viewRefForTemplate);
+		this.templateInstance = this.viewRefForTemplate.rootNodes[0];
+	}
+
+	public cleanUpTemplate(): void {
+		this.appRef.detachView(this.viewRefForTemplate);
+		this.viewRefForTemplate.destroy();
 	}
 }
