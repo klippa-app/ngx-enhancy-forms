@@ -18,6 +18,7 @@ export class TextInputComponent extends ValueAccessorBase<string> {
 	@Input() hasBorderLeft = true;
 	@Input() hasBorderRight = true;
 	@Input() passwordPeekIcon: TemplateRef<any>;
+	@Input() size: 'small' | 'medium' = 'medium';
 	@Output() onBlur = new EventEmitter<void>();
 
 	public togglePeakPassword(): void {

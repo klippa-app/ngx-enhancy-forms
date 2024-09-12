@@ -1,4 +1,4 @@
-<div class="componentContainer">
+<div class="componentContainer" [ngClass]="{smallSized: size === 'small'}">
 	<ng-container *ngIf="icon?.length > 0">
 		<i class="ti-search" *ngIf="icon === 'search'"></i>
 	</ng-container>

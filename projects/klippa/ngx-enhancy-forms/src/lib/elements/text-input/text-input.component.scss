@@ -11,6 +11,9 @@
 
 .componentContainer {
 	position: relative;
+	&.smallSized input {
+		height: 32px;
+	}
 }
 
 i {
