@@ -5,6 +5,10 @@
 	display: block;
 	// patching some styling in the native material date picker so it is inline with our own styling
 	::ng-deep {
+
+		.mat-mdc-icon-button .mat-mdc-button-persistent-ripple {
+			border-radius: unset
+		}
 		.mat-mdc-form-field {
 			display: block;
 			height: 100%;
@@ -27,6 +31,7 @@
 
 			.mat-mdc-form-field-icon-suffix {
 				height: 100%;
+				padding:0;
 			}
 
 
