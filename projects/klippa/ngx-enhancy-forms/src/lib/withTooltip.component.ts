@@ -12,8 +12,9 @@ const triangleSize = '12px';
 const zIndexStart = 99999999;
 
 const colors = {
-	orange: { noAlpha: 'rgb(255, 128, 0)', withAlpha: 'rgba(255, 128, 0, 0.1254901961)'},
-	black: { noAlpha: 'rgb(40, 40, 40)', withAlpha: 'rgba(40, 40, 40, 0.1254901961)'},
+	orange: { noAlpha: 'rgb(255, 128, 0)', withAlpha: 'rgba(255, 128, 0, 0.1254901961)', background: 'rgb(255, 255, 255)'},
+	black: { noAlpha: 'rgb(40, 40, 40)', withAlpha: 'rgba(40, 40, 40, 0.1254901961)', background: 'rgb(255, 255, 255)'},
+	whiteOnBlack: { noAlpha: 'rgb(255, 255, 255)', withAlpha: 'rgba(255, 255, 255, 0.1254901961)', background: 'rgba(12, 17, 29)'},
 };
 
 @Directive({
@@ -23,7 +24,7 @@ export class WithTooltipDirective {
 	private div: HTMLElement;
 	private triangle: HTMLElement;
 	private triangleWhite: HTMLElement;
-	@Input() klpWithTooltip: 'orange'| 'black' = 'orange';
+	@Input() klpWithTooltip: 'orange'| 'black' | 'whiteOnBlack' = 'orange';
 	@Input() tooltipText: string;
 	@Input() tooltipTemplate: TemplateRef<any>;
 	@Input() position: 'top' | 'bottom' = 'top';
@@ -63,6 +64,7 @@ export class WithTooltipDirective {
 				this.div = document.createElement('div');
 				this.div.style.zIndex = `${zIndexStart + 2}`;
 				this.div.style.color = `${colors[this.klpWithTooltip].noAlpha}`;
+				this.div.style.backgroundColor = `${colors[this.klpWithTooltip].background}`;
 				this.div.style.position = 'fixed';
 				this.div.style.left = `${el.nativeElement.getBoundingClientRect().x}px`;
 				if (this.position === 'top') {
@@ -74,7 +76,6 @@ export class WithTooltipDirective {
 				}
 				this.div.style.maxWidth = '200px';
 				this.div.style.whiteSpace = 'break-spaces';
-				this.div.style.backgroundColor = 'white';
 				this.div.style.border = `1px solid ${colors[this.klpWithTooltip].withAlpha}`;
 				this.div.style.boxShadow = `2px 3px 10px 0px ${colors[this.klpWithTooltip].withAlpha}`;
 				this.div.style.padding = '0.3rem 0.5rem';
@@ -97,7 +98,7 @@ export class WithTooltipDirective {
 				this.triangle = document.createElement('div');
 				this.triangle.style.zIndex = `${zIndexStart + 1}`;
 				this.triangle.style.position = 'fixed';
-				this.triangle.style.left = `calc(${el.nativeElement.getBoundingClientRect().x + el.nativeElement.getBoundingClientRect().width}px - 2rem)`;
+				this.triangle.style.left = `calc(${el.nativeElement.getBoundingClientRect().x + el.nativeElement.getBoundingClientRect().width}px - 0.8rem)`;
 				if (this.position === 'top') {
 					this.triangle.style.top = `${el.nativeElement.getBoundingClientRect().y}px`;
 					this.triangle.style.transform = `translate(-50%, calc(-100% + 0.1rem))`;
@@ -115,7 +116,7 @@ export class WithTooltipDirective {
 				this.triangleWhite = document.createElement('div');
 				this.triangleWhite.style.zIndex = `${zIndexStart + 3}`;
 				this.triangleWhite.style.position = 'fixed';
-				this.triangleWhite.style.left = `calc(${el.nativeElement.getBoundingClientRect().x + el.nativeElement.getBoundingClientRect().width}px - 2rem)`;
+				this.triangleWhite.style.left = `calc(${el.nativeElement.getBoundingClientRect().x + el.nativeElement.getBoundingClientRect().width}px - 0.8rem)`;
 				if (this.position === 'top') {
 					this.triangleWhite.style.top = `${el.nativeElement.getBoundingClientRect().y}px`;
 					this.triangleWhite.style.transform = `translate(-50%, calc(-100% + 0.1rem - 2px))`;
@@ -129,7 +130,7 @@ export class WithTooltipDirective {
 				this.triangleWhite.style.borderRight = `${triangleSize} solid transparent`;
 
 				if (stringIsSetAndFilled(textToDisplay)) {
-					this.triangleWhite.style.borderTop = `${triangleSize} solid white`;
+					this.triangleWhite.style.borderTop = `${triangleSize} solid ${colors[this.klpWithTooltip].background}`;
 				} else if (this.templateInstance) {
 					this.div.style.visibility = 'hidden';
 					setTimeout(() => {
