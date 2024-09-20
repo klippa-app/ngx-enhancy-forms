@@ -27,6 +27,7 @@ export class WithTooltipDirective {
 	@Input() klpWithTooltip: 'orange'| 'black' | 'whiteOnBlack' = 'orange';
 	@Input() tooltipText: string;
 	@Input() tooltipTemplate: TemplateRef<any>;
+	@Input() tooltipMaxWidth = 200;
 	@Input() position: 'top' | 'bottom' = 'top';
 	private templateInstance: HTMLElement;
 	private viewRefForTemplate: EmbeddedViewRef<any>;
@@ -74,7 +75,7 @@ export class WithTooltipDirective {
 					this.div.style.top = `${el.nativeElement.getBoundingClientRect().y + el.nativeElement.getBoundingClientRect().height}px`;
 					this.div.style.transform = `translate(calc(-100% + ${el.nativeElement.getBoundingClientRect().width}px), calc(0% + 0.3rem))`;
 				}
-				this.div.style.maxWidth = '200px';
+				this.div.style.maxWidth = `${this.tooltipMaxWidth}px`;
 				this.div.style.whiteSpace = 'break-spaces';
 				this.div.style.border = `1px solid ${colors[this.klpWithTooltip].withAlpha}`;
 				this.div.style.boxShadow = `2px 3px 10px 0px ${colors[this.klpWithTooltip].withAlpha}`;
