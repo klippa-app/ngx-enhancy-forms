@@ -16,5 +16,9 @@
   },
   "dependencies": {
     "tslib": "^2.0.0"
-  }
+  },
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/klippa-app/ngx-enhancy-forms.git"
+	}
 }
