@@ -2,10 +2,16 @@
 
 :host {
 	display: block;
+	--mdc-icon-button-icon-size: 18px;
 }
 
 .componentContainer {
 	position: relative;
+	::ng-deep {
+		.mdc-text-field__input::placeholder {
+			color: #aaa !important;
+		}
+	}
 	&.showErrors {
 		::ng-deep {
 			klp-form-date-time-picker {

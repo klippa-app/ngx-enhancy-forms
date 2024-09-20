@@ -41,6 +41,11 @@
 				margin-right: 6px;
 				width: 36px;
 				color: $default-gray-faded-dark;
+				&.cdk-focused {
+					.mat-mdc-button-persistent-ripple.mdc-icon-button__ripple {
+						display: none;
+					}
+				}
 					span {
 						height: 42px;
 						width: 42px;
