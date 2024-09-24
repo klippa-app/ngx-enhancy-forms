@@ -82,6 +82,7 @@ export class WithTooltipDirective {
 				this.div.style.padding = '0.3rem 0.5rem';
 				this.div.style.boxSizing = 'border-box';
 				this.div.style.borderRadius = '3px';
+				this.div.style.wordBreak = 'break-all';
 				if (stringIsSetAndFilled(textToDisplay)) {
 					this.div.textContent = textToDisplay;
 				} else if (this.templateInstance) {
