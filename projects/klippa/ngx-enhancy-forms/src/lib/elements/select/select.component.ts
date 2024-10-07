@@ -8,8 +8,9 @@ import {
 	Host,
 	Inject,
 	InjectionToken,
-	Input,
-	OnChanges, OnDestroy,
+	Input, NgZone,
+	OnChanges,
+	OnDestroy,
 	Optional,
 	Output,
 	SimpleChanges,
@@ -33,8 +34,9 @@ export type AppSelectOption = {
 
 export const SELECT_TRANSLATIONS = new InjectionToken<any>('klp.form.select.translations');
 
-@Directive({ selector: '[klpSelectOptionTpl]' })
-export class KlpSelectOptionTemplateDirective {}
+@Directive({selector: '[klpSelectOptionTpl]'})
+export class KlpSelectOptionTemplateDirective {
+}
 
 @Component({
 	selector: 'klp-form-select',
@@ -42,7 +44,7 @@ export class KlpSelectOptionTemplateDirective {}
 	styleUrls: ['./select.component.scss'],
 	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: SelectComponent, multi: true}],
 })
-export class SelectComponent extends ValueAccessorBase<string | string[]> implements OnChanges, AfterViewInit, OnDestroy{
+export class SelectComponent extends ValueAccessorBase<string | string[]> implements OnChanges, AfterViewInit, OnDestroy {
 	@Input() placeholder: string;
 	@Input() prefix: string;
 	@Input() orientation: 'vertical' | 'horizontal' = 'horizontal';
@@ -67,7 +69,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	@ViewChild('ngSelect') ngSelect;
 	@ViewChild('tailRef') tailRef: ElementRef;
 	@ViewChild('tailMockRef') tailMockRef: ElementRef;
-	@ContentChild(KlpSelectOptionTemplateDirective, { read: TemplateRef }) customOptionTpl: TemplateRef<any>;
+	@ContentChild(KlpSelectOptionTemplateDirective, {read: TemplateRef}) customOptionTpl: TemplateRef<any>;
 
 	private lastItemIndexReached = -1;
 	public dropdownPositionToUse: 'auto' | 'bottom' | 'top' | 'left' | 'right' = 'bottom';
@@ -82,6 +84,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 		@Optional() @Host() protected controlContainer: ControlContainer,
 		@Inject(SELECT_TRANSLATIONS) @Optional() private translations: any,
 		private elRef: ElementRef,
+		private ngZone: NgZone,
 	) {
 		super(parent, controlContainer);
 	}
@@ -118,7 +121,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	}
 
 	async ngOnChanges(changes: SimpleChanges): Promise<void> {
-		if (isValueSet(changes.options)) {
+		if (this.isOpen && isValueSet(changes.options)) {
 			this.lastItemIndexReached = -1;
 			// waiting for the thing to render until we fire the event
 			await awaitableForNextCycle();
@@ -175,7 +178,9 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 		await this.setWidthBasedOnOptionsWidths();
 		if (!this.truncateOptions) {
 			this.setFixedDropdownPanelPosition();
-			[...this.getAllLimitingContainers(), window].forEach(e => e.addEventListener('scroll', this.setFixedDropdownPanelPosition));
+			this.ngZone.runOutsideAngular(() => {
+				[...this.getAllLimitingContainers(), window].forEach(e => e.addEventListener('scroll', this.setFixedDropdownPanelPosition));
+			});
 		}
 	}
 
@@ -191,6 +196,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 		this.anchorFixed.style.position = 'fixed';
 		this.elRef.nativeElement.appendChild(this.anchorFixed);
 	}
+
 	private removeAnchors(): void {
 		this.elRef.nativeElement.removeChild(this.anchorAbsolute);
 		this.elRef.nativeElement.removeChild(this.anchorFixed);
@@ -209,7 +215,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 		this.setPanelOffsets();
 	};
 
-	private async setWidthBasedOnOptionsWidths(): Promise<void> {
+	private setWidthBasedOnOptionsWidths = async (): Promise<void> => {
 		if (this.truncateOptions === false) {
 			await awaitableForNextCycle();
 			const optionRefs: Array<HTMLElement> = Array.from(this.elRef.nativeElement.querySelectorAll('.ng-option > *'));
@@ -245,7 +251,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 				this.setPanelOffsets();
 			}
 		}
-	}
+	};
 
 	private getAllLimitingContainers(): Array<HTMLElement> {
 		const result = [];
@@ -261,6 +267,9 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 
 	private setPanelOffsets(): void {
 		const dropdownPanel = this.elRef.nativeElement.querySelector('ng-dropdown-panel');
+		if (!isValueSet(dropdownPanel)) {
+			return;
+		}
 		const scrollPositionOffset = `translate(${this.dropdownPanelOffsetX}px, ${this.dropdownPanelOffsetY}px)`;
 		const dropdownPositionOffset = this.dropdownPositionToUse === 'top' ? `translateY(-100%) translateY(1px)` : '';
 		if (this.orientation === 'vertical') {
