@@ -5,7 +5,7 @@ import {
 	ElementRef,
 	Inject,
 	InjectionToken,
-	Input, OnDestroy,
+	Input, NgZone, OnDestroy,
 	Optional,
 	TemplateRef,
 	ViewChild
@@ -69,6 +69,7 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 		@Optional() private parent: FormComponent,
 		@Inject(FORM_ERROR_MESSAGES) @Optional() private customMessages: CustomErrorMessages,
 		private elRef: ElementRef,
+		private ngZone: NgZone,
 	) {
 	}
 
@@ -123,15 +124,17 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 			return;
 		}
 		const containers = [...getAllLimitingContainers(this.elRef.nativeElement), window];
-		if (current === 'lockedOpen') {
-			containers.forEach(e => {
-				e.addEventListener('scroll', this.setErrorTooltipOffset);
-			});
-		} else {
-			containers.forEach(e => {
-				e.removeEventListener('scroll', this.setErrorTooltipOffset);
-			});
-		}
+		this.ngZone.runOutsideAngular(() => {
+			if (current === 'lockedOpen') {
+				containers.forEach(e => {
+					e.addEventListener('scroll', this.setErrorTooltipOffset);
+				});
+			} else {
+				containers.forEach(e => {
+					e.removeEventListener('scroll', this.setErrorTooltipOffset);
+				});
+			}
+		});
 	}
 
 	public unregisterControl(formControl: UntypedFormControl): void {
