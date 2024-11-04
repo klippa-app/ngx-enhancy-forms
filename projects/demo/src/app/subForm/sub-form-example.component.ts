@@ -1,22 +1,53 @@
-import {Component, OnInit} from '@angular/core';
-import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
+import {Component} from '@angular/core';
+import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
 	selector: 'app-sub-form-example',
 	templateUrl: './sub-form-example.component.html',
 })
-export class SubFormExampleComponent implements OnInit {
+export class SubFormExampleComponent {
 
-	public myNestedForm = new UntypedFormGroup({
-		name: new UntypedFormControl(null),
+	constructor(private fb: FormBuilder) {
+	}
+
+	public formArray = this.fb.array([
+		this.fb.group({
+			name: ['a name'],
+			age: [12],
+		}),
+	]);
+
+	public myNestedForm = this.fb.group({
+		items: this.formArray
 	});
 	readOnly = false;
 
-	ngOnInit() {
 
+	public getFormItems(): FormArray<FormGroup> {
+		return this.myNestedForm.get('items') as FormArray;
 	}
 
-	onInjected() {
+
+	onInjected(data) {
 		console.log('I AM INJECTED NOW!');
+		console.log(data);
 	}
+
+	public add() {
+		const newThing = this.fb.group({
+			name: ['some name'],
+			age: [22],
+		});
+		this.getFormItems().push(newThing);
+		if (Math.random() > 0.5) {
+			newThing.disable();
+		}
+	}
+
+	gaan = (renderedAndEnabledValues: object, renderedButDisabledValues: object) => {
+		console.log('GAAN');
+		console.log(renderedAndEnabledValues);
+		console.log(renderedButDisabledValues);
+		return Promise.resolve();
+	};
 }

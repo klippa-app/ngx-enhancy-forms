@@ -35,12 +35,15 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 	@Input() public readOnly = false;
 	@Input() public showErrorMessages = true;
 	@Input() public errorMessageLocation: 'belowCaption' | 'rightOfCaption' = 'belowCaption';
-	@Input() public formGroup: UntypedFormGroup;
+	@Input() public formGroup: FormGroup;
+	@Input() public formArray: FormArray;
 	@Input() public warnings: Map<AbstractControl, string | TemplateRef<any>> = new Map<AbstractControl, string | TemplateRef<any>>();
 	@Input() public errors: Map<AbstractControl, string> = new Map<AbstractControl, string>();
 	@Input() public patchValueInterceptor: (values: any) => Promise<any>;
 	@Input() public allowSubmitOn: 'buttonAndEnter' | 'buttonOnly' = 'buttonAndEnter';
 	@Output() public onInjected = new EventEmitter<Record<string, any>>();
+
+	private topLevelFormControl: AbstractControl;
 
 	// we keep track of what form controls are actually rendered. Only those count when looking at form validation
 	private activeControls: Array<{
@@ -52,6 +55,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 	}
 
 	ngOnInit(): void {
+		this.topLevelFormControl = this.formGroup ?? this.formArray;
 		if (isValueSet(this.patchValueInterceptor)) {
 			this.addSupportForPatchValueInterceptor();
 		}
@@ -63,26 +67,26 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 					throw new Error(`cannot index FormArray with ${typeof injectAt}`);
 				}
 				if (injectInto.at(injectAt)?.disabled) {
-					this.formGroup.disable();
+					this.topLevelFormControl.disable();
 				}
 				const valueBeforeInject = injectInto.at(injectAt)?.value;
 				if (isValueSet(valueBeforeInject)) {
-					this.formGroup.patchValue(valueBeforeInject);
+					this.topLevelFormControl.patchValue(valueBeforeInject);
 				}
-				injectInto.setControl(injectAt, this.formGroup);
+				injectInto.setControl(injectAt, this.topLevelFormControl);
 				this.onInjected.emit(valueBeforeInject);
 			} else if (injectInto instanceof UntypedFormGroup) {
 				if (typeof injectAt !== 'string') {
 					throw new Error(`cannot index FormGroup with ${typeof injectAt}`);
 				}
 				if (injectInto.get(injectAt)?.disabled) {
-					this.formGroup.disable();
+					this.topLevelFormControl.disable();
 				}
 				const valueBeforeInject = injectInto.get(injectAt)?.value;
 				if (isValueSet(valueBeforeInject)) {
-					this.formGroup.patchValue(valueBeforeInject);
+					this.topLevelFormControl.patchValue(valueBeforeInject);
 				}
-				injectInto.setControl(injectAt, this.formGroup);
+				injectInto.setControl(injectAt, this.topLevelFormControl);
 				this.onInjected.emit(valueBeforeInject);
 			}
 		}
@@ -105,7 +109,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 			const injectInto = this.subFormPlaceholder.injectInto;
 			const injectAt = this.subFormPlaceholder.at;
 			if (injectInto instanceof UntypedFormArray) {
-				const idx = injectInto.controls.findIndex(e => e === this.formGroup);
+				const idx = injectInto.controls.findIndex(e => e === this.topLevelFormControl);
 				injectInto.setControl(idx, new FormControl());
 			} else if (injectInto instanceof UntypedFormGroup) {
 				if (typeof injectAt !== 'string') {
@@ -159,7 +163,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 	}
 
 	private addSupportForPatchValueInterceptor(): void {
-		const fn = this.formGroup.patchValue;
+		const fn = this.topLevelFormControl.patchValue;
 		const newFn = (
 			value: {
 				[key: string]: any;
@@ -171,11 +175,11 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		): void => {
 			this.patchValueInterceptor(value).then((val) => {
 				setTimeout(() => {
-					fn.call(this.formGroup, val, options);
+					fn.call(this.topLevelFormControl, val, options);
 				});
 			});
 		};
-		this.formGroup.patchValue = newFn;
+		this.topLevelFormControl.patchValue = newFn;
 	}
 
 	public registerControl(formControl: UntypedFormControl, formElement: FormElementComponent): void {
@@ -227,7 +231,11 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 
 	private getAllFormControls(): Array<UntypedFormControl> {
 		const result = [];
-		this.addFormGroupControls(this.formGroup, result);
+		if (this.topLevelFormControl instanceof FormGroup) {
+			this.addFormGroupControls(this.topLevelFormControl, result);
+		} else if (this.topLevelFormControl instanceof FormArray) {
+			this.addFormArrayControls(this.topLevelFormControl, result);
+		}
 		return result;
 	}
 
@@ -250,34 +258,36 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 	}
 
 	trySubmit(): Promise<any> {
-		this.formGroup.markAllAsTouched();
+		this.topLevelFormControl.markAllAsTouched();
 		const allControls: Array<UntypedFormControl> = this.getAllFormControls();
 		const originalDisabledStates = allControls.map(e => {
 			return {control: e, disabled: e.disabled};
 		});
 		allControls.forEach(e => this.disableInactiveFormControl(e));
 		allControls.forEach(e => e.updateValueAndValidity());
-		const formGroupValue = this.formGroup.value;
-		const renderedAndEnabledValues = this.getRenderedFieldValuesFormGroup(this.formGroup, true);
-		const renderedButDisabledValues = this.getRenderedFieldValuesFormGroup(this.formGroup, false);
+		const formGroupValue = this.topLevelFormControl.value;
+		if (this.topLevelFormControl instanceof FormGroup) {
+			const renderedAndEnabledValues = this.getRenderedFieldValuesFormGroup(this.topLevelFormControl, true);
+			const renderedButDisabledValues = this.getRenderedFieldValuesFormGroup(this.topLevelFormControl, false);
 
-		return new Promise((resolve, reject) => {
-			if (this.formGroup.pending) {
-				const sub = this.formGroup.statusChanges.subscribe((res) => {
-					if (res !== 'PENDING') {
-						sub.unsubscribe();
-						this.handleSubmission(originalDisabledStates, renderedAndEnabledValues, renderedButDisabledValues, formGroupValue)
-						.then(resolve)
-						.catch(reject);
-					}
-				});
-			} else {
-				this.handleSubmission(originalDisabledStates, renderedAndEnabledValues, renderedButDisabledValues, formGroupValue)
-				.then(resolve)
-				.catch(reject);
-			}
-		});
-
+			return new Promise((resolve, reject) => {
+				if (this.topLevelFormControl.pending) {
+					const sub = this.topLevelFormControl.statusChanges.subscribe((res) => {
+						if (res !== 'PENDING') {
+							sub.unsubscribe();
+							this.handleSubmission(originalDisabledStates, renderedAndEnabledValues, renderedButDisabledValues, formGroupValue)
+							.then(resolve)
+							.catch(reject);
+						}
+					});
+				} else {
+					this.handleSubmission(originalDisabledStates, renderedAndEnabledValues, renderedButDisabledValues, formGroupValue)
+					.then(resolve)
+					.catch(reject);
+				}
+			});
+		}
+		throw new Error('Submitting a FormArray as topLevel not supported (yet). Wrap it in a FormGroup.');
 	}
 
 	private handleSubmission(
@@ -286,7 +296,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		renderedButDisabledValues: Record<any, any>,
 		formGroupValue): Promise<any>
 	{
-		if (this.formGroup.invalid) {
+		if (this.topLevelFormControl.invalid) {
 			this.activeControls.find((e) => e.formControl.invalid)?.formElement?.scrollTo();
 			this.setDisabledStatesForAllControls(originalDisabledStates);
 			return Promise.reject(invalidFieldsSymbol);

@@ -1,5 +1,9 @@
 
 <klp-form [formGroup]="myForm" [warnings]="formWarnings" errorMessageLocation="rightOfCaption" [readOnly]="false" allowSubmitOn="buttonOnly">
+	<klp-sub-form [injectInto]="myForm" at="oli">
+		<app-sub-form-example></app-sub-form-example>
+	</klp-sub-form>
+
 	<div style="height: 520px; overflow: auto; display: flex; gap: 30px">
 		<app-deep-input  *ngIf="false" >
 		</app-deep-input>
@@ -133,8 +137,8 @@
 			blaaaa
 			<app-sub-form-example></app-sub-form-example>
 		</klp-sub-form>
-		<klp-form-submit-button [before]="beforeSubmit" [after]="afterSubmit" [submitCallback]="submitForm">
-			Submit
+		<klp-form-submit-button [submitCallback]="submitForm">
+			Submit wutu
 		</klp-form-submit-button>
 		<klp-form-button variant="redOutlined" size="large" [disabled]="true">Red</klp-form-button>
 

@@ -107,7 +107,7 @@ export class DemoComponent {
 		name5: this.nameConfig,
 		name6: this.nameConfig,
 		name7: this.nameConfig,
-		picker: [null, [Validators.required, Validators.max(-1)]],
+		picker: [null],
 		date: [null, Validators.required],
 		hourMinute: [null, Validators.required],
 		email: [null, Validators.required],
@@ -120,7 +120,9 @@ export class DemoComponent {
 		selector: [null],
 		subbies: this.fb.array([]),
 		groupie: this.fb.group({}),
-		oli: null,
+		oli: this.fb.array([{
+			name: ['oli']
+		}]),
 		radioOption: null
 	});
 
@@ -200,9 +202,9 @@ export class DemoComponent {
 		console.log('after');
 		this.myForm.get('emails').removeValidators(Validators.required);
 	}
-	public submitForm = async (enabledAndRendered: any, all: any) => {
+	public submitForm = async (enabledAndRendered: any, allRendered: any) => {
 		console.log('enabledAndRendered', enabledAndRendered);
-		console.log('all', all);
+		console.log('allRendered', allRendered);
 	}
 	public innerValueChangeInterceptor = (prev, cur): Promise<void> => {
 		console.log(prev);
