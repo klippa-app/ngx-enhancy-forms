@@ -1,19 +1,23 @@
+dragInProgress {{dragSourceIndex}} {{innerValue | json}}
 <ng-template #listItem>
 	<li *ngFor="let item of innerValue; index as index"
 			class="sortableItem"
+			[draggable]="!disabled"
 			[ngClass]="{
 			largeSortableItem: sortableItemSize === 'lg',
-		 	smallSortableItem: sortableItemSize === 'sm'
-		 }"
+		 	smallSortableItem: sortableItemSize === 'sm',
+		 	}"
+			#dragItem
 	>
-		<ng-container [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{ item: item, index:index }"></ng-container>
+		<div class="visual">
+			<ng-container [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{ item: item, index:index }"></ng-container>
+		</div>
 	</li>
 </ng-template>
 
 <ol *ngIf='!disabled'
-		[sortablejs]="innerValue"
-		[sortablejsOptions]="sortablejsOptions"
 		class="itemsContainer"
+		[ngClass]="{dragInProgress: dragSourceIndex >= 0}"
 >
 	<ng-container *ngTemplateOutlet="listItem"></ng-container>
 </ol>

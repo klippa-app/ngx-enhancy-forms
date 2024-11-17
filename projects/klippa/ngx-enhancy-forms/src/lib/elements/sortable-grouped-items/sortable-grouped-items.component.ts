@@ -19,6 +19,7 @@ export class SortableGroupedItemsComponent<T> extends ValueAccessorBase<Array<Ar
 		setTimeout(() => {
 			if (arrayIsSetAndFilled(value)) {
 				this.items = value.flatMap(e => [...e, '']);
+				console.log(this.items);
 			} else {
 				this.items = [];
 			}
@@ -27,6 +28,8 @@ export class SortableGroupedItemsComponent<T> extends ValueAccessorBase<Array<Ar
 	}
 
 	public onItemsRearranged(value: Array<T | string>): void {
+		console.log('gers');
+		console.log(value);
 		const result: Array<Array<T>> = splitArrayByCondition(value, e => e === '').filter(arrayIsSetAndFilled) as any;
 		this.setInnerValueAndNotify(result);
 		this.reloader = false;

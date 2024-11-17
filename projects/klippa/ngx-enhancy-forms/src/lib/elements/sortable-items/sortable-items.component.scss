@@ -9,23 +9,29 @@
 	padding: 0;
 	margin-bottom: 0; // overwrite default styling for <ol>
 }
+.dragInProgress .visual {
+	pointer-events: none;
+	transition: transform 0.1s linear;
+}
 .sortableItem {
 	list-style: none;
-	border-top: 1px solid $border-color;
-	cursor: grab;
-	&:hover {
-		background: $default-gray-light;
+	.visual {
+		border-top: 1px solid $border-color;
+		&:hover {
+			background: $default-gray-light;
+		}
 	}
-	&:first-child {
-		border-top: none; // otherwise you get 2 borders, 1 from container and 1 from the topmost item
+	cursor: grab;
+	&:first-child .visual {
+		//border-top: none; // otherwise you get 2 borders, 1 from container and 1 from the topmost item
 	}
 }
 
-.largeSortableItem {
+.largeSortableItem .visual {
 	padding: 15px;
 }
 
-.smallSortableItem {
+.smallSortableItem .visual {
 	padding: 0 10px;
 }
 

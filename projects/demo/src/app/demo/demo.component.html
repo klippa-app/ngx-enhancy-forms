@@ -176,10 +176,18 @@
 <klp-form-checkbox [(ngModel)]="isChecked" [renderUndefinedAsIndeterminate]="true"></klp-form-checkbox>
 <klp-form-file-input style="height: 100%;" [(ngModel)]="myfile" [multiple]="false" [onlyShowUploadButton]="false" (ngModelChange)="fileSelected($event)" [useFullParentSize]="false"></klp-form-file-input>
 <klp-form-button (click)="toggie()">clickie</klp-form-button>
-{{groupedItems | json}}
-<klp-form-sortable-grouped-items [(ngModel)]="groupedItems"></klp-form-sortable-grouped-items>
+grouped items {{groupedItems | json}}
+<klp-form-sortable-items [(ngModel)]="sortableItems">
+	<ng-template klpSortableItemTpl let-item="item">
+		{{item}}
+	</ng-template>
+</klp-form-sortable-items>
 
-{{minutes}}
+<div style="height: 100px;"></div>
+<klp-form-sortable-grouped-items [(ngModel)]="groupedItems"></klp-form-sortable-grouped-items>
+<div style="height: 100px;"></div>
+
+{{minutes}} {{test()}}
 <klp-form-hour-minute-input [(ngModel)]="minutes"></klp-form-hour-minute-input>
 <klp-form-hour-minute-input [(ngModel)]="minutes"></klp-form-hour-minute-input>
 {{fancyDate}}

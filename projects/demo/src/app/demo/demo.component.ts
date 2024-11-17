@@ -145,7 +145,8 @@ export class DemoComponent {
 		// {id: 10, name: 'nnn'}
 	];
 	myfile: any;
-	groupedItems = [['a', 'b']];
+	groupedItems = [['a', 'b'], ['c', 'd', 'e']];
+	sortableItems = ['aap', 'noot', 'hond', 'gans', 'beer', 'noot', 'hond', 'gans', 'beer', 'noot', 'hond', 'gans', 'beer', 'noot', 'hond', 'gans', 'beer', 'noot', 'hond', 'gans', 'beer', 'noot', 'hond', 'gans', 'beer', 'noot', 'hond', 'gans', 'beer', 'aap', 'noot', 'hond', 'gans', 'beer', 'noot', 'hond', 'gans', 'beer', 'noot', 'hond', 'gans' ];
 	minutes: number = null;
 	fancyDate: any;
 	staticOptions: AppSelectOptions = [
@@ -269,5 +270,10 @@ export class DemoComponent {
 		this.options = [...this.options, {id: $event, name: $event}];
 		this.myValue = [...(this.myValue ?? []), $event];
 		this.selectComponent.close();
+	}
+
+	test() {
+		// console.log('test');
+		return "test";
 	}
 }
