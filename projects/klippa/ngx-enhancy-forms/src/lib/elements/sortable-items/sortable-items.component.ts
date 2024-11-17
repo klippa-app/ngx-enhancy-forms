@@ -1,16 +1,21 @@
 import {
 	AfterViewInit,
 	Component,
-	ContentChild, ElementRef, Host,
-	Input, NgZone,
-	OnInit, Optional, QueryList,
-	TemplateRef, ViewChildren,
+	ContentChild,
+	ElementRef,
+	Host,
+	Input,
+	NgZone,
+	OnInit,
+	Optional,
+	QueryList,
+	TemplateRef,
+	ViewChildren,
 } from '@angular/core';
 import {ControlContainer, NG_VALUE_ACCESSOR} from '@angular/forms';
-import { Options } from 'sortablejs';
-import { isValueSet } from '../../util/values';
-import { ValueAccessorBase } from '../value-accessor-base/value-accessor-base.component';
-import {FormElementComponent} from "../../form/form-element/form-element.component";
+import {isValueSet} from '../../util/values';
+import {ValueAccessorBase} from '../value-accessor-base/value-accessor-base.component';
+import {FormElementComponent} from '../../form/form-element/form-element.component';
 
 @Component({
 	selector: 'klp-form-sortable-items',
@@ -73,6 +78,13 @@ export class SortableItemsComponent
 	}
 
 	private onDragEnter = (ev) => {
+		if (ev.clientY < 80) {
+			this.scrollPage(40);
+		} else if (window.innerHeight - ev.clientY < 80) {
+			this.scrollPage(-40);
+		} else {
+			this.stopScrolling();
+		}
 		ev.dataTransfer.dropEffect = 'move';
 		const targetIndex = this.dragItems.map(e => e.nativeElement).findIndex(e => e === (ev.target as HTMLElement));
 		if (targetIndex === -1) {
@@ -137,6 +149,7 @@ export class SortableItemsComponent
 	};
 
 	private onDragEnd = (ev) => {
+		this.stopScrolling();
 		const movedElement = this.innerValue[this.dragSourceIndex];
 		const isMovedToLastPlace = this.currentDragPosition === this.innerValue.length - 1;
 		this.ngZone.run(() => {
@@ -169,7 +182,6 @@ export class SortableItemsComponent
 	}
 
 	private scrollPage(scrollAmount: number): void {
-		console.log('hallo');
 		if (!isValueSet(this.scrollInterval)) {
 			this.scrollInterval = setInterval(() => {
 				window.scroll({
