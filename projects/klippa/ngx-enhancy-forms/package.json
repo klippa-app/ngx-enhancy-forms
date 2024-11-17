@@ -1,6 +1,6 @@
 {
   "name": "@klippa/ngx-enhancy-forms",
-  "version": "18.24.0",
+  "version": "18.25.0",
   "publishConfig": {
     "access": "public"
   },
@@ -10,9 +10,7 @@
     "@ng-select/ng-select": ">=13",
     "ngx-mat-datefns-date-adapter": ">=10",
     "date-fns": ">=2.29",
-    "lodash-es": ">=4.17",
-    "@dustfoundation/ngx-sortablejs": ">=15.0.0",
-    "sortablejs": ">=1.15"
+    "lodash-es": ">=4.17"
   },
   "dependencies": {
     "tslib": "^2.0.0"
