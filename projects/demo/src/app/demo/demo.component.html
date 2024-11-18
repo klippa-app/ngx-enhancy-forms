@@ -178,13 +178,17 @@
 <klp-form-button (click)="toggie()">clickie</klp-form-button>
 grouped items {{groupedItems | json}}
 <klp-form-sortable-items [(ngModel)]="sortableItems">
-	<ng-template klpSortableItemTpl let-item="item">
+	<ng-template let-item="item">
 		{{item}}
 	</ng-template>
 </klp-form-sortable-items>
 
 <div style="height: 100px;"></div>
-<klp-form-sortable-grouped-items [(ngModel)]="groupedItems"></klp-form-sortable-grouped-items>
+<klp-form-sortable-grouped-items [(ngModel)]="groupedItems">
+	<ng-template let-item="item">
+		kers {{item}}
+	</ng-template>
+</klp-form-sortable-grouped-items>
 <div style="height: 100px;"></div>
 
 {{minutes}} {{test()}}

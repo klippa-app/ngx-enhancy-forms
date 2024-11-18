@@ -146,7 +146,7 @@ export class DemoComponent {
 	];
 	myfile: any;
 	groupedItems = [['a', 'b'], ['c', 'd', 'e']];
-	sortableItems = ['aap', 'noot', 'hond', 'gans', 'beer', 'noot', 'hond', 'gans', 'beer', 'noot', 'hond', 'gans', 'beer', 'noot', 'hond', 'gans', 'beer', 'noot', 'hond', 'gans', 'beer', 'noot', 'hond', 'gans', 'beer', 'noot', 'hond', 'gans', 'beer', 'aap', 'noot', 'hond', 'gans', 'beer', 'noot', 'hond', 'gans', 'beer', 'noot', 'hond', 'gans' ];
+	sortableItems = ['aap', 'noot', 'hond', 'gans', 'beer', 'noot', 'hond', 'gans', 'beer'];
 	minutes: number = null;
 	fancyDate: any;
 	staticOptions: AppSelectOptions = [

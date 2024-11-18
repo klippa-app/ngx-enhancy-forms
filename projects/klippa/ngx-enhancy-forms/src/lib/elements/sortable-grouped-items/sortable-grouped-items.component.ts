@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ContentChild, TemplateRef} from '@angular/core';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {arrayIsSetAndFilled, splitArrayByCondition} from '../../util/arrays';
 import {ValueAccessorBase} from '../value-accessor-base/value-accessor-base.component';
@@ -11,6 +11,7 @@ import {ValueAccessorBase} from '../value-accessor-base/value-accessor-base.comp
 })
 export class SortableGroupedItemsComponent<T> extends ValueAccessorBase<Array<Array<T>>> {
 	public items: Array<T | string>;
+	@ContentChild(TemplateRef) template: TemplateRef<any>;
 	reloader = true; // sortable items doesnt correctly update, so we have this boolean that flips to rerender the sortable items comp
 
 	writeValue(value: Array<Array<T>>): void {
@@ -19,7 +20,6 @@ export class SortableGroupedItemsComponent<T> extends ValueAccessorBase<Array<Ar
 		setTimeout(() => {
 			if (arrayIsSetAndFilled(value)) {
 				this.items = value.flatMap(e => [...e, '']);
-				console.log(this.items);
 			} else {
 				this.items = [];
 			}
@@ -28,8 +28,6 @@ export class SortableGroupedItemsComponent<T> extends ValueAccessorBase<Array<Ar
 	}
 
 	public onItemsRearranged(value: Array<T | string>): void {
-		console.log('gers');
-		console.log(value);
 		const result: Array<Array<T>> = splitArrayByCondition(value, e => e === '').filter(arrayIsSetAndFilled) as any;
 		this.setInnerValueAndNotify(result);
 		this.reloader = false;

@@ -4,7 +4,8 @@
 		(ngModelChange)="onItemsRearranged($event)"
 	>
 		<ng-template let-item="item">
-			<div>{{item}}</div>
+			<ng-container *ngIf="template" [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{ item: item }"></ng-container>
+			<div *ngIf="!template">{{item}}</div>
 		</ng-template>
 	</klp-form-sortable-items>
 </ng-container>
