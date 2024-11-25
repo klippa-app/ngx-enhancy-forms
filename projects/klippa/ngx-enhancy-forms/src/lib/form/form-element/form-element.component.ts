@@ -55,6 +55,7 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 	@ViewChild('absoluteAnchor') public absoluteAnchor: ElementRef;
 	@ViewChild('fixedAnchor') public fixedAnchor: ElementRef;
 	@ViewChild('fixedWrapper') public fixedWrapper: ElementRef;
+	@ViewChild('inputContainer') public inputContainer: ElementRef;
 	@ContentChild(NG_VALUE_ACCESSOR) fieldInput: ValueAccessorBase<any>;
 
 	public captionRef: TemplateRef<any>;
@@ -80,6 +81,11 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 		if (isValueSet(subscription))  {
 			this.subscriptions.push(subscription);
 		}
+		this.ngZone.runOutsideAngular(() => {
+			this.inputContainer?.nativeElement.addEventListener('mouseenter', () => {
+				this.setErrorTooltipOffset();
+			});
+		});
 	}
 
 	public shouldShowErrorMessages(): boolean {

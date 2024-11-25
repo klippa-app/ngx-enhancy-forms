@@ -25,7 +25,7 @@
 		</div>
 		<ng-container [ngTemplateOutlet]="captionTpl"></ng-container>
 		<ng-container *ngIf="direction === 'vertical' && getErrorLocation() === 'belowCaption' && !errorMessageAsTooltip" [ngTemplateOutlet]="errorRef"></ng-container>
-		<div class="inputContainer" (mouseenter)="setErrorTooltipOffset()">
+		<div class="inputContainer" #inputContainer>
 			<ng-container *ngIf="errorMessageAsTooltip && shouldShowErrorMessages() && getErrorToShow()">
 				<div class="errorTooltipTriangle"></div>
 				<div class="errorTooltipTriangleWhite"></div>
