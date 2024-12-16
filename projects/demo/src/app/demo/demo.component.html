@@ -177,6 +177,8 @@
 <klp-form-file-input style="height: 100%;" [(ngModel)]="myfile" [multiple]="false" [onlyShowUploadButton]="false" (ngModelChange)="fileSelected($event)" [useFullParentSize]="false"></klp-form-file-input>
 <klp-form-button (click)="toggie()">clickie</klp-form-button>
 grouped items {{groupedItems | json}}
+
+
 <klp-form-sortable-items [(ngModel)]="sortableItems">
 	<ng-template let-item="item">
 		{{item}}

@@ -51,24 +51,26 @@ export class SortableItemsComponent
 	}
 
 	ngAfterViewInit(): void {
+		this.setDragItemListeners();
 		this.dragItems.changes.subscribe(() => {
-			this.dragItems.forEach(e => {
-				this.ngZone.runOutsideAngular(() => {
-					e.nativeElement.removeEventListener('dragstart', this.onDragStart);
-					e.nativeElement.removeEventListener('dragover', this.onDragOver);
-					e.nativeElement.removeEventListener('dragenter', this.onDragEnter);
-					e.nativeElement.removeEventListener('dragend', this.onDragEnd);
+			this.setDragItemListeners();
+		});
+	}
 
-					e.nativeElement.addEventListener('dragstart', this.onDragStart);
-					e.nativeElement.addEventListener('dragover', this.onDragOver);
-					e.nativeElement.addEventListener('dragenter', this.onDragEnter);
-					e.nativeElement.addEventListener('dragend', this.onDragEnd);
+	private setDragItemListeners(): void {
+		this.dragItems.forEach(e => {
+			this.ngZone.runOutsideAngular(() => {
+				e.nativeElement.removeEventListener('dragstart', this.onDragStart);
+				e.nativeElement.removeEventListener('dragover', this.onDragOver);
+				e.nativeElement.removeEventListener('dragenter', this.onDragEnter);
+				e.nativeElement.removeEventListener('dragend', this.onDragEnd);
 
-					this.dragItems.forEach((dragItem, i) => {
-						dragItem.nativeElement.querySelector('.visual').style.transform = `translateY(0%)`;
-					});
+				e.nativeElement.addEventListener('dragstart', this.onDragStart);
+				e.nativeElement.addEventListener('dragover', this.onDragOver);
+				e.nativeElement.addEventListener('dragenter', this.onDragEnter);
+				e.nativeElement.addEventListener('dragend', this.onDragEnd);
 
-				});
+				e.nativeElement.querySelector('.visual').style.transform = `translateY(0%)`;
 			});
 		});
 	}
