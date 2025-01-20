@@ -23,7 +23,7 @@ export class FormSubmitButtonComponent implements OnInit{
 	@Input() public isLoading = false;
 	@Input() @HostBinding('class._fullWidth') public fullWidth = false;
 	@Input() public variant: SubmitButtonVariant = 'greenFilled';
-	@Input() public submitCallback: (renderedAndEnabledValues: object, renderedButDisabledValues: object) => Promise<any>;
+	@Input() public submitCallback: (renderedAndEnabledValues: object, allRenderedValues: object) => Promise<any>;
 	@Input() public before: () => Promise<any> = () => Promise.resolve();
 	@Input() public after: () => Promise<any> = () => Promise.resolve();
 	@Input() public disabled: boolean = false;

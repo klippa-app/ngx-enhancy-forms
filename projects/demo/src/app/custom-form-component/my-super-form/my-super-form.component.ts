@@ -9,5 +9,5 @@ import { FormComponent } from "@klippa/ngx-enhancy-forms";
 })
 export class MySuperFormComponent extends FormComponent {
 	@Input()
-	public submitCallback: (renderedAndEnabledValues: object, renderedButDisabledValues: object) => Promise<any>;
+	public submitCallback: (renderedAndEnabledValues: object, allRenderedValues: object) => Promise<any>;
 }

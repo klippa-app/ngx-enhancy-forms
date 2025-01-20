@@ -44,10 +44,10 @@ export class SubFormExampleComponent {
 		}
 	}
 
-	gaan = (renderedAndEnabledValues: object, renderedButDisabledValues: object) => {
+	gaan = (renderedAndEnabledValues: object, allRenderedValues: object) => {
 		console.log('GAAN');
 		console.log(renderedAndEnabledValues);
-		console.log(renderedButDisabledValues);
+		console.log(allRenderedValues);
 		return Promise.resolve();
 	};
 }
