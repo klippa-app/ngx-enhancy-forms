@@ -12,6 +12,7 @@
 		.mat-mdc-form-field {
 			display: block;
 			height: 100%;
+			width: 100%;
 			.mat-mdc-text-field-wrapper, .mat-mdc-text-field-wrapper:hover .mat-mdc-form-field-focus-overlay {
 				background-color: unset;
 
@@ -148,6 +149,12 @@
 		}
 		&.disabled {
 			background: $default-disabled-background;
+		}
+		&::ng-deep input {
+			padding-right: $spacing-huge;
+			&:placeholder-shown {
+				text-overflow: ellipsis;
+			}
 		}
 	}
 	.timeContainer {
