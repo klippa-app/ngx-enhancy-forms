@@ -50,7 +50,7 @@
 			<div *ngIf="isRequired()">&nbsp;*</div>
 		</div>
 		<div *ngIf="!captionRef" class="captionText">{{caption}}<span *ngIf="isRequired()">&nbsp;*</span></div>
-		<div class="rightOfCaptionError" *ngIf="hasRightOfCaptionError()" [ngClass]="{errorFullyVisible: errorFullyVisible}">
+		<div class="rightOfCaptionError" *ngIf="hasRightOfCaptionError()" [ngClass]="{errorFullyVisible: errorFullyVisible, errorMessageHasMaxWidth: errorMessageHasMaxWidth}">
 			<ng-container [ngTemplateOutlet]="errorRef" [ngTemplateOutletContext]="{forCalculation: forCalculation}"></ng-container>
 		</div>
 	</div>

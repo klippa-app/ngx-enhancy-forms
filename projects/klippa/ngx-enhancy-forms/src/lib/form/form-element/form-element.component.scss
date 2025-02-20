@@ -171,7 +171,9 @@
 			&.errorFullyVisible {
 				display: block;
 			}
-			max-width: 40%;
+			&.errorMessageHasMaxWidth {
+				max-width: 40%;
+			}
 			font-weight: normal;
 			overflow: hidden;
 			flex: 1 0 auto;

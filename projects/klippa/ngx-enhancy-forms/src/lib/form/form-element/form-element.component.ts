@@ -49,6 +49,7 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 	@Input() public spaceDistribution: '40-60' | '34-66' | '30-70' | 'fixedInputWidth' = '40-60';
 	@Input() public swapInputAndCaption = false;
 	@Input() public errorMessageAsTooltip = false;
+	@Input() public errorMessageHasMaxWidth = true;
 	@ViewChild('internalComponentRef') public internalComponentRef: ElementRef;
 	@ViewChild('tailTpl') public tailTpl: TemplateRef<any>;
 	@ViewChild('captionDummyForSpaceCalculation') public captionDummyForSpaceCalculation: ElementRef;
