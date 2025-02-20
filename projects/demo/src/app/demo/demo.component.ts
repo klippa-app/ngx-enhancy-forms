@@ -77,6 +77,7 @@ export class DemoComponent {
 	].map(e => {
 		return new Date(e);
 	});
+	testDate2: Date;
 	show = false;
 	isChecked: boolean = undefined;
 

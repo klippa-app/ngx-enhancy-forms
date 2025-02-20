@@ -53,6 +53,8 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 	@Input() public placeholder: string;
 	@Input() public clearable = false;
 	@Input() public showTimeInput = true;
+	@Input() public initHour: string = null;
+	@Input() public initMinute: string = null;
 	@Input() public invalidTimeAsMidnight = false; // if the time is not valid, use 00:00 as the time
 
 	@ViewChild('nativeInput') nativeInputRef: ElementRef;
@@ -94,6 +96,8 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 			this.placeholder = '';
 			this.showTimeInput = false;
 		}
+		this.hours = this.initHour;
+		this.minutes = this.initMinute;
 	}
 
 	ngAfterViewInit(): void {
@@ -259,8 +263,8 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 				this.formatTime();
 				this.openPickerOnDate = value;
 			} else {
-				this.hours = '';
-				this.minutes = '';
+				this.hours = this.initHour ?? '';
+				this.minutes = this.initMinute ?? '';
 				this.openPickerOnDate = null;
 				this.selectedDates = [];
 			}
