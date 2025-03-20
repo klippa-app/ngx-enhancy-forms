@@ -99,11 +99,11 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		}
 		if (isValueSet(simpleChanges.immutableValues?.currentValue)) {
 			simpleChanges.immutableValues?.previousValue?.forEach((value, key) => {
-				this.getFormElementByFormControl(key)?.getAttachedInput().setImmutableValue(undefined);
+				this.setImmutableValueForFormControl(key, undefined);
 			});
 
 			simpleChanges.immutableValues?.currentValue.forEach((value, key) => {
-				this.getFormElementByFormControl(key)?.getAttachedInput().setImmutableValue(value);
+				this.setImmutableValueForFormControl(key, value);
 			});
 			this.patchImmutableValuesMap();
 		}
@@ -134,12 +134,10 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 	private patchImmutableValuesMap(): void {
 		const setFn = this.immutableValues.set;
 		this.immutableValues.set = (key: AbstractControl, value: string): Map<AbstractControl, string> => {
-			console.log('calling set', key, value);
 			const prevVal = this.immutableValues.get(key);
 			const result = setFn.call(this.immutableValues, key, value);
 			if (prevVal !== value) {
-				console.log('setting immutable value', key, value);
-				this.getFormElementByFormControl(key)?.getAttachedInput().setImmutableValue(value);
+				this.setImmutableValueForFormControl(key, value);
 			}
 			return result;
 		};
@@ -147,7 +145,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		const deleteFn = this.immutableValues.delete;
 		this.immutableValues.delete = (key: AbstractControl): boolean => {
 			const result = deleteFn.call(this.immutableValues, key);
-			this.getFormElementByFormControl(key)?.getAttachedInput().setImmutableValue(undefined);
+			this.setImmutableValueForFormControl(key, undefined);
 			return result;
 		};
 	}
@@ -288,6 +286,13 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 
 	public getFormElementByFormControl(control: AbstractControl): FormElementComponent {
 		return this.activeControls.find((e) => e.formControl === control)?.formElement;
+	}
+
+	private setImmutableValueForFormControl(control: AbstractControl, value: any): void {
+		if (value !== undefined) {
+			control.setValue(value);
+		}
+		this.getFormElementByFormControl(control)?.getAttachedInput().setImmutableValue(value);
 	}
 
 	public getWarningToShow(control: AbstractControl): string | TemplateRef<any> {
