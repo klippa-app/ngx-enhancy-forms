@@ -15,6 +15,7 @@ import {
 import {FormElementComponent} from '../../form/form-element/form-element.component';
 import {isNullOrUndefined, isValueSet, stringIsSetAndFilled} from '../../util/values';
 import { arrayIsSetAndFilled } from '../../util/arrays';
+import {cloneDeep} from "lodash";
 
 /**
  * This component is a base in order to create a component that supports ngModel.
@@ -81,6 +82,10 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 		if (value !== undefined) {
 			this.writeValue(value);
 		}
+	}
+
+	public getImmutableValue(): T {
+		return cloneDeep(this.immutableValue);
 	}
 
 
