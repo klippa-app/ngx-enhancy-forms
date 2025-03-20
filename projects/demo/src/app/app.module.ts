@@ -13,6 +13,7 @@ import { OnSubmitErrorsComponent } from './on-submit-errors/on-submit-errors.com
 import { CustomFormComponent } from './custom-form-component/custom-form.component';
 import { MySuperFormComponent } from './custom-form-component/my-super-form/my-super-form.component';
 import SimpleComponent from "./simple-comp/simple.component";
+import {SubFormGroupExampleComponent} from "./subFormGroup/sub-form-group-example.component";
 
 const routes: Routes = [
 	{
@@ -42,6 +43,7 @@ const routes: Routes = [
 	declarations: [
 		AppComponent,
 		SubFormExampleComponent,
+		SubFormGroupExampleComponent,
 		DeepInputComponent,
 		DemoComponent,
 		OnSubmitErrorsComponent,

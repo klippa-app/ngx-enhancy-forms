@@ -1,6 +1,6 @@
-<klp-form-text-area></klp-form-text-area>
-
+{{myForm.getRawValue() | json}}
 <klp-form [formGroup]="myForm" [warnings]="formWarnings" [immutableValues]="immutableValues" errorMessageLocation="rightOfCaption" [readOnly]="false" allowSubmitOn="buttonOnly">
+
 	<klp-sub-form [injectInto]="myForm" at="oli">
 		<app-sub-form-example></app-sub-form-example>
 	</klp-sub-form>
@@ -126,6 +126,7 @@
 			</klp-form-toggle>
 		</klp-form-element>
 
+		emailsss?
 		<klp-form-element>
 			<klp-form-text-input formControlName="emails"></klp-form-text-input>
 		</klp-form-element>
@@ -134,10 +135,6 @@
 				<app-sub-form-example></app-sub-form-example>
 			</klp-sub-form>
 		</ng-container>
-		<klp-sub-form *ngIf="showSubForm" [injectInto]="myForm" at="oli">
-			blaaaa
-			<app-sub-form-example></app-sub-form-example>
-		</klp-sub-form>
 		<klp-form-submit-button [submitCallback]="submitForm">
 			Submit wutu
 		</klp-form-submit-button>

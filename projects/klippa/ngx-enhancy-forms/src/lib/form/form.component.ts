@@ -14,6 +14,7 @@ import {AbstractControl, FormArray, FormControl, FormGroup, UntypedFormArray, Un
 import {FormElementComponent} from './form-element/form-element.component';
 import {isValueSet} from '../util/values';
 import { deepMerge } from '../util/objects';
+import {awaitableForNextCycle, runNextRenderCycle} from "../util/angular";
 
 export const invalidFieldsSymbol = Symbol('Not all fields are valid');
 
@@ -70,12 +71,17 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 				if (injectInto.at(injectAt)?.disabled) {
 					this.topLevelFormControl.disable();
 				}
-				const valueBeforeInject = injectInto.at(injectAt)?.value;
+				const source = injectInto.at(injectAt);
+				const valueBeforeInject = source?.value;
 				if (isValueSet(valueBeforeInject)) {
 					this.topLevelFormControl.patchValue(valueBeforeInject);
 				}
 				injectInto.setControl(injectAt, this.topLevelFormControl);
 				this.onInjected.emit(valueBeforeInject);
+				runNextRenderCycle(() => {
+					// sub form needs to be rendered first
+					this.setImmutableValueForFormControl(this.topLevelFormControl, this.parent.immutableValues?.get(injectInto));
+				});
 			} else if (injectInto instanceof UntypedFormGroup) {
 				if (typeof injectAt !== 'string') {
 					throw new Error(`cannot index FormGroup with ${typeof injectAt}`);
@@ -83,12 +89,17 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 				if (injectInto.get(injectAt)?.disabled) {
 					this.topLevelFormControl.disable();
 				}
-				const valueBeforeInject = injectInto.get(injectAt)?.value;
+				const source = injectInto.get(injectAt);
+				const valueBeforeInject = source?.value;
 				if (isValueSet(valueBeforeInject)) {
 					this.topLevelFormControl.patchValue(valueBeforeInject);
 				}
 				injectInto.setControl(injectAt, this.topLevelFormControl);
 				this.onInjected.emit(valueBeforeInject);
+				runNextRenderCycle(() => {
+					// sub form needs to be rendered first
+					this.setImmutableValueForFormControl(this.topLevelFormControl, this.parent.immutableValues?.get(source));
+				});
 			}
 		}
 	}
@@ -291,6 +302,18 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 	private setImmutableValueForFormControl(control: AbstractControl, value: any): void {
 		if (value !== undefined) {
 			control.setValue(value);
+		}
+		if (control instanceof FormGroup) {
+			Object.entries((control as FormGroup).controls).forEach(([name, ctrl]) => {
+				this.setImmutableValueForFormControl(ctrl, value?.[name]);
+			});
+			return;
+		}
+		if (control instanceof FormArray) {
+			(control as FormArray).controls.forEach((ctrl, i) => {
+				this.setImmutableValueForFormControl(ctrl, value?.[i]);
+			});
+			return;
 		}
 		this.getFormElementByFormControl(control)?.getAttachedInput().setImmutableValue(value);
 	}

@@ -1,4 +1,4 @@
-export function runNextRenderCycle(fn: () => void) {
+export function runNextRenderCycle(fn: () => void): void {
 	setTimeout(fn);
 }
 

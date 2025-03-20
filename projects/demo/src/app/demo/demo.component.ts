@@ -14,25 +14,29 @@ export class DemoComponent {
 	public formErrors = new Map<AbstractControl, string>();
 	constructor(private fb: FormBuilder) {
 
-		this.immutableValues = new Map<AbstractControl, string>([
-			[this.myForm.get('name'), 'I am i222mmutable'],
+		this.immutableValues = new Map<AbstractControl, any>([
+			// [this.myForm.get('oliGroup'), {name: 'olifant', age: 222}],
+			[this.myForm.get('oli'), [{name: 'immutableee', age: 111111}]],
+			[this.myForm.get('subbies'), [{name: 'immutableeEmail', age: 3.1415}]],
 		]);
+		console.log(this.myForm.get('oli'));
+
 
 		setTimeout(() => {
 		// this.formWarnings.set(this.myForm.get('name'), 'This is a warning about your name');
-		this.formWarnings.set(this.myForm.get('picker'), this.myFancyTemplate);
+		// this.formWarnings.set(this.myForm.get('picker'), this.myFancyTemplate);
 			// this.formWarnings.delete(this.myForm.get('name'));
-		}, 200);
+		}, 2000);
 
 		setTimeout(() => {
-			this.immutableValues = new Map<AbstractControl, string>([
-				[this.myForm.get('name'), 'I am immutable'],
-			]);
+			// this.immutableValues = new Map<AbstractControl, string>([
+				// [this.myForm.get('name'), 'I am immutable'],
+			// ]);
 			// this.immutableValues.set(this.myForm.get('name'), 'Even normaal doen');
 		}, 1000);
 
 		setTimeout(() => {
-			this.immutableValues = new Map<AbstractControl, string>([]);
+			// this.immutableValues = new Map<AbstractControl, string>([]);
 			// this.immutableValues.set(this.myForm.get('name'), 'Even normaal doen');
 		}, 2000);
 
@@ -59,6 +63,10 @@ export class DemoComponent {
 		// setTimeout(() => {
 		// 	this.myForm.get('name').enable();
 		// }, 1000);
+	}
+
+	ngOnInit(): void {
+
 	}
 
 	public get emails(): any[] {
@@ -132,9 +140,8 @@ export class DemoComponent {
 		selector: [null],
 		subbies: this.fb.array([]),
 		groupie: this.fb.group({}),
-		oli: this.fb.array([{
-			name: ['oli']
-		}]),
+		oli: null,
+		oliGroup: null,
 		radioOption: null
 	});
 

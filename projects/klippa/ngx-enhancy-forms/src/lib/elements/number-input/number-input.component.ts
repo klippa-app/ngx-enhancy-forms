@@ -12,9 +12,8 @@ export class NumberInputComponent extends ValueAccessorBase<string | number> {
 	@Input() placeholder: string;
 	@Input() parseNumber: boolean = false;
 
-
-	setInnerValueAndNotify(value: string | number) {
-		if (this.parseNumber && typeof value === "string") {
+	setInnerValueAndNotify(value: string | number): void {
+		if (this.parseNumber && typeof value === 'string') {
 			super.setInnerValueAndNotify(Number(value));
 		} else {
 			super.setInnerValueAndNotify(value);
