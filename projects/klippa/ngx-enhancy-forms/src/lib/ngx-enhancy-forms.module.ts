@@ -32,6 +32,7 @@ import {WithTooltipDirective} from "./withTooltip.component";
 import {WarningIconComponent} from "./warning-icon/warning-icon.component";
 import {ElementIsTruncatedCbComponent} from "./elementIsTruncatedCb.component";
 import {OnRenderDirective} from "./onRender.component";
+import {TextAreaComponent} from "./elements/text-area/text-area.component";
 
 @NgModule({
 	imports: [
@@ -58,6 +59,7 @@ import {OnRenderDirective} from "./onRender.component";
 		SortableItemsComponent,
 		SortableGroupedItemsComponent,
 		TextInputComponent,
+		TextAreaComponent,
 		ToggleComponent,
 		FileInputComponent,
 		FormCaptionComponent,
@@ -90,6 +92,7 @@ import {OnRenderDirective} from "./onRender.component";
 		SortableItemsComponent,
 		SortableGroupedItemsComponent,
 		TextInputComponent,
+		TextAreaComponent,
 		ToggleComponent,
 		FileInputComponent,
 		FormCaptionComponent,

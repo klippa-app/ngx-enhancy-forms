@@ -1,0 +1,23 @@
+@import '../../../style/themes/default/variables';
+@import '../../../style/mixins';
+
+:host {
+	display: block;
+
+	input:disabled {
+		cursor: not-allowed;
+	}
+}
+
+.componentContainer {
+	position: relative;
+}
+
+textarea {
+	outline: none;
+	@include formControl();
+}
+
+.showErrors {
+	border-color: $default-warning;
+}

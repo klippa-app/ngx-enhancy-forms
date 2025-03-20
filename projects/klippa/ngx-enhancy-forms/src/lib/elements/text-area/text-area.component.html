@@ -1,0 +1,11 @@
+<div class="componentContainer">
+	<textarea
+		[(ngModel)]="innerValue"
+		[ngClass]="{showErrors: isInErrorState()}"
+		(input)="setInnerValueAndNotify($event.target.value)"
+		[placeholder]="placeholder ? placeholder : ''"
+		(blur)="touch(); onBlur.emit()"
+		[disabled]='disabled'
+		#nativeInputRef
+	></textarea>
+</div>
