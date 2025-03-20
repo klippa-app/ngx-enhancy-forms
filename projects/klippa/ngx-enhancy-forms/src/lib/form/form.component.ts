@@ -38,6 +38,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 	@Input() public formGroup: FormGroup;
 	@Input() public formArray: FormArray;
 	@Input() public warnings: Map<AbstractControl, string | TemplateRef<any>> = new Map<AbstractControl, string | TemplateRef<any>>();
+	@Input() public immutableValues: Map<AbstractControl, string> = new Map<AbstractControl, string>();
 	@Input() public errors: Map<AbstractControl, string> = new Map<AbstractControl, string>();
 	@Input() public patchValueInterceptor: (values: any) => Promise<any>;
 	@Input() public allowSubmitOn: 'buttonAndEnter' | 'buttonOnly' = 'buttonAndEnter';
@@ -96,6 +97,16 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		if (simpleChanges.readOnly?.currentValue === true) {
 			this.activeControls.forEach(e => e.formControl.disable());
 		}
+		if (isValueSet(simpleChanges.immutableValues?.currentValue)) {
+			simpleChanges.immutableValues?.previousValue?.forEach((value, key) => {
+				this.getFormElementByFormControl(key)?.getAttachedInput().setImmutableValue(undefined);
+			});
+
+			simpleChanges.immutableValues?.currentValue.forEach((value, key) => {
+				this.getFormElementByFormControl(key)?.getAttachedInput().setImmutableValue(value);
+			});
+			this.patchImmutableValuesMap();
+		}
 		if (isValueSet(simpleChanges.warnings?.currentValue)) {
 			this.patchFormWarningsMap();
 		}
@@ -118,6 +129,27 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 				injectInto.setControl(injectAt, new FormControl());
 			}
 		}
+	}
+
+	private patchImmutableValuesMap(): void {
+		const setFn = this.immutableValues.set;
+		this.immutableValues.set = (key: AbstractControl, value: string): Map<AbstractControl, string> => {
+			console.log('calling set', key, value);
+			const prevVal = this.immutableValues.get(key);
+			const result = setFn.call(this.immutableValues, key, value);
+			if (prevVal !== value) {
+				console.log('setting immutable value', key, value);
+				this.getFormElementByFormControl(key)?.getAttachedInput().setImmutableValue(value);
+			}
+			return result;
+		};
+
+		const deleteFn = this.immutableValues.delete;
+		this.immutableValues.delete = (key: AbstractControl): boolean => {
+			const result = deleteFn.call(this.immutableValues, key);
+			this.getFormElementByFormControl(key)?.getAttachedInput().setImmutableValue(undefined);
+			return result;
+		};
 	}
 
 	private patchFormWarningsMap(): void {
@@ -196,6 +228,11 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 				enableFn.call(formControl, opts);
 			}
 		};
+
+		const value = this.immutableValues?.get(formControl);
+		if (isValueSet(value)) {
+			formElement.getAttachedInput().setImmutableValue(value);
+		}
 	}
 
 	public unregisterControl(formControl: UntypedFormControl): void {

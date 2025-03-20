@@ -10,8 +10,13 @@ import {AppSelectOptions, SelectComponent} from '@klippa/ngx-enhancy-forms';
 export class DemoComponent {
 	@ViewChild('myFancyTemplate') myFancyTemplate: TemplateRef<any>;
 	public formWarnings = new Map<AbstractControl, string | TemplateRef<any>>();
+	public immutableValues = new Map<AbstractControl, any>();
 	public formErrors = new Map<AbstractControl, string>();
 	constructor(private fb: FormBuilder) {
+
+		this.immutableValues = new Map<AbstractControl, string>([
+			[this.myForm.get('name'), 'I am i222mmutable'],
+		]);
 
 		setTimeout(() => {
 		// this.formWarnings.set(this.myForm.get('name'), 'This is a warning about your name');
@@ -20,11 +25,16 @@ export class DemoComponent {
 		}, 200);
 
 		setTimeout(() => {
-			// this.formWarnings = new Map<AbstractControl, string>([
-			// 	[this.myForm.get('name'), 'This is a ewgewgewgewname'],
-			// ]);
-			// this.formWarnings.set(this.myForm.get('name'), 'another');
-		}, 2500);
+			this.immutableValues = new Map<AbstractControl, string>([
+				[this.myForm.get('name'), 'I am immutable'],
+			]);
+			// this.immutableValues.set(this.myForm.get('name'), 'Even normaal doen');
+		}, 1000);
+
+		setTimeout(() => {
+			this.immutableValues = new Map<AbstractControl, string>([]);
+			// this.immutableValues.set(this.myForm.get('name'), 'Even normaal doen');
+		}, 2000);
 
 		// setTimeout(() => {
 		// 	this.options = [...this.options, {id : this.options.length, name: 'BLAAAAAAAAAAAAAAAAAAAAAAAT'}];
@@ -102,6 +112,7 @@ export class DemoComponent {
 	public myForm = this.fb.group({
 		deepInput: ['', Validators.required],
 		name: this.nameConfig,
+		password: this.nameConfig,
 		name2: this.nameConfig,
 		name3: this.nameConfig,
 		name4: this.nameConfig,

@@ -4,11 +4,11 @@ import {
 	ElementRef,
 	EventEmitter,
 	Host,
-	Input,
+	Input, OnChanges,
 	OnDestroy,
 	OnInit,
 	Optional,
-	Output,
+	Output, SimpleChanges,
 	TemplateRef,
 	ViewChild
 } from '@angular/core';
@@ -35,6 +35,7 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 	public changed = new Array<(value: T) => void>();
 	private touched = new Array<() => void>();
 	private prevValue: T = null;
+	private immutableValue: T = undefined;
 
 	@Input() public disabled = false;
 	// needed to prevent race conditions
@@ -75,6 +76,14 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 		}
 	}
 
+	public setImmutableValue(value: T): void {
+		this.immutableValue = value;
+		if (value !== undefined) {
+			this.writeValue(value);
+		}
+	}
+
+
 	isInErrorState(): boolean {
 		if (this.inErrorState) {
 			return true;
@@ -94,8 +103,12 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 	}
 
 	writeValue(value: T): void {
-		this.innerValue = value;
 		this.prevValue = value;
+		if (this.immutableValue !== undefined) {
+			this.innerValue = this.immutableValue;
+		} else {
+			this.innerValue = value;
+		}
 	}
 
 	registerOnChange(fn: (value: T) => void): void {
@@ -108,9 +121,14 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 
 	setInnerValueAndNotify(value: T): void {
 		const actuallySetValue = (valueToSet: T): void => {
-			this.innerValue = valueToSet;
 			this.prevValue = valueToSet;
-			this.changed.forEach((fn) => fn(valueToSet));
+			if (this.immutableValue !== undefined) {
+				this.innerValue = this.immutableValue;
+				this.changed.forEach((fn) => fn(this.immutableValue));
+			} else {
+				this.innerValue = valueToSet;
+				this.changed.forEach((fn) => fn(valueToSet));
+			}
 		};
 		if (isValueSet(this.innerValueChangeInterceptor)) {
 			this.latestInnerValueChangedInterceptorPromise = this.innerValueChangeInterceptor(this.prevValue, value);

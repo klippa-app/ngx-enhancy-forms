@@ -101,8 +101,8 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 
 	public registerControl(formControl: UntypedFormControl, input: ValueAccessorBase<any> = null): void {
 		this.attachedControl = formControl;
-		this.parent.registerControl(formControl, this);
 		this.input = input;
+		this.parent.registerControl(formControl, this);
 
 
 		const subscription = this.attachedControl.statusChanges.subscribe(() => {
