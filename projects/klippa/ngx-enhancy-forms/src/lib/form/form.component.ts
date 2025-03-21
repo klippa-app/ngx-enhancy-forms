@@ -1,6 +1,7 @@
 import {
 	Component,
-	Directive, EventEmitter,
+	Directive,
+	EventEmitter,
 	Input,
 	OnChanges,
 	OnDestroy,
@@ -8,13 +9,21 @@ import {
 	Optional,
 	Output,
 	SimpleChanges,
-	SkipSelf, TemplateRef
+	SkipSelf,
+	TemplateRef
 } from '@angular/core';
-import {AbstractControl, FormArray, FormControl, FormGroup, UntypedFormArray, UntypedFormControl, UntypedFormGroup} from '@angular/forms';
+import {
+	AbstractControl,
+	FormArray,
+	FormControl,
+	FormGroup,
+	UntypedFormArray,
+	UntypedFormControl,
+	UntypedFormGroup
+} from '@angular/forms';
 import {FormElementComponent} from './form-element/form-element.component';
 import {isValueSet} from '../util/values';
-import { deepMerge } from '../util/objects';
-import {awaitableForNextCycle, runNextRenderCycle} from "../util/angular";
+import {deepMerge} from '../util/objects';
 
 export const invalidFieldsSymbol = Symbol('Not all fields are valid');
 
@@ -39,7 +48,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 	@Input() public formGroup: FormGroup;
 	@Input() public formArray: FormArray;
 	@Input() public warnings: Map<AbstractControl, string | TemplateRef<any>> = new Map<AbstractControl, string | TemplateRef<any>>();
-	@Input() public immutableValues: Map<AbstractControl, string> = new Map<AbstractControl, string>();
+	@Input() public immutableValues: Record<string, any> = {};
 	@Input() public errors: Map<AbstractControl, string> = new Map<AbstractControl, string>();
 	@Input() public patchValueInterceptor: (values: any) => Promise<any>;
 	@Input() public allowSubmitOn: 'buttonAndEnter' | 'buttonOnly' = 'buttonAndEnter';
@@ -78,10 +87,6 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 				}
 				injectInto.setControl(injectAt, this.topLevelFormControl);
 				this.onInjected.emit(valueBeforeInject);
-				runNextRenderCycle(() => {
-					// sub form needs to be rendered first
-					this.setImmutableValueForFormControl(this.topLevelFormControl, this.parent.immutableValues?.get(injectInto));
-				});
 			} else if (injectInto instanceof UntypedFormGroup) {
 				if (typeof injectAt !== 'string') {
 					throw new Error(`cannot index FormGroup with ${typeof injectAt}`);
@@ -96,10 +101,6 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 				}
 				injectInto.setControl(injectAt, this.topLevelFormControl);
 				this.onInjected.emit(valueBeforeInject);
-				runNextRenderCycle(() => {
-					// sub form needs to be rendered first
-					this.setImmutableValueForFormControl(this.topLevelFormControl, this.parent.immutableValues?.get(source));
-				});
 			}
 		}
 	}
@@ -107,16 +108,6 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 	ngOnChanges(simpleChanges: SimpleChanges): void {
 		if (simpleChanges.readOnly?.currentValue === true) {
 			this.activeControls.forEach(e => e.formControl.disable());
-		}
-		if (isValueSet(simpleChanges.immutableValues?.currentValue)) {
-			simpleChanges.immutableValues?.previousValue?.forEach((value, key) => {
-				this.setImmutableValueForFormControl(key, undefined);
-			});
-
-			simpleChanges.immutableValues?.currentValue.forEach((value, key) => {
-				this.setImmutableValueForFormControl(key, value);
-			});
-			this.patchImmutableValuesMap();
 		}
 		if (isValueSet(simpleChanges.warnings?.currentValue)) {
 			this.patchFormWarningsMap();
@@ -140,25 +131,6 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 				injectInto.setControl(injectAt, new FormControl());
 			}
 		}
-	}
-
-	private patchImmutableValuesMap(): void {
-		const setFn = this.immutableValues.set;
-		this.immutableValues.set = (key: AbstractControl, value: string): Map<AbstractControl, string> => {
-			const prevVal = this.immutableValues.get(key);
-			const result = setFn.call(this.immutableValues, key, value);
-			if (prevVal !== value) {
-				this.setImmutableValueForFormControl(key, value);
-			}
-			return result;
-		};
-
-		const deleteFn = this.immutableValues.delete;
-		this.immutableValues.delete = (key: AbstractControl): boolean => {
-			const result = deleteFn.call(this.immutableValues, key);
-			this.setImmutableValueForFormControl(key, undefined);
-			return result;
-		};
 	}
 
 	private patchFormWarningsMap(): void {
@@ -231,6 +203,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		if (this.readOnly) {
 			formControl.disable();
 		}
+
 		const enableFn: (opts?: { onlySelf?: boolean; emitEvent?: boolean }) => void = formControl.enable;
 		formControl.enable = (opts?: { onlySelf?: boolean; emitEvent?: boolean }) => {
 			if (!this.readOnly) {
@@ -238,10 +211,62 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 			}
 		};
 
-		const value = this.immutableValues?.get(formControl);
-		if (isValueSet(value)) {
-			formElement.getAttachedInput().setImmutableValue(value);
+		const setValueFn: (value: unknown, options?: {
+			onlySelf?: boolean;
+			emitEvent?: boolean;
+			emitModelToViewChange?: boolean;
+			emitViewToModelChange?: boolean;
+		}) => void = formControl.setValue;
+		formControl.setValue = (value: unknown, options?: {
+			onlySelf?: boolean;
+			emitEvent?: boolean;
+			emitModelToViewChange?: boolean;
+			emitViewToModelChange?: boolean;
+		}) => {
+			const path = this.getPathFromParentToControl(formControl);
+			const immutableValue = this.getImmutableValueFromPath(path);
+			if (immutableValue !== undefined && options?.emitModelToViewChange !== true) {
+				if (!isValueSet(options)) {
+					options = {};
+				}
+				options.emitModelToViewChange = true;
+			}
+			setValueFn.call(formControl, immutableValue !== undefined ? immutableValue : value, options);
+		};
+
+		const path = this.getPathFromParentToControl(formControl);
+		const immutableValue = this.getImmutableValueFromPath(path);
+		if (immutableValue !== undefined) {
+			formControl.setValue(immutableValue);
 		}
+	}
+
+	private getPathFromParentToControl(control: AbstractControl): Array<string> {
+		const path = [];
+		let currentControl = control;
+		while (currentControl.parent) {
+			const parent = currentControl.parent;
+			if (parent instanceof FormGroup) {
+				const key = Object.entries(parent.controls).find(([key, value]) => value === currentControl)[0];
+				path.push(key);
+			} else if (parent instanceof FormArray) {
+				const idx = parent.controls.findIndex(e => e === currentControl);
+				path.push(idx);
+			}
+			currentControl = parent;
+		}
+		return path.reverse();
+	}
+
+	private getImmutableValueFromPath(path: Array<string>): any {
+		let current = this.immutableValues;
+		for (const key of path) {
+			if (!isValueSet(current?.[key])) {
+				return undefined;
+			}
+			current = current[key];
+		}
+		return current;
 	}
 
 	public unregisterControl(formControl: UntypedFormControl): void {
@@ -297,25 +322,6 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 
 	public getFormElementByFormControl(control: AbstractControl): FormElementComponent {
 		return this.activeControls.find((e) => e.formControl === control)?.formElement;
-	}
-
-	private setImmutableValueForFormControl(control: AbstractControl, value: any): void {
-		if (value !== undefined) {
-			control.setValue(value);
-		}
-		if (control instanceof FormGroup) {
-			Object.entries((control as FormGroup).controls).forEach(([name, ctrl]) => {
-				this.setImmutableValueForFormControl(ctrl, value?.[name]);
-			});
-			return;
-		}
-		if (control instanceof FormArray) {
-			(control as FormArray).controls.forEach((ctrl, i) => {
-				this.setImmutableValueForFormControl(ctrl, value?.[i]);
-			});
-			return;
-		}
-		this.getFormElementByFormControl(control)?.getAttachedInput().setImmutableValue(value);
 	}
 
 	public getWarningToShow(control: AbstractControl): string | TemplateRef<any> {

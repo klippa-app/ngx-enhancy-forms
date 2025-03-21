@@ -4,18 +4,18 @@ import {
 	ElementRef,
 	EventEmitter,
 	Host,
-	Input, OnChanges,
+	Input,
 	OnDestroy,
 	OnInit,
 	Optional,
-	Output, SimpleChanges,
+	Output,
 	TemplateRef,
 	ViewChild
 } from '@angular/core';
 import {FormElementComponent} from '../../form/form-element/form-element.component';
 import {isNullOrUndefined, isValueSet, stringIsSetAndFilled} from '../../util/values';
-import { arrayIsSetAndFilled } from '../../util/arrays';
-import {cloneDeep} from "lodash";
+import {arrayIsSetAndFilled} from '../../util/arrays';
+import {cloneDeep} from 'lodash';
 
 /**
  * This component is a base in order to create a component that supports ngModel.
@@ -36,7 +36,6 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 	public changed = new Array<(value: T) => void>();
 	private touched = new Array<() => void>();
 	private prevValue: T = null;
-	private immutableValue: T = undefined;
 
 	@Input() public disabled = false;
 	// needed to prevent race conditions
@@ -77,17 +76,6 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 		}
 	}
 
-	public setImmutableValue(value: T): void {
-		this.immutableValue = value;
-		if (value !== undefined) {
-			this.writeValue(value);
-		}
-	}
-
-	public getImmutableValue(): T {
-		return cloneDeep(this.immutableValue);
-	}
-
 
 	isInErrorState(): boolean {
 		if (this.inErrorState) {
@@ -109,11 +97,7 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 
 	writeValue(value: T): void {
 		this.prevValue = value;
-		if (this.immutableValue !== undefined) {
-			this.innerValue = this.immutableValue;
-		} else {
-			this.innerValue = value;
-		}
+		this.innerValue = value;
 	}
 
 	registerOnChange(fn: (value: T) => void): void {
@@ -127,13 +111,8 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 	setInnerValueAndNotify(value: T): void {
 		const actuallySetValue = (valueToSet: T): void => {
 			this.prevValue = valueToSet;
-			if (this.immutableValue !== undefined) {
-				this.innerValue = this.immutableValue;
-				this.changed.forEach((fn) => fn(this.immutableValue));
-			} else {
-				this.innerValue = valueToSet;
-				this.changed.forEach((fn) => fn(valueToSet));
-			}
+			this.innerValue = valueToSet;
+			this.changed.forEach((fn) => fn(valueToSet));
 		};
 		if (isValueSet(this.innerValueChangeInterceptor)) {
 			this.latestInnerValueChangedInterceptorPromise = this.innerValueChangeInterceptor(this.prevValue, value);

@@ -10,16 +10,28 @@ import {AppSelectOptions, SelectComponent} from '@klippa/ngx-enhancy-forms';
 export class DemoComponent {
 	@ViewChild('myFancyTemplate') myFancyTemplate: TemplateRef<any>;
 	public formWarnings = new Map<AbstractControl, string | TemplateRef<any>>();
-	public immutableValues = new Map<AbstractControl, any>();
+	public immutableValues: Record<string, any> = {};
 	public formErrors = new Map<AbstractControl, string>();
 	constructor(private fb: FormBuilder) {
 
-		this.immutableValues = new Map<AbstractControl, any>([
-			// [this.myForm.get('oliGroup'), {name: 'olifant', age: 222}],
-			[this.myForm.get('oli'), [{name: 'immutableee', age: 111111}]],
-			[this.myForm.get('subbies'), [{name: 'immutableeEmail', age: 3.1415}]],
-		]);
-		console.log(this.myForm.get('oli'));
+		this.immutableValues = {
+			// name: 'immutable namorzzz',
+			// oliGroup: {name: 'immutableee', age: 111111},
+			emails: 'immutable email',
+			subbies: [[{name: 'immutableeEmail', age: 3.1415}]],
+		};
+
+		// this.immutableValues = new Map<AbstractControl, any>([
+		// 	// [this.myForm.get('oliGroup'), {name: 'olifant', age: 222}],
+		// 	[this.myForm.get('name'), 'immutable namorzzz'],
+		// 	[this.myForm.get('oliGroup'), {name: 'immutableee', age: 111111}],
+		// 	[this.myForm.get('subbies'), [{name: 'immutableeEmail', age: 3.1415}]],
+		// ]);
+		// console.log(this.myForm.get('oli'));
+
+		setInterval(() => {
+			// this.myForm.get('name').patchValue(Math.random().toString());
+		}, 1500);
 
 
 		setTimeout(() => {
