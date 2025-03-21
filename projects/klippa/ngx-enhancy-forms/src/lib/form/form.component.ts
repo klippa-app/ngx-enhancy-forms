@@ -24,6 +24,7 @@ import {
 import {FormElementComponent} from './form-element/form-element.component';
 import {isValueSet} from '../util/values';
 import {deepMerge} from '../util/objects';
+import {cloneDeep} from 'lodash';
 
 export const invalidFieldsSymbol = Symbol('Not all fields are valid');
 
@@ -195,10 +196,11 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		this.topLevelFormControl.patchValue = newFn;
 	}
 
-	public registerControl(formControl: UntypedFormControl, formElement: FormElementComponent): void {
+	public registerControl(formControl: UntypedFormControl, formElement: FormElementComponent): () => any {
 		this.activeControls.push({formControl, formElement});
+		let parentImmutableValueFn: () => any;
 		if (this.parent) {
-			this.parent.registerControl(formControl, formElement);
+			parentImmutableValueFn = this.parent.registerControl(formControl, formElement);
 		}
 		if (this.readOnly) {
 			formControl.disable();
@@ -209,6 +211,13 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 			if (!this.readOnly) {
 				enableFn.call(formControl, opts);
 			}
+		};
+
+		const getImmutableValueFn = (): any => {
+			const path = this.getPathFromParentToControl(formControl);
+			const immutableValue = this.getImmutableValueFromPath(path);
+			const immutableValueFromParent = parentImmutableValueFn?.();
+			return cloneDeep(immutableValue !== undefined  ?  immutableValue : immutableValueFromParent);
 		};
 
 		const setValueFn: (value: unknown, options?: {
@@ -223,8 +232,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 			emitModelToViewChange?: boolean;
 			emitViewToModelChange?: boolean;
 		}) => {
-			const path = this.getPathFromParentToControl(formControl);
-			const immutableValue = this.getImmutableValueFromPath(path);
+			const immutableValue = getImmutableValueFn();
 			if (immutableValue !== undefined && options?.emitModelToViewChange !== true) {
 				if (!isValueSet(options)) {
 					options = {};
@@ -234,11 +242,12 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 			setValueFn.call(formControl, immutableValue !== undefined ? immutableValue : value, options);
 		};
 
-		const path = this.getPathFromParentToControl(formControl);
-		const immutableValue = this.getImmutableValueFromPath(path);
+		const immutableValue = getImmutableValueFn();
 		if (immutableValue !== undefined) {
 			formControl.setValue(immutableValue);
 		}
+
+		return getImmutableValueFn;
 	}
 
 	private getPathFromParentToControl(control: AbstractControl): Array<string> {

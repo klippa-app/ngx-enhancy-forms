@@ -15,7 +15,7 @@ export class DemoComponent {
 	constructor(private fb: FormBuilder) {
 
 		this.immutableValues = {
-			// name: 'immutable namorzzz',
+			name: 'immutable namorzzz',
 			// oliGroup: {name: 'immutableee', age: 111111},
 			emails: 'immutable email',
 			subbies: [[{name: 'immutableeEmail', age: 3.1415}]],

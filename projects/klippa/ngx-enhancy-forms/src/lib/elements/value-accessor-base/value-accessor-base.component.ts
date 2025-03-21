@@ -51,6 +51,7 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 
 	private attachedFormControl: UntypedFormControl;
 	private tailTpl: TemplateRef<any>;
+	private getImmutableValueFn: () => T;
 
 	constructor(
 		@Host() @Optional() protected parent: FormElementComponent,
@@ -72,8 +73,12 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 			this.attachedFormControl.statusChanges.subscribe(() => {
 				this.disabled = this.attachedFormControl.disabled;
 			});
-			this.parent?.registerControl(this.attachedFormControl, this);
+			this.getImmutableValueFn = this.parent?.registerControl(this.attachedFormControl, this);
 		}
+	}
+
+	protected getImmutableValue(): T {
+		return this.getImmutableValueFn?.();
 	}
 
 

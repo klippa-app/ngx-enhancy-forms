@@ -99,10 +99,10 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 		}, message);
 	}
 
-	public registerControl(formControl: UntypedFormControl, input: ValueAccessorBase<any> = null): void {
+	public registerControl(formControl: UntypedFormControl, input: ValueAccessorBase<any> = null): () => any {
 		this.attachedControl = formControl;
 		this.input = input;
-		this.parent.registerControl(formControl, this);
+		const getImmutableValueFn = this.parent.registerControl(formControl, this);
 
 
 		const subscription = this.attachedControl.statusChanges.subscribe(() => {
@@ -110,6 +110,7 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 		});
 		this.subscriptions.push(subscription);
 		this.determinePopupState();
+		return getImmutableValueFn;
 	}
 
 	public determinePopupState(): void {
