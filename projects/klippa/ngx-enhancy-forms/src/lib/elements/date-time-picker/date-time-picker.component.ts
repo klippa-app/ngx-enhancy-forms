@@ -6,7 +6,7 @@ import {
 	Host,
 	Inject,
 	InjectionToken,
-	Input,
+	Input, NgZone,
 	OnChanges,
 	OnInit,
 	Optional,
@@ -23,6 +23,7 @@ import {MultipleValueAccessorBase} from '../value-accessor-base/multiple-value-a
 import {isValueSet, stringIsSetAndFilled} from '../../util/values';
 import {endOfMonth, format as formatDate, startOfMonth, isSameDay} from 'date-fns';
 import {arrayIsSetAndFilled, removeDuplicatesFromArray } from '../../util/arrays';
+import {runNextRenderCycle} from "../../util/angular";
 
 export const KLP_DATE_FORMATS = new InjectionToken<KlpDateFormats>('klp.form.date.formats');
 export const DATE_TIME_PICKER_TRANSLATIONS = new InjectionToken<any>('klp.form.dateTime.translations');
@@ -59,6 +60,7 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 
 	@ViewChild('nativeInput') nativeInputRef: ElementRef;
 	@ViewChild('picker') datePickerRef: MatDatepicker<Date>;
+	@ViewChild('timeDoubleDropdown') timeDoubleDropdown: ElementRef;
 
 	openPickerOnDate: Date = null;
 	minDateStartOfDay: Date = undefined;
@@ -77,6 +79,7 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 	private minutesTouched = false;
 	protected dropdownVisible = false;
 	protected minutesOfHour: Array<number> = [];
+	protected Number = Number;
 
 	constructor(
 		@Host() @Optional() protected parent: FormElementComponent,
@@ -84,7 +87,9 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 		@Inject(DATE_TIME_PICKER_TRANSLATIONS) @Optional() private translations: any,
 		@Inject(DATE_PICKER_LOCALE) @Optional() private datePickerLocale: any,
 		private dateAdapter: DateAdapter<Date>,
-		private cdr: ChangeDetectorRef
+		private elRef: ElementRef,
+		private cdr: ChangeDetectorRef,
+		private ngZone: NgZone,
 	) {
 		super(parent, controlContainer);
 		if (isValueSet(datePickerLocale)) {
@@ -102,6 +107,8 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 		this.minutes = this.initMinute;
 		this.minutesOfHour = Array.from({length: 60}, (v, k) => k).filter(e => e % 5 === 0);
 	}
+
+
 
 	ngAfterViewInit(): void {
 		if (this.multiple) {
@@ -379,12 +386,48 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 	blurredHours(): void {
 		this.formatTime();
 		this.touchHours();
-		this.dropdownVisible = false;
 	}
 
 	blurredMinutes(): void {
 		this.formatTime();
 		this.touchMinutes();
-		this.dropdownVisible = false;
 	}
+
+	isActive(toCheck: number, actualValue: string): boolean {
+		if (!stringIsSetAndFilled(actualValue)) {
+			return false;
+		}
+		return Number(actualValue) === toCheck;
+	}
+
+	timeDropdownRendered = () => {
+		runNextRenderCycle(() => {
+			this.ngZone.runOutsideAngular(() => {
+				document.addEventListener('mousedown',  this.clickHandlerForTimeDropdown);
+			});
+		});
+
+		const activeHour = this.timeDoubleDropdown.nativeElement.querySelector('.hourOfDay .isActive');
+		const activeMinute = this.timeDoubleDropdown.nativeElement.querySelector('.minuteOfHour .isActive');
+		const activeHourParent = activeHour?.parentElement;
+		const activeMinuteParent = activeMinute?.parentElement;
+		if (activeHourParent) {
+			activeHourParent.scrollTop = activeHour?.offsetTop - 110;
+		}
+		if (activeMinuteParent) {
+			activeMinuteParent.scrollTop = activeMinute?.offsetTop - 110;
+		}
+	}
+
+	clickHandlerForTimeDropdown = (event: MouseEvent) => {
+		if (this.dropdownVisible) {
+			const dropdown = this.elRef.nativeElement.querySelector('.timeDoubleDropdown');
+			if (!dropdown.contains(event.target)) {
+				this.ngZone.run(() => {
+					this.dropdownVisible = false;
+					document.removeEventListener('mousedown',  this.clickHandlerForTimeDropdown);
+				});
+			}
+		}
+	};
 }

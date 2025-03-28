@@ -222,6 +222,10 @@
 				&:hover {
 					background: $default-gray-light;
 				}
+				&.isActive {
+					color: white;
+					background: $default-primary;
+				}
 			}
 		}
 	}

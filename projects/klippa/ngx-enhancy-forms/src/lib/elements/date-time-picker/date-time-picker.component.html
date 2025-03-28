@@ -47,15 +47,15 @@
 			<input maxlength="2" placeholder="__" [disabled]="disabled" [(ngModel)]="minutes" (ngModelChange)="notifyNewDate()" (focus)="dropdownVisible = true" (blur)="blurredMinutes();">
 		</div>
 
-		<div class="timeDoubleDropdown" *ngIf="dropdownVisible">
+		<div class="timeDoubleDropdown" #timeDoubleDropdown *ngIf="dropdownVisible" [onRenderFn]="timeDropdownRendered">
 			<div class="hourOfDay">
 				@for (hour of counter(24); track hour) {
-					<div class="entry" (mousedown)="setHour(hour)">{{hour}}</div>
+					<div class="entry" (mousedown)="setHour(hour)" [ngClass]="{isActive: isActive(hour, hours)}">{{hour}}</div>
 				}
 			</div>
 			<div class="minuteOfHour">
 				@for (minute of minutesOfHour; track minute) {
-					<div class="entry" (mousedown)="setMinute(minute)">{{minute}}</div>
+					<div class="entry" (mousedown)="setMinute(minute)" [ngClass]="{isActive: isActive(minute, minutes)}">{{minute}}</div>
 				}
 			</div>
 		</div>
