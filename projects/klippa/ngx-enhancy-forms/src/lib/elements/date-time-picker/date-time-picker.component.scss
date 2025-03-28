@@ -158,15 +158,25 @@
 		}
 	}
 	.timeContainer {
-		flex: 0 0 auto;
+		$timeContainerWidth: 102px;
+		width: $timeContainerWidth;
+		position: relative;
 		margin-left: $spacing-medium;
-		padding: 6px $spacing-small;
-		background: $default-white;
-		display: flex;
-		align-items: center;
-		border: $border-default;
+		.timeContainerInner {
+			height: 100%;
+			flex: 0 0 auto;
+			padding: 6px $spacing-small;
+			background: $default-white;
+			display: flex;
+			align-items: center;
+			border: $border-default;
+		}
 		&.disabled {
 			background: $default-disabled-background;
+		}
+		.clockIcon {
+			width: 20px;
+			margin-right: $spacing-tiny;
 		}
 		input {
 			color: #888da8;
@@ -174,12 +184,45 @@
 			width: 20px;
 			padding: 0;
 			border: none;
+			height: 100%;
 			&::placeholder {
 				color: $default-gray-faded-dark;
 			}
 		}
 		.divider {
 			margin: 0 $spacing-tiny;
+		}
+		.timeDoubleDropdown {
+			position: absolute;
+			height: 275px;
+			width: $timeContainerWidth;
+			z-index: 1;
+			transform: translateX($timeContainerWidth) translateX(-100%); // 42 / 2
+			border: $border-default;
+			display: flex;
+			background: white;
+			.hourOfDay {
+				overflow: auto;
+				scrollbar-width: none;
+				width: 50%;
+			}
+			.minuteOfHour {
+				border-left: $border-default;
+				overflow: auto;
+				scrollbar-width: none;
+				width: 50%;
+			}
+			.entry {
+				text-align: center;
+				height: 42px;
+				width: 100%;
+				line-height: 42px;
+				background: white;
+				cursor: pointer;
+				&:hover {
+					background: $default-gray-light;
+				}
+			}
 		}
 	}
 }

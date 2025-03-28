@@ -1,4 +1,6 @@
 {{myForm.getRawValue() | json}}
+<klp-form-date-time-picker [(ngModel)]="dateTime"></klp-form-date-time-picker>
+
 <klp-form [formGroup]="myForm" [warnings]="formWarnings" [immutableValues]="immutableValues" errorMessageLocation="rightOfCaption" [readOnly]="false" allowSubmitOn="buttonOnly">
 
 	<klp-sub-form [injectInto]="myForm" at="oliGroup">

@@ -70,11 +70,13 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 	valueForMaterialDatePicker: Date;
 	hours: string; // string because it's a text input
 	minutes: string; // string because it's a text input
-	private selectedDates: Array<Date> = [];
+	protected selectedDates: Array<Date> = [];
 	private datePickingClosingFn: () => void;
 	private dateTouched = false;
 	private hoursTouched = false;
 	private minutesTouched = false;
+	protected dropdownVisible = false;
+	protected minutesOfHour: Array<number> = [];
 
 	constructor(
 		@Host() @Optional() protected parent: FormElementComponent,
@@ -98,6 +100,7 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 		}
 		this.hours = this.initHour;
 		this.minutes = this.initMinute;
+		this.minutesOfHour = Array.from({length: 60}, (v, k) => k).filter(e => e % 5 === 0);
 	}
 
 	ngAfterViewInit(): void {
@@ -304,6 +307,7 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 		return true;
 	};
 
+
 	formatTime(): void {
 		if (Number.isFinite(Number(this.hours)) && this.hours.length === 1) {
 			this.hours = '0' + this.hours;
@@ -358,5 +362,29 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 			return this.placeholder;
 		}
 		return this.translations?.[key]?.(params) ?? this.getDefaultTranslation(key)(params);
+	}
+
+	counter(i: number): Array<number> {
+		return new Array(i).fill(0).map((x, j) => j);
+	}
+
+	setHour(hour: number): void {
+		this.hours = hour > 9 ? String(hour) : '0' + hour;
+	}
+
+	setMinute(minute: number): void {
+		this.minutes = minute > 9 ? String(minute) : '0' + minute;
+	}
+
+	blurredHours(): void {
+		this.formatTime();
+		this.touchHours();
+		this.dropdownVisible = false;
+	}
+
+	blurredMinutes(): void {
+		this.formatTime();
+		this.touchMinutes();
+		this.dropdownVisible = false;
 	}
 }

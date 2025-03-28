@@ -36,9 +36,28 @@
 		</div>
 	</div>
 	<div class="timeContainer" *ngIf="showTimeInput" [ngClass]="{disabled: disabled}">
-		<input maxlength="2" placeholder="__" [disabled]="disabled" [(ngModel)]="hours" (ngModelChange)="notifyNewDate()" (blur)="formatTime(); touchHours()">
-		<div class="divider">:</div>
-		<input maxlength="2" placeholder="__" [disabled]="disabled" [(ngModel)]="minutes" (ngModelChange)="notifyNewDate()" (blur)="formatTime(); touchMinutes()">
+
+		<div class="timeContainerInner">
+			<svg class="clockIcon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" (click)="hourInput.focus()">
+				<path d="M12 6V12L16 14M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="#888da8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+
+			<input #hourInput maxlength="2" placeholder="__" [disabled]="disabled" [(ngModel)]="hours" (ngModelChange)="notifyNewDate()" (focus)="dropdownVisible = true" (blur)="blurredHours();">
+			<div class="divider">:</div>
+			<input maxlength="2" placeholder="__" [disabled]="disabled" [(ngModel)]="minutes" (ngModelChange)="notifyNewDate()" (focus)="dropdownVisible = true" (blur)="blurredMinutes();">
+		</div>
+
+		<div class="timeDoubleDropdown" *ngIf="dropdownVisible">
+			<div class="hourOfDay">
+				@for (hour of counter(24); track hour) {
+					<div class="entry" (mousedown)="setHour(hour)">{{hour}}</div>
+				}
+			</div>
+			<div class="minuteOfHour">
+				@for (minute of minutesOfHour; track minute) {
+					<div class="entry" (mousedown)="setMinute(minute)">{{minute}}</div>
+				}
+			</div>
+		</div>
 	</div>
-	<button *ngIf="clearable && !disabled" class="clearButton" (click)="resetToNull()" [ngClass]="{withoutSpacing: !showTimeInput}">×</button>
 </div>
