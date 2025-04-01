@@ -21,7 +21,7 @@
 		cursor: not-allowed;
 	}
 	input {
-		color: #888da8;
+		color: $default-text-color;
 		text-align: center;
 		width: 30px;
 		&.hourInput {

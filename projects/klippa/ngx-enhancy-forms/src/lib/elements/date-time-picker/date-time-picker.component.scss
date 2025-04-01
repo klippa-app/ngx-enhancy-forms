@@ -3,11 +3,14 @@
 
 :host {
 	display: block;
+	--mdc-icon-button-icon-size: 18px;
 	// patching some styling in the native material date picker so it is inline with our own styling
 	::ng-deep {
-
 		.mat-mdc-icon-button .mat-mdc-button-persistent-ripple {
 			border-radius: unset
+		}
+		.mat-datepicker-toggle-default-icon {
+			color: $default-text-color;
 		}
 		.mat-mdc-form-field {
 			display: block;
@@ -26,7 +29,7 @@
 				padding-bottom: 8px;
 				min-height: 40px;
 				font-size: 14px;
-				color: #888da8;
+				color: $default-text-color;
 				width: 100%;
 			}
 
@@ -74,7 +77,7 @@
 
 		.mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-text-field__input,
 		.mat-mdc-form-field-input-control, .mdc-text-field__input {
-			color: #888da8;
+			color: $default-text-color;
 		}
 		.mat-mdc-form-field-has-icon-suffix .mat-mdc-text-field-wrapper {
 			padding: 0;
@@ -108,7 +111,12 @@
 	display: flex;
 	position: relative;
 	border-radius: 2px;
-	color: #888da8;
+	color: $default-text-color;
+	::ng-deep {
+		.mdc-text-field__input::placeholder {
+			color: #aaa !important;
+		}
+	}
 	.placeholderForMultipleSelection,
 	.placeholderForSelection {
 		color: $default-gray-faded-dark;
@@ -172,14 +180,16 @@
 			border: $border-default;
 		}
 		&.disabled {
-			background: $default-disabled-background;
+			.timeContainerInner, input {
+				background: $default-disabled-background;
+			}
 		}
 		.clockIcon {
-			width: 20px;
+			width: 18px;
 			margin-right: $spacing-tiny;
 		}
 		input {
-			color: #888da8;
+			color: $default-text-color;
 			text-align: center;
 			width: 20px;
 			padding: 0;
