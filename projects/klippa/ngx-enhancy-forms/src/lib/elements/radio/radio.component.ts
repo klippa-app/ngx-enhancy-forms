@@ -23,7 +23,8 @@ export type RadioOption = {
 export class RadioComponent extends ValueAccessorBase<string>{
 	@Input() options: RadioOptions;
 	@Input() orientation: Orientation = Orientation.ROW;
-	@Input() variant: 'classic' | 'button' = 'classic';
+	@Input() variant: 'classic' | 'button' | 'buttonGray' = 'classic';
+	@Input() size: 'small' | 'medium'  = 'medium';
 	public Orientation = Orientation;
 }
 

@@ -211,7 +211,6 @@ export class DemoComponent {
 		{
 			id: '1',
 			name: '1st option',
-			description: '1nd option'
 		},
 		{
 			id: '21',

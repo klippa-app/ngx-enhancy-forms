@@ -29,6 +29,27 @@
 				border-radius: 0 6px 6px 0;
 			}
 		}
+		&.buttonGray .optionContainer {
+			&:first-child {
+				border-radius: $border-radius-default;
+			}
+
+			&:last-child {
+				border-radius: $border-radius-default;
+			}
+		}
+	}
+
+	&.buttonGray {
+		background: $default-gray-quasi-dark;
+		border-radius: $border-radius-default;
+		display: inline-block;
+	}
+
+	&.sizeSmall {
+		.optionContainer {
+			padding: 0.4rem 0.8rem;
+		}
 	}
 }
 
@@ -80,6 +101,21 @@
 		&.isSelected {
 			background: $primary;
 			color: $default-white;
+		}
+	}
+
+	&.buttonGray {
+		position: relative;
+		cursor: pointer;
+		padding: 10px 14px;
+		margin: 2px;
+		color: $default-dark;
+		background: $default-gray-quasi-dark;
+		border-radius: $border-radius-default;
+
+		&.isSelected {
+			background: $default-white;
+			color: $default-black;
 		}
 	}
 }
