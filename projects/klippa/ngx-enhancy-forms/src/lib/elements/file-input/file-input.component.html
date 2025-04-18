@@ -1,4 +1,18 @@
-<div class="componentContainer" [ngClass]="{fullParentSize: useFullParentSize, showErrors: isInErrorState()}">
+<div class="fullyCustom" *ngIf="fullyCustom">
+	<input
+		type="file"
+		#nativeInputRef
+		(change)="onChange($event.target.files)"
+		[multiple]="multiple"
+		[disabled]="disabled"
+	/>
+	<div (click)="uploadFileClicked()">
+		<ng-container [ngTemplateOutlet]="contentTpl"></ng-container>
+	</div>
+</div>
+
+<div class="componentContainer" [ngClass]="{fullParentSize: useFullParentSize, showErrors: isInErrorState()}"
+		 *ngIf="!fullyCustom">
 	<div class="buttonContainer">
 		<input
 			type="file"
@@ -7,10 +21,17 @@
 			[multiple]="multiple"
 			[disabled]="disabled"
 		>
-		<klp-form-button class="uploadButton" [isLoading]="isLoading" [disabled]="disabled" (click)="uploadFileClicked()">
+		<klp-form-button
+			class="uploadButton"
+			[isLoading]="isLoading"
+			[disabled]="disabled"
+			(click)="uploadFileClicked()"
+		>
 			<div class="innerButton">
-				<span *ngIf="buttonText">{{buttonText}}</span>
-				<div *ngIf="!buttonText"><ng-content></ng-content></div>
+				<span *ngIf="buttonText">{{ buttonText }}</span>
+				<div *ngIf="!buttonText">
+					<ng-container [ngTemplateOutlet]="contentTpl"></ng-container>
+				</div>
 				<div class="tail">
 					<ng-container [ngTemplateOutlet]="getTailTpl()"></ng-container>
 				</div>
@@ -18,7 +39,12 @@
 		</klp-form-button>
 	</div>
 	<div class="fileName" *ngIf="!onlyShowUploadButton">
-		{{getFileNames()}}
+		{{ getFileNames() }}
 	</div>
-	<klp-form-button class="clearButton" variant="white" *ngIf="shouldShowClearButton()" (click)="resetToNull()">X</klp-form-button>
+	<klp-form-button class="clearButton" variant="white" *ngIf="shouldShowClearButton()" (click)="resetToNull()">X
+	</klp-form-button>
 </div>
+
+<ng-template #contentTpl>
+	<ng-content></ng-content>
+</ng-template>
