@@ -1,6 +1,5 @@
 import {Component, Host, Input, OnInit, Optional, TemplateRef, ViewChild} from '@angular/core';
 import {FormElementComponent} from "../form-element/form-element.component";
-import {isNullOrUndefined} from "../../util/values";
 import {ErrorTypes} from "../../types";
 
 @Component({
@@ -20,11 +19,7 @@ export class FormErrorComponent implements OnInit {
 		// <some-input />
 		// That would fail, because the logic of the form error is run first, and at that moment, the `some-input` isnt registered yet
 		setTimeout(() => {
-			const attachedControl = this.parent.getAttachedControl();
 			this.parent.registerErrorHandler(this.error, this.contentRef);
-			if (isNullOrUndefined(attachedControl)) {
-				throw new Error('You added a Form Error component without an attached Form Control');
-			}
 		});
 	}
 
