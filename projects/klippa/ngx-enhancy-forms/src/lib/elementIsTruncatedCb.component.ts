@@ -1,4 +1,4 @@
-import {AfterViewInit, Directive, ElementRef, Input} from "@angular/core";
+import {AfterViewInit, Directive, ElementRef, Input, OnDestroy} from "@angular/core";
 import {awaitableForNextCycle} from "./util/angular";
 import {isValueSet} from "./util/values";
 
@@ -6,7 +6,9 @@ import {isValueSet} from "./util/values";
 @Directive({
 	selector: '[elementIsTruncatedCb]'
 })
-export class ElementIsTruncatedCbComponent implements AfterViewInit {
+export class ElementIsTruncatedCbComponent implements AfterViewInit, OnDestroy {
+	private observer: MutationObserver;
+
 	@Input() elementIsTruncatedCb = (isTruncated: boolean) => {};
 	constructor(private elementRef: ElementRef) {
 
@@ -17,11 +19,20 @@ export class ElementIsTruncatedCbComponent implements AfterViewInit {
 			return;
 		}
 
-		this.elementRef.nativeElement.addEventListener('DOMCharacterDataModified', (event) => {
-			if (isValueSet(event.target.wholeText)) {
-				this.checkForTruncation();
-			}
-		}, false);
+		const targetNode = this.elementRef.nativeElement;
+
+		const observerOptions = {
+			childList: true,
+			attributes: true,
+			subtree: true
+		};
+
+		const callback = () => {
+			this.checkForTruncation();
+		};
+
+		this.observer = new MutationObserver(callback);
+		this.observer.observe(targetNode, observerOptions);
 		this.checkForTruncation();
 	}
 
@@ -42,5 +53,9 @@ export class ElementIsTruncatedCbComponent implements AfterViewInit {
 			return Array.from(element.children).some((child) => this.isTruncated(child as HTMLElement));
 		}
 		return thisElementIsTruncated;
+	}
+
+	ngOnDestroy(): void {
+		this.observer.disconnect();
 	}
 }
