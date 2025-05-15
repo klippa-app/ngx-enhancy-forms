@@ -1,4 +1,4 @@
 <ng-template #contentRef>
-	<ng-content *ngIf="error !== 'async'"></ng-content>
+	<ng-container *ngIf="error !== 'async'" [ngTemplateOutlet]="contentChild"></ng-container>
 	<div *ngIf="error === 'async'">{{getErrorValueMessage()}}</div>
 </ng-template>

@@ -56,6 +56,6 @@ export class ElementIsTruncatedCbComponent implements AfterViewInit, OnDestroy {
 	}
 
 	ngOnDestroy(): void {
-		this.observer.disconnect();
+		this.observer?.disconnect();
 	}
 }
