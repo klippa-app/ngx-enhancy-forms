@@ -377,10 +377,12 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 
 	setHour(hour: number): void {
 		this.hours = hour > 9 ? String(hour) : '0' + hour;
+		this.notifyNewDate();
 	}
 
 	setMinute(minute: number): void {
 		this.minutes = minute > 9 ? String(minute) : '0' + minute;
+		this.notifyNewDate();
 	}
 
 	blurredHours(): void {
