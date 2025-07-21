@@ -112,6 +112,16 @@
 			flex: 0 0 auto;
 		}
 	}
+
+	&.fixedCaptionWidth {
+		.caption {
+			flex: 0 0 auto;
+		}
+		.inputContainer {
+			flex: 1 1 0px;
+			overflow: hidden;
+		}
+	}
 }
 
 .captionInputAndError {

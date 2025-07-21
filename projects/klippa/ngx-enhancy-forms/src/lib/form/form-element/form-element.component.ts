@@ -46,7 +46,7 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 	@Input() public direction: 'horizontal' | 'vertical' = 'horizontal';
 	@Input() public captionSpacing: 'percentages' | 'none' = 'percentages';
 	@Input() public verticalAlignment: 'center' | 'top' = 'center';
-	@Input() public spaceDistribution: '40-60' | '34-66' | '30-70' | 'fixedInputWidth' = '40-60';
+	@Input() public spaceDistribution: '40-60' | '34-66' | '30-70' | 'fixedInputWidth' | 'fixedCaptionWidth' = '40-60';
 	@Input() public swapInputAndCaption = false;
 	@Input() public errorMessageAsTooltip = false;
 	@Input() public errorMessageHasMaxWidth = true;
