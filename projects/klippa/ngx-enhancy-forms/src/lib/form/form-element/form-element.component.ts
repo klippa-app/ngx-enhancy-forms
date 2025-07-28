@@ -60,6 +60,7 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 	@ContentChild(NG_VALUE_ACCESSOR) fieldInput: ValueAccessorBase<any>;
 
 	public captionRef: TemplateRef<any>;
+	public captionEndRef: TemplateRef<any>;
 	public errorMessages: FormErrorMessages = DEFAULT_ERROR_MESSAGES;
 	public customErrorHandlers: Array<{ error: string; templateRef: TemplateRef<any> }> = [];
 	private input: ValueAccessorBase<any>;
@@ -164,6 +165,10 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 
 	public registerCaption(templateRef: TemplateRef<any>): void {
 		this.captionRef = templateRef;
+	}
+
+	public registerCaptionEnd(templateRef: TemplateRef<any>): void {
+		this.captionEndRef = templateRef;
 	}
 
 	public getWarningToShow(): string | TemplateRef<any> {

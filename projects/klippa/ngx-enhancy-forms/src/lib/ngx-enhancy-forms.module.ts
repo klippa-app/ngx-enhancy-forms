@@ -33,6 +33,7 @@ import {WarningIconComponent} from "./warning-icon/warning-icon.component";
 import {ElementIsTruncatedCbComponent} from "./elementIsTruncatedCb.component";
 import {OnRenderDirective} from "./onRender.component";
 import {TextAreaComponent} from "./elements/text-area/text-area.component";
+import {FormCaptionEndComponent} from "./form/form-caption-end/form-caption-end.component";
 
 @NgModule({
 	imports: [
@@ -63,6 +64,7 @@ import {TextAreaComponent} from "./elements/text-area/text-area.component";
 		ToggleComponent,
 		FileInputComponent,
 		FormCaptionComponent,
+		FormCaptionEndComponent,
 		FormElementComponent,
 		FormErrorComponent,
 		FormSubmitButtonComponent,
@@ -96,6 +98,7 @@ import {TextAreaComponent} from "./elements/text-area/text-area.component";
 		ToggleComponent,
 		FileInputComponent,
 		FormCaptionComponent,
+		FormCaptionEndComponent,
 		FormElementComponent,
 		FormErrorComponent,
 		FormSubmitButtonComponent,

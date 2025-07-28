@@ -226,7 +226,13 @@ some cool stuff here <br />
 simple form with form level errors
 
 <klp-form [formGroup]="simpleFormWithFormLevelErrors" [errors]="formErrors" errorMessageLocation="rightOfCaption" allowSubmitOn="buttonOnly">
-	<klp-form-element caption="First name" spaceDistribution="34-66" direction="vertical">
+	<klp-form-element direction="vertical">
+		<klp-form-caption>
+			First name jwz
+		</klp-form-caption>
+		<klp-form-caption-end *ngIf="showCaptionEnd">
+			draak
+		</klp-form-caption-end>
 		<klp-form-text-input formControlName="firstName" [clearable]="true">
 		</klp-form-text-input>
 	</klp-form-element>

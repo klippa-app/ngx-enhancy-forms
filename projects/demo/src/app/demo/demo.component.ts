@@ -29,8 +29,9 @@ export class DemoComponent {
 		// ]);
 		// console.log(this.myForm.get('oli'));
 
-		setInterval(() => {
+		setTimeout(() => {
 			// this.myForm.get('name').patchValue(Math.random().toString());
+			this.showCaptionEnd = true;
 		}, 1500);
 
 
@@ -38,7 +39,8 @@ export class DemoComponent {
 		// this.formWarnings.set(this.myForm.get('name'), 'This is a warning about your name');
 		// this.formWarnings.set(this.myForm.get('picker'), this.myFancyTemplate);
 			// this.formWarnings.delete(this.myForm.get('name'));
-		}, 2000);
+			this.showCaptionEnd = false;
+		}, 4000);
 
 		setTimeout(() => {
 			// this.immutableValues = new Map<AbstractControl, string>([
@@ -287,6 +289,7 @@ export class DemoComponent {
 		console.log(this.simpleFormWithFormLevelErrors.get('firstName').errors);
 	};
 	dateTime: any;
+	showCaptionEnd = false;
 
 	blurry() {
 		console.log('blurr');

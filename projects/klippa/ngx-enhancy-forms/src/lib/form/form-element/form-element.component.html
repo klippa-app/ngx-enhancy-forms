@@ -54,6 +54,9 @@
 		<div class="rightOfCaptionError" *ngIf="hasRightOfCaptionError()" [ngClass]="{errorFullyVisible: errorFullyVisible, errorMessageHasMaxWidth: errorMessageHasMaxWidth}">
 			<ng-container [ngTemplateOutlet]="errorRef" [ngTemplateOutletContext]="{forCalculation: forCalculation}"></ng-container>
 		</div>
+		<div *ngIf="captionEndRef" class="captionEndRefContainer">
+			<ng-container [ngTemplateOutlet]="captionEndRef"></ng-container>
+		</div>
 	</div>
 </ng-template>
 
