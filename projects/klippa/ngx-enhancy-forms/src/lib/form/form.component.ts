@@ -337,7 +337,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		return this.warnings.get(control);
 	}
 
-	trySubmit(): Promise<any> {
+	public trySubmit(): Promise<any> {
 		this.topLevelFormControl.markAllAsTouched();
 		const allControls: Array<UntypedFormControl> = this.getAllFormControls();
 		const originalDisabledStates = allControls.map(e => {
@@ -416,6 +416,16 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 				this.getRenderedFieldValuesFormGroup(control, enabled, newObject);
 			}
 		});
+	}
+
+	public _ext_getRenderedFieldValues(): Record<string, any> {
+		if (this.topLevelFormControl instanceof FormGroup) {
+			const renderedAndEnabledValues = this.getRenderedFieldValuesFormGroup(this.topLevelFormControl, true);
+			const renderedButDisabledValues = this.getRenderedFieldValuesFormGroup(this.topLevelFormControl, false);
+			const allRenderedValues = deepMerge(renderedAndEnabledValues, renderedButDisabledValues);
+			return allRenderedValues;
+		}
+		throw new Error('Getting values from a FormArray as topLevel is not supported (yet).');
 	}
 
 	private setDisabledStatesForAllControls(originalDisabledStates: Array<{ control: AbstractControl; disabled: boolean }>): void {
