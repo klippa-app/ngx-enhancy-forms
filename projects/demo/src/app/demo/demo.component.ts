@@ -1,5 +1,5 @@
 import {Component, TemplateRef, ViewChild} from '@angular/core';
-import {AbstractControl, FormBuilder, UntypedFormArray, UntypedFormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, UntypedFormArray, UntypedFormGroup, Validators} from '@angular/forms';
 import {AppSelectOptions, SelectComponent} from '@klippa/ngx-enhancy-forms';
 
 @Component({
@@ -80,7 +80,9 @@ export class DemoComponent {
 	}
 
 	ngOnInit(): void {
-
+		setInterval(() => {
+			console.log(this.myFormArray.controls);
+		}, 3000);
 	}
 
 	public get emails(): any[] {
@@ -290,6 +292,13 @@ export class DemoComponent {
 	};
 	dateTime: any;
 	showCaptionEnd = false;
+	items: Array<{id: string, name: string}> = [];
+	myFormArray = new FormArray([]);
+
+	submitttt = async (renderedAndEnabledValues: object, allRenderedValues: object): Promise<any> => {
+		console.log(renderedAndEnabledValues);
+		return true;
+	};
 
 	blurry() {
 		console.log('blurr');
@@ -309,5 +318,13 @@ export class DemoComponent {
 	test() {
 		// console.log('test');
 		return "test";
+	}
+
+	addItem() {
+		this.items = [...this.items, {id: 'a' + Math.random(), name: 'a' + Math.random()}];
+	}
+
+	removeItem($index: number) {
+		this.items = this.items.filter((item, i) => i !== $index);
 	}
 }

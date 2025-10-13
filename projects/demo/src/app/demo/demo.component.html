@@ -1,4 +1,18 @@
-{{myForm.getRawValue() | json}}
+
+<klp-form [formArray]="myFormArray">
+	@for (item of items; track item.id) {
+		<div style="display: flex;">
+			<klp-sub-form [injectInto]="myFormArray" [at]="$index">
+				<app-simple [text]="item.id"></app-simple>
+			</klp-sub-form>
+			<div>{{$index}}</div>
+			<button (click)="removeItem($index)">delete</button>
+		</div>
+	}
+</klp-form>
+
+<button (click)="addItem()">add</button>
+
 <klp-form-file-input [(ngModel)]="myfile" [fullyCustom]="true" (ngModelChange)="fileSelected($event)">
 	<button style="cursor: pointer">upload file</button>
 </klp-form-file-input>
@@ -111,7 +125,6 @@
 			<klp-form-radio formControlName="radioOption" [options]="radioOptionsButton" variant="button">
 			</klp-form-radio>
 		</klp-form-element>
-		{{myForm.get('emails').value}}
 		<klp-form-element caption="Emails" spaceDistribution="fixedCaptionWidth">
 			<klp-form-text-input formControlName="emails" [innerValueChangeInterceptor]="innerValueChangeInterceptor" (onBlur)="blurry()">
 			</klp-form-text-input>

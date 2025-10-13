@@ -124,7 +124,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 			const injectAt = this.subFormPlaceholder.at;
 			if (injectInto instanceof UntypedFormArray) {
 				const idx = injectInto.controls.findIndex(e => e === this.topLevelFormControl);
-				injectInto.setControl(idx, new FormControl());
+				injectInto.removeAt(idx);
 			} else if (injectInto instanceof UntypedFormGroup) {
 				if (typeof injectAt !== 'string') {
 					throw new Error(`cannot index FormGroup with ${typeof injectAt}`);

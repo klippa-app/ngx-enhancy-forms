@@ -1,4 +1,6 @@
-import { Component} from "@angular/core";
+import {Component, Input} from "@angular/core";
+import {FormGroup} from "@angular/forms";
+
 
 @Component({
 	selector: 'app-simple',
@@ -6,12 +8,15 @@ import { Component} from "@angular/core";
 	styleUrls: ['./simple.component.scss'],
 })
 export default class SimpleComponent {
-	public text = 'world';
+	@Input() text!:	string;
+	protected myFormGroup = new FormGroup({});
 
 	ngOnInit(): void {
-		setTimeout(() => {
-			console.log('update plz');
-			this.text = 'hello again!';
-		}, 1000);
+		console.log('init');
+	}
+
+
+	ngOnDestroy() {
+		console.log('destroy');
 	}
 }
