@@ -75,6 +75,9 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 			const injectInto = this.subFormPlaceholder.injectInto;
 			const injectAt = this.subFormPlaceholder.at;
 			if (injectInto instanceof UntypedFormArray) {
+				if (injectInto.at(injectAt as number) instanceof FormGroup || injectInto.at(injectAt as number) instanceof FormArray) {
+					throw new Error(`There already is a subform injected at ${injectAt}. Make sure this property does not have a formGroup or formArray already attached when linking it to a subForm.`);
+				}
 				if (typeof injectAt !== 'number') {
 					throw new Error(`cannot index FormArray with ${typeof injectAt}`);
 				}
@@ -89,6 +92,9 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 				injectInto.setControl(injectAt, this.topLevelFormControl);
 				this.onInjected.emit(valueBeforeInject);
 			} else if (injectInto instanceof UntypedFormGroup) {
+				if (injectInto.get(injectAt as string) instanceof FormGroup || injectInto.get(injectAt as string) instanceof FormArray) {
+					throw new Error(`There already is a subform injected at ${injectAt}. Make sure this property does not have a formGroup or formArray already attached when linking it to a subForm.`);
+				}
 				if (typeof injectAt !== 'string') {
 					throw new Error(`cannot index FormGroup with ${typeof injectAt}`);
 				}

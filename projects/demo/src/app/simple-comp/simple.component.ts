@@ -1,5 +1,5 @@
 import {Component, Input} from "@angular/core";
-import {FormGroup} from "@angular/forms";
+import {FormControl, FormGroup} from "@angular/forms";
 
 
 @Component({
@@ -9,7 +9,9 @@ import {FormGroup} from "@angular/forms";
 })
 export default class SimpleComponent {
 	@Input() text!:	string;
-	protected myFormGroup = new FormGroup({});
+	protected myFormGroup = new FormGroup({
+		wutu: new FormControl(),
+	});
 
 	ngOnInit(): void {
 		console.log('init');

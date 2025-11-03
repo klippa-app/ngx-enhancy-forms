@@ -22,7 +22,8 @@
 <klp-form [formGroup]="myForm" [warnings]="formWarnings" [immutableValues]="immutableValues" errorMessageLocation="rightOfCaption" [readOnly]="false" allowSubmitOn="buttonOnly">
 
 	<klp-sub-form [injectInto]="myForm" at="oliGroup">
-		<app-sub-form-group-example></app-sub-form-group-example>
+		<app-simple text="aaa"></app-simple>
+		<app-simple text="bbb"></app-simple>
 	</klp-sub-form>
 
 	<div style="height: 520px; overflow: auto; display: flex; gap: 30px">

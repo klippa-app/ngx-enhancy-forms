@@ -43,6 +43,8 @@ export class DemoComponent {
 		}, 4000);
 
 		setTimeout(() => {
+			console.log('my form');
+			console.log(this.myForm);
 			// this.immutableValues = new Map<AbstractControl, string>([
 				// [this.myForm.get('name'), 'I am immutable'],
 			// ]);
