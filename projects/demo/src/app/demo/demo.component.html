@@ -1,3 +1,5 @@
+ohja
+<app-simple text="aaa"></app-simple>
 
 <klp-form [formArray]="myFormArray">
 	@for (item of items; track item.id) {
@@ -21,9 +23,8 @@
 
 <klp-form [formGroup]="myForm" [warnings]="formWarnings" [immutableValues]="immutableValues" errorMessageLocation="rightOfCaption" [readOnly]="false" allowSubmitOn="buttonOnly">
 
-	<klp-sub-form [injectInto]="myForm" at="oliGroup">
+	<klp-sub-form [injectInto]="myForm" at="oliGroup" [manuallyTriggerInjection]="true">
 		<app-simple text="aaa"></app-simple>
-		<app-simple text="bbb"></app-simple>
 	</klp-sub-form>
 
 	<div style="height: 520px; overflow: auto; display: flex; gap: 30px">

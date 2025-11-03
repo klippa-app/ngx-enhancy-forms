@@ -1,5 +1,6 @@
-<klp-form [formGroup]="myFormGroup">
+<klp-form [formGroup]="myFormGroup" #formComponent [onRenderFn]="hookUpAsSubForm">
 	ohai {{text}}
 	<klp-form-text-input formControlName="wutu"></klp-form-text-input>
 </klp-form>
 
+<app-sub-form-example></app-sub-form-example>

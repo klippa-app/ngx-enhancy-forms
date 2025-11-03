@@ -1,6 +1,6 @@
 import {Component, TemplateRef, ViewChild} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, UntypedFormArray, UntypedFormGroup, Validators} from '@angular/forms';
-import {AppSelectOptions, SelectComponent} from '@klippa/ngx-enhancy-forms';
+import {AppSelectOptions, FormComponent, SelectComponent} from '@klippa/ngx-enhancy-forms';
 
 @Component({
 	selector: 'app-demo',
@@ -329,4 +329,5 @@ export class DemoComponent {
 	removeItem($index: number) {
 		this.items = this.items.filter((item, i) => i !== $index);
 	}
+
 }

@@ -35,6 +35,7 @@ export const invalidFieldsSymbol = Symbol('Not all fields are valid');
 export class SubFormDirective {
 	@Input() injectInto: UntypedFormArray | UntypedFormGroup;
 	@Input() at: number | string;
+	@Input() manuallyTriggerInjection: boolean = false;
 }
 
 @Component({
@@ -72,43 +73,61 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 			this.addSupportForPatchValueInterceptor();
 		}
 		if (isValueSet(this.parent) && isValueSet(this.subFormPlaceholder)) {
-			const injectInto = this.subFormPlaceholder.injectInto;
-			const injectAt = this.subFormPlaceholder.at;
-			if (injectInto instanceof UntypedFormArray) {
-				if (injectInto.at(injectAt as number) instanceof FormGroup || injectInto.at(injectAt as number) instanceof FormArray) {
-					throw new Error(`There already is a subform injected at ${injectAt}. Make sure this property does not have a formGroup or formArray already attached when linking it to a subForm.`);
-				}
-				if (typeof injectAt !== 'number') {
-					throw new Error(`cannot index FormArray with ${typeof injectAt}`);
-				}
-				if (injectInto.at(injectAt)?.disabled) {
-					this.topLevelFormControl.disable();
-				}
-				const source = injectInto.at(injectAt);
-				const valueBeforeInject = source?.value;
-				if (isValueSet(valueBeforeInject)) {
-					this.topLevelFormControl.patchValue(valueBeforeInject);
-				}
-				injectInto.setControl(injectAt, this.topLevelFormControl);
-				this.onInjected.emit(valueBeforeInject);
-			} else if (injectInto instanceof UntypedFormGroup) {
-				if (injectInto.get(injectAt as string) instanceof FormGroup || injectInto.get(injectAt as string) instanceof FormArray) {
-					throw new Error(`There already is a subform injected at ${injectAt}. Make sure this property does not have a formGroup or formArray already attached when linking it to a subForm.`);
-				}
-				if (typeof injectAt !== 'string') {
-					throw new Error(`cannot index FormGroup with ${typeof injectAt}`);
-				}
-				if (injectInto.get(injectAt)?.disabled) {
-					this.topLevelFormControl.disable();
-				}
-				const source = injectInto.get(injectAt);
-				const valueBeforeInject = source?.value;
-				if (isValueSet(valueBeforeInject)) {
-					this.topLevelFormControl.patchValue(valueBeforeInject);
-				}
-				injectInto.setControl(injectAt, this.topLevelFormControl);
-				this.onInjected.emit(valueBeforeInject);
+			if (this.subFormPlaceholder.manuallyTriggerInjection) {
+				return;
 			}
+			// if the `formComponentToInject` is not set, just attach the first that requests an injection
+			this.attachAsSubForm();
+		}
+	}
+
+	public _ext_attachAsSubForm(): void {
+		if (!isValueSet(this.parent)) {
+			throw new Error('No parent to inject this form into was found.');
+		}
+		if (!isValueSet(this.subFormPlaceholder)) {
+			throw new Error('Subform directive not found.');
+		}
+		this.attachAsSubForm();
+	}
+
+	private attachAsSubForm(): void {
+		const injectInto = this.subFormPlaceholder.injectInto;
+		const injectAt = this.subFormPlaceholder.at;
+		if (injectInto instanceof UntypedFormArray) {
+			if (injectInto.at(injectAt as number) instanceof FormGroup || injectInto.at(injectAt as number) instanceof FormArray) {
+				throw new Error(`There already is a subform injected at ${injectAt}. Make sure this property does not have a formGroup or formArray already attached when linking it to a subForm.`);
+			}
+			if (typeof injectAt !== 'number') {
+				throw new Error(`cannot index FormArray with ${typeof injectAt}`);
+			}
+			if (injectInto.at(injectAt)?.disabled) {
+				this.topLevelFormControl.disable();
+			}
+			const source = injectInto.at(injectAt);
+			const valueBeforeInject = source?.value;
+			if (isValueSet(valueBeforeInject)) {
+				this.topLevelFormControl.patchValue(valueBeforeInject);
+			}
+			injectInto.setControl(injectAt, this.topLevelFormControl);
+			this.onInjected.emit(valueBeforeInject);
+		} else if (injectInto instanceof UntypedFormGroup) {
+			if (injectInto.get(injectAt as string) instanceof FormGroup || injectInto.get(injectAt as string) instanceof FormArray) {
+				throw new Error(`There already is a subform injected at ${injectAt}. Make sure this property does not have a formGroup or formArray already attached when linking it to a subForm.`);
+			}
+			if (typeof injectAt !== 'string') {
+				throw new Error(`cannot index FormGroup with ${typeof injectAt}`);
+			}
+			if (injectInto.get(injectAt)?.disabled) {
+				this.topLevelFormControl.disable();
+			}
+			const source = injectInto.get(injectAt);
+			const valueBeforeInject = source?.value;
+			if (isValueSet(valueBeforeInject)) {
+				this.topLevelFormControl.patchValue(valueBeforeInject);
+			}
+			injectInto.setControl(injectAt, this.topLevelFormControl);
+			this.onInjected.emit(valueBeforeInject);
 		}
 	}
 
