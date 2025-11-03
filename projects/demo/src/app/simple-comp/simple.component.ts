@@ -4,7 +4,6 @@ import {FormComponent, SubFormDirective} from "@klippa/ngx-enhancy-forms";
 import {isValueSet} from "../../../../klippa/ngx-enhancy-forms/src/lib/util/values";
 
 
-;
 @Component({
 	selector: 'app-simple',
 	templateUrl: './simple.component.html',
