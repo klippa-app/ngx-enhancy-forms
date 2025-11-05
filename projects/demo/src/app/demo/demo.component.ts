@@ -32,6 +32,7 @@ export class DemoComponent {
 		setTimeout(() => {
 			// this.myForm.get('name').patchValue(Math.random().toString());
 			this.showCaptionEnd = true;
+			this.myPrefix = 'changed prefix';
 		}, 1500);
 
 
@@ -301,6 +302,7 @@ export class DemoComponent {
 		console.log(renderedAndEnabledValues);
 		return true;
 	};
+	myPrefix: string = 'for real';
 
 	blurry() {
 		console.log('blurr');

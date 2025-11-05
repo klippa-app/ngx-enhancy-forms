@@ -130,6 +130,12 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 		if (changes.dropdownPosition) {
 			this.dropdownPositionToUse = this.dropdownPosition;
 		}
+		if (changes.prefix) {
+			const container = this.elRef?.nativeElement?.querySelector('.ng-select-container .prefix');
+			if (isValueSet(container)) {
+				container.innerText = changes.prefix.currentValue;
+			}
+		}
 	}
 
 	getDefaultTranslation(key: string): (x: any) => string {
