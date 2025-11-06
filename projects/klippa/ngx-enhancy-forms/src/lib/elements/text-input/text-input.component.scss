@@ -39,10 +39,14 @@ input {
 
 	&.noBorderLeft {
 		border-left: none;
+		border-top-left-radius: 0px;
+		border-bottom-left-radius: 0px;
 	}
 
 	&.noBorderRight {
 		border-right: none;
+		border-top-right-radius: 0px;
+		border-bottom-right-radius: 0px;
 	}
 }
 

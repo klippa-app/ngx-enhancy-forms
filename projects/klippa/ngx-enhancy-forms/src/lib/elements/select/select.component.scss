@@ -281,6 +281,17 @@ ng-select.showErrors {
 :host .ng-select.withSeparatingLine ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option{
 	border-bottom: 1px solid #e3e3e3;
 }
+:host .ng-select.noBorderLeft ::ng-deep .ng-select-container{
+		border-left: none;
+		border-top-left-radius: 0px;
+		border-bottom-left-radius: 0px;
+}
+:host .ng-select.noBorderRight ::ng-deep .ng-select-container{
+		border-right: none;
+		border-top-right-radius: 0px;
+		border-bottom-right-radius: 0px;
+}
+
 :host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected{
   color:#333;
   background-color:$color-marked;
