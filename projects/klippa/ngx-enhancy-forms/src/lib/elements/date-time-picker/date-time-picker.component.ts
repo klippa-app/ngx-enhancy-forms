@@ -432,4 +432,9 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 			}
 		}
 	};
+
+	shizzle() {
+		console.log('a');
+		this.datePickerRef.open();
+	}
 }

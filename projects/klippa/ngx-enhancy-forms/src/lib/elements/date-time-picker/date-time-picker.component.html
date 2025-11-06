@@ -9,6 +9,10 @@
 				<span *ngIf="selectedDates.length === 1">{{getTranslation('selectedDate', selectedDates[0])}}</span>
 				<span *ngIf="selectedDates.length === 0" class="placeholderForMultipleSelection">{{getTranslation('selectDays')}}</span>
 			</div>
+
+			@if (disabled) {
+				<div class="disabledClickArea" (click)="picker.open()"></div>
+			}
 			<input
 				#nativeInput
 				matInput
@@ -20,9 +24,8 @@
 				[min]="minDateStartOfDay"
 				[max]="maxDateEndOfDay"
 				[placeholder]="getTranslation('placeholder')"
-				(click)="picker.open()"
 				(blur)="touchDate()"
-				[ngClass]="{inputForMultipleDays: multiple}"
+				[ngClass]="{inputForMultipleDays: multiple, disabled: disabled}"
 			>
 			<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 			<mat-datepicker

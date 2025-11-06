@@ -4,6 +4,7 @@
 :host {
 	display: block;
 	--mdc-icon-button-icon-size: 18px;
+	--mui-palette-text-disabled: red;
 	// patching some styling in the native material date picker so it is inline with our own styling
 	::ng-deep {
 		.mat-mdc-icon-button .mat-mdc-button-persistent-ripple {
@@ -99,6 +100,14 @@
 		.inputForMultipleDays {
 			display: none;
 		}
+		.disabledClickArea {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			z-index: 1;
+		}
 
 		.mat-mdc-form-field.mat-focused, .mat-mdc-form-field-focus-overlay {
 			opacity: unset;
@@ -151,17 +160,33 @@
 		flex: 1 1 auto;
 		background: $default-white;
 		border: $border-default;
+		border-radius: $border-radius-default;
 		display: flex;
 		&.noRightBorder {
 			border-right: none;
 		}
 		&.disabled {
 			background: $default-disabled-background;
+			border-color: transparent;
+			cursor: pointer;
+			&::ng-deep input {
+				cursor: pointer;
+			}
+		}
+		&:hover {
+			border-color: $border-color-hover;
+		}
+		&:focus-within {
+			border-color: $default-focus-color;
+			outline: 1px solid $default-focus-color;
 		}
 		&::ng-deep input {
 			padding-right: $spacing-huge;
 			&:placeholder-shown {
 				text-overflow: ellipsis;
+			}
+			@include placeholder {
+				color: red;
 			}
 		}
 	}
@@ -178,12 +203,22 @@
 			display: flex;
 			align-items: center;
 			border: $border-default;
+			border-radius: $border-radius-default;
+			&:hover {
+				border-color: $border-color-hover;
+			}
+
+			&:focus-within {
+				border-color: $default-focus-color;
+				outline: 1px solid $default-focus-color;
+			}
 		}
 		&.disabled {
 			.timeContainerInner, input {
 				background: $default-disabled-background;
 			}
 		}
+
 		.clockIcon {
 			width: 18px;
 			margin-right: $spacing-tiny;

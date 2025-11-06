@@ -7,6 +7,8 @@
 
 .componentContainer {
 	height: 42px;
+	@include formControl();
+	width: initial;
 	flex: 0 0 auto;
 	padding: 6px $spacing-small;
 	background: $default-white;
@@ -20,9 +22,14 @@
 		background: $default-disabled-background;
 		cursor: not-allowed;
 	}
+	&:focus-within {
+		border-color: $default-focus-color;
+		outline: 1px solid $default-focus-color;
+	}
 	input {
 		color: $default-text-color;
 		text-align: center;
+		height: 100%;
 		width: 30px;
 		&.hourInput {
 			width: 50px;

@@ -67,7 +67,7 @@ label {
 .checkboxNative {
 	&:hover {
 		+ .checkboxVisual {
-			border-color: $default-text-color;
+			border-color: $border-color-hover;
 			&.filledWithColor {
 				border-color: $primary;
 			}

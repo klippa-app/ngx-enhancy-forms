@@ -26,22 +26,24 @@
 @mixin formControl() {
   display: block;
   border: 1px solid $border-color;
-  border-radius: 2px;
+	&:hover {
+		border-color: $border-color-hover;
+	}
+  border-radius: $border-radius-default;
   box-shadow: none;
   height: 42px;
   width: 100%;
   padding: $padding-small $padding-large;
   font-size: 14px;
   color: $default-text-color;
-  @include transition(all 0.2s ease-in);
   @include placeholder {
-    color: $default-gray-faded-dark;
+    color: $default-placeholder-color;
   }
 
   &:focus {
-    outline: 0 none;
+    outline: 1px solid $default-focus-color;
     box-shadow: none;
-    border-color: lighten($primary, 10%);
+    border-color: $default-focus-color;
   }
 
   &.input-sm {
@@ -64,6 +66,10 @@
   }
 	&:placeholder-shown {
 		text-overflow: ellipsis;
+	}
+	&[disabled] {
+		background-color: $default-disabled-background;
+		border-color: $default-disabled-background;
 	}
 }
 

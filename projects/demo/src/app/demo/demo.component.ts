@@ -294,7 +294,7 @@ export class DemoComponent {
 		this.formErrors.set(this.simpleFormWithFormLevelErrors.get('lastName'), 'Your last name makes no sense');
 		console.log(this.simpleFormWithFormLevelErrors.get('firstName').errors);
 	};
-	dateTime: any;
+	dateTime : Date = new Date();
 	showCaptionEnd = false;
 	items: Array<{id: string, name: string}> = [];
 	myFormArray = new FormArray([]);
