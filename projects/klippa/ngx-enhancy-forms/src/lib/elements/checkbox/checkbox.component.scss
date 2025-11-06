@@ -1,19 +1,28 @@
 @import '../../../style/themes/default/variables';
-$size: 22px;
+$size: 20px;
 :host {
 	display: block;
 }
 .componentContainer {
 	display: flex;
+	align-items: center;
 	margin-bottom: 0;
 }
 .checkboxContainer {
 	position: relative;
 }
+.checkBoxVisualContainer {
+	padding: 2px;
+	margin-right: 10px;
+	border-radius: 4px;
+	&:focus-within {
+		outline: 2px solid $primary;
+	}
+}
 .caption {
 	cursor: pointer;
-	font-weight: bold;
-	color: $default-text-color;
+	font-weight: 400;
+	color: $default-black;
 }
 
 .checkboxNative {
@@ -28,14 +37,15 @@ $size: 22px;
 
 .checkboxVisual {
 	pointer-events: none;
-  color: $primary;
   padding: $padding-tiny;
+	color: $default-white;
   width: $size;
   height: $size;
-  display: inline-block;
-  border: 2px solid $border-color;
-  border-radius: 3px;
-  margin-right: 10px;
+  display: flex;
+	align-items: center;
+	justify-content: center;
+  border: 1px solid $border-color;
+	border-radius: 4px;
   font-size: 15px;
   font-weight: 400;
   line-height: 19px;
@@ -43,13 +53,38 @@ $size: 22px;
   text-align: center;
   background-color: $default-white;
   cursor: pointer;
+	&.filledWithColor {
+  	background-color: $primary;
+  	border-color: $primary;
+	}
+}
+
+.checkboxNative {
+	&:hover {
+		+ .checkboxVisual {
+			border-color: $default-text-color;
+			&.filledWithColor {
+				border-color: $primary;
+			}
+		}
+		&[disabled] {
+			+ .checkboxVisual {
+				border-color: $default-gray-quasi-dark;
+				&.filledWithColor {
+					border-color: $default-gray;
+				}
+			}
+		}
+	}
 }
 
 .checkboxNative[disabled] {
 	cursor: not-allowed;
 	+ .checkboxVisual {
-		&:before {
-			color: $default-gray-dark;
+		background-color: $default-gray;
+		border-color: $default-gray-quasi-dark;
+		svg {
+			color: $default-text-color;
 		}
 	}
 }

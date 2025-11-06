@@ -50,12 +50,12 @@ $default-black:           #101828 !default;
 $default-dark:            #515365 !default;
 $default-white:           #ffffff !default;
 $default-gray-light:      #f8f9fa !default;
-$default-gray:            #f6f7fb !default;
+$default-gray:            #F2F4F7 !default;
 $default-gray-quasi-dark: #eaecf0 !default;
 $default-gray-semi-dark:  #cccccc !default;
 $default-gray-faded-dark: #adadad !default;
 $default-gray-dark:       #666666 !default;
-$default-text-color:      #888da8 !default;
+$default-text-color:      #98A2B3 !default;
 $default-primary:         #7774e7 !default;
 $default-success:         #37c936 !default;
 $default-info:            #0f9aee !default;
@@ -85,7 +85,7 @@ $inverse-danger: lighten($default-danger, 35%);
 //==================================
 // 	Misc
 //==================================
-$border-color:            #e6ecf5;
+$border-color:            #D0D5DD;
 $header-height:           65px;
 $offscreen-size:          280px;
 $collapsed-size:          70px;

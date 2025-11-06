@@ -12,6 +12,7 @@ export class DemoComponent {
 	public formWarnings = new Map<AbstractControl, string | TemplateRef<any>>();
 	public immutableValues: Record<string, any> = {};
 	public formErrors = new Map<AbstractControl, string>();
+	public myBoolean: boolean = undefined;
 	constructor(private fb: FormBuilder) {
 
 		this.immutableValues = {
