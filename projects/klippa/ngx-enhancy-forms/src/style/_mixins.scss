@@ -40,7 +40,7 @@
     color: $default-placeholder-color;
   }
 
-  &:focus {
+  &:focus, &:focus-within {
     outline: 1px solid $default-focus-color;
     box-shadow: none;
     border-color: $default-focus-color;

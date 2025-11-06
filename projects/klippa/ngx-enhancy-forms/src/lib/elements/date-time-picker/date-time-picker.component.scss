@@ -4,7 +4,6 @@
 :host {
 	display: block;
 	--mdc-icon-button-icon-size: 18px;
-	--mui-palette-text-disabled: red;
 	// patching some styling in the native material date picker so it is inline with our own styling
 	::ng-deep {
 		.mat-mdc-icon-button .mat-mdc-button-persistent-ripple {

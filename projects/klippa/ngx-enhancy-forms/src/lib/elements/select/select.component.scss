@@ -1,7 +1,8 @@
 @import '../../../style/themes/default/variables';
-$color-marked: lighten($primary, 50%)!default;
-$label-background: lighten($primary, 50%)!default;
-$label-border: lighten($primary, 30%)!default;
+@import '../../../style/mixins';
+$color-marked: $primary-light !default;
+$label-background: #FFFFFF !default;
+$label-border: $border-color !default;
 
 :host {
 	display: block;
@@ -15,7 +16,12 @@ ng-select.showErrors {
 	}
 }
 :host ::ng-deep ng-select.ng-select .ng-select-container {
-  color: $default-text-color;
+  @include formControl();
+	display: flex;
+	&:focus, &:focus-within {
+		border-color: $border-color;
+		outline: none;
+	}
 }
 
 :host ::ng-deep .ng-select.ng-select-opened>.ng-select-container{
@@ -42,7 +48,10 @@ ng-select.showErrors {
   border-top-left-radius:0
 }
 :host ::ng-deep .ng-select.ng-select-disabled>.ng-select-container{
-  background-color:#f9f9f9
+	&, &:hover {
+		background-color: $default-disabled-background;
+		border-color: $default-disabled-background;
+	}
 }
 :host ::ng-deep .ng-select .ng-has-value .ng-placeholder{
   display:none
@@ -124,8 +133,8 @@ ng-select.showErrors {
   margin-top:3px;
   margin-bottom:3px;
   background-color:$label-background;
-  border-radius:2px;
   border:1px solid $label-border;
+  border-radius:6px;
 	display: flex;
 	overflow: hidden;
 }
@@ -191,7 +200,7 @@ ng-select.showErrors {
 }
 :host ::ng-deep .ng-dropdown-panel{
   background-color:#fff;
-  border:1px solid lighten($primary, 10%);
+  border: 1px solid $border-color;
   box-shadow:0 1px 0 rgba(0,0,0,0.06)
 }
 :host ::ng-deep .ng-dropdown-panel.ng-select-bottom{
