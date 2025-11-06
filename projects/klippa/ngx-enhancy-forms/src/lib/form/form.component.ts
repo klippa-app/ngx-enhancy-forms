@@ -36,6 +36,7 @@ export class SubFormDirective {
 	@Input() injectInto: UntypedFormArray | UntypedFormGroup;
 	@Input() at: number | string;
 	@Input() manuallyTriggerInjection: boolean = false;
+	@Input() allowInjectionToOverwrite: boolean = false;
 }
 
 @Component({
@@ -64,7 +65,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		formElement: FormElementComponent;
 	}> = [];
 
-	constructor(@SkipSelf() @Optional() private parent: FormComponent, @Optional() private subFormPlaceholder: SubFormDirective) {
+	constructor(@SkipSelf() @Optional() private parent: FormComponent, @Optional() private subFormDirective: SubFormDirective) {
 	}
 
 	ngOnInit(): void {
@@ -72,8 +73,8 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		if (isValueSet(this.patchValueInterceptor)) {
 			this.addSupportForPatchValueInterceptor();
 		}
-		if (isValueSet(this.parent) && isValueSet(this.subFormPlaceholder)) {
-			if (this.subFormPlaceholder.manuallyTriggerInjection) {
+		if (isValueSet(this.parent) && isValueSet(this.subFormDirective)) {
+			if (this.subFormDirective.manuallyTriggerInjection) {
 				return;
 			}
 			// if the `formComponentToInject` is not set, just attach the first that requests an injection
@@ -85,18 +86,21 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		if (!isValueSet(this.parent)) {
 			throw new Error('No parent to inject this form into was found.');
 		}
-		if (!isValueSet(this.subFormPlaceholder)) {
+		if (!isValueSet(this.subFormDirective)) {
 			throw new Error('Subform directive not found.');
 		}
 		this.attachAsSubForm();
 	}
 
 	private attachAsSubForm(): void {
-		const injectInto = this.subFormPlaceholder.injectInto;
-		const injectAt = this.subFormPlaceholder.at;
+		const injectInto = this.subFormDirective.injectInto;
+		const injectAt = this.subFormDirective.at;
+		const allowInjectionToOverwrite = this.subFormDirective.allowInjectionToOverwrite;
 		if (injectInto instanceof UntypedFormArray) {
-			if (injectInto.at(injectAt as number) instanceof FormGroup || injectInto.at(injectAt as number) instanceof FormArray) {
-				throw new Error(`There already is a subform injected at ${injectAt}. Make sure this property does not have a formGroup or formArray already attached when linking it to a subForm.`);
+			if (!allowInjectionToOverwrite) {
+				if (injectInto.at(injectAt as number) instanceof FormGroup || injectInto.at(injectAt as number) instanceof FormArray) {
+					throw new Error(`There already is a subform injected at ${injectAt}. Make sure this property does not have a formGroup or formArray already attached when linking it to a subForm.`);
+				}
 			}
 			if (typeof injectAt !== 'number') {
 				throw new Error(`cannot index FormArray with ${typeof injectAt}`);
@@ -112,8 +116,10 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 			injectInto.setControl(injectAt, this.topLevelFormControl);
 			this.onInjected.emit(valueBeforeInject);
 		} else if (injectInto instanceof UntypedFormGroup) {
-			if (injectInto.get(injectAt as string) instanceof FormGroup || injectInto.get(injectAt as string) instanceof FormArray) {
-				throw new Error(`There already is a subform injected at ${injectAt}. Make sure this property does not have a formGroup or formArray already attached when linking it to a subForm.`);
+			if (!allowInjectionToOverwrite) {
+				if (injectInto.get(injectAt as string) instanceof FormGroup || injectInto.get(injectAt as string) instanceof FormArray) {
+					throw new Error(`There already is a subform injected at ${injectAt}. Make sure this property does not have a formGroup or formArray already attached when linking it to a subForm.`);
+				}
 			}
 			if (typeof injectAt !== 'string') {
 				throw new Error(`cannot index FormGroup with ${typeof injectAt}`);
@@ -144,9 +150,9 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 	}
 
 	ngOnDestroy(): void {
-		if (isValueSet(this.parent) && isValueSet(this.subFormPlaceholder)) {
-			const injectInto = this.subFormPlaceholder.injectInto;
-			const injectAt = this.subFormPlaceholder.at;
+		if (isValueSet(this.parent) && isValueSet(this.subFormDirective)) {
+			const injectInto = this.subFormDirective.injectInto;
+			const injectAt = this.subFormDirective.at;
 			if (injectInto instanceof UntypedFormArray) {
 				const idx = injectInto.controls.findIndex(e => e === this.topLevelFormControl);
 				injectInto.removeAt(idx);
