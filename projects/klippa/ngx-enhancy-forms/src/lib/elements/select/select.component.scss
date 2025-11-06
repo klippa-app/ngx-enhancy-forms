@@ -92,10 +92,6 @@ ng-select.showErrors {
   outline: none;
   overflow: visible;
   padding: .375rem .75rem;
-  transition-delay: 0s;
-  transition-duration: .2s;
-  transition-property: all;
-  transition-timing-function: ease-in;
   width: 100%;
 }
 :host ::ng-deep .ng-select .ng-select-container:hover{
