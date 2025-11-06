@@ -1,21 +1,23 @@
-<label class="componentContainer">
-	<div class="checkboxContainer">
-		<div class="checkBoxVisualContainer">
-			<input type="checkbox" class="checkboxNative"
-				[(ngModel)]="innerValue"
-				(change)="setInnerValueAndNotify(innerValue); touch()"
-				[disabled]="disabled"
-				#nativeInputRef
-			/>
-			<div class="checkboxVisual" [ngClass]="{filledWithColor: innerValue === true || (renderUndefinedAsIndeterminate && innerValue === undefined)}">
-				<svg *ngIf="innerValue === true" version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="9" viewBox="0 0 12 9" fill="none">
-					<path d="M10.3333 1L3.91667 7.41667L1 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-				</svg>
-				<svg *ngIf="renderUndefinedAsIndeterminate && innerValue === undefined" xmlns="http://www.w3.org/2000/svg" width="11" height="2" viewBox="0 0 11 2" fill="none">
-					<path d="M1 1H9.16667" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-				</svg>
+<div class="componentContainer">
+	<label>
+		<div class="checkboxContainer">
+			<div class="checkBoxVisualContainer">
+				<input type="checkbox" class="checkboxNative"
+					[(ngModel)]="innerValue"
+					(change)="setInnerValueAndNotify(innerValue); touch()"
+					[disabled]="disabled"
+					#nativeInputRef
+				/>
+				<div class="checkboxVisual" [ngClass]="{filledWithColor: innerValue === true || (renderUndefinedAsIndeterminate && innerValue === undefined)}">
+					<svg *ngIf="innerValue === true" version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="9" viewBox="0 0 12 9" fill="none">
+						<path d="M10.3333 1L3.91667 7.41667L1 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+					<svg *ngIf="renderUndefinedAsIndeterminate && innerValue === undefined" xmlns="http://www.w3.org/2000/svg" width="11" height="2" viewBox="0 0 11 2" fill="none">
+						<path d="M1 1H9.16667" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div *ngIf="caption" class="caption">{{ caption }}</div>
-</label>
+		<div *ngIf="caption" class="caption">{{ caption }}</div>
+	</label>
+</div>

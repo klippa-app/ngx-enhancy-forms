@@ -8,6 +8,11 @@ $size: 20px;
 	align-items: center;
 	margin-bottom: 0;
 }
+label {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 .checkboxContainer {
 	position: relative;
 }
