@@ -17,6 +17,7 @@ ng-select.showErrors {
 }
 :host ::ng-deep ng-select.ng-select .ng-select-container {
   @include formControl();
+	min-height: 42px;
 	display: flex;
 	&:focus, &:focus-within {
 		border-color: $border-color;
