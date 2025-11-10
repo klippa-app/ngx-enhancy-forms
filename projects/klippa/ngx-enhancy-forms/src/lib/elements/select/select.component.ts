@@ -338,6 +338,18 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 		});
 	}
 
+	onFocus(): void {
+		const singleValueInputElement = this.elRef.nativeElement.querySelector('.ng-select-single .ng-input');
+		const prefixElement = this.elRef.nativeElement.querySelector('.ng-select-single .prefix');
+		if (isValueSet(singleValueInputElement) && isValueSet(prefixElement)) {
+			const prefixWidth = prefixElement.getBoundingClientRect().width;
+			const spacing = '0.4rem';
+			singleValueInputElement.style.left = `calc(${prefixWidth}px + ${spacing})`;
+		} else if (isValueSet(singleValueInputElement)) {
+			singleValueInputElement.style.left = `0px`;
+		}
+	}
+
 	ngOnDestroy(): void {
 		super.ngOnDestroy();
 		this.elRef.nativeElement?.querySelector('input')?.removeEventListener('keydown', this.keyListener);

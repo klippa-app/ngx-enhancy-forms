@@ -21,6 +21,7 @@
 	(scroll)="onScroll($event.end)"
 	(open)="onOpen()"
 	(close)="onClose()"
+	(focus)="onFocus()"
 >
 	<ng-template let-item="item" ng-option-tmp>
 		<ng-container *ngIf="customOptionTpl" [ngTemplateOutlet]="customOptionTpl" [ngTemplateOutletContext]="{item: item}"></ng-container>
