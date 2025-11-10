@@ -21,6 +21,7 @@
 				[(ngModel)]="valueForMaterialDatePicker"
 				(dateInput)="dateChanged($event)"
 				(input)="nativeValueChanged()"
+				(click)="picker.open()"
 				[min]="minDateStartOfDay"
 				[max]="maxDateEndOfDay"
 				[placeholder]="getTranslation('placeholder')"
