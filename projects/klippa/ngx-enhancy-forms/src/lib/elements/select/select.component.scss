@@ -69,6 +69,9 @@ ng-select.showErrors {
 	}
 
 	.ng-select.ng-select-multiple {
+		.ng-value {
+			flex-direction: row-reverse;
+		}
 		.ng-select-container .ng-value-container .ng-value {
 			white-space: initial;
 		}
@@ -153,11 +156,18 @@ ng-select.showErrors {
   display:inline-block;
   padding:0px 5px
 }
-:host ::ng-deep .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value .ng-value-icon:hover{
-  background-color:$label-border;
-}
 :host ::ng-deep .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value .ng-value-icon.left{
-  border-right:1px solid $label-border;
+  border-right: none;
+	line-height: 1rem;
+	font-size: 1rem;
+	border-radius: 3px;
+	align-self: center;
+	margin-right:2px;
+	color: $border-color-hover;
+	&:hover {
+		background-color: $default-gray;
+		color: $default-gray-dark;
+	}
 }
 :host ::ng-deep .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value .ng-value-icon.right{
   border-left:1px solid #c2e0ff
@@ -253,10 +263,14 @@ ng-select.showErrors {
 :host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option{
   background-color:#fff;
   color:rgba(0,0,0,0.87);
-	padding: 8px 10px;
+	padding: 1px 6px;
 	display: flex;
+	border-radius: 6px;
+	box-sizing: content-box;
 	div {
 		white-space: nowrap;
+		min-width: 100%;
+		cursor: pointer;
 	}
 }
 :host .ng-select.truncateOptions ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option{
@@ -290,16 +304,41 @@ ng-select.showErrors {
 		border-bottom-right-radius: 0px;
 }
 
-:host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected{
-  color:#333;
-  background-color:$color-marked;
+:host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected {
+	&.ng-option-marked {
+		>div {
+			color: $primary-dark;
+			background-color: $primary-light-2;
+		}
+	}
+	>div {
+		color: $primary-dark;
+		background-color:$color-marked;
+		/*
+		Leaving the checkmark out for now, too complex when the option itself is so large that it grows the panel. Then, the checkmarks overlaps the option's text
+
+		&::after {
+			content: '';
+			display: inline-block;
+			position: relative;
+			right: 14px;
+			width: 18px;
+			height: 16px;
+			background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M4 12l6 6L20 6" stroke="green" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+
+			background-size: cover;
+		}
+	*/
+	}
 }
+
+
 :host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected .ng-option-label{
   font-weight:600
 }
-:host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked{
-  background-color: $color-marked;
-  color:#333
+:host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked >div{
+  background-color: $default-gray;
+  color: $default-text-color;
 }
 :host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-disabled{
   color:#cccccc
@@ -326,8 +365,10 @@ ng-select.showErrors {
   color: $default-text-color;
 }
 
-:host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+:host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option >div {
   color: $default-text-color;
+	padding: 8px 10px;
+	border-radius: 6px;
 }
 
 :host ::ng-deep .ng-select.ng-select-auto-grow {
