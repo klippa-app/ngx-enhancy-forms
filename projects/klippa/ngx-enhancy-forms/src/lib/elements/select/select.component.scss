@@ -305,6 +305,7 @@ ng-select.showErrors {
 }
 
 :host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected {
+	font-weight: 500;
 	&.ng-option-marked {
 		>div {
 			color: $primary-dark;
