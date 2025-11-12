@@ -151,7 +151,7 @@
 	display: flex;
 }
 .caption {
-	font-weight: bold;
+	font-weight: 500;
 	flex: 0 0 auto;
 	&.percentageSpacing {
 		max-width: 40%;
@@ -165,7 +165,7 @@
 			flex: 34 1 0px;
 		}
 	}
-	color: $default-dark;
+	color: $default-heading;
 	&.withErrorRightOfCaption {
 		display: flex;
 		justify-content: space-between;

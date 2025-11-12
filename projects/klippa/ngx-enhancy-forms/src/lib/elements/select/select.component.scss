@@ -33,10 +33,21 @@ ng-select.showErrors {
 :host ::ng-deep .ng-select.ng-select-opened>.ng-select-container:hover{
   box-shadow:none
 }
-:host ::ng-deep .ng-select.ng-select-opened>.ng-select-container .ng-arrow{
-  top:-2px;
-  border-color:transparent transparent #999;
-  border-width:0 5px 5px
+:host ::ng-deep .ng-select.ng-select-opened>.ng-select-container .ng-arrow {
+	position: relative;
+	display: block;
+	&::after {
+		position: absolute;
+		content: '';
+		display: inline-block;
+		width: 20px; /* Width of the SVG */
+		height: 20px; /* Height of the SVG */
+		margin-left: 10px; /* Spacing from the text */
+		background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M15 12.5L10 7.5L5 12.5" stroke="%23475467" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+		background-size: contain; /* Ensure the SVG scales correctly */
+		background-repeat: no-repeat; /* Prevent repeating */
+		transform: translate(-50%, -50%);
+	}
 }
 :host ::ng-deep .ng-select.ng-select-opened>.ng-select-container .ng-arrow:hover{
   border-color:transparent transparent #666
@@ -184,8 +195,29 @@ ng-select.showErrors {
 }
 
 :host ::ng-deep .ng-select .ng-clear-wrapper{
-  color:#999;
-	width: initial;
+  position: relative;
+	width: 24px; /* Width of the SVG */
+	height: 24px; /* Height of the SVG */
+	.ng-clear {
+		display: block;
+		color: transparent;
+		&::after {
+			position: absolute;
+			left: 0px;
+			content: '';
+			display: inline-block;
+			width: 24px; /* Width of the SVG */
+			height: 24px; /* Height of the SVG */
+			background-image: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17 7L7 17M7 7L17 17" stroke="%23667085" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+			background-size: contain; /* Ensure the SVG scales correctly */
+			background-repeat: no-repeat; /* Prevent repeating */
+		}
+	}
+	&:hover {
+		.ng-clear::after {
+			background-image: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="%23F2F4F7"/><path d="M17 7L7 17M7 7L17 17" stroke="%23475467" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+		}
+	}
 }
 :host ::ng-deep .ng-select .ng-clear-wrapper .ng-clear:hover{
   color:$default-danger;
@@ -195,15 +227,27 @@ ng-select.showErrors {
   padding-top:5px
 }
 :host ::ng-deep .ng-select .ng-arrow-wrapper{
-
+	position: relative;
+	width: 20px;
 }
 :host ::ng-deep .ng-select .ng-arrow-wrapper:hover .ng-arrow{
-  border-top-color:#666
+
 }
 :host ::ng-deep .ng-select .ng-arrow-wrapper .ng-arrow{
-  border-color:#999 transparent transparent;
-  border-style:solid;
-  border-width:5px 5px 2.5px
+	position: relative;
+	display: block;
+	&::after {
+		position: absolute;
+		content: '';
+		display: inline-block;
+		width: 20px; /* Width of the SVG */
+		height: 20px; /* Height of the SVG */
+		margin-left: 10px; /* Spacing from the text */
+		background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M5 7.5L10 12.5L15 7.5" stroke="%23475467" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+		background-size: contain; /* Ensure the SVG scales correctly */
+		background-repeat: no-repeat; /* Prevent repeating */
+		transform: translate(-50%, -50%);
+	}
 }
 :host ::ng-deep .ng-dropdown-panel{
   background-color:#fff;
@@ -239,15 +283,14 @@ ng-select.showErrors {
   padding:5px 7px
 }
 :host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items{
-  margin-bottom:1px
+  margin-bottom:1px;
 }
 :host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-optgroup{
   user-select:none;
-  cursor:default;
   padding:8px 10px;
   font-weight:500;
   color:rgba(0,0,0,0.54);
-  cursor:pointer
+  cursor:pointer;
 }
 :host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-optgroup.ng-option-disabled{
   cursor:default

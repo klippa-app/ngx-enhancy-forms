@@ -60,9 +60,13 @@ input {
 	gap: $spacing-small;
 
 	.clearIcon {
-		transform: translateY(-2px);
 		font-size: 18px;
 		cursor: pointer;
+		width: 20px;
+		height: 20px;
+		&:hover {
+			background: $default-gray;
+		}
 	}
 }
 
