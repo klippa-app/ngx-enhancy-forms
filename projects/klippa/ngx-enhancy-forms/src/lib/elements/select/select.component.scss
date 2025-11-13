@@ -131,6 +131,15 @@ ng-select.showErrors {
   padding-right: 4.5rem;
   top:5px;
 }
+
+:host ::ng-deep .ng-select.ng-select-multiple>.ng-select-container {
+	:has(input:focus) {
+		.ng-placeholder {
+			top: initial !important;
+			position: absolute !important;
+		}
+	}
+}
 :host ::ng-deep .ng-select.ng-select-multiple>.ng-select-container .ng-value-container {
 	gap: 5px;
 }
