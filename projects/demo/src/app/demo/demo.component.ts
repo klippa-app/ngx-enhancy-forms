@@ -172,8 +172,8 @@ export class DemoComponent {
 
 	subForms = [];
 	options: AppSelectOptions = [
-		{id: 1, name: 'draaaaaaa'},
-		{id: 2, name: 'looooong gekwhjg kehjw gkjehw gjkehw gjkh ghegkw egwhj ej wgklej gklej glkj gklj gljkl gewgjkew gewgjkew gewgjkew gewgjkew'},
+		{id: 1, name: 'draaaaaaa a akshjf ajksf ajksf f ewf ewf ewf ewfh ewkfhehjf hf hf ', description: 'worm '},
+		// {id: 2, name: 'looooong gekwhjg kehjw gkjehw gjkehw gjkh ghegkw egwhj ej wgklej gklej glkj gklj gljkl gewgjkew gewgjkew gewgjkew gewgjkew'},
 		{id: 3, name: 'jjj'},
 		{id: 4, name: 'kkk'},
 		{id: 5, name: 'lll'},
