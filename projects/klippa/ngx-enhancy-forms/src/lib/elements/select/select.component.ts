@@ -226,13 +226,20 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	private setWidthBasedOnOptionsWidths = async (): Promise<void> => {
 		if (this.truncateOptions === false) {
 			await awaitableForNextCycle();
-			this.elRef.nativeElement.querySelector('.scrollable-content').classList.add('calculatingWidths');
-			const maxWidth = this.elRef.nativeElement.querySelector('.scrollable-content').getBoundingClientRect().width;
-			this.elRef.nativeElement.querySelector('.scrollable-content').classList.remove('calculatingWidths');
+			const optionRefs: Array<HTMLElement> = Array.from(this.elRef.nativeElement.querySelectorAll('.ng-option > *'));
+			const widths: Array<number> = optionRefs.map(
+				(e: any) => e.scrollWidth,
+			);
+			const maxWidth = Math.max(...widths);
 			const dropdownPanel = this.elRef.nativeElement.querySelector('ng-dropdown-panel');
 			if (dropdownPanel) {
+				const firstOption = this.elRef.nativeElement.querySelector('.ng-option');
+				let padding = 0;
+				if (firstOption) {
+					padding = parseInt(getComputedStyle(firstOption).paddingLeft, 10) + parseInt(getComputedStyle(firstOption).paddingRight, 10);
+				}
 				dropdownPanel.style.minWidth = `${this.elRef.nativeElement.clientWidth}px`;
-				dropdownPanel.style.width = `${Math.max(this.elRef.nativeElement.clientWidth, maxWidth, dropdownPanel.getBoundingClientRect().width)}px`;
+				dropdownPanel.style.width = `${Math.max(this.elRef.nativeElement.clientWidth, maxWidth + padding, dropdownPanel.getBoundingClientRect().width)}px`;
 				await awaitableForNextCycle();
 				const pickerWidth = this.elRef.nativeElement.getBoundingClientRect().width;
 				const dropdownPanelWidth = dropdownPanel.getBoundingClientRect().width;

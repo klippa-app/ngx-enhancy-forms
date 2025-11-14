@@ -275,10 +275,7 @@ ng-select.showErrors {
 :host ::ng-deep .ng-dropdown-panel{
   background-color:#fff;
   border: 1px solid $border-color;
-  box-shadow:0 1px 0 rgba(0,0,0,0.06);
-	.scrollable-content.calculatingWidths {
-		width: initial;
-	}
+  box-shadow:0 1px 0 rgba(0,0,0,0.06)
 }
 :host ::ng-deep .ng-dropdown-panel.ng-select-bottom{
   border-bottom-right-radius:8px;
