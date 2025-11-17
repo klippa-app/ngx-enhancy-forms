@@ -147,7 +147,7 @@ export class DemoComponent {
 		name5: this.nameConfig,
 		name6: this.nameConfig,
 		name7: this.nameConfig,
-		picker: [null],
+		picker: [null, Validators.required],
 		date: [null, Validators.required],
 		hourMinute: [null, Validators.required],
 		email: [null, Validators.required],

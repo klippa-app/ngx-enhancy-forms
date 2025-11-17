@@ -52,6 +52,10 @@ ohja
 				<klp-form-error error="async"></klp-form-error>
 			</klp-form-element>
 
+			<klp-form-element caption="mandatory picker" spaceDistribution="34-66" direction="vertical">
+				<klp-form-select [hasBorderLeft]="true" [hasBorderRight]="true" prefix="a prefix" [options]="staticOptions" [truncateOptions]="false" [multiple]="false" formControlName="picker" [disabled]="false"></klp-form-select>
+			</klp-form-element>
+
 			<klp-form-element caption="Password" spaceDistribution="34-66" direction="vertical">
 				<klp-form-text-input type="password" formControlName="password" [clearable]="true" [passwordPeekIcon]="peekIcon">
 				</klp-form-text-input>

@@ -8,7 +8,7 @@ $label-border: $border-color !default;
 	display: block;
 	position: relative;
 }
-ng-select.showErrors {
+ng-select.ng-select.showErrors {
 	&::ng-deep {
 		.ng-select-container {
 			border-color: $default-warning;
@@ -460,7 +460,7 @@ ng-select.showErrors {
 .tail {
 	position: absolute;
 	top: 10px;
-	right: 28px;
+	right: 35px;
 	z-index: 2;
 	background: transparent;
 }
