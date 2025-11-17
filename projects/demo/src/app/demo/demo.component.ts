@@ -177,11 +177,15 @@ export class DemoComponent {
 		{id: 3, name: 'jjj'},
 		{id: 4, name: 'kkk'},
 		{id: 5, name: 'lll'},
-		// {id: 6, name: 'mmm'},
-		// {id: 7, name: 'mmm'},
-		// {id: 8, name: 'mmm'},
-		// {id: 9, name: 'mmm'},
-		// {id: 10, name: 'nnn'}
+		{id: 6, name: 'mmm'},
+		{id: 7, name: 'mmm'},
+		{id: 8, name: 'mmm'},
+		{id: 9, name: 'mmm'},
+		{id: 10, name: 'nnn'},
+		{id: 11, name: 'nnn'},
+		{id: 12, name: 'nnn'},
+		{id: 13, name: 'nnn'},
+		{id: 14, name: 'nnn'},
 	];
 	myfile: any;
 	groupedItems = [['a', 'b'], ['c', 'd', 'e']];

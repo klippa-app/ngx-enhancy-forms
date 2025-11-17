@@ -230,7 +230,8 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 				return;
 			}
 			this.elRef.nativeElement.querySelector('.scrollable-content').classList.add('calculatingWidths');
-			const maxWidth = this.elRef.nativeElement.querySelector('.scrollable-content').getBoundingClientRect().width;
+			const paddingForScrollbar = this.getScrollbarWidth();
+			const maxWidth = this.elRef.nativeElement.querySelector('.scrollable-content').getBoundingClientRect().width + paddingForScrollbar;
 			this.elRef.nativeElement.querySelector('.scrollable-content').classList.remove('calculatingWidths');
 			const dropdownPanel = this.elRef.nativeElement.querySelector('ng-dropdown-panel');
 			if (dropdownPanel) {
@@ -344,6 +345,29 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 		} else if (isValueSet(singleValueInputElement)) {
 			singleValueInputElement.style.left = `0px`;
 		}
+	}
+
+	private getScrollbarWidth(): number {
+		// Create a temporary div element
+		const div = document.createElement('div');
+
+		// Set the style to measure the scrollbar
+		div.style.overflow = 'scroll'; // Enable scrollbar
+		div.style.width = '100px';      // Set a fixed width
+		div.style.height = '100px';     // Set a fixed height
+		div.style.position = 'absolute'; // Prevent the element from taking space in the layout
+		div.style.top = '-9999px';      // Position it out of the viewport
+
+		// Append the element to the body
+		document.body.appendChild(div);
+
+		// Get the width of the scrollbar
+		const scrollbarWidth = div.offsetWidth - div.clientWidth;
+
+		// Remove the temporary element from the DOM
+		document.body.removeChild(div);
+
+		return scrollbarWidth;
 	}
 
 	ngOnDestroy(): void {
