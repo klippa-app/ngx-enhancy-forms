@@ -227,6 +227,8 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 		if (this.truncateOptions === false) {
 			await awaitableForNextCycle();
 			if (!isValueSet(this.elRef.nativeElement.querySelector('.scrollable-content'))) {
+				const panel = this.elRef.nativeElement.querySelector('ng-dropdown-panel');
+				panel.style.width = `${this.elRef.nativeElement.clientWidth}px`;
 				return;
 			}
 			this.elRef.nativeElement.querySelector('.scrollable-content').classList.add('calculatingWidths');
