@@ -278,7 +278,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 			return;
 		}
 		const scrollPositionOffset = `translate(${this.dropdownPanelOffsetX}px, ${this.dropdownPanelOffsetY}px)`;
-		const dropdownPositionOffset = this.dropdownPositionToUse === 'top' ? `translateY(-100%) translateY(1px)` : '';
+		const dropdownPositionOffset = this.dropdownPositionToUse === 'top' ? `translateY(-100%) translateY(-8px)` : 'translateY(8px)';
 		if (this.orientation === 'vertical') {
 			dropdownPanel.style.transformOrigin = 'top left';
 			dropdownPanel.style.transform = `rotate(90deg) translateY(-${this.elRef.nativeElement.getBoundingClientRect().width}px)`;
