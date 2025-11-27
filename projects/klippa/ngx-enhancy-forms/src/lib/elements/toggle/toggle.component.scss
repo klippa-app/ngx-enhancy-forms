@@ -83,3 +83,7 @@ $height: 20px;
 .showErrors + .toggleVisual:before {
 	border: 1px solid $default-warning;
 }
+
+.hiddenToggleValueContainer {
+	display: none;
+}

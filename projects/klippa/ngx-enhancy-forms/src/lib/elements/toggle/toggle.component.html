@@ -1,4 +1,5 @@
 <div class="componentContainer" [ngClass]="{disabled: disabled}">
+	<div class="hiddenToggleValueContainer">{{ innerValue }}</div>
 	<input type="checkbox" class="nativeCheckbox"
 		[(ngModel)]="innerValue"
 		(input)="setInnerValueAndNotify($event.target.checked); touch()"
