@@ -1,26 +1,32 @@
 <ng-template #listItem>
-	<li *ngFor="let item of innerValue; index as index"
-			class="sortableItem"
-			[draggable]="!disabled"
+  @for (item of innerValue; track item; let index = $index) {
+    <li
+      class="sortableItem"
+      [draggable]="!disabled"
 			[ngClass]="{
 			largeSortableItem: sortableItemSize === 'lg',
 		 	smallSortableItem: sortableItemSize === 'sm',
 		 	}"
-			#dragItem
-	>
-		<div class="visual">
-			<ng-container [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{ item: item, index:index }"></ng-container>
-		</div>
-	</li>
+      #dragItem
+      >
+      <div class="visual">
+        <ng-container [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{ item: item, index:index }"></ng-container>
+      </div>
+    </li>
+  }
 </ng-template>
 
-<ol *ngIf='!disabled'
-		class="itemsContainer"
-		[ngClass]="{dragInProgress: dragSourceIndex >= 0}"
->
-	<ng-container *ngTemplateOutlet="listItem"></ng-container>
-</ol>
+@if (!disabled) {
+  <ol
+    class="itemsContainer"
+    [ngClass]="{dragInProgress: dragSourceIndex >= 0}"
+    >
+    <ng-container *ngTemplateOutlet="listItem"></ng-container>
+  </ol>
+}
 
-<ol *ngIf='disabled' class="itemsContainer disabled-mouse-cursor">
-	<ng-container *ngTemplateOutlet="listItem"></ng-container>
-</ol>
+@if (disabled) {
+  <ol class="itemsContainer disabled-mouse-cursor">
+    <ng-container *ngTemplateOutlet="listItem"></ng-container>
+  </ol>
+}

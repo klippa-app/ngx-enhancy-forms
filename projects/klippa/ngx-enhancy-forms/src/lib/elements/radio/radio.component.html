@@ -1,18 +1,24 @@
 <div class="componentContainer" [ngClass]="{'verticallyOriented': orientation === Orientation.COLUMN, 'horizontallyOriented': orientation === Orientation.ROW, buttonGray: variant === 'buttonGray', sizeSmall: size === 'small'}">
-	<ng-container *ngFor="let option of options">
-		<button class="optionContainer"
-			[ngClass]="{classic: variant === 'classic', button: variant === 'button', buttonGray: variant === 'buttonGray', isSelected: innerValue === option.id}"
-			(click)="setInnerValueAndNotify(option.id)"
-		>
-			<div class="radioAndName">
-				<div class="selectedRadioBtnContainer" *ngIf="variant === 'classic'">
-					<div class="selected" *ngIf="innerValue === option.id"></div>
-				</div>
-				<div class="nameAndDescription">
-					<div>{{option.name}}</div>
-					<div class="description" *ngIf="option.description">{{option.description}}</div>
-				</div>
-			</div>
-		</button>
-	</ng-container>
+  @for (option of options; track option) {
+    <button class="optionContainer"
+      [ngClass]="{classic: variant === 'classic', button: variant === 'button', buttonGray: variant === 'buttonGray', isSelected: innerValue === option.id}"
+      (click)="setInnerValueAndNotify(option.id)"
+      >
+      <div class="radioAndName">
+        @if (variant === 'classic') {
+          <div class="selectedRadioBtnContainer">
+            @if (innerValue === option.id) {
+              <div class="selected"></div>
+            }
+          </div>
+        }
+        <div class="nameAndDescription">
+          <div>{{option.name}}</div>
+          @if (option.description) {
+            <div class="description">{{option.description}}</div>
+          }
+        </div>
+      </div>
+    </button>
+  }
 </div>

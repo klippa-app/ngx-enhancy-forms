@@ -1,11 +1,15 @@
 <ng-container>
-	<klp-form-sortable-items
-		[(ngModel)]="items"
-		(ngModelChange)="onItemsRearranged($event)"
-	>
-		<ng-template let-item="item">
-			<ng-container *ngIf="template" [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{ item: item }"></ng-container>
-			<div *ngIf="!template">{{item}}</div>
-		</ng-template>
-	</klp-form-sortable-items>
+  <klp-form-sortable-items
+    [(ngModel)]="items"
+    (ngModelChange)="onItemsRearranged($event)"
+    >
+    <ng-template let-item="item">
+      @if (template) {
+        <ng-container [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{ item: item }"></ng-container>
+      }
+      @if (!template) {
+        <div>{{item}}</div>
+      }
+    </ng-template>
+  </klp-form-sortable-items>
 </ng-container>

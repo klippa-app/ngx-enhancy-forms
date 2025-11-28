@@ -1,15 +1,16 @@
 <klp-form [formArray]="formArray" [readOnly]="readOnly" (onInjected)="onInjected($event)">
-	<div class="bookingLine" *ngFor="let lineGroup of formArray.controls; let groupIndex = index">
-		<ng-container [formGroup]="lineGroup">
-			<klp-form-element caption="Nested name 111">
-				<klp-form-text-input formControlName="name">
-				</klp-form-text-input>
-			</klp-form-element>
-
-			<klp-form-element caption="Age">
-				<klp-form-number-input formControlName="age">
-				</klp-form-number-input>
-			</klp-form-element>
-		</ng-container>
-	</div>
+  @for (lineGroup of formArray.controls; track lineGroup; let groupIndex = $index) {
+    <div class="bookingLine">
+      <ng-container [formGroup]="lineGroup">
+        <klp-form-element caption="Nested name 111">
+          <klp-form-text-input formControlName="name">
+          </klp-form-text-input>
+        </klp-form-element>
+        <klp-form-element caption="Age">
+          <klp-form-number-input formControlName="age">
+          </klp-form-number-input>
+        </klp-form-element>
+      </ng-container>
+    </div>
+  }
 </klp-form>
