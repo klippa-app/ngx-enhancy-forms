@@ -7,6 +7,9 @@ $height: 20px;
 :host {
 	display: block;
 }
+.hiddenValue {
+	display: none;
+}
 .componentContainer {
 	position: relative;
 	padding-right: 6px;
