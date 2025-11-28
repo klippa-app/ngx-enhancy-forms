@@ -6,10 +6,11 @@ import {invalidTimeKey} from '../../validators/timeValidator';
 
 
 @Component({
-	selector: 'klp-form-hour-minute-input',
-	templateUrl: './hour-minute-input.component.html',
-	styleUrls: ['./hour-minute-input.component.scss'],
-	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: HourMinuteInputComponent, multi: true}],
+    selector: 'klp-form-hour-minute-input',
+    templateUrl: './hour-minute-input.component.html',
+    styleUrls: ['./hour-minute-input.component.scss'],
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: HourMinuteInputComponent, multi: true }],
+    standalone: false
 })
 export class HourMinuteInputComponent extends ValueAccessorBase<number | typeof invalidTimeKey> {
 	public hours: string; // string because it's a text input

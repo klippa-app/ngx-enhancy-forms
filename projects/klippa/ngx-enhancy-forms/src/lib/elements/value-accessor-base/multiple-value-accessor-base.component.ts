@@ -5,8 +5,9 @@ import {FormElementComponent} from '../../form/form-element/form-element.compone
 import {isValueSet} from '../../util/values';
 
 @Component({
-	selector: '',
-	template: '',
+    selector: '',
+    template: '',
+    standalone: false
 })
 export class MultipleValueAccessorBase<T> extends ValueAccessorBase<Array<T> | T> {
 	@Input() multiple = false;

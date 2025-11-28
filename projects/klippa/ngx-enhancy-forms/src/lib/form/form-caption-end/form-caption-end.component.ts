@@ -2,9 +2,10 @@ import {Component, ElementRef, Host, OnDestroy, OnInit, Optional, TemplateRef, V
 import {FormElementComponent} from "../form-element/form-element.component";
 
 @Component({
-	selector: 'klp-form-caption-end',
-	templateUrl: './form-caption-end.component.html',
-	styleUrls: ['./form-caption-end.component.scss'],
+    selector: 'klp-form-caption-end',
+    templateUrl: './form-caption-end.component.html',
+    styleUrls: ['./form-caption-end.component.scss'],
+    standalone: false
 })
 export class FormCaptionEndComponent implements OnInit, OnDestroy {
 	@ViewChild('contentRef') public contentRef: TemplateRef<any>;

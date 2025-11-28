@@ -18,16 +18,17 @@ import {ValueAccessorBase} from '../value-accessor-base/value-accessor-base.comp
 import {FormElementComponent} from '../../form/form-element/form-element.component';
 
 @Component({
-	selector: 'klp-form-sortable-items',
-	templateUrl: './sortable-items.component.html',
-	styleUrls: ['./sortable-items.component.scss'],
-	providers: [
-		{
-			provide: NG_VALUE_ACCESSOR,
-			useExisting: SortableItemsComponent,
-			multi: true,
-		},
-	],
+    selector: 'klp-form-sortable-items',
+    templateUrl: './sortable-items.component.html',
+    styleUrls: ['./sortable-items.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: SortableItemsComponent,
+            multi: true,
+        },
+    ],
+    standalone: false
 })
 export class SortableItemsComponent
 	extends ValueAccessorBase<Array<any>>

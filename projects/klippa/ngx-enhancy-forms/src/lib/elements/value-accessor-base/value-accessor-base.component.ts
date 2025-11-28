@@ -28,8 +28,9 @@ import {cloneDeep} from 'lodash';
  */
 
 @Component({
-	selector: '',
-	template: '',
+    selector: '',
+    template: '',
+    standalone: false
 })
 export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDestroy {
 	public innerValue: T;

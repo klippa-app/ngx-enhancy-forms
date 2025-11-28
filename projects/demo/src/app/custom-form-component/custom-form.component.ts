@@ -2,9 +2,10 @@ import { Component, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 
 @Component({
-  selector: 'app-custom-form',
-  templateUrl: './custom-form.component.html',
-  styleUrls: ['./custom-form.component.scss'],
+    selector: 'app-custom-form',
+    templateUrl: './custom-form.component.html',
+    styleUrls: ['./custom-form.component.scss'],
+    standalone: false
 })
 export class CustomFormComponent {
 	protected form = inject(FormBuilder).group({

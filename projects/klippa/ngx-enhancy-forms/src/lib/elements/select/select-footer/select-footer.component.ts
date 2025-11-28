@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-	selector: 'klp-select-footer',
-	templateUrl: './select-footer.component.html',
-	styleUrls: ['./select-footer.component.scss'],
+    selector: 'klp-select-footer',
+    templateUrl: './select-footer.component.html',
+    styleUrls: ['./select-footer.component.scss'],
+    standalone: false
 })
 export class SelectFooterComponent {
 	@Input() public prefix: string;

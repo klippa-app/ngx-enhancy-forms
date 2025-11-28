@@ -11,9 +11,10 @@ export type SubmitButtonVariant = Extract<ButtonVariant,
 >;
 
 @Component({
-	selector: 'klp-form-submit-button',
-	templateUrl: './form-submit-button.component.html',
-	styleUrls: ['./form-submit-button.component.scss'],
+    selector: 'klp-form-submit-button',
+    templateUrl: './form-submit-button.component.html',
+    styleUrls: ['./form-submit-button.component.scss'],
+    standalone: false
 })
 export class FormSubmitButtonComponent implements OnInit{
 	private parentForm = inject(FormComponent, {optional: true});

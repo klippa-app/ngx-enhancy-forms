@@ -11,9 +11,10 @@ export type ButtonVariant = 'white'
 		| 'orangeFilled';
 
 @Component({
-	selector: 'klp-form-button',
-	templateUrl: './button.component.html',
-	styleUrls: ['./button.component.scss'],
+    selector: 'klp-form-button',
+    templateUrl: './button.component.html',
+    styleUrls: ['./button.component.scss'],
+    standalone: false
 })
 export class ButtonComponent {
 	@Input() variant: ButtonVariant = 'white';

@@ -3,10 +3,11 @@ import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {ValueAccessorBase} from '../value-accessor-base/value-accessor-base.component';
 
 @Component({
-	selector: 'klp-form-password-field',
-	templateUrl: './password-field.component.html',
-	styleUrls: ['./password-field.component.scss'],
-	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: PasswordFieldComponent, multi: true}],
+    selector: 'klp-form-password-field',
+    templateUrl: './password-field.component.html',
+    styleUrls: ['./password-field.component.scss'],
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: PasswordFieldComponent, multi: true }],
+    standalone: false
 })
 export class PasswordFieldComponent extends ValueAccessorBase<string> {
 	@Input() placeholder = 'Password';

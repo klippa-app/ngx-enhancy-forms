@@ -18,7 +18,8 @@ const colors = {
 };
 
 @Directive({
-	selector: '[klpWithTooltip]'
+    selector: '[klpWithTooltip]',
+    standalone: false
 })
 export class WithTooltipDirective {
 	private div: HTMLElement;

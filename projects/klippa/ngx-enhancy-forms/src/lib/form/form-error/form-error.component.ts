@@ -3,9 +3,10 @@ import {FormElementComponent} from "../form-element/form-element.component";
 import {ErrorTypes} from "../../types";
 
 @Component({
-	selector: 'klp-form-error',
-	templateUrl: './form-error.component.html',
-	styleUrls: ['./form-error.component.scss'],
+    selector: 'klp-form-error',
+    templateUrl: './form-error.component.html',
+    styleUrls: ['./form-error.component.scss'],
+    standalone: false
 })
 export class FormErrorComponent implements OnInit {
 	@Input() error: ErrorTypes;

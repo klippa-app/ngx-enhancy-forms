@@ -5,10 +5,11 @@ import {isValueSet} from '../../util/values';
 import { arrayIsSetAndFilled } from '../../util/arrays';
 
 @Component({
-	selector: 'klp-form-file-input',
-	templateUrl: './file-input.component.html',
-	styleUrls: ['./file-input.component.scss'],
-	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: FileInputComponent, multi: true}],
+    selector: 'klp-form-file-input',
+    templateUrl: './file-input.component.html',
+    styleUrls: ['./file-input.component.scss'],
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: FileInputComponent, multi: true }],
+    standalone: false
 })
 export class FileInputComponent extends MultipleValueAccessorBase<File> {
 	@Input() isLoading = false;

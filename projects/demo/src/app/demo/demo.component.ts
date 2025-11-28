@@ -3,9 +3,10 @@ import {AbstractControl, FormArray, FormBuilder, UntypedFormArray, UntypedFormGr
 import {AppSelectOptions, FormComponent, SelectComponent} from '@klippa/ngx-enhancy-forms';
 
 @Component({
-	selector: 'app-demo',
-	templateUrl: './demo.component.html',
-	styleUrls: ['./demo.component.scss']
+    selector: 'app-demo',
+    templateUrl: './demo.component.html',
+    styleUrls: ['./demo.component.scss'],
+    standalone: false
 })
 export class DemoComponent {
 	@ViewChild('myFancyTemplate') myFancyTemplate: TemplateRef<any>;

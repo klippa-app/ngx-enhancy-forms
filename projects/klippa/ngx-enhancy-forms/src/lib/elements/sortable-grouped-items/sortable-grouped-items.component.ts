@@ -4,10 +4,11 @@ import {arrayIsSetAndFilled, splitArrayByCondition} from '../../util/arrays';
 import {ValueAccessorBase} from '../value-accessor-base/value-accessor-base.component';
 
 @Component({
-	selector: 'klp-form-sortable-grouped-items',
-	templateUrl: './sortable-grouped-items.component.html',
-	styleUrls: ['./sortable-grouped-items.component.scss'],
-	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: SortableGroupedItemsComponent, multi: true}],
+    selector: 'klp-form-sortable-grouped-items',
+    templateUrl: './sortable-grouped-items.component.html',
+    styleUrls: ['./sortable-grouped-items.component.scss'],
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: SortableGroupedItemsComponent, multi: true }],
+    standalone: false
 })
 export class SortableGroupedItemsComponent<T> extends ValueAccessorBase<Array<Array<T>>> {
 	public items: Array<T | string>;

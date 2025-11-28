@@ -3,7 +3,8 @@ import {runNextRenderCycle} from "./util/angular";
 
 
 @Directive({
-	selector: '[onRenderFn]'
+    selector: '[onRenderFn]',
+    standalone: false
 })
 export class OnRenderDirective implements AfterViewInit {
 	@Input() onRenderFn: () => any;

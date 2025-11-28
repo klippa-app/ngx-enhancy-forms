@@ -34,17 +34,18 @@ export function matDateFormatsFactory(component: DateTimePickerComponent, dateFo
 }
 
 @Component({
-	selector: 'klp-form-date-time-picker',
-	templateUrl: './date-time-picker.component.html',
-	styleUrls: ['./date-time-picker.component.scss'],
-	providers: [
-		{provide: NG_VALUE_ACCESSOR, useExisting: DateTimePickerComponent, multi: true},
-		{
-			provide: MAT_DATE_FORMATS,
-			deps: [DateTimePickerComponent, [new Optional(), KLP_DATE_FORMATS]],
-			useFactory: matDateFormatsFactory,
-		},
-	],
+    selector: 'klp-form-date-time-picker',
+    templateUrl: './date-time-picker.component.html',
+    styleUrls: ['./date-time-picker.component.scss'],
+    providers: [
+        { provide: NG_VALUE_ACCESSOR, useExisting: DateTimePickerComponent, multi: true },
+        {
+            provide: MAT_DATE_FORMATS,
+            deps: [DateTimePickerComponent, [new Optional(), KLP_DATE_FORMATS]],
+            useFactory: matDateFormatsFactory,
+        },
+    ],
+    standalone: false
 })
 export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | typeof invalidDateKey> implements OnInit, AfterViewInit, OnChanges {
 	@Input() public minDate: Date = undefined;

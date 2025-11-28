@@ -34,15 +34,19 @@ export type AppSelectOption = {
 
 export const SELECT_TRANSLATIONS = new InjectionToken<any>('klp.form.select.translations');
 
-@Directive({selector: '[klpSelectOptionTpl]'})
+@Directive({
+    selector: '[klpSelectOptionTpl]',
+    standalone: false
+})
 export class KlpSelectOptionTemplateDirective {
 }
 
 @Component({
-	selector: 'klp-form-select',
-	templateUrl: './select.component.html',
-	styleUrls: ['./select.component.scss'],
-	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: SelectComponent, multi: true}],
+    selector: 'klp-form-select',
+    templateUrl: './select.component.html',
+    styleUrls: ['./select.component.scss'],
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: SelectComponent, multi: true }],
+    standalone: false
 })
 export class SelectComponent extends ValueAccessorBase<string | string[]> implements OnChanges, AfterViewInit, OnDestroy {
 	@Input() placeholder: string;

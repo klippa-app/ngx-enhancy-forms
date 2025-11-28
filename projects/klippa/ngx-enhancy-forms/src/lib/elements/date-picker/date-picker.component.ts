@@ -9,10 +9,11 @@ import {FormElementComponent} from '../../form/form-element/form-element.compone
 export const DATE_PICKER_TRANSLATIONS = new InjectionToken<any>('klp.form.date.translations');
 
 @Component({
-	selector: 'klp-form-date-picker',
-	templateUrl: './date-picker.component.html',
-	styleUrls: ['./date-picker.component.scss'],
-	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: DatePickerComponent, multi: true}],
+    selector: 'klp-form-date-picker',
+    templateUrl: './date-picker.component.html',
+    styleUrls: ['./date-picker.component.scss'],
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: DatePickerComponent, multi: true }],
+    standalone: false
 })
 export class DatePickerComponent extends MultipleValueAccessorBase<string | typeof invalidDateKey> {
 	@Input() public minDate: Date = undefined;

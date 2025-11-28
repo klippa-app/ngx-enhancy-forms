@@ -4,7 +4,8 @@ import {isValueSet} from "./util/values";
 
 
 @Directive({
-	selector: '[elementIsTruncatedCb]'
+    selector: '[elementIsTruncatedCb]',
+    standalone: false
 })
 export class ElementIsTruncatedCbComponent implements AfterViewInit, OnDestroy {
 	private observer: MutationObserver;

@@ -2,8 +2,9 @@ import {Component} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
-	selector: 'app-sub-form-example',
-	templateUrl: './sub-form-example.component.html',
+    selector: 'app-sub-form-example',
+    templateUrl: './sub-form-example.component.html',
+    standalone: false
 })
 export class SubFormExampleComponent {
 

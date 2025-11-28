@@ -3,10 +3,11 @@ import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {ValueAccessorBase} from '../value-accessor-base/value-accessor-base.component';
 
 @Component({
-	selector: 'klp-form-text-input',
-	templateUrl: './text-input.component.html',
-	styleUrls: ['./text-input.component.scss'],
-	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: TextInputComponent, multi: true}],
+    selector: 'klp-form-text-input',
+    templateUrl: './text-input.component.html',
+    styleUrls: ['./text-input.component.scss'],
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: TextInputComponent, multi: true }],
+    standalone: false
 })
 export class TextInputComponent extends ValueAccessorBase<string> {
 	private isPeekingPassword = false;

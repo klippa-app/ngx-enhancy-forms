@@ -39,12 +39,13 @@ const LocationErrorHandler: FormErrorHandler = (error: any): FormValidationError
  };
 
 @Component({
-  selector: 'app-on-submit-errors',
-  templateUrl: './on-submit-errors.component.html',
-  styleUrls: ['./on-submit-errors.component.scss'],
-	providers: [
-		{provide: KLP_FORM_ERROR_HANDLER, useValue: LocationErrorHandler },
-	]
+    selector: 'app-on-submit-errors',
+    templateUrl: './on-submit-errors.component.html',
+    styleUrls: ['./on-submit-errors.component.scss'],
+    providers: [
+        { provide: KLP_FORM_ERROR_HANDLER, useValue: LocationErrorHandler },
+    ],
+    standalone: false
 })
 export class OnSubmitErrorsComponent {
 	private fb = inject(FormBuilder);

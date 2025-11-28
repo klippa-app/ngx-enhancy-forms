@@ -34,8 +34,9 @@ export type OnInjectedEmitterType = {
 };
 
 @Directive({
-	// tslint:disable-next-line:directive-selector
-	selector: 'klp-sub-form',
+    // tslint:disable-next-line:directive-selector
+    selector: 'klp-sub-form',
+    standalone: false
 })
 export class SubFormDirective {
 	@Input() injectInto: UntypedFormArray | UntypedFormGroup;
@@ -45,9 +46,10 @@ export class SubFormDirective {
 }
 
 @Component({
-	selector: 'klp-form',
-	templateUrl: './form.component.html',
-	styleUrls: ['./form.component.scss'],
+    selector: 'klp-form',
+    templateUrl: './form.component.html',
+    styleUrls: ['./form.component.scss'],
+    standalone: false
 })
 export class FormComponent implements OnInit, OnDestroy, OnChanges {
 	@Input() public readOnly = false;

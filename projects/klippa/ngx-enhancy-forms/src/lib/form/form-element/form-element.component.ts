@@ -36,9 +36,10 @@ export const DEFAULT_ERROR_MESSAGES: FormErrorMessages = {
 type PopupState = 'onHover' | 'lockedOpen';
 
 @Component({
-	selector: 'klp-form-element',
-	templateUrl: './form-element.component.html',
-	styleUrls: ['./form-element.component.scss'],
+    selector: 'klp-form-element',
+    templateUrl: './form-element.component.html',
+    styleUrls: ['./form-element.component.scss'],
+    standalone: false
 })
 export class FormElementComponent implements AfterViewInit, OnDestroy {
 	public attachedControl: AbstractControl;
