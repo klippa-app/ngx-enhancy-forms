@@ -28,6 +28,11 @@ import {cloneDeep} from 'lodash';
 
 export const invalidFieldsSymbol = Symbol('Not all fields are valid');
 
+export type OnInjectedEmitterType = {
+	childValue: Record<string, any>;
+	parentValue: Record<string, any>;
+};
+
 @Directive({
 	// tslint:disable-next-line:directive-selector
 	selector: 'klp-sub-form',
@@ -55,7 +60,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 	@Input() public errors: Map<AbstractControl, string> = new Map<AbstractControl, string>();
 	@Input() public patchValueInterceptor: (values: any) => Promise<any>;
 	@Input() public allowSubmitOn: 'buttonAndEnter' | 'buttonOnly' = 'buttonAndEnter';
-	@Output() public onInjected = new EventEmitter<Record<string, any>>();
+	@Output() public onInjected = new EventEmitter<OnInjectedEmitterType>();
 
 	private topLevelFormControl: AbstractControl;
 
@@ -109,12 +114,16 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 				this.topLevelFormControl.disable();
 			}
 			const source = injectInto.at(injectAt);
-			const valueBeforeInject = source?.value;
-			if (isValueSet(valueBeforeInject)) {
-				this.topLevelFormControl.patchValue(valueBeforeInject);
+			const parentValueBeforeInject = source?.value;
+			const childValueBeforeInject = this.topLevelFormControl.value;
+			if (isValueSet(parentValueBeforeInject)) {
+				this.topLevelFormControl.patchValue(parentValueBeforeInject);
 			}
 			injectInto.setControl(injectAt, this.topLevelFormControl);
-			this.onInjected.emit(valueBeforeInject);
+			this.onInjected.emit({
+				childValue: childValueBeforeInject,
+				parentValue: parentValueBeforeInject,
+			});
 		} else if (injectInto instanceof UntypedFormGroup) {
 			if (!allowInjectionToOverwrite) {
 				if (injectInto.get(injectAt as string) instanceof FormGroup || injectInto.get(injectAt as string) instanceof FormArray) {
@@ -128,12 +137,16 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 				this.topLevelFormControl.disable();
 			}
 			const source = injectInto.get(injectAt);
-			const valueBeforeInject = source?.value;
-			if (isValueSet(valueBeforeInject)) {
-				this.topLevelFormControl.patchValue(valueBeforeInject);
+			const parentValueBeforeInject = source?.value;
+			const childValueBeforeInject = this.topLevelFormControl.value;
+			if (isValueSet(parentValueBeforeInject)) {
+				this.topLevelFormControl.patchValue(parentValueBeforeInject);
 			}
 			injectInto.setControl(injectAt, this.topLevelFormControl);
-			this.onInjected.emit(valueBeforeInject);
+			this.onInjected.emit({
+				childValue: childValueBeforeInject,
+				parentValue: parentValueBeforeInject,
+			});
 		}
 	}
 
@@ -155,10 +168,16 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 			const injectAt = this.subFormDirective.at;
 			if (injectInto instanceof UntypedFormArray) {
 				const idx = injectInto.controls.findIndex(e => e === this.topLevelFormControl);
+				if (idx === -1) {
+					return;
+				}
 				injectInto.removeAt(idx);
 			} else if (injectInto instanceof UntypedFormGroup) {
 				if (typeof injectAt !== 'string') {
 					throw new Error(`cannot index FormGroup with ${typeof injectAt}`);
+				}
+				if (injectInto.get(injectAt) !== this.topLevelFormControl) {
+					return;
 				}
 				injectInto.setControl(injectAt, new FormControl());
 			}
@@ -189,7 +208,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		this.errors.set = (key: AbstractControl, value: string): Map<AbstractControl, string> => {
 			const prevVal = this.errors.get(key);
 			const result = setFn.call(this.errors, key, value);
-			key.setErrors({ ...key.errors, formLevel: value});
+			key.setErrors({...key.errors, formLevel: value});
 			if (prevVal !== value) {
 				this.getFormElementByFormControl(key)?.determinePopupState();
 			}
@@ -248,7 +267,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 			const path = this.getPathFromParentToControl(formControl);
 			const immutableValue = this.getImmutableValueFromPath(path);
 			const immutableValueFromParent = parentImmutableValueFn?.();
-			return cloneDeep(immutableValue !== undefined  ?  immutableValue : immutableValueFromParent);
+			return cloneDeep(immutableValue !== undefined ? immutableValue : immutableValueFromParent);
 		};
 
 		const setValueFn: (value: unknown, options?: {
@@ -387,14 +406,14 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 						if (res !== 'PENDING') {
 							sub.unsubscribe();
 							this.handleSubmission(originalDisabledStates, renderedAndEnabledValues, renderedButDisabledValues, formGroupValue)
-							.then(resolve)
-							.catch(reject);
+								.then(resolve)
+								.catch(reject);
 						}
 					});
 				} else {
 					this.handleSubmission(originalDisabledStates, renderedAndEnabledValues, renderedButDisabledValues, formGroupValue)
-					.then(resolve)
-					.catch(reject);
+						.then(resolve)
+						.catch(reject);
 				}
 			});
 		}
@@ -405,8 +424,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		originalDisabledStates: Array<{ control: FormControl<any>; disabled: boolean }>,
 		renderedAndEnabledValues: Record<any, any>,
 		renderedButDisabledValues: Record<any, any>,
-		formGroupValue): Promise<any>
-	{
+		formGroupValue): Promise<any> {
 		if (this.topLevelFormControl.invalid) {
 			this.activeControls.find((e) => e.formControl.invalid)?.formElement?.scrollTo();
 			this.setDisabledStatesForAllControls(originalDisabledStates);
@@ -459,7 +477,10 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 		throw new Error('Getting values from a FormArray as topLevel is not supported (yet).');
 	}
 
-	private setDisabledStatesForAllControls(originalDisabledStates: Array<{ control: AbstractControl; disabled: boolean }>): void {
+	private setDisabledStatesForAllControls(originalDisabledStates: Array<{
+		control: AbstractControl;
+		disabled: boolean
+	}>): void {
 		originalDisabledStates.forEach((e) => {
 			if (e.disabled) {
 				e.control.disable();
