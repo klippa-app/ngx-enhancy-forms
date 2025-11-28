@@ -26,7 +26,7 @@
     "@angular/platform-browser": "^20.3.14",
     "@angular/platform-browser-dynamic": "^20.3.14",
     "@angular/router": "^20.3.14",
-    "@ng-select/ng-select": "^14.9.0",
+    "@ng-select/ng-select": "^20.7.0",
     "date-fns": "^2.29.3",
     "lodash-es": "^4.17.21",
     "rxjs": "~6.6.0",
