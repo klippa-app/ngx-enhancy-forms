@@ -18,7 +18,6 @@ import {FormElementComponent} from './form/form-element/form-element.component';
 import {FormErrorComponent} from './form/form-error/form-error.component';
 import {FormSubmitButtonComponent} from './form/form-submit-button/form-submit-button.component';
 import {FormComponent, SubFormDirective} from './form/form.component';
-import { SortablejsModule } from '@dustfoundation/ngx-sortablejs';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {DatePickerComponent} from './elements/date-picker/date-picker.component';
 import {DateTimePickerComponent} from './elements/date-time-picker/date-time-picker.component';
@@ -28,19 +27,18 @@ import {FileInputComponent} from './elements/file-input/file-input.component';
 import {SortableGroupedItemsComponent} from './elements/sortable-grouped-items/sortable-grouped-items.component';
 import {HourMinuteInputComponent} from './elements/hour-minute-input/hour-minute-input.component';
 import {RadioComponent} from './elements/radio/radio.component';
-import {WithTooltipDirective} from "./withTooltip.component";
-import {WarningIconComponent} from "./warning-icon/warning-icon.component";
-import {ElementIsTruncatedCbComponent} from "./elementIsTruncatedCb.component";
-import {OnRenderDirective} from "./onRender.component";
-import {TextAreaComponent} from "./elements/text-area/text-area.component";
-import {FormCaptionEndComponent} from "./form/form-caption-end/form-caption-end.component";
+import {WithTooltipDirective} from './withTooltip.component';
+import {WarningIconComponent} from './warning-icon/warning-icon.component';
+import {ElementIsTruncatedCbComponent} from './elementIsTruncatedCb.component';
+import {OnRenderDirective} from './onRender.component';
+import {TextAreaComponent} from './elements/text-area/text-area.component';
+import {FormCaptionEndComponent} from './form/form-caption-end/form-caption-end.component';
 
 @NgModule({
 	imports: [
 		CommonModule,
 		FormsModule,
 		NgSelectModule,
-		SortablejsModule,
 		MaterialModule,
 	],
 	declarations: [
