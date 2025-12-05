@@ -331,7 +331,10 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 	}
 
 	public unregisterControl(formControl: UntypedFormControl): void {
+		console.log('this.activeControls before', this.activeControls.length);
+		console.log(this.activeControls);
 		this.activeControls = this.activeControls.filter((e) => e.formControl !== formControl);
+		console.log('this.activeControls after', this.activeControls.length);
 		if (this.parent) {
 			this.parent.unregisterControl(formControl);
 		}
