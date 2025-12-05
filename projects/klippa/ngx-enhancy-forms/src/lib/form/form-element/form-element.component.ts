@@ -149,7 +149,7 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 
 	public unregisterControl(formControl: UntypedFormControl): void {
 		this.attachedControl = null;
-		this.parent.unregisterControl(formControl);
+		this.parent.unregisterControl(formControl, this);
 	}
 
 	public getAttachedControl(): AbstractControl {
