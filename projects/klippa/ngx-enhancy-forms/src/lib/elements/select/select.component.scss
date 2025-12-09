@@ -329,19 +329,22 @@ ng-select.ng-select.showErrors {
   background-color:#f5faff;
   font-weight:600
 }
-:host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option{
-  background-color:#fff;
-  color:rgba(0,0,0,0.87);
-	padding: 1px 6px;
-	display: flex;
-	border-radius: 6px;
-	box-sizing: content-box;
-	div {
+:host ::ng-deep .ng-select {
+	.ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+		background-color: #fff;
+		color: rgba(0, 0, 0, 0.87);
+		padding: 1px 6px;
+		display: flex;
+		border-radius: 6px;
+		box-sizing: content-box;
+	}
+	&:not(.hasCustomOptionTpl) .ng-dropdown-panel .ng-dropdown-panel-items .ng-option div {
 		white-space: nowrap;
 		min-width: 100%;
 		cursor: pointer;
 	}
 }
+
 :host .ng-select.truncateOptions ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option{
 	display: block;
 	div {

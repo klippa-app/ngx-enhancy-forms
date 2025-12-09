@@ -5,12 +5,17 @@ ohja
 <klp-form-text-input [ngModel]="''" [disabled]="false" placeholder="doe eens" ></klp-form-text-input>
 <klp-form-checkbox [disabled]="false" [(ngModel)]="myBoolean" [renderUndefinedAsIndeterminate]="true" caption="doggoooo"></klp-form-checkbox>
 
-<klp-form-select [hasBorderLeft]="true" [hasBorderRight]="true" prefix="a prefix" [options]="staticOptions" [truncateOptions]="false" [multiple]="false" [ngModel]="1" [disabled]="false">
+<klp-form-select [hasBorderLeft]="true" [hasBorderRight]="true" prefix="with custom meuk" [options]="staticOptions" [truncateOptions]="false" [multiple]="false" [ngModel]="1" [disabled]="false">
 
   <ng-template klpSelectOptionTpl let-item="item">
+		<div style="display: flex; justify-content: space-between;">
+		<div>
+			pepernootjes
+		</div>
     <div class="entry">
       custom {{item | json}}
     </div>
+		</div>
   </ng-template>
 
 </klp-form-select>
@@ -57,7 +62,16 @@ ohja
       </klp-form-element>
 
       <klp-form-element caption="mandatory picker" spaceDistribution="34-66" direction="vertical">
-        <klp-form-select [hasBorderLeft]="true" [hasBorderRight]="true" prefix="a prefix" [options]="staticOptions" [truncateOptions]="false" [multiple]="false" formControlName="picker" [disabled]="false"></klp-form-select>
+        <klp-form-select [hasBorderLeft]="true" [hasBorderRight]="true" prefix="a prefix" [options]="staticOptions" [truncateOptions]="false" [multiple]="false" formControlName="picker" [disabled]="false">
+					<ng-template klpSelectOptionTpl let-item="item">
+						<div>
+							pepernootjes
+						</div>
+						<div class="entry">
+							custom {{item | json}}
+						</div>
+					</ng-template>
+				</klp-form-select>
       </klp-form-element>
 
       <klp-form-element caption="Password" spaceDistribution="34-66" direction="vertical">

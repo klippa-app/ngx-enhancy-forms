@@ -6,7 +6,7 @@
   [items]="options"
   [clearable]="clearable"
   [(ngModel)]="innerValue"
-  [ngClass]="{showErrors: isInErrorState(), verticalOrientation: orientation === 'vertical', truncateOptions: truncateOptions, nonTruncatedOptions: !truncateOptions, withSeparatingLine: withSeparatingLine, noBorderLeft: !hasBorderLeft, noBorderRight: !hasBorderRight}"
+  [ngClass]="{showErrors: isInErrorState(), verticalOrientation: orientation === 'vertical', truncateOptions: truncateOptions, nonTruncatedOptions: !truncateOptions, withSeparatingLine: withSeparatingLine, noBorderLeft: !hasBorderLeft, noBorderRight: !hasBorderRight, hasCustomOptionTpl: !!customOptionTpl}"
   (change)="setInnerValueAndNotify(innerValue)"
   [multiple]="multiple"
   [disabled]="disabled"
