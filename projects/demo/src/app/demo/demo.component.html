@@ -5,6 +5,10 @@ ohja
 <klp-form-text-input [ngModel]="''" [disabled]="false" placeholder="doe eens" ></klp-form-text-input>
 <klp-form-checkbox [disabled]="false" [(ngModel)]="myBoolean" [renderUndefinedAsIndeterminate]="true" caption="doggoooo"></klp-form-checkbox>
 
+<div style="margin-left: 20rem">
+	<span klpWithTooltip="whiteOnBlack" tooltipText="je weet zelffffff je weet zelffffff je weet zelffffff je weet zelffffff je weet zelffffff" [position]="'bottom'"> blaa blaa blaa blaa blaa blaa </span>
+</div>
+
 <klp-form-select [hasBorderLeft]="true" [hasBorderRight]="true" prefix="with custom meuk" [options]="staticOptions" [truncateOptions]="false" [multiple]="false" [ngModel]="1" [disabled]="false">
 
   <ng-template klpSelectOptionTpl let-item="item">

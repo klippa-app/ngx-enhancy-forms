@@ -69,24 +69,22 @@ export class WithTooltipDirective {
 				this.div.style.color = `${colors[this.klpWithTooltip].noAlpha}`;
 				this.div.style.backgroundColor = `${colors[this.klpWithTooltip].background}`;
 				this.div.style.position = 'fixed';
-				this.div.style.left = `${el.nativeElement.getBoundingClientRect().x}px`;
 				if (this.position === 'top') {
-					this.div.style.top = `${el.nativeElement.getBoundingClientRect().y}px`;
 					this.div.style.transform = `translate(calc(-100% + ${el.nativeElement.getBoundingClientRect().width}px), calc(-100% - 0.3rem))`;
 				} else if (this.position === 'bottom') {
-					this.div.style.top = `${el.nativeElement.getBoundingClientRect().y + el.nativeElement.getBoundingClientRect().height}px`;
-					this.div.style.transform = `translate(calc(-100% + ${el.nativeElement.getBoundingClientRect().width}px), calc(0% + 0.3rem))`;
+					this.div.style.transform = `translate(calc(-100% + ${el.nativeElement.getBoundingClientRect().width}px), calc(0% + 0.3rem)) translateY(${el.nativeElement.getBoundingClientRect().height}px)`;
 				}
 				if (this.tooltipMinWidth > 0) {
 					this.div.style.minWidth = `${this.tooltipMinWidth}px`;
 				}
+				this.div.style.width = 'max-content';
 				this.div.style.maxWidth = `${this.tooltipMaxWidth}px`;
 				this.div.style.whiteSpace = 'break-spaces';
 				this.div.style.border = `1px solid ${colors[this.klpWithTooltip].withAlpha}`;
 				this.div.style.boxShadow = `2px 3px 10px 0px ${colors[this.klpWithTooltip].withAlpha}`;
 				this.div.style.padding = '0.3rem 0.5rem';
 				this.div.style.boxSizing = 'border-box';
-				this.div.style.borderRadius = '3px';
+				this.div.style.borderRadius = '8px';
 				this.div.style.wordBreak = 'break-word';
 				if (stringIsSetAndFilled(textToDisplay)) {
 					this.div.textContent = textToDisplay;
@@ -105,13 +103,10 @@ export class WithTooltipDirective {
 				this.triangle = document.createElement('div');
 				this.triangle.style.zIndex = `${zIndexStart + 1}`;
 				this.triangle.style.position = 'fixed';
-				this.triangle.style.left = `calc(${el.nativeElement.getBoundingClientRect().x + el.nativeElement.getBoundingClientRect().width}px - 0.8rem)`;
 				if (this.position === 'top') {
-					this.triangle.style.top = `${el.nativeElement.getBoundingClientRect().y}px`;
-					this.triangle.style.transform = `translate(-50%, calc(-100% + 0.1rem))`;
+					this.triangle.style.transform = `translate(${el.nativeElement.getBoundingClientRect().width}px) translate(-100%, calc(-100% + 0.1rem))`;
 				} else if (this.position === 'bottom') {
-					this.triangle.style.top = `${el.nativeElement.getBoundingClientRect().y + el.nativeElement.getBoundingClientRect().height}px`;
-					this.triangle.style.transform = `translate(-50%, 0rem) rotate(180deg)`;
+					this.triangle.style.transform = `translate(${el.nativeElement.getBoundingClientRect().width}px) translateY(${el.nativeElement.getBoundingClientRect().height}px) translate(-100%, 0rem) rotate(180deg)`;
 				}
 				this.triangle.style.width = '0';
 				this.triangle.style.height = '0';
@@ -123,13 +118,10 @@ export class WithTooltipDirective {
 				this.triangleWhite = document.createElement('div');
 				this.triangleWhite.style.zIndex = `${zIndexStart + 3}`;
 				this.triangleWhite.style.position = 'fixed';
-				this.triangleWhite.style.left = `calc(${el.nativeElement.getBoundingClientRect().x + el.nativeElement.getBoundingClientRect().width}px - 0.8rem)`;
 				if (this.position === 'top') {
-					this.triangleWhite.style.top = `${el.nativeElement.getBoundingClientRect().y}px`;
-					this.triangleWhite.style.transform = `translate(-50%, calc(-100% + 0.1rem - 2px))`;
+					this.triangleWhite.style.transform = `translate(${el.nativeElement.getBoundingClientRect().width}px) translate(-100%, calc(-100% + 0.1rem - 2px))`;
 				} else if (this.position === 'bottom') {
-					this.triangleWhite.style.top = `${el.nativeElement.getBoundingClientRect().y + el.nativeElement.getBoundingClientRect().height}px`;
-					this.triangleWhite.style.transform = `translate(-50%, -2px) rotate(180deg)`;
+					this.triangleWhite.style.transform = `translate(${el.nativeElement.getBoundingClientRect().width}px) translateY(${el.nativeElement.getBoundingClientRect().height}px) translate(-100%, -2px) rotate(180deg)`;
 				}
 				this.triangleWhite.style.width = '0';
 				this.triangleWhite.style.height = '0';
