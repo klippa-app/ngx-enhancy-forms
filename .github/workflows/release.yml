@@ -19,4 +19,4 @@ jobs:
       - run: yarn install
       - run: yarn build:prod
       - run: npm --version
-      - run: npm publish ./dist/klippa/ngx-enhancy-forms
+      - run: npm publish --provenance ./dist/klippa/ngx-enhancy-forms
