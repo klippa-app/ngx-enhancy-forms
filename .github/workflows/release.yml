@@ -21,5 +21,4 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: yarn install
       - run: yarn build:prod
-      - run: npm --version
       - run: npm publish ./dist/klippa/ngx-enhancy-forms
