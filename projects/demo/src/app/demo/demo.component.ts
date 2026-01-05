@@ -309,6 +309,7 @@ export class DemoComponent {
 		return true;
 	};
 	myPrefix: string = 'for real';
+	dateValue = new Date();
 
 	blurry() {
 		console.log('blurr');

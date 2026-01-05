@@ -5,6 +5,11 @@ ohja
 <klp-form-text-input [ngModel]="''" [disabled]="false" placeholder="doe eens" ></klp-form-text-input>
 <klp-form-checkbox [disabled]="false" [(ngModel)]="myBoolean" [renderUndefinedAsIndeterminate]="true" caption="doggoooo"></klp-form-checkbox>
 
+<div style="width: 20rem">
+<klp-form-date-picker [clearable]="true" [(ngModel)]="dateValue" [disabled]="true"></klp-form-date-picker>
+
+</div>
+
 <div style="margin-left: 20rem">
 	<span klpWithTooltip="whiteOnBlack" tooltipText="je weet zelffffff je weet zelffffff je weet zelffffff je weet zelffffff je weet zelffffff" [position]="'bottom'"> blaa blaa blaa blaa blaa blaa </span>
 </div>
@@ -119,7 +124,7 @@ ohja
       </klp-form-element>
 
       <klp-form-element caption="A nice date" direction="vertical">
-        <klp-form-date-picker formControlName="date"></klp-form-date-picker>
+        <klp-form-date-picker [clearable]="true" formControlName="date"></klp-form-date-picker>
       </klp-form-element>
 
       <klp-form-element caption="Time" direction="vertical">

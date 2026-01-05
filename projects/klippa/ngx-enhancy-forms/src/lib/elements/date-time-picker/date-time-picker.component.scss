@@ -175,9 +175,6 @@
 		border: $border-default;
 		border-radius: $border-radius-default;
 		display: flex;
-		&.noRightBorder {
-			border-right: none;
-		}
 		&.disabled {
 			background: $default-disabled-background;
 			border-color: transparent;

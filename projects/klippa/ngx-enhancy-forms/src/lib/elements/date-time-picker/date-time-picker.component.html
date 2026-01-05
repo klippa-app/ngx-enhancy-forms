@@ -1,5 +1,5 @@
 <div class="componentContainer" [ngClass]="{showErrors: isInErrorState()}" [ngClass]="{disabled: disabled}">
-  <div class="dateContainer" [ngClass]="{noRightBorder: !showTimeInput && clearable && !disabled, disabled: disabled}">
+  <div class="dateContainer" [ngClass]="{disabled: disabled}">
     <mat-form-field floatLabel="never">
       @if (multiple) {
         <div class="daysSelectedCaption" (click)="picker.open()" [ngClass]="{disabled: disabled}">
