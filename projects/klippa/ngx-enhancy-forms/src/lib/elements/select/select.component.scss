@@ -443,6 +443,7 @@ ng-select.ng-select.showErrors {
   color: $default-text-color;
 	padding: 8px 10px;
 	border-radius: 6px;
+	flex-grow: 1;
 }
 
 :host ::ng-deep .ng-select.ng-select-auto-grow {
