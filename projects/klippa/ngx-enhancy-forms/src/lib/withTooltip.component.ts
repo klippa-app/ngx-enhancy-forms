@@ -66,7 +66,7 @@ export class WithTooltipDirective {
 				const top = el.nativeElement.getBoundingClientRect().top;
 				const left = el.nativeElement.getBoundingClientRect().left;
 
-				el.nativeElement.prepend(this.hookDiv);
+				document.body.appendChild(this.hookDiv);
 
 				this.div = document.createElement('div');
 				this.div.style.zIndex = `${zIndexStart + 2}`;
@@ -174,7 +174,7 @@ export class WithTooltipDirective {
 					el.nativeElement.removeChild(this.triangleWhite);
 				} catch (ex) {}
 				try {
-					el.nativeElement.removeChild(this.hookDiv);
+					document.body.removeChild(this.hookDiv);
 				} catch (ex) {}
 			});
 		});
