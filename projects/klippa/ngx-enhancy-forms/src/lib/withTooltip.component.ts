@@ -61,9 +61,6 @@ export class WithTooltipDirective {
 						return;
 					}
 				}
-				if (getComputedStyle(el.nativeElement).position === 'static') {
-					el.nativeElement.style.position = 'relative';
-				}
 
 				this.hookDiv = document.createElement('div');
 				this.hookDiv.style.position = 'absolute';
