@@ -6,7 +6,7 @@ import {
 	Input, NgZone,
 	TemplateRef
 } from "@angular/core";
-import {stringIsSetAndFilled} from "./util/values";
+import {isValueSet, stringIsSetAndFilled} from "./util/values";
 
 const triangleSize = '12px';
 const zIndexStart = 99999999;
@@ -138,8 +138,6 @@ export class WithTooltipDirective {
 					this.triangleWhite.style.top = `${top + el.nativeElement.getBoundingClientRect().height}px`;
 					this.triangleWhite.style.left = `${left}px`;
 					this.triangleWhite.style.transform = `translate(calc(-100% + ${el.nativeElement.getBoundingClientRect().width}px), calc(0% - 0.15rem + 2px)) rotate(180deg)`;
-
-					// this.triangleWhite.style.transform = `translate(${el.nativeElement.getBoundingClientRect().width}px) translateY(${el.nativeElement.getBoundingClientRect().height}px) translate(-100%, -2px) rotate(180deg)`;
 				}
 				this.triangleWhite.style.width = '0';
 				this.triangleWhite.style.height = '0';
@@ -161,23 +159,23 @@ export class WithTooltipDirective {
 			});
 
 			el.nativeElement.addEventListener('mouseleave', () => {
-				if (this.tooltipTemplate) {
-					this.cleanUpTemplate();
-				}
-				try {
-					el.nativeElement.removeChild(this.div);
-				} catch (ex) {}
-				try {
-					el.nativeElement.removeChild(this.triangle);
-				} catch (ex) {}
-				try {
-					el.nativeElement.removeChild(this.triangleWhite);
-				} catch (ex) {}
-				try {
-					document.body.removeChild(this.hookDiv);
-				} catch (ex) {}
+				this.cleanUpTooltipFromDom();
 			});
 		});
+	}
+
+	private cleanUpTooltipFromDom(): void {
+			if (this.tooltipTemplate) {
+				this.cleanUpTemplate();
+			}
+			try {
+				document.body.removeChild(this.hookDiv);
+			} catch (ex) {
+			}
+	}
+
+	public ngOnDestroy(): void {
+		this.cleanUpTooltipFromDom();
 	}
 
 	public hookUpTemplate(): void {
@@ -187,6 +185,9 @@ export class WithTooltipDirective {
 	}
 
 	public cleanUpTemplate(): void {
+		if (!isValueSet(this.viewRefForTemplate)) {
+			return;
+		}
 		this.appRef.detachView(this.viewRefForTemplate);
 		this.viewRefForTemplate.destroy();
 	}

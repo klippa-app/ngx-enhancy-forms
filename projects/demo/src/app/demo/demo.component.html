@@ -1,5 +1,5 @@
 ohja
-<klp-form-toggle [(ngModel)]="myBoolean" [transparentBackground]="false" [disabled]="true"></klp-form-toggle>
+<klp-form-toggle [(ngModel)]="myBoolean" [transparentBackground]="false"></klp-form-toggle>
 
 <klp-form-text-input [ngModel]="'kers'" [disabled]="true"></klp-form-text-input>
 <klp-form-text-input [ngModel]="''" [disabled]="false" placeholder="doe eens" ></klp-form-text-input>
@@ -10,30 +10,33 @@ ohja
 
 </div>
 
-
-<div style="margin-left: 20rem; overflow: hidden">
-	<div style="margin-left: 20rem; overflow: hidden; display: flex;">
-		<div klpWithTooltip="black" tooltipText="My own text"> blaa</div>
+@if (this.myBoolean) {
+	<div style="margin-left: 20rem; overflow: hidden">
+		<div style="margin-left: 20rem; overflow: hidden; display: flex;">
+			<div klpWithTooltip="black" tooltipText="My own text"> blaa</div>
+		</div>
 	</div>
-</div>
 
-<div style="margin-left: 20rem; overflow: hidden">
-	<div style="margin-left: 20rem; overflow: hidden; display: flex;">
-		<div klpWithTooltip="black" tooltipText="My own text" position="bottom"> blaa</div>
+	<div style="margin-left: 20rem; overflow: hidden">
+		<div style="margin-left: 20rem; overflow: hidden; display: flex;">
+			<div klpWithTooltip="black" tooltipText="My own text" position="bottom"> blaa</div>
+		</div>
 	</div>
-</div>
 
-<div style="margin-left: 20rem; overflow: hidden">
-	<div style="margin-left: 20rem; overflow: hidden; display: flex;">
-		<div klpWithTooltip="black" [tooltipTemplate]="myTooltip"> blaa</div>
+	<div style="margin-left: 20rem; overflow: hidden">
+		<div style="margin-left: 20rem; overflow: hidden; display: flex;">
+			<div klpWithTooltip="black" [tooltipTemplate]="myTooltip"> blaa</div>
+		</div>
 	</div>
-</div>
 
-<div style="margin-left: 20rem; overflow: hidden">
-	<div style="margin-left: 20rem; overflow: hidden; display: flex;">
-		<div klpWithTooltip="black" [tooltipTemplate]="myTooltip" position="bottom"> blaa</div>
+	<div style="margin-left: 20rem; overflow: hidden">
+		<div style="margin-left: 20rem; overflow: hidden; display: flex;">
+			<div klpWithTooltip="black" [tooltipTemplate]="myTooltip" position="bottom"> blaa</div>
+		</div>
 	</div>
-</div>
+
+}
+
 
 <ng-template #myTooltip>
 	<div class="myToolTip">even lekker tooltippen</div>
@@ -281,9 +284,7 @@ grouped items {{groupedItems | json}}
 
 <div style="height: 100px;"></div>
 <klp-form-sortable-grouped-items [(ngModel)]="groupedItems">
-  <ng-template let-item="item">
-    kers {{item}}
-  </ng-template>
+
 </klp-form-sortable-grouped-items>
 <div style="height: 100px;"></div>
 
