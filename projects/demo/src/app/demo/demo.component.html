@@ -11,7 +11,16 @@ ohja
 </div>
 
 <div style="margin-left: 20rem">
-	<span klpWithTooltip="whiteOnBlack" tooltipText="je weet zelffffff je weet zelffffff je weet zelffffff je weet zelffffff je weet zelffffff" [position]="'bottom'"> blaa blaa blaa blaa blaa blaa </span>
+	<span klpWithTooltip="black" [tooltipTemplate]="myTooltip"> blaa</span>
+</div>
+
+<ng-template #myTooltip>
+	<div class="myToolTip">even lekker tooltippen</div>
+</ng-template>
+
+<div style="position: relative; transform: translate(0, 0)">
+	kers1
+	<div style="position: fixed; z-index: 99999999; transform: translate(-10px, -10px);">miaow1</div>
 </div>
 
 <klp-form-select [hasBorderLeft]="true" [hasBorderRight]="true" prefix="with custom meuk" [options]="staticOptions" [truncateOptions]="false" [multiple]="false" [ngModel]="1" [disabled]="false">
@@ -176,6 +185,12 @@ ohja
     <klp-form-text-input formControlName="emails" [innerValueChangeInterceptor]="innerValueChangeInterceptor" (onBlur)="blurry()">
     </klp-form-text-input>
   </klp-form-element>
+
+	<div style="position: relative">
+		kers
+		<div style="position: fixed; z-index: 99999999">miaow</div>
+	</div>
+
   <klp-form-element caption="disabledButRendered" spaceDistribution="34-66">
     <klp-form-text-input formControlName="disabledButRendered" [innerValueChangeInterceptor]="innerValueChangeInterceptor" (onBlur)="blurry()">
     </klp-form-text-input>

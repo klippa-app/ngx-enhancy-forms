@@ -22,6 +22,7 @@ const colors = {
     standalone: false
 })
 export class WithTooltipDirective {
+	private hookDiv: HTMLElement;
 	private div: HTMLElement;
 	private triangle: HTMLElement;
 	private triangleWhite: HTMLElement;
@@ -64,6 +65,11 @@ export class WithTooltipDirective {
 					el.nativeElement.style.position = 'relative';
 				}
 
+				this.hookDiv = document.createElement('div');
+				this.hookDiv.style.position = 'absolute';
+				this.hookDiv.style.transform = 'translate(0, 0)';
+				el.nativeElement.prepend(this.hookDiv);
+
 				this.div = document.createElement('div');
 				this.div.style.zIndex = `${zIndexStart + 2}`;
 				this.div.style.color = `${colors[this.klpWithTooltip].noAlpha}`;
@@ -98,7 +104,7 @@ export class WithTooltipDirective {
 						this.div.style.visibility = 'visible';
 					});
 				}
-				el.nativeElement.prepend(this.div);
+				this.hookDiv.prepend(this.div);
 
 				this.triangle = document.createElement('div');
 				this.triangle.style.zIndex = `${zIndexStart + 1}`;
@@ -113,7 +119,7 @@ export class WithTooltipDirective {
 				this.triangle.style.borderLeft = `${triangleSize} solid transparent`;
 				this.triangle.style.borderRight = `${triangleSize} solid transparent`;
 				this.triangle.style.borderTop = `${triangleSize} solid ${colors[this.klpWithTooltip].withAlpha}`;
-				el.nativeElement.prepend(this.triangle);
+				this.hookDiv.prepend(this.triangle);
 
 				this.triangleWhite = document.createElement('div');
 				this.triangleWhite.style.zIndex = `${zIndexStart + 3}`;
@@ -139,7 +145,7 @@ export class WithTooltipDirective {
 					});
 				}
 
-				el.nativeElement.prepend(this.triangleWhite);
+				this.hookDiv.prepend(this.triangleWhite);
 			});
 
 			el.nativeElement.addEventListener('mouseleave', () => {
@@ -154,6 +160,9 @@ export class WithTooltipDirective {
 				} catch (ex) {}
 				try {
 					el.nativeElement.removeChild(this.triangleWhite);
+				} catch (ex) {}
+				try {
+					el.nativeElement.removeChild(this.hookDiv);
 				} catch (ex) {}
 			});
 		});
