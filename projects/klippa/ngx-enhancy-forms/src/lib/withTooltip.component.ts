@@ -63,8 +63,9 @@ export class WithTooltipDirective {
 				}
 
 				this.hookDiv = document.createElement('div');
-				this.hookDiv.style.position = 'absolute';
-				this.hookDiv.style.transform = 'translate(0, 0)';
+				const top = el.nativeElement.getBoundingClientRect().top;
+				const left = el.nativeElement.getBoundingClientRect().left;
+
 				el.nativeElement.prepend(this.hookDiv);
 
 				this.div = document.createElement('div');
@@ -73,9 +74,13 @@ export class WithTooltipDirective {
 				this.div.style.backgroundColor = `${colors[this.klpWithTooltip].background}`;
 				this.div.style.position = 'fixed';
 				if (this.position === 'top') {
+					this.div.style.top = `${top}px`;
+					this.div.style.left = `${left}px`;
 					this.div.style.transform = `translate(calc(-100% + ${el.nativeElement.getBoundingClientRect().width}px), calc(-100% - 0.3rem))`;
 				} else if (this.position === 'bottom') {
-					this.div.style.transform = `translate(calc(-100% + ${el.nativeElement.getBoundingClientRect().width}px), calc(0% + 0.3rem)) translateY(${el.nativeElement.getBoundingClientRect().height}px)`;
+					this.div.style.top = `${top + el.nativeElement.getBoundingClientRect().height}px`;
+					this.div.style.left = `${left}px`;
+					this.div.style.transform = `translate(calc(-100% + ${el.nativeElement.getBoundingClientRect().width}px), calc(0% + 0.3rem))`;
 				}
 				if (this.tooltipMinWidth > 0) {
 					this.div.style.minWidth = `${this.tooltipMinWidth}px`;
@@ -107,9 +112,13 @@ export class WithTooltipDirective {
 				this.triangle.style.zIndex = `${zIndexStart + 1}`;
 				this.triangle.style.position = 'fixed';
 				if (this.position === 'top') {
+					this.triangle.style.top = `${top}px`;
+					this.triangle.style.left = `${left}px`;
 					this.triangle.style.transform = `translate(${el.nativeElement.getBoundingClientRect().width}px) translate(-100%, calc(-100% + 0.1rem))`;
 				} else if (this.position === 'bottom') {
-					this.triangle.style.transform = `translate(${el.nativeElement.getBoundingClientRect().width}px) translateY(${el.nativeElement.getBoundingClientRect().height}px) translate(-100%, 0rem) rotate(180deg)`;
+					this.triangle.style.top = `${top + el.nativeElement.getBoundingClientRect().height}px`;
+					this.triangle.style.left = `${left}px`;
+					this.triangle.style.transform = `translate(calc(-100% + ${el.nativeElement.getBoundingClientRect().width}px), calc(0% - 0.15rem)) rotate(180deg)`;
 				}
 				this.triangle.style.width = '0';
 				this.triangle.style.height = '0';
@@ -122,9 +131,15 @@ export class WithTooltipDirective {
 				this.triangleWhite.style.zIndex = `${zIndexStart + 3}`;
 				this.triangleWhite.style.position = 'fixed';
 				if (this.position === 'top') {
+					this.triangleWhite.style.top = `${top}px`;
+					this.triangleWhite.style.left = `${left}px`;
 					this.triangleWhite.style.transform = `translate(${el.nativeElement.getBoundingClientRect().width}px) translate(-100%, calc(-100% + 0.1rem - 2px))`;
 				} else if (this.position === 'bottom') {
-					this.triangleWhite.style.transform = `translate(${el.nativeElement.getBoundingClientRect().width}px) translateY(${el.nativeElement.getBoundingClientRect().height}px) translate(-100%, -2px) rotate(180deg)`;
+					this.triangleWhite.style.top = `${top + el.nativeElement.getBoundingClientRect().height}px`;
+					this.triangleWhite.style.left = `${left}px`;
+					this.triangleWhite.style.transform = `translate(calc(-100% + ${el.nativeElement.getBoundingClientRect().width}px), calc(0% - 0.15rem + 2px)) rotate(180deg)`;
+
+					// this.triangleWhite.style.transform = `translate(${el.nativeElement.getBoundingClientRect().width}px) translateY(${el.nativeElement.getBoundingClientRect().height}px) translate(-100%, -2px) rotate(180deg)`;
 				}
 				this.triangleWhite.style.width = '0';
 				this.triangleWhite.style.height = '0';

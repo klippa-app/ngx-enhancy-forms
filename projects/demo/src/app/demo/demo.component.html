@@ -10,8 +10,29 @@ ohja
 
 </div>
 
+
 <div style="margin-left: 20rem; overflow: hidden">
-	<span klpWithTooltip="black" tooltipText="myTooltip"> blaa</span>
+	<div style="margin-left: 20rem; overflow: hidden; display: flex;">
+		<div klpWithTooltip="black" tooltipText="My own text"> blaa</div>
+	</div>
+</div>
+
+<div style="margin-left: 20rem; overflow: hidden">
+	<div style="margin-left: 20rem; overflow: hidden; display: flex;">
+		<div klpWithTooltip="black" tooltipText="My own text" position="bottom"> blaa</div>
+	</div>
+</div>
+
+<div style="margin-left: 20rem; overflow: hidden">
+	<div style="margin-left: 20rem; overflow: hidden; display: flex;">
+		<div klpWithTooltip="black" [tooltipTemplate]="myTooltip"> blaa</div>
+	</div>
+</div>
+
+<div style="margin-left: 20rem; overflow: hidden">
+	<div style="margin-left: 20rem; overflow: hidden; display: flex;">
+		<div klpWithTooltip="black" [tooltipTemplate]="myTooltip" position="bottom"> blaa</div>
+	</div>
 </div>
 
 <ng-template #myTooltip>
