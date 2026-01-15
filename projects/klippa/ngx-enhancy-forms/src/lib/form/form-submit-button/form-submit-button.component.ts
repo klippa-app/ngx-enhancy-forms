@@ -1,7 +1,12 @@
 import {Component, HostBinding, inject, Input, OnInit} from '@angular/core';
 import {FormComponent, invalidFieldsSymbol} from '../form.component';
 import { ButtonVariant } from '../../elements/button/button.component';
-import { DefaultErrorHandler, FormValidationError, KLP_FORM_ERROR_HANDLER } from '../form-validation-error/form-validation-error';
+import {
+	DefaultErrorHandler,
+	FormValidationError,
+	KLP_FORM_ERROR_HANDLER,
+	KLP_FORM_ERROR_NO_CONTROL_FOUND
+} from '../form-validation-error/form-validation-error';
 
 export type SubmitButtonVariant = Extract<ButtonVariant,
 	| 'greenFilled'
@@ -19,6 +24,7 @@ export type SubmitButtonVariant = Extract<ButtonVariant,
 export class FormSubmitButtonComponent implements OnInit{
 	private parentForm = inject(FormComponent, {optional: true});
 	private handleError = inject(KLP_FORM_ERROR_HANDLER, {optional: true}) ?? DefaultErrorHandler;
+	private noControlFound = inject(KLP_FORM_ERROR_NO_CONTROL_FOUND, {optional: true});
 	public buttonType: 'submit' | 'button' = 'submit';
 
 	@Input() public isLoading = false;
@@ -38,7 +44,14 @@ export class FormSubmitButtonComponent implements OnInit{
 	}
 
 	private setValidationError = (e: FormValidationError) => {
-		this.parentForm.formGroup.get(e.path)?.setErrors({ message: { value: e.message }});
+		const targetControl = this.parentForm.formGroup.get(e.path);
+		if (targetControl) {
+			targetControl.setErrors({ message: { value: e.message }});
+			return;
+		}
+		if (this.noControlFound) {
+			this.noControlFound(e);
+		}
 	}
 
 	async submitForm(): Promise<void> {
