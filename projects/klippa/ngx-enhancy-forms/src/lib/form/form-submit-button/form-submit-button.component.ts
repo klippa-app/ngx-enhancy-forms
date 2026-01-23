@@ -5,7 +5,7 @@ import {
 	DefaultErrorHandler,
 	FormValidationError,
 	KLP_FORM_ERROR_HANDLER,
-	KLP_FORM_ERROR_NO_CONTROL_FOUND
+	KLP_FORM_ERROR_NO_CONTROL_FOUND_HANDLER
 } from '../form-validation-error/form-validation-error';
 
 export type SubmitButtonVariant = Extract<ButtonVariant,
@@ -24,7 +24,7 @@ export type SubmitButtonVariant = Extract<ButtonVariant,
 export class FormSubmitButtonComponent implements OnInit{
 	private parentForm = inject(FormComponent, {optional: true});
 	private handleError = inject(KLP_FORM_ERROR_HANDLER, {optional: true}) ?? DefaultErrorHandler;
-	private noControlFound = inject(KLP_FORM_ERROR_NO_CONTROL_FOUND, {optional: true});
+	private noControlFoundOnSettingValidationError = inject(KLP_FORM_ERROR_NO_CONTROL_FOUND_HANDLER, {optional: true});
 	public buttonType: 'submit' | 'button' = 'submit';
 
 	@Input() public isLoading = false;
@@ -49,8 +49,8 @@ export class FormSubmitButtonComponent implements OnInit{
 			targetControl.setErrors({ message: { value: e.message }});
 			return;
 		}
-		if (this.noControlFound) {
-			this.noControlFound(e);
+		if (this.noControlFoundOnSettingValidationError) {
+			this.noControlFoundOnSettingValidationError(e);
 		}
 	}
 

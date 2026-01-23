@@ -1,5 +1,5 @@
-import { InjectionToken } from '@angular/core';
-import { isArrayOf } from '../../util/arrays';
+import {InjectionToken} from '@angular/core';
+import {isArrayOf} from '../../util/arrays';
 
 export class FormValidationError extends Error {
 	public readonly name = 'FormValidationError';
@@ -19,7 +19,8 @@ export type FormErrorHandler = (error: any) => FormValidationErrors;
 export type FormErrorNoControlFound = (error: FormValidationError) => void;
 
 export const KLP_FORM_ERROR_HANDLER = new InjectionToken<FormErrorHandler>('KLP_FORM_ERROR_HANDLER');
-export const KLP_FORM_ERROR_NO_CONTROL_FOUND = new InjectionToken<FormErrorNoControlFound>('KLP_FORM_ERROR_NO_CONTROL_FOUND');
+export const KLP_FORM_ERROR_NO_CONTROL_FOUND_HANDLER =
+	new InjectionToken<FormErrorNoControlFound>('KLP_FORM_ERROR_NO_CONTROL_FOUND_HANDLER');
 
 export const DefaultErrorHandler: FormErrorHandler = (error: any) => {
 	if (Array.isArray(error) && isArrayOf(error, FormValidationError)) {
