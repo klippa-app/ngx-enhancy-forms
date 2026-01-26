@@ -1,32 +1,41 @@
-<div class="componentContainer" [ngClass]="{smallSized: size === 'small'}">
-  @if (icon?.length > 0) {
-    @if (icon === 'search') {
-      <i class="ti-search"></i>
-    }
-  }
-  <input
-    [type]="getType()"
-    [(ngModel)]="innerValue"
-    [ngClass]="{showErrors: isInErrorState(), hasIcon: icon?.length > 0, hasClearButton: clearable, hasTail: getTailTpl(), noBorderLeft: !hasBorderLeft, noBorderRight: !hasBorderRight}"
-    (input)="setInnerValueAndNotify($event.target.value)"
-    [placeholder]="placeholder ? placeholder : ''"
-    (blur)="touch(); onBlur.emit()"
-    [disabled]='disabled'
-    #nativeInputRef
-    />
-  <div class="tail">
-    <ng-container [ngTemplateOutlet]="getTailTpl()"></ng-container>
-    @if (clearable && innerValue?.length > 0) {
-      <div class="clearIcon" (click)="resetToNull()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M15 5L5 15M5 5L15 15" stroke="#475467" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-    }
-    @if (passwordPeekIcon && type === 'password') {
-      <div class="peakBtn" (click)="togglePeakPassword()">
-        <ng-container [ngTemplateOutlet]="passwordPeekIcon"></ng-container>
-      </div>
-    }
-  </div>
+<div class="componentContainer" [ngClass]="{'input-sm': size === 'small', 'input-lg': size === 'large'}">
+	<div class="head">
+		@if (prefixTpl) {
+			<div class="prefix">
+				<ng-container [ngTemplateOutlet]="prefixTpl"></ng-container>
+			</div>
+		}
+	</div>
+	<input
+		[type]="getType()"
+		[(ngModel)]="innerValue"
+		[ngClass]="{noBorderLeft: !hasBorderLeft, noBorderRight: !hasBorderRight}"
+		(input)="setInnerValueAndNotify($event.target.value)"
+		[placeholder]="placeholder ? placeholder : ''"
+		(blur)="touch(); onBlur.emit()"
+		[disabled]='disabled'
+		#nativeInputRef
+	/>
+	<div class="tail">
+		<ng-container [ngTemplateOutlet]="getTailTpl()"></ng-container>
+		@if (clearable && innerValue?.length > 0) {
+			<div class="clearIcon" (click)="resetToNull()">
+				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+					<path d="M15 5L5 15M5 5L15 15" stroke="#475467" stroke-width="1.5" stroke-linecap="round"
+								stroke-linejoin="round"/>
+				</svg>
+			</div>
+		}
+		@if (passwordPeekIcon && type === 'password') {
+			<div class="peakBtn" (click)="togglePeakPassword()">
+				<ng-container [ngTemplateOutlet]="passwordPeekIcon"></ng-container>
+			</div>
+		}
+		@if (suffixTpl) {
+			<div class="suffix">
+				<ng-container [ngTemplateOutlet]="suffixTpl"></ng-container>
+			</div>
+		}
+	</div>
 </div>
+

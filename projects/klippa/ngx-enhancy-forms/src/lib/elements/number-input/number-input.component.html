@@ -1,10 +1,28 @@
-<input
-	type="number"
-	class="form-control"
-	[(ngModel)]="innerValue"
-	(input)="setInnerValueAndNotify($event.target.value)"
-	[placeholder]="placeholder ? placeholder : ''"
-	[ngClass]="{showErrors: isInErrorState()}"
-	[disabled]="disabled"
-	#nativeInputRef
-/>
+<div class="componentContainer" [ngClass]="{'input-sm': size === 'small', 'input-lg': size === 'large'}">
+	<div class="head">
+		@if (prefixTpl) {
+			<div class="prefix">
+				<ng-container [ngTemplateOutlet]="prefixTpl"></ng-container>
+			</div>
+		}
+	</div>
+
+	<input
+		type="number"
+		class="form-control"
+		[(ngModel)]="innerValue"
+		(input)="setInnerValueAndNotify($event.target.value)"
+		[placeholder]="placeholder ? placeholder : ''"
+		[ngClass]="{showErrors: isInErrorState()}"
+		[disabled]="disabled"
+		#nativeInputRef
+	/>
+
+	<div class="tail">
+		@if (suffixTpl) {
+			<div class="suffix">
+				<ng-container [ngTemplateOutlet]="suffixTpl"></ng-container>
+			</div>
+		}
+	</div>
+</div>

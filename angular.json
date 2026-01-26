@@ -100,8 +100,9 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "demo:build"
-          },
+            "buildTarget": "demo:build",
+						"port": 4201
+					},
           "configurations": {
             "production": {
               "buildTarget": "demo:build:production"
@@ -171,5 +172,8 @@
     "@schematics/angular:resolver": {
       "typeSeparator": "."
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

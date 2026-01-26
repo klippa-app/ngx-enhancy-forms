@@ -134,77 +134,142 @@
 	position: relative;
 	border-radius: 2px;
 	color: $default-text-color;
-	::ng-deep {
-		.mdc-text-field__input::placeholder {
-			color: #aaa !important;
-		}
-	}
-	.placeholderForMultipleSelection,
-	.placeholderForSelection {
-		color: $default-gray-faded-dark;
-	}
-	&.showErrors {
-		.dateContainer,
-		.timeContainer,
-		.clearButton.withoutSpacing {
-			border-color: $default-warning;
-		}
-	}
-	.clearButton {
-		flex: 0 0 auto;
-		display: flex;
-		align-items: center;
-		background: $default-white;
-		color: #7b7b7b;
-		border: $border-default;
-		margin-left: $spacing-medium;
-		padding: 6px 14px;
-		font-size: 18px;
-		&.withoutSpacing {
-			border-left: none;
-			margin-left: 0;
-		}
-		&:disabled {
-			border: $border-default;
-			background: $default-disabled-background;
-		}
-	}
+
 	.dateContainer {
+		@include formControl();
+		display: flex;
+		flex-direction: row;
+		align-items: center;
 		flex: 1 1 auto;
 		background: $default-white;
 		border: $border-default;
 		border-radius: $border-radius-default;
-		display: flex;
+
+		mat-form-field {
+			flex: 1 1 auto;
+			height: 100%;
+			display: flex;
+
+			::ng-deep .mat-mdc-text-field-wrapper {
+				height: 100%;
+				display: flex;
+				align-items: center;
+			}
+
+			::ng-deep .mat-mdc-form-field-infix {
+				padding: 0;
+				min-height: auto;
+				display: flex;
+				align-items: center;
+				align-self: center;
+			}
+
+			::ng-deep input.mat-mdc-input-element {
+				height: 100%;
+				padding: 0;
+				margin: 0;
+			}
+
+			&::ng-deep input {
+				@include nestedInput();
+				align-self: center;
+
+				&:placeholder-shown {
+					text-overflow: ellipsis;
+				}
+
+				@include placeholder {
+					color: red;
+				}
+			}
+		}
+
 		&.disabled {
 			background: $default-disabled-background;
 			border-color: transparent;
 			cursor: pointer;
+
 			&::ng-deep input {
 				cursor: pointer;
 			}
 		}
+
 		&:hover {
 			border-color: $border-color-hover;
 		}
+
 		&:focus-within {
 			border-color: $default-focus-color;
 			outline: 1px solid $default-focus-color;
 		}
-		&::ng-deep input {
-			padding-right: $spacing-huge;
-			&:placeholder-shown {
-				text-overflow: ellipsis;
+
+		::ng-deep {
+			.mdc-text-field__input::placeholder {
+				color: #aaa !important;
 			}
-			@include placeholder {
-				color: red;
+		}
+
+		.placeholderForMultipleSelection,
+		.placeholderForSelection {
+			color: $default-gray-faded-dark;
+		}
+
+		.head {
+			cursor: default;
+		}
+
+		.tail {
+			cursor: default;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			gap: $spacing-small;
+		}
+
+		.prefix,
+		.suffix {
+			display: flex;
+			align-items: center;
+			flex-shrink: 0;
+		}
+
+		&.showErrors {
+			.dateContainer,
+			.timeContainer,
+			.clearButton.withoutSpacing {
+				border-color: $default-warning;
+			}
+		}
+
+		.clearButton {
+			flex: 0 0 auto;
+			display: flex;
+			align-items: center;
+			background: $default-white;
+			color: #7b7b7b;
+			border: $border-default;
+			margin-left: $spacing-medium;
+			padding: 6px 14px;
+			font-size: 18px;
+
+			&.withoutSpacing {
+				border-left: none;
+				margin-left: 0;
+			}
+
+			&:disabled {
+				border: $border-default;
+				background: $default-disabled-background;
 			}
 		}
 	}
+
 	.timeContainer {
 		$timeContainerWidth: 102px;
 		width: $timeContainerWidth;
 		position: relative;
 		margin-left: $spacing-medium;
+
 		.timeContainerInner {
 			height: 100%;
 			flex: 0 0 auto;
@@ -214,6 +279,7 @@
 			align-items: center;
 			border: $border-default;
 			border-radius: $border-radius-default;
+
 			&:hover {
 				border-color: $border-color-hover;
 			}
@@ -223,6 +289,7 @@
 				outline: 1px solid $default-focus-color;
 			}
 		}
+
 		&.disabled {
 			.timeContainerInner, input {
 				background: $default-disabled-background;
@@ -233,6 +300,7 @@
 			width: 18px;
 			margin-right: $spacing-tiny;
 		}
+
 		input {
 			color: $default-text-color;
 			text-align: center;
@@ -240,13 +308,16 @@
 			padding: 0;
 			border: none;
 			height: 100%;
+
 			&::placeholder {
 				color: $default-gray-faded-dark;
 			}
 		}
+
 		.divider {
 			margin: 0 $spacing-tiny;
 		}
+
 		.timeDoubleDropdown {
 			position: absolute;
 			height: 275px;
@@ -256,17 +327,20 @@
 			border: $border-default;
 			display: flex;
 			background: white;
+
 			.hourOfDay {
 				overflow: auto;
 				scrollbar-width: none;
 				width: 50%;
 			}
+
 			.minuteOfHour {
 				border-left: $border-default;
 				overflow: auto;
 				scrollbar-width: none;
 				width: 50%;
 			}
+
 			.entry {
 				text-align: center;
 				height: 42px;
@@ -274,9 +348,11 @@
 				line-height: 42px;
 				background: white;
 				cursor: pointer;
+
 				&:hover {
 					background: $default-gray-light;
 				}
+
 				&.isActive {
 					color: white;
 					background: $default-primary;
@@ -284,8 +360,4 @@
 			}
 		}
 	}
-}
-.tail {
-	margin-left: 0.4rem;
-	transform: translateY(0.3rem);
 }

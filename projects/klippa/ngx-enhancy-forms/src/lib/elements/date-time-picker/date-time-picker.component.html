@@ -1,76 +1,97 @@
 <div class="componentContainer" [ngClass]="{showErrors: isInErrorState()}" [ngClass]="{disabled: disabled}">
-  <div class="dateContainer" [ngClass]="{disabled: disabled}">
-    <mat-form-field floatLabel="never">
-      @if (multiple) {
-        <div class="daysSelectedCaption" (click)="picker.open()" [ngClass]="{disabled: disabled}">
-          @if (selectedDates.length >= 2) {
-            <span>{{getTranslation('daysSelected', selectedDates.length)}}</span>
-            @if (getSelectedMonths() === 1) {
-              <span>{{getTranslation('selectedInMonth', selectedDates[0])}}</span>
-            }
-          }
-          @if (selectedDates.length === 1) {
-            <span>{{getTranslation('selectedDate', selectedDates[0])}}</span>
-          }
-          @if (selectedDates.length === 0) {
-            <span class="placeholderForMultipleSelection">{{getTranslation('selectDays')}}</span>
-          }
-        </div>
-      }
+	<div class="dateContainer" [ngClass]="{disabled: disabled, 'input-sm': size === 'small', 'input-lg': size === 'large'}">
+			<div class="head">
+				@if (prefixTpl) {
+					<div class="prefix">
+						<ng-container [ngTemplateOutlet]="prefixTpl"></ng-container>
+					</div>
+				}
+			</div>
+			<mat-form-field floatLabel="never">
+				@if (multiple) {
+					<div class="daysSelectedCaption" (click)="picker.open()" [ngClass]="{disabled: disabled}">
+						@if (selectedDates.length >= 2) {
+							<span>{{ getTranslation('daysSelected', selectedDates.length) }}</span>
+							@if (getSelectedMonths() === 1) {
+								<span>{{ getTranslation('selectedInMonth', selectedDates[0]) }}</span>
+							}
+						}
+						@if (selectedDates.length === 1) {
+							<span>{{ getTranslation('selectedDate', selectedDates[0]) }}</span>
+						}
+						@if (selectedDates.length === 0) {
+							<span class="placeholderForMultipleSelection">{{ getTranslation('selectDays') }}</span>
+						}
+					</div>
+				}
 
-      @if (disabled) {
-        <div class="disabledClickArea" (click)="picker.open()"></div>
-      }
-      <input
-        #nativeInput
-        matInput
-        [matDatepicker]="picker"
-        [matDatepickerFilter]="filterDates"
-        [(ngModel)]="valueForMaterialDatePicker"
-        (dateInput)="dateChanged($event)"
-        (input)="nativeValueChanged()"
-        (click)="picker.open()"
-        [min]="minDateStartOfDay"
-        [max]="maxDateEndOfDay"
-        [placeholder]="getTranslation('placeholder')"
-        (blur)="touchDate()"
-        [ngClass]="{inputForMultipleDays: multiple, disabled: disabled}"
-        >
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker
-        #picker
-        [dateClass]="isSelected"
-        [startAt]="openPickerOnDate"
-      ></mat-datepicker>
-    </mat-form-field>
-    <div class="tail">
-      <ng-container [ngTemplateOutlet]="getTailTpl()"></ng-container>
-    </div>
-  </div>
-  @if (showTimeInput) {
-    <div class="timeContainer" [ngClass]="{disabled: disabled}">
-      <div class="timeContainerInner">
-        <svg class="clockIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" (click)="hourInput.focus()">
-          <path d="M12 6V12L16 14M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="#888da8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <input #hourInput maxlength="2" placeholder="__" [disabled]="disabled" [(ngModel)]="hours" (ngModelChange)="notifyNewDate()" (focus)="dropdownVisible = true" (blur)="blurredHours();">
-        <div class="divider">:</div>
-        <input maxlength="2" placeholder="__" [disabled]="disabled" [(ngModel)]="minutes" (ngModelChange)="notifyNewDate()" (focus)="dropdownVisible = true" (blur)="blurredMinutes();">
-      </div>
-      @if (dropdownVisible) {
-        <div class="timeDoubleDropdown" #timeDoubleDropdown [onRenderFn]="timeDropdownRendered">
-          <div class="hourOfDay">
-            @for (hour of counter(24); track hour) {
-              <div class="entry" (mousedown)="setHour(hour)" [ngClass]="{isActive: isActive(hour, hours)}">{{hour > 9 ? hour : '0' + hour }}</div>
-            }
-          </div>
-          <div class="minuteOfHour">
-            @for (minute of minutesOfHour; track minute) {
-              <div class="entry" (mousedown)="setMinute(minute)" [ngClass]="{isActive: isActive(minute, minutes)}">{{minute > 9 ? minute : '0' + minute}}</div>
-            }
-          </div>
-        </div>
-      }
-    </div>
-  }
+				@if (disabled) {
+					<div class="disabledClickArea" (click)="picker.open()"></div>
+				}
+				<input
+					#nativeInput
+					matInput
+					[matDatepicker]="picker"
+					[matDatepickerFilter]="filterDates"
+					[(ngModel)]="valueForMaterialDatePicker"
+					(dateInput)="dateChanged($event)"
+					(input)="nativeValueChanged()"
+					(click)="picker.open()"
+					[min]="minDateStartOfDay"
+					[max]="maxDateEndOfDay"
+					[placeholder]="getTranslation('placeholder')"
+					(blur)="touchDate()"
+					[ngClass]="{inputForMultipleDays: multiple, disabled: disabled}"
+				>
+				<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+				<mat-datepicker
+					#picker
+					[dateClass]="isSelected"
+					[startAt]="openPickerOnDate"
+				></mat-datepicker>
+			</mat-form-field>
+			<div class="tail">
+				<ng-container [ngTemplateOutlet]="getTailTpl()"></ng-container>
+				@if (suffixTpl) {
+					<div class="suffix">
+						<ng-container [ngTemplateOutlet]="suffixTpl"></ng-container>
+					</div>
+				}
+			</div>
+	</div>
+	@if (showTimeInput) {
+		<div class="timeContainer" [ngClass]="{disabled: disabled}">
+			<div class="timeContainerInner">
+				<svg class="clockIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+						 (click)="hourInput.focus()">
+					<path
+						d="M12 6V12L16 14M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
+						stroke="#888da8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
+				<input #hourInput maxlength="2" placeholder="__" [disabled]="disabled" [(ngModel)]="hours"
+							 (ngModelChange)="notifyNewDate()" (focus)="dropdownVisible = true" (blur)="blurredHours();">
+				<div class="divider">:</div>
+				<input maxlength="2" placeholder="__" [disabled]="disabled" [(ngModel)]="minutes"
+							 (ngModelChange)="notifyNewDate()" (focus)="dropdownVisible = true" (blur)="blurredMinutes();">
+			</div>
+			@if (dropdownVisible) {
+				<div class="timeDoubleDropdown" #timeDoubleDropdown [onRenderFn]="timeDropdownRendered">
+					<div class="hourOfDay">
+						@for (hour of counter(24); track hour) {
+							<div class="entry" (mousedown)="setHour(hour)"
+									 [ngClass]="{isActive: isActive(hour, hours)}">{{ hour > 9 ? hour : '0' + hour }}
+							</div>
+						}
+					</div>
+					<div class="minuteOfHour">
+						@for (minute of minutesOfHour; track minute) {
+							<div class="entry" (mousedown)="setMinute(minute)"
+									 [ngClass]="{isActive: isActive(minute, minutes)}">{{ minute > 9 ? minute : '0' + minute }}
+							</div>
+						}
+					</div>
+				</div>
+			}
+		</div>
+	}
 </div>

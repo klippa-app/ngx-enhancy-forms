@@ -1,26 +1,27 @@
-import {Component, EventEmitter, Input, Output, TemplateRef} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, Output, TemplateRef, ViewChild} from '@angular/core';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {ValueAccessorBase} from '../value-accessor-base/value-accessor-base.component';
 
 @Component({
-    selector: 'klp-form-text-input',
-    templateUrl: './text-input.component.html',
-    styleUrls: ['./text-input.component.scss'],
-    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: TextInputComponent, multi: true }],
-    standalone: false
+	selector: 'klp-form-text-input',
+	templateUrl: './text-input.component.html',
+	styleUrls: ['./text-input.component.scss'],
+	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: TextInputComponent, multi: true}],
+	standalone: false
 })
 export class TextInputComponent extends ValueAccessorBase<string> {
-	private isPeekingPassword = false;
-
 	@Input() placeholder: string;
 	@Input() type: 'text' | 'password' = 'text';
 	@Input() clearable = false;
-	@Input() icon: 'search';
 	@Input() hasBorderLeft = true;
 	@Input() hasBorderRight = true;
 	@Input() passwordPeekIcon: TemplateRef<any>;
-	@Input() size: 'small' | 'medium' = 'medium';
+	@Input() suffixTpl: TemplateRef<any> | null = null;
+	@Input() prefixTpl: TemplateRef<any> | null = null;
+	@Input() size: 'small' | 'medium' | 'large' = 'medium';
 	@Output() onBlur = new EventEmitter<void>();
+
+	private isPeekingPassword = false;
 
 	public togglePeakPassword(): void {
 		this.isPeekingPassword = !this.isPeekingPassword;
