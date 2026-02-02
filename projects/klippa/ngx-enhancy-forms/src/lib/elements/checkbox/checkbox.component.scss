@@ -4,18 +4,21 @@ $size: 20px;
 	display: block;
 }
 .componentContainer {
-	display: flex;
-	align-items: center;
+	display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
 	margin-bottom: 0;
 }
 label {
-	display: flex;
+	display: contents;
 	align-items: center;
 	justify-content: center;
 	margin-bottom: 0;
 }
 .checkboxContainer {
 	position: relative;
+	grid-column: 1;
+	align-self: center;
 }
 .checkBoxVisualContainer {
 	padding: 2px;
@@ -29,6 +32,13 @@ label {
 	cursor: pointer;
 	font-weight: 400;
 	color: $default-heading;
+	grid-column: 2;
+}
+
+.description {
+	font-weight: 400;
+	color: $default-gray-dark;
+	grid-column: 2;
 }
 
 .checkboxNative {

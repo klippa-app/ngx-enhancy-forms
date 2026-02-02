@@ -3,12 +3,13 @@
     <button class="optionContainer"
       [ngClass]="{classic: variant === 'classic', button: variant === 'button', buttonGray: variant === 'buttonGray', isSelected: innerValue === option.id}"
       (click)="setInnerValueAndNotify(option.id)"
+			[disabled]="disabled"
       >
       <div class="radioAndName">
         @if (variant === 'classic') {
-          <div class="selectedRadioBtnContainer">
+          <div class="radioBtnContainer" [ngClass]="{selected: innerValue === option.id}">
             @if (innerValue === option.id) {
-              <div class="selected"></div>
+              <div class="innerCircle"></div>
             }
           </div>
         }
