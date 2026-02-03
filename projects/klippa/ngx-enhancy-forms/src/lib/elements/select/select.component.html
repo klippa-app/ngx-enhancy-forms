@@ -1,6 +1,6 @@
 <div class="componentContainer"
 		 [class.verticalOrientation]="orientation === 'vertical'"
-		 [ngClass]="{'input-sm': size === 'small', 'input-lg': size === 'large', 'grow': multiple}"
+		 [ngClass]="{'input-sm': size === 'small', 'input-lg': size === 'large', 'grow': multiple,  noBorderLeft: !hasBorderLeft, noBorderRight: !hasBorderRight,}"
 >
 	@if(prefixTpl) {
 		<div class="prefix-tpl">
@@ -17,7 +17,7 @@
 			[items]="options"
 			[clearable]="clearable"
 			[(ngModel)]="innerValue"
-			[ngClass]="{showErrors: isInErrorState(), truncateOptions: truncateOptions, nonTruncatedOptions: !truncateOptions, withSeparatingLine: withSeparatingLine, noBorderLeft: !hasBorderLeft, noBorderRight: !hasBorderRight, hasCustomOptionTpl: !!customOptionTpl, 'grow': multiple}"
+			[ngClass]="{showErrors: isInErrorState(), truncateOptions: truncateOptions, nonTruncatedOptions: !truncateOptions, withSeparatingLine: withSeparatingLine, hasCustomOptionTpl: !!customOptionTpl, 'grow': multiple}"
 			(change)="setInnerValueAndNotify(innerValue)"
 			[multiple]="multiple"
 			[disabled]="disabled"

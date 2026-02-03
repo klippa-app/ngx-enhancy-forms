@@ -100,8 +100,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "demo:build",
-						"port": 4202
+            "buildTarget": "demo:build"
 					},
           "configurations": {
             "production": {

@@ -335,7 +335,6 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 		const ngSelect = this.elRef.nativeElement.querySelector('ng-select');
 		const containerRect = componentContainer.getBoundingClientRect();
 		const ngSelectRect = ngSelect.getBoundingClientRect();
-		const panelRect = dropdownPanel.getBoundingClientRect();
 		// Calculate horizontal offset to align panel with container
 		const horizontalOffset = containerRect.left - ngSelectRect.left;
 		const scrollPositionOffset = `translate(${this.dropdownPanelOffsetX + horizontalOffset}px, ${this.dropdownPanelOffsetY}px)`;
