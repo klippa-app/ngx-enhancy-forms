@@ -48,6 +48,7 @@ ng-select.ng-select.showErrors {
 
 :host ::ng-deep ng-select.ng-select {
 	height: 100%;
+	width: 100%;
 }
 
 :host ::ng-deep ng-select.ng-select .ng-select-container {
@@ -114,6 +115,17 @@ ng-select.ng-select.showErrors {
 		}
 	}
 
+	.ng-select .ng-select-container {
+		.ng-value-container .ng-placeholder {
+			width: 0px;
+			max-width: 0;
+			flex-grow: 1;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+	}
+
 	.ng-select.ng-select-multiple {
 		.ng-value {
 			flex-direction: row-reverse;
@@ -147,6 +159,7 @@ ng-select.ng-select.showErrors {
 }
 
 :host ::ng-deep .ng-select .ng-select-container .ng-value-container {
+	height: 100%;
 	align-items: center;
 	padding-left: 10px;
 	overflow: hidden;
@@ -162,6 +175,11 @@ ng-select.ng-select.showErrors {
 		.ng-placeholder {
 			top: initial !important;
 			position: absolute !important;
+		}
+	}
+	&:not(:has(input:focus)):not(.ng-has-value) {
+		.ng-input {
+			position: absolute;
 		}
 	}
 }
@@ -504,8 +522,14 @@ ng-select.ng-select.showErrors {
 	flex-wrap: wrap;
 }
 
+:host ::ng-deep .componentContainer .ng-input {
+	height: 100%;
+}
+
 :host ::ng-deep .componentContainer .ng-input > input {
-	all: inherit;
+	font: inherit;
+	color: inherit;
+	line-height: inherit;
 }
 
 .verticalOrientation {
