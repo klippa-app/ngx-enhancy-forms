@@ -37,6 +37,7 @@
 	}
 
 	display: block;
+	background: white;
 	border: 1px solid $border-color;
 	border-radius: $border-radius-default;
 	box-shadow: none;
@@ -59,11 +60,24 @@
 		font-size: 14px;
 		line-height: 20px;
 		height: 32px;
+
+		&.grow {
+			min-height: 32px;
+		}
 	}
 
 	&.input-lg {
 		padding: $padding-large $padding-very-large;
 		height: 44px;
+
+		&.grow {
+			min-height: 44px;
+		}
+	}
+
+	&.grow {
+		height: auto;
+		min-height: 40px;
 	}
 
 	&:hover {

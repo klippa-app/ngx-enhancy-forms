@@ -21,7 +21,7 @@ import {ControlContainer, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {ValueAccessorBase} from '../value-accessor-base/value-accessor-base.component';
 import {FormElementComponent} from '../../form/form-element/form-element.component';
 import {isValueSet, stringIsSetAndFilled} from '../../util/values';
-import {awaitableForNextCycle} from "../../util/angular";
+import {awaitableForNextCycle} from '../../util/angular';
 
 export type AppSelectOptions = Array<AppSelectOption>;
 export type AppSelectOption = {
@@ -35,18 +35,18 @@ export type AppSelectOption = {
 export const SELECT_TRANSLATIONS = new InjectionToken<any>('klp.form.select.translations');
 
 @Directive({
-    selector: '[klpSelectOptionTpl]',
-    standalone: false
+	selector: '[klpSelectOptionTpl]',
+	standalone: false
 })
 export class KlpSelectOptionTemplateDirective {
 }
 
 @Component({
-    selector: 'klp-form-select',
-    templateUrl: './select.component.html',
-    styleUrls: ['./select.component.scss'],
-    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: SelectComponent, multi: true }],
-    standalone: false
+	selector: 'klp-form-select',
+	templateUrl: './select.component.html',
+	styleUrls: ['./select.component.scss'],
+	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: SelectComponent, multi: true}],
+	standalone: false
 })
 export class SelectComponent extends ValueAccessorBase<string | string[]> implements OnChanges, AfterViewInit, OnDestroy {
 	@Input() placeholder: string;
@@ -65,6 +65,9 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	@Input() public dropdownAlignment: 'left' | 'right' = 'left';
 	@Input() public customSearchFn: (term: string, item: { id: string; name: string; description: string }) => boolean;
 	@Input() public footerElement: TemplateRef<any>;
+	@Input() public size: 'small' | 'medium' | 'large' = 'large';
+	@Input() prefixTpl: TemplateRef<any> | null = null;
+	@Input() suffixTpl: TemplateRef<any> | null = null;
 	@Output() public onSearch = new EventEmitter<string>();
 	@Output() public onEndReached = new EventEmitter<void>();
 	@Output() public onOpened = new EventEmitter<void>();
@@ -98,6 +101,8 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	ngAfterViewInit(): void {
 		this.addPrefix();
 		this.addTail();
+		this.applySizeClass();
+		this.updateTailPosition();
 		this.elRef.nativeElement.querySelector('input').addEventListener('keydown', this.keyListener);
 	}
 
@@ -126,6 +131,50 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 		}
 	}
 
+	private updateTailPosition(): void {
+		if (this.tailRef) {
+			let offset = 0;
+
+			const ngInput = this.elRef.nativeElement.querySelector('.ng-select');
+			const arrowWrapper = this.elRef.nativeElement.querySelector('.ng-arrow-wrapper');
+			if (ngInput && arrowWrapper) {
+				offset += ngInput.getBoundingClientRect().width;
+				offset -= arrowWrapper.getBoundingClientRect().width;
+				offset -= 16;
+			}
+
+			if (this.prefixTpl) {
+				const prefixElement = this.elRef.nativeElement.querySelector('.prefix-tpl');
+				offset += prefixElement.getBoundingClientRect().width;
+			}
+
+			this.tailRef.nativeElement.style.left = `${offset}px`;
+
+			switch (this.size) {
+				case 'small':
+					this.tailRef.nativeElement.style.top = '8px';
+					break;
+				case 'medium':
+					this.tailRef.nativeElement.style.top = '10px';
+					break;
+				case 'large':
+					this.tailRef.nativeElement.style.top = '12px';
+					break;
+			}
+		}
+	}
+
+	private applySizeClass(): void {
+		const container = this.elRef.nativeElement.querySelector('.ng-select-container');
+		if (container) {
+			if (this.size === 'small') {
+				container.classList.add('input-sm');
+			} else if (this.size === 'large') {
+				container.classList.add('input-lg');
+			}
+		}
+	}
+
 	async ngOnChanges(changes: SimpleChanges): Promise<void> {
 		if (this.isOpen && isValueSet(changes.options)) {
 			this.lastItemIndexReached = -1;
@@ -141,6 +190,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 			if (isValueSet(container)) {
 				container.innerText = changes.prefix.currentValue;
 			}
+			this.updateTailPosition();
 		}
 	}
 
@@ -281,8 +331,21 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 		if (!isValueSet(dropdownPanel)) {
 			return;
 		}
-		const scrollPositionOffset = `translate(${this.dropdownPanelOffsetX}px, ${this.dropdownPanelOffsetY}px)`;
-		const dropdownPositionOffset = this.dropdownPositionToUse === 'top' ? `translateY(-100%) translateY(-8px)` : 'translateY(8px)';
+		const componentContainer = this.elRef.nativeElement.querySelector('.componentContainer');
+		const ngSelect = this.elRef.nativeElement.querySelector('ng-select');
+		const containerRect = componentContainer.getBoundingClientRect();
+		const ngSelectRect = ngSelect.getBoundingClientRect();
+		const panelRect = dropdownPanel.getBoundingClientRect();
+		// Calculate horizontal offset to align panel with container
+		const horizontalOffset = containerRect.left - ngSelectRect.left;
+		const scrollPositionOffset = `translate(${this.dropdownPanelOffsetX + horizontalOffset}px, ${this.dropdownPanelOffsetY}px)`;
+		const offsetToContainerBottom = containerRect.bottom - ngSelectRect.bottom;
+		let dropdownPositionOffset = `translateY(${offsetToContainerBottom + 8}px)`;
+
+		if (this.dropdownPositionToUse === 'top') {
+			dropdownPositionOffset = `translateY(-100%) ${dropdownPositionOffset} translateY(-16px)`;
+		}
+
 		if (this.orientation === 'vertical') {
 			dropdownPanel.style.transformOrigin = 'top left';
 			dropdownPanel.style.transform = `rotate(90deg) translateY(-${this.elRef.nativeElement.getBoundingClientRect().width}px)`;
