@@ -49,6 +49,11 @@
 	line-height: 24px;
 	color: $default-text-color;
 
+	.ng-input > input,
+  input {
+    all: inherit;
+  }
+
 	&:focus, &:focus-within {
 		outline: 1px solid $default-focus-color;
 		box-shadow: none;

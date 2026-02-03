@@ -124,10 +124,6 @@ ng-select.ng-select.showErrors {
 	border-radius: 2px;
 	box-shadow: none;
 	box-sizing: border-box;
-	color: $default-text-color;
-	font-size: 14px;
-	line-height: 1.5;
-	margin: 0;
 	outline: none;
 	overflow: visible;
 	width: 100%;
@@ -231,12 +227,6 @@ ng-select.ng-select.showErrors {
 
 :host ::ng-deep .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value .ng-value-icon.right {
 	border-left: 1px solid #c2e0ff
-}
-
-:host ::ng-deep .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-input {
-	padding-bottom: 3px;
-	padding-left: 3px
-
 }
 
 :host ::ng-deep ng-select.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder {
@@ -488,14 +478,6 @@ ng-select.ng-select.showErrors {
 	padding-left: 0;
 }
 
-:host ::ng-deep ng-select.ng-select.ng-select-single .ng-select-container .ng-value-container .ng-input {
-	color: $default-text-color;
-}
-
-:host ::ng-deep .ng-select .ng-select-container .ng-value-container .ng-input > input {
-	color: $default-text-color;
-}
-
 :host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option > div {
 	color: $default-text-color;
 	padding: 8px 10px;
@@ -519,6 +501,10 @@ ng-select.ng-select.showErrors {
 	height: auto;
 	align-items: center;
 	flex-wrap: wrap;
+}
+
+:host ::ng-deep .componentContainer .ng-input > input {
+  all: inherit;
 }
 
 .verticalOrientation {
