@@ -99,9 +99,10 @@
 		text-overflow: ellipsis;
 	}
 
-	&[disabled] {
+	&.disabled {
 		background-color: $default-disabled-background;
 		border-color: $default-disabled-background;
+		cursor: not-allowed;
 	}
 }
 
@@ -117,6 +118,9 @@
 	color: inherit;
 	background: none;
 
+	&.disabled {
+		cursor: not-allowed;
+	}
 	:disabled {
 		cursor: not-allowed;
 	}

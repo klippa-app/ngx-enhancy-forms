@@ -1,8 +1,8 @@
 <div class="componentContainer"
 		 [class.verticalOrientation]="orientation === 'vertical'"
-		 [ngClass]="{'input-sm': size === 'small', 'input-lg': size === 'large', 'grow': multiple,  noBorderLeft: !hasBorderLeft, noBorderRight: !hasBorderRight,}"
+		 [ngClass]="{'input-sm': size === 'small', 'input-lg': size === 'large', 'grow': multiple,  noBorderLeft: !hasBorderLeft, noBorderRight: !hasBorderRight, disabled: disabled}"
 >
-	@if(prefixTpl) {
+	@if (prefixTpl) {
 		<div class="prefix-tpl">
 			<ng-container [ngTemplateOutlet]="prefixTpl"></ng-container>
 		</div>
@@ -17,7 +17,7 @@
 			[items]="options"
 			[clearable]="clearable"
 			[(ngModel)]="innerValue"
-			[ngClass]="{showErrors: isInErrorState(), truncateOptions: truncateOptions, nonTruncatedOptions: !truncateOptions, withSeparatingLine: withSeparatingLine, hasCustomOptionTpl: !!customOptionTpl, 'grow': multiple}"
+			[ngClass]="{showErrors: isInErrorState(), truncateOptions: truncateOptions, nonTruncatedOptions: !truncateOptions, withSeparatingLine: withSeparatingLine, hasCustomOptionTpl: !!customOptionTpl, 'grow': multiple, disabled: disabled}"
 			(change)="setInnerValueAndNotify(innerValue)"
 			[multiple]="multiple"
 			[disabled]="disabled"
@@ -73,7 +73,9 @@
 		</div>
 	</div>
 
-	@if(suffixTpl) {
-		<ng-container [ngTemplateOutlet]="suffixTpl"></ng-container>
+	@if (suffixTpl) {
+		<div class="suffix">
+			<ng-container [ngTemplateOutlet]="suffixTpl"></ng-container>
+		</div>
 	}
 </div>

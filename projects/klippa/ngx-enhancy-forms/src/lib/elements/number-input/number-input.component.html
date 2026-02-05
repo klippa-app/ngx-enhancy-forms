@@ -1,4 +1,4 @@
-<div class="componentContainer" [ngClass]="{'input-sm': size === 'small', 'input-lg': size === 'large'}">
+<div class="componentContainer" [ngClass]="{'input-sm': size === 'small', 'input-lg': size === 'large', disabled: disabled}">
 	<div class="head">
 		@if (prefixTpl) {
 			<div class="prefix">
@@ -13,7 +13,7 @@
 		[(ngModel)]="innerValue"
 		(input)="setInnerValueAndNotify($event.target.value)"
 		[placeholder]="placeholder ? placeholder : ''"
-		[ngClass]="{showErrors: isInErrorState()}"
+		[ngClass]="{showErrors: isInErrorState(), disabled: disabled}"
 		[disabled]="disabled"
 		#nativeInputRef
 	/>

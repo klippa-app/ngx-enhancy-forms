@@ -26,6 +26,13 @@ $label-border: $border-color !default;
 		border-top-right-radius: 0px;
 		border-bottom-right-radius: 0px;
 	}
+
+	.prefix-tpl,
+	.suffix {
+		display: flex;
+		align-items: center;
+		flex-shrink: 0;
+	}
 }
 
 ng-select.ng-select.showErrors {
@@ -177,6 +184,7 @@ ng-select.ng-select.showErrors {
 			position: absolute !important;
 		}
 	}
+
 	&:not(:has(input:focus)):not(.ng-has-value) {
 		.ng-input {
 			position: absolute;
