@@ -101,7 +101,6 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	ngAfterViewInit(): void {
 		this.addPrefix();
 		this.addTail();
-		this.applySizeClass();
 		this.updateTailPosition();
 		this.elRef.nativeElement.querySelector('input').addEventListener('keydown', this.keyListener);
 	}
@@ -160,17 +159,6 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 				case 'large':
 					this.tailRef.nativeElement.style.top = '12px';
 					break;
-			}
-		}
-	}
-
-	private applySizeClass(): void {
-		const container = this.elRef.nativeElement.querySelector('.ng-select-container');
-		if (container) {
-			if (this.size === 'small') {
-				container.classList.add('input-sm');
-			} else if (this.size === 'large') {
-				container.classList.add('input-lg');
 			}
 		}
 	}
