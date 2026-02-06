@@ -112,11 +112,6 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 		this.minutesOfHour = Array.from({length: 60}, (v, k) => k).filter(e => e % 5 === 0);
 	}
 
-	get buttonSize(): string {
-		return this.size === 'small' ? '20px' : '24px';
-	}
-
-
 	ngAfterViewInit(): void {
 		if (this.multiple) {
 			// we are going to overwrite the datepicker closing fn later, so we are saving it here to restore it when needed

@@ -1,5 +1,5 @@
 <div class="componentContainer" [ngClass]="{showErrors: isInErrorState()}" [ngClass]="{disabled: disabled}">
-	<div class="dateContainer" [ngClass]="{disabled: disabled, 'input-sm': size === 'small', 'input-lg': size === 'large'}" [style.--button-size]="buttonSize">
+	<div class="dateContainer" [ngClass]="{disabled: disabled, 'input-sm': size === 'small', 'input-lg': size === 'large'}" [style.--button-size]="size === 'small' ? '20px' : '24px'" >
 			<div class="head">
 				@if (prefixTpl) {
 					<div class="prefix">

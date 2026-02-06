@@ -65,7 +65,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	@Input() public dropdownAlignment: 'left' | 'right' = 'left';
 	@Input() public customSearchFn: (term: string, item: { id: string; name: string; description: string }) => boolean;
 	@Input() public footerElement: TemplateRef<any>;
-	@Input() public size: 'small' | 'medium' | 'large' = 'large';
+	@Input() public size: 'small' | 'medium' | 'large' = 'medium';
 	@Input() prefixTpl: TemplateRef<any> | null = null;
 	@Input() suffixTpl: TemplateRef<any> | null = null;
 	@Output() public onSearch = new EventEmitter<string>();
