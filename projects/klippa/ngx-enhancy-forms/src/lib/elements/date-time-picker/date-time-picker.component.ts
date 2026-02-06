@@ -10,7 +10,7 @@ import {
 	OnChanges,
 	OnInit,
 	Optional,
-	SimpleChanges,
+	SimpleChanges, TemplateRef,
 	ViewChild
 } from '@angular/core';
 import {ControlContainer, NG_VALUE_ACCESSOR} from '@angular/forms';
@@ -58,6 +58,9 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 	@Input() public initHour: string = null;
 	@Input() public initMinute: string = null;
 	@Input() public invalidTimeAsMidnight = false; // if the time is not valid, use 00:00 as the time
+	@Input() size: 'small' | 'medium' | 'large' = 'medium';
+	@Input() suffixTpl: TemplateRef<any> | null = null;
+	@Input() prefixTpl: TemplateRef<any> | null = null;
 
 	@ViewChild('nativeInput') nativeInputRef: ElementRef;
 	@ViewChild('picker') datePickerRef: MatDatepicker<Date>;
@@ -108,8 +111,6 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 		this.minutes = this.initMinute;
 		this.minutesOfHour = Array.from({length: 60}, (v, k) => k).filter(e => e % 5 === 0);
 	}
-
-
 
 	ngAfterViewInit(): void {
 		if (this.multiple) {

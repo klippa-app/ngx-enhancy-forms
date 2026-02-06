@@ -1,4 +1,4 @@
-import {Component, Host, Inject, InjectionToken, Input, Optional} from '@angular/core';
+import {Component, Host, Inject, InjectionToken, Input, Optional, TemplateRef} from '@angular/core';
 import {ControlContainer, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {format as dateFormat, parse} from 'date-fns';
 import {MultipleValueAccessorBase} from '../value-accessor-base/multiple-value-accessor-base.component';
@@ -22,6 +22,9 @@ export class DatePickerComponent extends MultipleValueAccessorBase<string | type
 	@Input() public format = 'dd-MM-yyyy';
 	@Input() public placeholder: string;
 	@Input() public clearable = false;
+	@Input() size: 'small' | 'medium' | 'large' = 'medium';
+	@Input() suffixTpl: TemplateRef<any> | null = null;
+	@Input() prefixTpl: TemplateRef<any> | null = null;
 
 	public dateValue: Date | Array<Date>;
 

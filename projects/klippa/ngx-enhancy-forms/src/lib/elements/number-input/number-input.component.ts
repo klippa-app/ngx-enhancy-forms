@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input, TemplateRef} from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import {ValueAccessorBase} from "../value-accessor-base/value-accessor-base.component";
 
@@ -12,6 +12,9 @@ import {ValueAccessorBase} from "../value-accessor-base/value-accessor-base.comp
 export class NumberInputComponent extends ValueAccessorBase<string | number> {
 	@Input() placeholder: string;
 	@Input() parseNumber: boolean = false;
+	@Input() size: 'small' | 'medium' | 'large' = 'medium';
+	@Input() suffixTpl: TemplateRef<any> | null = null;
+	@Input() prefixTpl: TemplateRef<any> | null = null;
 
 	setInnerValueAndNotify(value: string | number): void {
 		if (this.parseNumber && typeof value === 'string') {

@@ -4,11 +4,11 @@
 
 // eg: @include transition(all 0.4s ease-in-out);
 @mixin transition($transition) {
-  transition: $transition;
-  -webkit-transition: $transition;
-  -moz-transition: $transition;
-  -o-transition: $transition;
-  -ms-transition: $transition;
+	transition: $transition;
+	-webkit-transition: $transition;
+	-moz-transition: $transition;
+	-o-transition: $transition;
+	-ms-transition: $transition;
 }
 
 //--------------------------------------------------
@@ -17,59 +17,112 @@
 
 // usage: @include placeholder {font-size: 10px;}
 @mixin placeholder {
-  &::-webkit-input-placeholder {@content}
-  &:-moz-placeholder           {@content}
-  &::-moz-placeholder          {@content}
-  &:-ms-input-placeholder      {@content}
+	&::-webkit-input-placeholder {
+		@content
+	}
+	&:-moz-placeholder {
+		@content
+	}
+	&::-moz-placeholder {
+		@content
+	}
+	&:-ms-input-placeholder {
+		@content
+	}
 }
 
 @mixin formControl() {
-  display: block;
-  border: 1px solid $border-color;
+	@include placeholder {
+		color: $default-placeholder-color;
+	}
+
+	display: block;
+	background: white;
+	border: 1px solid $border-color;
+	border-radius: $border-radius-default;
+	box-shadow: none;
+	height: 40px;
+	width: 100%;
+	padding: $padding-medium $padding-very-large;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 24px;
+	color: $default-text-color;
+
+	&:focus, &:focus-within {
+		outline: 1px solid $default-focus-color;
+		box-shadow: none;
+		border-color: $default-focus-color;
+	}
+
+	&.input-sm {
+		padding: $padding-small $padding-medium;
+		font-size: 14px;
+		line-height: 20px;
+		height: 32px;
+
+		&.grow {
+			min-height: 32px;
+		}
+	}
+
+	&.input-lg {
+		padding: $padding-large $padding-very-large;
+		height: 44px;
+
+		&.grow {
+			min-height: 44px;
+		}
+	}
+
+	&.grow {
+		height: auto;
+		min-height: 40px;
+	}
+
 	&:hover {
 		border-color: $border-color-hover;
 	}
-  border-radius: $border-radius-default;
-  box-shadow: none;
-  height: 42px;
-  width: 100%;
-  padding: $padding-small $padding-large;
-  font-size: 14px;
-  color: $default-text-color;
-  @include placeholder {
-    color: $default-placeholder-color;
-  }
 
-  &:focus, &:focus-within {
-    outline: 1px solid $default-focus-color;
-    box-shadow: none;
-    border-color: $default-focus-color;
-  }
+	&.error {
+		border-color: $default-danger;
+		background-color: $inverse-danger;
+	}
 
-  &.input-sm {
-    height: 30px;
-  }
+	&.valid {
+		border-color: $default-success;
+		background-color: $inverse-success;
+		color: darken($default-success, 15%);
+	}
 
-  &.input-lg {
-    height: 50px;
-  }
-
-  &.error {
-    border-color: $default-danger;
-    background-color: $inverse-danger;
-  }
-
-  &.valid {
-    border-color: $default-success;
-    background-color: $inverse-success;
-    color: darken($default-success, 15%);
-  }
 	&:placeholder-shown {
 		text-overflow: ellipsis;
 	}
-	&[disabled] {
+
+	&.disabled {
 		background-color: $default-disabled-background;
 		border-color: $default-disabled-background;
+		cursor: not-allowed;
+	}
+}
+
+@mixin nestedInput() {
+	outline: none;
+	border: none;
+	flex: 1 1 auto;
+	min-width: 0;
+	width: auto;
+	height: 100%;
+	font-size: inherit;
+	line-height: inherit;
+	color: inherit;
+	background: none;
+
+	&.disabled {
+		cursor: not-allowed;
+	}
+	:disabled {
+		cursor: not-allowed;
 	}
 }
 

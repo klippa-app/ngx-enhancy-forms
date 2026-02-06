@@ -2,14 +2,32 @@
 @import '../../../style/mixins';
 
 :host {
-  display: block;
+	display: block;
 }
 
-input {
-  outline: none;
-  @include formControl();
-}
+.componentContainer {
+	@include formControl();
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	overflow-y: hidden;
 
-.showErrors {
-  border-color: $default-warning;
+	input {
+		@include nestedInput();
+	}
+
+	.head {
+		cursor: default;
+	}
+
+	.tail {
+		cursor: default;
+	}
+
+	.prefix,
+	.suffix {
+		display: flex;
+		align-items: center;
+		flex-shrink: 0;
+	}
 }

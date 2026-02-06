@@ -11,9 +11,10 @@
 		[placeholder]="getTranslation('placeholder')"
 		[clearable]="clearable"
 		[showTimeInput]="false"
+		[getTailTplFn]="getTailTpl"
 		(onTouch)="touch()"
+		[size]="size"
+		[suffixTpl]="suffixTpl"
+		[prefixTpl]="prefixTpl"
 	></klp-form-date-time-picker>
-	<div class="tail">
-		<ng-container [ngTemplateOutlet]="getTailTpl()"></ng-container>
-	</div>
 </div>

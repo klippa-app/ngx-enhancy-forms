@@ -1,4 +1,5 @@
 @import '../../../style/themes/default/variables';
+@import "../../../style/mixins";
 
 :host {
 	display: block;
@@ -164,14 +165,28 @@
 		}
 	}
 }
+
+.textInput {
+	@include formControl();
+
+	input {
+		@include nestedInput();
+	}
+}
+
 .picker {
+	@include formControl();
 	position: relative;
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	justify-content: space-between;
+
+	input {
+		@include nestedInput();
+	}
+
 	.chevronDown {
-		position: absolute;
-		top: 18px;
-		right: 23px;
-		width: 0;
-		height: 0;
 		border-top: 5px solid $default-text-color;
 		border-left: 5px solid transparent;
 		border-right: 5px solid transparent;

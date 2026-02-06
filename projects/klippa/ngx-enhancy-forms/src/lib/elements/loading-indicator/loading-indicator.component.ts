@@ -9,4 +9,5 @@ import { Component, Input } from '@angular/core';
 export class LoadingIndicatorComponent {
 	@Input() public variant: '3dots' | 'spinner' | 'textInput' | 'picker' = '3dots';
 	@Input() public size: 'tiny' | 'small' | 'medium' | 'large' | 'huge' = 'medium';
+	@Input() public formSize: 'small' | 'medium' | 'large' = 'medium';
 }
