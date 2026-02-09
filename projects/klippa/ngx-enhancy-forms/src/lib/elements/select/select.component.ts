@@ -138,9 +138,15 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 		const prefixElement = this.elRef.nativeElement.querySelector('.prefix-tpl');
 
 		const elementsToObserve: HTMLElement[] = [];
-		if (ngInput) { elementsToObserve.push(ngInput); }
-		if (arrowWrapper) { elementsToObserve.push(arrowWrapper); }
-		if (prefixElement) { elementsToObserve.push(prefixElement); }
+		if (ngInput) {
+			elementsToObserve.push(ngInput);
+		}
+		if (arrowWrapper) {
+			elementsToObserve.push(arrowWrapper);
+		}
+		if (prefixElement) {
+			elementsToObserve.push(prefixElement);
+		}
 
 		this.resizeObserver = new ResizeObserver(() => {
 			this.updateTailPosition();
