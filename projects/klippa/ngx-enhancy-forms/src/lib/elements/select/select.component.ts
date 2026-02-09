@@ -82,11 +82,12 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 
 	private lastItemIndexReached = -1;
 	public dropdownPositionToUse: 'auto' | 'bottom' | 'top' | 'left' | 'right' = 'bottom';
-	private isOpen: boolean = false;
+	private isOpen = false;
 	private dropdownPanelOffsetX = 0;
 	private dropdownPanelOffsetY = 0;
 	private anchorAbsolute: HTMLDivElement;
 	private anchorFixed: HTMLDivElement;
+	private resizeObserver?: ResizeObserver;
 
 	constructor(
 		@Optional() @Host() protected parent: FormElementComponent,
@@ -101,6 +102,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	ngAfterViewInit(): void {
 		this.addPrefix();
 		this.addTail();
+		this.createSizeObservers();
 		this.updateTailPosition();
 		this.elRef.nativeElement.querySelector('input').addEventListener('keydown', this.keyListener);
 	}
@@ -128,6 +130,23 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 			newNode.innerText = this.prefix;
 			container.insertBefore(newNode, container.children[0]);
 		}
+	}
+
+	private createSizeObservers(): void {
+		const ngInput = this.elRef.nativeElement.querySelector('.ng-select');
+		const arrowWrapper = this.elRef.nativeElement.querySelector('.ng-arrow-wrapper');
+		const prefixElement = this.elRef.nativeElement.querySelector('.prefix-tpl');
+
+		const elementsToObserve: HTMLElement[] = [];
+		if (ngInput) { elementsToObserve.push(ngInput); }
+		if (arrowWrapper) { elementsToObserve.push(arrowWrapper); }
+		if (prefixElement) { elementsToObserve.push(prefixElement); }
+
+		this.resizeObserver = new ResizeObserver(() => {
+			this.updateTailPosition();
+		});
+
+		elementsToObserve.forEach(el => this.resizeObserver.observe(el));
 	}
 
 	private updateTailPosition(): void {
@@ -263,7 +282,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 
 		dropdownPanel.style.position = 'fixed';
 		this.setPanelOffsets();
-	};
+	}
 
 	private setWidthBasedOnOptionsWidths = async (): Promise<void> => {
 		if (this.truncateOptions === false) {
@@ -300,7 +319,7 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 				this.setPanelOffsets();
 			}
 		}
-	};
+	}
 
 	private getAllLimitingContainers(): Array<HTMLElement> {
 		const result = [];
@@ -429,5 +448,6 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	ngOnDestroy(): void {
 		super.ngOnDestroy();
 		this.elRef.nativeElement?.querySelector('input')?.removeEventListener('keydown', this.keyListener);
+		this.resizeObserver?.disconnect();
 	}
 }
