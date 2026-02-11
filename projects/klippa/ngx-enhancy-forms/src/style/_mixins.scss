@@ -126,3 +126,24 @@
 	}
 }
 
+@mixin captionText() {
+	color: $default-text-color;
+	font-feature-settings: 'cv05' on;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 24px;
+	letter-spacing: 0.16px;
+
+	&.input-sm {
+		font-size: 14px;
+		line-height: 20px;
+		letter-spacing: 0.14px;
+	}
+}
+
+@mixin subCaptionText() {
+	@include captionText();
+	color: $default-dark;
+	font-weight: 400;
+}

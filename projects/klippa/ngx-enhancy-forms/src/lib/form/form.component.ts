@@ -33,6 +33,19 @@ export type OnInjectedEmitterType = {
 	parentValue: Record<string, any>;
 };
 
+export type FormSize = 'small' | 'medium' | 'large';
+
+export function GetSizeClass(size: FormSize): string {
+	switch (size){
+		case 'small':
+			return 'input-sm';
+		case 'medium':
+			return 'input-md';
+		case 'large':
+			return 'input-lg';
+	}
+}
+
 @Directive({
     // tslint:disable-next-line:directive-selector
     selector: 'klp-sub-form',
@@ -62,6 +75,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 	@Input() public errors: Map<AbstractControl, string> = new Map<AbstractControl, string>();
 	@Input() public patchValueInterceptor: (values: any) => Promise<any>;
 	@Input() public allowSubmitOn: 'buttonAndEnter' | 'buttonOnly' = 'buttonAndEnter';
+	@Input() public size: FormSize = 'medium';
 	@Output() public onInjected = new EventEmitter<OnInjectedEmitterType>();
 
 	private topLevelFormControl: AbstractControl;

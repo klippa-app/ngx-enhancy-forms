@@ -14,7 +14,7 @@ import {AbstractControl, NG_VALUE_ACCESSOR, UntypedFormControl} from '@angular/f
 import {ValueAccessorBase} from '../../elements/value-accessor-base/value-accessor-base.component';
 import {CustomErrorMessages, FormErrorMessages} from '../../types';
 import {isValueSet, stringIsSetAndFilled} from '../../util/values';
-import {FormComponent} from '../form.component';
+import {FormComponent, FormSize, GetSizeClass} from '../form.component';
 import {getAllLimitingContainers} from '../../util/dom';
 import {Subscription} from "rxjs";
 
@@ -51,6 +51,7 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 	@Input() public swapInputAndCaption = false;
 	@Input() public errorMessageAsTooltip = false;
 	@Input() public errorMessageHasMaxWidth = true;
+	@Input() public size: FormSize | null = null;
 	@ViewChild('internalComponentRef') public internalComponentRef: ElementRef;
 	@ViewChild('tailTpl') public tailTpl: TemplateRef<any>;
 	@ViewChild('captionDummyForSpaceCalculation') public captionDummyForSpaceCalculation: ElementRef;
@@ -62,6 +63,7 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 
 	public captionRef: TemplateRef<any>;
 	public captionEndRef: TemplateRef<any>;
+	public subCaptionRef: TemplateRef<any>;
 	public errorMessages: FormErrorMessages = DEFAULT_ERROR_MESSAGES;
 	public customErrorHandlers: Array<{ error: string; templateRef: TemplateRef<any> }> = [];
 	private input: ValueAccessorBase<any>;
@@ -75,6 +77,9 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 		private elRef: ElementRef,
 		private ngZone: NgZone,
 	) {
+		if (this.parent && !this.size) {
+			this.size = this.parent.size;
+		}
 	}
 
 	async ngAfterViewInit(): Promise<void> {
@@ -170,6 +175,10 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 
 	public registerCaptionEnd(templateRef: TemplateRef<any>): void {
 		this.captionEndRef = templateRef;
+	}
+
+	public registerSubCaption(templateRef: TemplateRef<any>): void {
+		this.subCaptionRef = templateRef;
 	}
 
 	public getWarningToShow(): string | TemplateRef<any> {
@@ -330,4 +339,6 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 			}
 		}
 	}
+
+	protected readonly GetSizeClass = GetSizeClass;
 }

@@ -33,6 +33,8 @@ import {ElementIsTruncatedCbComponent} from './elementIsTruncatedCb.component';
 import {OnRenderDirective} from './onRender.component';
 import {TextAreaComponent} from './elements/text-area/text-area.component';
 import {FormCaptionEndComponent} from './form/form-caption-end/form-caption-end.component';
+import {FormSubCaptionComponent} from './form/form-sub-caption/form-sub-caption.component';
+import {FormTextSubCaptionComponent} from "./form/form-text-sub-caption/form-text-sub-caption.component";
 
 @NgModule({
 	imports: [
@@ -63,6 +65,8 @@ import {FormCaptionEndComponent} from './form/form-caption-end/form-caption-end.
 		FileInputComponent,
 		FormCaptionComponent,
 		FormCaptionEndComponent,
+		FormSubCaptionComponent,
+		FormTextSubCaptionComponent,
 		FormElementComponent,
 		FormErrorComponent,
 		FormSubmitButtonComponent,
@@ -97,6 +101,8 @@ import {FormCaptionEndComponent} from './form/form-caption-end/form-caption-end.
 		FileInputComponent,
 		FormCaptionComponent,
 		FormCaptionEndComponent,
+		FormSubCaptionComponent,
+		FormTextSubCaptionComponent,
 		FormElementComponent,
 		FormErrorComponent,
 		FormSubmitButtonComponent,

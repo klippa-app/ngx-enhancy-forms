@@ -5,6 +5,7 @@ import {MultipleValueAccessorBase} from '../value-accessor-base/multiple-value-a
 import {invalidDateKey} from '../../validators/dateValidator';
 import {isNullOrUndefined, stringIsSetAndFilled} from '../../util/values';
 import {FormElementComponent} from '../../form/form-element/form-element.component';
+import {FormSize} from "../../form/form.component";
 
 export const DATE_PICKER_TRANSLATIONS = new InjectionToken<any>('klp.form.date.translations');
 
@@ -22,18 +23,16 @@ export class DatePickerComponent extends MultipleValueAccessorBase<string | type
 	@Input() public format = 'dd-MM-yyyy';
 	@Input() public placeholder: string;
 	@Input() public clearable = false;
-	@Input() size: 'small' | 'medium' | 'large' = 'medium';
+	@Input() size: FormSize | null = null;
 	@Input() suffixTpl: TemplateRef<any> | null = null;
 	@Input() prefixTpl: TemplateRef<any> | null = null;
 
 	public dateValue: Date | Array<Date>;
 
 	constructor(
-		@Host() @Optional() protected parent: FormElementComponent,
-		@Host() @Optional() protected controlContainer: ControlContainer,
 		@Inject(DATE_PICKER_TRANSLATIONS) @Optional() private translations: any,
 	) {
-		super(parent, controlContainer);
+		super();
 	}
 
 	writeValue(value: string | Array<string> | typeof invalidDateKey): void {

@@ -3,7 +3,7 @@ import {
 	Component,
 	ElementRef,
 	EventEmitter,
-	Host,
+	Host, inject,
 	Input,
 	OnDestroy,
 	OnInit,
@@ -53,12 +53,8 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 	private attachedFormControl: UntypedFormControl;
 	private tailTpl: TemplateRef<any>;
 	private getImmutableValueFn: () => T;
-
-	constructor(
-		@Host() @Optional() protected parent: FormElementComponent,
-		@Host() @Optional() protected controlContainer: ControlContainer
-	) {
-	}
+	protected parent = inject(FormElementComponent, { host: true, optional: true });
+	protected controlContainer = inject(ControlContainer, { host: true, optional: true });
 
 	ngOnInit(): void {
 		if (this.formControl) {

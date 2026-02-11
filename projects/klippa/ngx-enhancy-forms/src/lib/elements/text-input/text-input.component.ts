@@ -1,6 +1,18 @@
-import {Component, ElementRef, EventEmitter, Input, Output, TemplateRef, ViewChild} from '@angular/core';
-import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import {
+	Component,
+	ElementRef,
+	EventEmitter,
+	Host,
+	Input,
+	Optional,
+	Output,
+	TemplateRef,
+	ViewChild
+} from '@angular/core';
+import {ControlContainer, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {ValueAccessorBase} from '../value-accessor-base/value-accessor-base.component';
+import {FormElementComponent} from "../../form/form-element/form-element.component";
+import {FormSize, GetSizeClass} from "../../form/form.component";
 
 @Component({
 	selector: 'klp-form-text-input',
@@ -18,8 +30,16 @@ export class TextInputComponent extends ValueAccessorBase<string> {
 	@Input() passwordPeekIcon: TemplateRef<any>;
 	@Input() suffixTpl: TemplateRef<any> | null = null;
 	@Input() prefixTpl: TemplateRef<any> | null = null;
-	@Input() size: 'small' | 'medium' | 'large' = 'medium';
+	@Input() size: FormSize | null = null;
 	@Output() onBlur = new EventEmitter<void>();
+
+	constructor() {
+		super();
+
+		if (this.parent && !this.size) {
+			this.size = this.parent.size;
+		}
+	}
 
 	private isPeekingPassword = false;
 
@@ -33,4 +53,6 @@ export class TextInputComponent extends ValueAccessorBase<string> {
 		}
 		return this.isPeekingPassword ? 'text' : 'password';
 	}
+
+	protected readonly GetSizeClass = GetSizeClass;
 }

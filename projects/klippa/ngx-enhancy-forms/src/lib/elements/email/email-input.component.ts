@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {ValueAccessorBase} from '../value-accessor-base/value-accessor-base.component';
+import {FormSize, GetSizeClass} from "../../form/form.component";
 
 @Component({
     selector: 'klp-form-email-input',
@@ -11,4 +12,14 @@ import {ValueAccessorBase} from '../value-accessor-base/value-accessor-base.comp
 })
 export class EmailInputComponent extends ValueAccessorBase<string> {
 	@Input() placeholder = '';
+	@Input() size: FormSize | null = null;
+
+	constructor() {
+		super();
+		if (this.parent && !this.size) {
+			this.size = this.parent.size;
+		}
+	}
+
+	protected readonly GetSizeClass = GetSizeClass;
 }

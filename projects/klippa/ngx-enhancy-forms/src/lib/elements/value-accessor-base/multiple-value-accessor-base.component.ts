@@ -12,13 +12,6 @@ import {isValueSet} from '../../util/values';
 export class MultipleValueAccessorBase<T> extends ValueAccessorBase<Array<T> | T> {
 	@Input() multiple = false;
 
-	constructor(
-		@Host() @Optional() protected parent: FormElementComponent,
-		@Host() @Optional() protected controlContainer: ControlContainer
-	) {
-		super(parent, controlContainer);
-	}
-
 	writeValue(value: Array<T> | T): void {
 		// if the outside world passes a value in the wrong format, it should be corrected
 		if (this.multiple && !Array.isArray(value)) {

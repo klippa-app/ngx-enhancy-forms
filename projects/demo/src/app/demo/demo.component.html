@@ -104,6 +104,7 @@ ohja
       </klp-form-element>
 
       <klp-form-element caption="mandatory picker" spaceDistribution="34-66" direction="vertical">
+				<klp-form-text-sub-caption [text]="'this is a sub caption'"/>
         <klp-form-select [hasBorderLeft]="true" [hasBorderRight]="true" prefix="a prefix" [options]="staticOptions" [truncateOptions]="false" [multiple]="false" formControlName="picker" [disabled]="false">
 					<ng-template klpSelectOptionTpl let-item="item">
 						<div>

@@ -24,6 +24,7 @@ import {isValueSet, stringIsSetAndFilled} from '../../util/values';
 import {endOfMonth, format as formatDate, startOfMonth, isSameDay} from 'date-fns';
 import {arrayIsSetAndFilled, removeDuplicatesFromArray } from '../../util/arrays';
 import {runNextRenderCycle} from "../../util/angular";
+import {FormSize, GetSizeClass} from "../../form/form.component";
 
 export const KLP_DATE_FORMATS = new InjectionToken<KlpDateFormats>('klp.form.date.formats');
 export const DATE_TIME_PICKER_TRANSLATIONS = new InjectionToken<any>('klp.form.dateTime.translations');
@@ -58,7 +59,7 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 	@Input() public initHour: string = null;
 	@Input() public initMinute: string = null;
 	@Input() public invalidTimeAsMidnight = false; // if the time is not valid, use 00:00 as the time
-	@Input() size: 'small' | 'medium' | 'large' = 'medium';
+	@Input() size: FormSize | null = null;
 	@Input() suffixTpl: TemplateRef<any> | null = null;
 	@Input() prefixTpl: TemplateRef<any> | null = null;
 
@@ -86,8 +87,6 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 	protected Number = Number;
 
 	constructor(
-		@Host() @Optional() protected parent: FormElementComponent,
-		@Host() @Optional() protected controlContainer: ControlContainer,
 		@Inject(DATE_TIME_PICKER_TRANSLATIONS) @Optional() private translations: any,
 		@Inject(DATE_PICKER_LOCALE) @Optional() private datePickerLocale: any,
 		private dateAdapter: DateAdapter<Date>,
@@ -95,9 +94,13 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 		private cdr: ChangeDetectorRef,
 		private ngZone: NgZone,
 	) {
-		super(parent, controlContainer);
+		super();
 		if (isValueSet(datePickerLocale)) {
 			dateAdapter.setLocale(datePickerLocale());
+		}
+
+		if (this.parent && !this.size) {
+			this.size = this.parent.size;
 		}
 	}
 
@@ -439,4 +442,6 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 		console.log('a');
 		this.datePickerRef.open();
 	}
+
+	protected readonly GetSizeClass = GetSizeClass;
 }
