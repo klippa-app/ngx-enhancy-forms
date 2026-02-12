@@ -1,7 +1,7 @@
 <div class="componentContainer">
 	<label>
 		<div class="checkboxContainer">
-			<div class="checkBoxVisualContainer">
+			<div class="checkBoxVisualContainer" [class.hasMargin]="!!caption">
 				<input type="checkbox" class="checkboxNative"
 							 [(ngModel)]="innerValue"
 							 (change)="setInnerValueAndNotify(innerValue); touch()"

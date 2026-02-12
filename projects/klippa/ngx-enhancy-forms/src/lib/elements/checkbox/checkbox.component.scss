@@ -22,10 +22,12 @@ label {
 }
 .checkBoxVisualContainer {
 	padding: 2px;
-	margin-right: 10px;
 	border-radius: 4px;
 	&:focus-within {
 		outline: 2px solid $primary;
+	}
+	&.hasMargin {
+		margin-right: 10px;
 	}
 }
 .caption {
