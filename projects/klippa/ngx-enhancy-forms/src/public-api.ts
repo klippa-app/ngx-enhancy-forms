@@ -39,6 +39,7 @@ export * from './lib/form/form-element/form-element.component';
 export * from './lib/form/form-error/form-error.component';
 export * from './lib/form/form-submit-button/form-submit-button.component';
 export * from './lib/form/form-validation-error/form-validation-error';
+export * from './lib/form/form-size-provider/form-size-provider';
 
 export * from './lib/validators/dateValidator';
 
