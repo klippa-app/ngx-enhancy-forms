@@ -3,7 +3,7 @@
 		type="email"
 		class="form-control"
 		[(ngModel)]="innerValue"
-		[class]="GetSizeClass(size)"
+		[class]="sizeClass"
 		(input)="setInnerValueAndNotify($event.target.value)"
 		[placeholder]="placeholder"
 		(blur)="touch()"

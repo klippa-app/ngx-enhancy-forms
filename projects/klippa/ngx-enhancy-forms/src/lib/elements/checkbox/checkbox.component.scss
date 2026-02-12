@@ -1,5 +1,5 @@
 @import '../../../style/themes/default/variables';
-$size: 20px;
+@import '../../../style/mixins';
 :host {
 	display: block;
 }
@@ -29,13 +29,18 @@ label {
 	}
 }
 .caption {
-	cursor: pointer;
+	@include captionText();
 	font-weight: 400;
-	color: $default-heading;
+	cursor: pointer;
 	grid-column: 2;
+
+	&.disabled {
+		cursor: not-allowed;
+	}
 }
 
 .description {
+	@include subCaptionText();
 	font-weight: 400;
 	color: $default-gray-dark;
 	grid-column: 2;
@@ -46,8 +51,8 @@ label {
 	opacity: 0;
 	top: 0;
 	left: 0;
-	width: $size;
-	height: $size;
+	width: var(--checkbox-size);
+	height: var(--checkbox-size);
 	cursor: pointer;
 }
 
@@ -55,8 +60,8 @@ label {
 	pointer-events: none;
   padding: $padding-tiny;
 	color: $default-white;
-  width: $size;
-  height: $size;
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
   display: flex;
 	align-items: center;
 	justify-content: center;

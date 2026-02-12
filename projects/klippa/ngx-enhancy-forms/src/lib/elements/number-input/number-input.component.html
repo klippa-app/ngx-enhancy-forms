@@ -1,4 +1,7 @@
-<div class="componentContainer" [ngClass]="{'input-sm': size === 'small', 'input-lg': size === 'large', disabled: disabled}">
+<div class="componentContainer"
+		 [ngClass]="{disabled: disabled}"
+		 [class]="sizeClass"
+>
 	<div class="head">
 		@if (prefixTpl) {
 			<div class="prefix">

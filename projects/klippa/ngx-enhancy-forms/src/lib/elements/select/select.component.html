@@ -1,7 +1,7 @@
 <div class="componentContainer"
 		 [class.verticalOrientation]="orientation === 'vertical'"
 		 [ngClass]="{'grow': multiple,  noBorderLeft: !hasBorderLeft, noBorderRight: !hasBorderRight, disabled: disabled}"
-		 [class]="GetSizeClass(size)"
+		 [class]="sizeClass"
 >
 	@if (prefixTpl) {
 		<div class="prefix-tpl">

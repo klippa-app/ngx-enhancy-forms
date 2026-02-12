@@ -1,7 +1,7 @@
 import {
 	Component,
 	Directive,
-	EventEmitter,
+	EventEmitter, inject,
 	Input,
 	OnChanges,
 	OnDestroy,
@@ -25,6 +25,7 @@ import {FormElementComponent} from './form-element/form-element.component';
 import {isValueSet} from '../util/values';
 import {deepMerge} from '../util/objects';
 import {cloneDeep} from 'lodash';
+import {DefaultSize, FormSize, KLP_FORM_DEFAULT_SIZE} from './form-size-provider/form-size-provider';
 
 export const invalidFieldsSymbol = Symbol('Not all fields are valid');
 
@@ -32,19 +33,6 @@ export type OnInjectedEmitterType = {
 	childValue: Record<string, any>;
 	parentValue: Record<string, any>;
 };
-
-export type FormSize = 'small' | 'medium' | 'large';
-
-export function GetSizeClass(size: FormSize): string {
-	switch (size){
-		case 'small':
-			return 'input-sm';
-		case 'medium':
-			return 'input-md';
-		case 'large':
-			return 'input-lg';
-	}
-}
 
 @Directive({
     // tslint:disable-next-line:directive-selector
@@ -75,7 +63,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 	@Input() public errors: Map<AbstractControl, string> = new Map<AbstractControl, string>();
 	@Input() public patchValueInterceptor: (values: any) => Promise<any>;
 	@Input() public allowSubmitOn: 'buttonAndEnter' | 'buttonOnly' = 'buttonAndEnter';
-	@Input() public size: FormSize = 'medium';
+	@Input() public size: FormSize = inject(KLP_FORM_DEFAULT_SIZE, {optional: true}) ?? DefaultSize;
 	@Output() public onInjected = new EventEmitter<OnInjectedEmitterType>();
 
 	private topLevelFormControl: AbstractControl;

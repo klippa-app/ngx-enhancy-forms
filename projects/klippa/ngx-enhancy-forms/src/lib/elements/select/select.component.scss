@@ -27,6 +27,14 @@ $label-border: $border-color !default;
 		border-bottom-right-radius: 0px;
 	}
 
+	&.input-sm {
+		padding-top: 3px;
+		padding-bottom: 3px;
+		::ng-deep .inputContainer .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value {
+			height: 24px;
+		}
+	}
+
 	.prefix-tpl,
 	.suffix {
 		display: flex;
@@ -213,6 +221,7 @@ ng-select.ng-select.showErrors {
 	display: flex;
 	align-items: center;
 	overflow: hidden;
+	height: 28px;
 }
 
 :host ::ng-deep .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value.ng-value-disabled {

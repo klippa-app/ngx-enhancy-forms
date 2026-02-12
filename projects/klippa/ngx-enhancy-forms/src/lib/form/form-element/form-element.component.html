@@ -53,7 +53,7 @@
 				 [ngClass]="{
 			withErrorRightOfCaption: getErrorLocation() === 'rightOfCaption'
 		}"
-				 [class]="GetSizeClass(size)"
+				 [class]="sizeClass"
 		>
 			@if (captionRef) {
 				<div class="captionRefContainer">
@@ -165,7 +165,7 @@
 
 <ng-template #subCaptionTpl>
 	<div class="subCaption"
-			 [class]="GetSizeClass(size)"
+			 [class]="sizeClass"
 	>
 		@if (subCaptionRef){
 			<ng-container [ngTemplateOutlet]="subCaptionRef"></ng-container>

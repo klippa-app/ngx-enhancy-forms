@@ -12,7 +12,6 @@ import {ValueAccessorBase} from "../value-accessor-base/value-accessor-base.comp
 export class NumberInputComponent extends ValueAccessorBase<string | number> {
 	@Input() placeholder: string;
 	@Input() parseNumber: boolean = false;
-	@Input() size: 'small' | 'medium' | 'large' = 'medium';
 	@Input() suffixTpl: TemplateRef<any> | null = null;
 	@Input() prefixTpl: TemplateRef<any> | null = null;
 

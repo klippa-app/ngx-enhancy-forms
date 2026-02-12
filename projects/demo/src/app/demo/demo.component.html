@@ -84,7 +84,7 @@ ohja
 
 <klp-form-date-time-picker [(ngModel)]="dateTime" [disabled]="false"></klp-form-date-time-picker>
 
-<klp-form [formGroup]="myForm" [warnings]="formWarnings" [immutableValues]="immutableValues" errorMessageLocation="rightOfCaption" [readOnly]="false" allowSubmitOn="buttonOnly">
+<klp-form [formGroup]="myForm" [warnings]="formWarnings" [immutableValues]="immutableValues" errorMessageLocation="rightOfCaption" [readOnly]="false" allowSubmitOn="buttonOnly" [size]="'small'">
 
   <klp-sub-form [injectInto]="myForm" at="oliGroup" [manuallyTriggerInjection]="true">
     <app-simple text="aaa"></app-simple>
@@ -116,6 +116,14 @@ ohja
 					</ng-template>
 				</klp-form-select>
       </klp-form-element>
+
+			<klp-form-element caption="cool_checkbox" spaceDistribution="34-66" direction="vertical" [size]="'medium'">
+				<klp-form-checkbox [ngModel]="false" [disabled]="true" [ngModelOptions]="{standalone: true}" [caption]="'caption'" [description]="'description'"></klp-form-checkbox>
+			</klp-form-element>
+
+			<klp-form-element caption="cool_toggle" spaceDistribution="34-66" direction="vertical" [size]="'medium'">
+				<klp-form-toggle [ngModel]="false" [disabled]="true" [ngModelOptions]="{standalone: true}"></klp-form-toggle>
+			</klp-form-element>
 
       <klp-form-element caption="Password" spaceDistribution="34-66" direction="vertical">
         <klp-form-text-input type="password" formControlName="password" [clearable]="true" [passwordPeekIcon]="peekIcon">

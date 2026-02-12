@@ -1,4 +1,4 @@
-<div class="componentContainer" [ngClass]="{disabled: disabled}">
+<div class="componentContainer" [ngClass]="{disabled: disabled}" [style.--toggle-width]="toggleWidth + 'px'" [style.--toggle-height]="toggleHeight + 'px'">
 	<div class="hiddenValue" data-cy-value>{{innerValue}}</div>
 	<input type="checkbox" class="nativeCheckbox"
 		[(ngModel)]="innerValue"

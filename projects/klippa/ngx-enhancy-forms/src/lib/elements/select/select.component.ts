@@ -10,7 +10,7 @@ import {
 	InjectionToken,
 	Input, NgZone,
 	OnChanges,
-	OnDestroy,
+	OnDestroy, OnInit,
 	Optional,
 	Output,
 	SimpleChanges,
@@ -22,7 +22,6 @@ import {ValueAccessorBase} from '../value-accessor-base/value-accessor-base.comp
 import {FormElementComponent} from '../../form/form-element/form-element.component';
 import {isValueSet, stringIsSetAndFilled} from '../../util/values';
 import {awaitableForNextCycle} from '../../util/angular';
-import {FormSize, GetSizeClass} from "../../form/form.component";
 
 export type AppSelectOptions = Array<AppSelectOption>;
 export type AppSelectOption = {
@@ -49,7 +48,7 @@ export class KlpSelectOptionTemplateDirective {
 	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: SelectComponent, multi: true}],
 	standalone: false
 })
-export class SelectComponent extends ValueAccessorBase<string | string[]> implements OnChanges, AfterViewInit, OnDestroy {
+export class SelectComponent extends ValueAccessorBase<string | string[]> implements OnInit, OnChanges, AfterViewInit, OnDestroy {
 	@Input() placeholder: string;
 	@Input() prefix: string;
 	@Input() orientation: 'vertical' | 'horizontal' = 'horizontal';
@@ -66,7 +65,6 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	@Input() public dropdownAlignment: 'left' | 'right' = 'left';
 	@Input() public customSearchFn: (term: string, item: { id: string; name: string; description: string }) => boolean;
 	@Input() public footerElement: TemplateRef<any>;
-	@Input() public size: FormSize | null = null;
 	@Input() prefixTpl: TemplateRef<any> | null = null;
 	@Input() suffixTpl: TemplateRef<any> | null = null;
 	@Output() public onSearch = new EventEmitter<string>();
@@ -90,14 +88,17 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	private anchorFixed: HTMLDivElement;
 
 	constructor(
+		@Optional() @Host() protected parent: FormElementComponent,
+		@Optional() @Host() protected controlContainer: ControlContainer,
 		@Inject(SELECT_TRANSLATIONS) @Optional() private translations: any,
 		private elRef: ElementRef,
 		private ngZone: NgZone,
 	) {
-		super();
-		if (this.parent && !this.size) {
-			this.size = this.parent.size;
-		}
+		super(parent, controlContainer);
+	}
+
+	ngOnInit(): void {
+		super.ngOnInit();
 	}
 
 	ngAfterViewInit(): void {
@@ -432,6 +433,4 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 		super.ngOnDestroy();
 		this.elRef.nativeElement?.querySelector('input')?.removeEventListener('keydown', this.keyListener);
 	}
-
-	protected readonly GetSizeClass = GetSizeClass;
 }

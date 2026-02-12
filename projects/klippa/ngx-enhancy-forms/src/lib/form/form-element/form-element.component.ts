@@ -2,11 +2,11 @@ import {
 	AfterViewInit,
 	Component,
 	ContentChild,
-	ElementRef,
+	ElementRef, inject,
 	Inject,
 	InjectionToken,
-	Input, NgZone, OnDestroy,
-	Optional,
+	Input, NgZone, OnChanges, OnDestroy, OnInit,
+	Optional, SimpleChanges,
 	TemplateRef,
 	ViewChild
 } from '@angular/core';
@@ -14,9 +14,16 @@ import {AbstractControl, NG_VALUE_ACCESSOR, UntypedFormControl} from '@angular/f
 import {ValueAccessorBase} from '../../elements/value-accessor-base/value-accessor-base.component';
 import {CustomErrorMessages, FormErrorMessages} from '../../types';
 import {isValueSet, stringIsSetAndFilled} from '../../util/values';
-import {FormComponent, FormSize, GetSizeClass} from '../form.component';
+import {FormComponent} from '../form.component';
 import {getAllLimitingContainers} from '../../util/dom';
-import {Subscription} from "rxjs";
+import {Subscription} from 'rxjs';
+import {
+	DefaultSize,
+	FormSize,
+	GetSizeClass,
+	KLP_FORM_DEFAULT_SIZE,
+	SizeClass
+} from '../form-size-provider/form-size-provider';
 
 
 export const FORM_ERROR_MESSAGES = new InjectionToken<CustomErrorMessages>('form.error.messages');
@@ -36,12 +43,12 @@ export const DEFAULT_ERROR_MESSAGES: FormErrorMessages = {
 type PopupState = 'onHover' | 'lockedOpen';
 
 @Component({
-    selector: 'klp-form-element',
-    templateUrl: './form-element.component.html',
-    styleUrls: ['./form-element.component.scss'],
-    standalone: false
+	selector: 'klp-form-element',
+	templateUrl: './form-element.component.html',
+	styleUrls: ['./form-element.component.scss'],
+	standalone: false
 })
-export class FormElementComponent implements AfterViewInit, OnDestroy {
+export class FormElementComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
 	public attachedControl: AbstractControl;
 	@Input() public caption: string;
 	@Input() public direction: 'horizontal' | 'vertical' = 'horizontal';
@@ -61,6 +68,8 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 	@ViewChild('inputContainer') public inputContainer: ElementRef;
 	@ContentChild(NG_VALUE_ACCESSOR) fieldInput: ValueAccessorBase<any>;
 
+	private injectedSize = inject(KLP_FORM_DEFAULT_SIZE, {optional: true});
+
 	public captionRef: TemplateRef<any>;
 	public captionEndRef: TemplateRef<any>;
 	public subCaptionRef: TemplateRef<any>;
@@ -70,6 +79,7 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 	public errorFullyVisible: boolean;
 	private popupState: PopupState = 'onHover';
 	private subscriptions: Array<Subscription> = [];
+	public sizeClass!: SizeClass;
 
 	constructor(
 		@Optional() private parent: FormComponent,
@@ -77,8 +87,18 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 		private elRef: ElementRef,
 		private ngZone: NgZone,
 	) {
-		if (this.parent && !this.size) {
-			this.size = this.parent.size;
+	}
+
+	ngOnInit(): void {
+		if (!this.size) {
+			this.size = this.parent?.size ?? this.injectedSize ?? DefaultSize;
+		}
+		this.sizeClass = GetSizeClass(this.size);
+	}
+
+	ngOnChanges(changes: SimpleChanges): void {
+		if (changes.size) {
+			this.sizeClass = GetSizeClass(this.size);
 		}
 	}
 
@@ -86,7 +106,7 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 		const subscription = this.fieldInput?.onTouch.asObservable().subscribe(() => {
 			this.determinePopupState();
 		});
-		if (isValueSet(subscription))  {
+		if (isValueSet(subscription)) {
 			this.subscriptions.push(subscription);
 		}
 		this.ngZone.runOutsideAngular(() => {
@@ -339,6 +359,4 @@ export class FormElementComponent implements AfterViewInit, OnDestroy {
 			}
 		}
 	}
-
-	protected readonly GetSizeClass = GetSizeClass;
 }
