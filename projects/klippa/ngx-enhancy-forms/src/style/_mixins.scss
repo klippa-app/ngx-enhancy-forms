@@ -151,3 +151,13 @@
 	color: $default-dark;
 	font-weight: 400;
 }
+
+@mixin rightSideCaption() {
+	@include captionText();
+	font-weight: 400;
+}
+
+@mixin rightSideSubCaption() {
+	@include rightSideCaption();
+	color: $default-gray-dark;
+}

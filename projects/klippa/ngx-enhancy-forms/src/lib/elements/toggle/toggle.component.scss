@@ -4,13 +4,35 @@
 :host {
 	display: block;
 }
+
 .hiddenValue {
 	display: none;
 }
+
 .componentContainer {
-	position: relative;
-	padding-right: 6px;
+	display: grid;
+	grid-template-columns: auto 1fr;
+	align-items: start;
+	margin-bottom: 0;
 }
+
+label {
+	display: contents;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 0;
+}
+
+.toggleContainer {
+	position: relative;
+	grid-column: 1;
+	align-self: center;
+	margin-right: var(--caption-spacing);
+	&.disabled {
+		opacity: 0.6;
+	}
+}
+
 .nativeCheckbox {
 	position: absolute;
 	opacity: 0;
@@ -42,7 +64,7 @@
 		position: absolute;
 		display: block;
 		@include transition(0.2s cubic-bezier(0.24, 0, 0.5, 1));
-    margin: 1px;
+		margin: 1px;
 		width: calc(var(--toggle-width) - 2px);
 		height: calc(var(--toggle-height) - 2px);
 		top: -1px;
@@ -71,6 +93,7 @@
 			background: $default-success;
 			@include transition(width 0.2s cubic-bezier(0, 0, 0, 0.1));
 		}
+
 		&:after {
 			left: calc(var(--toggle-width) - var(--toggle-height));
 		}
@@ -78,11 +101,26 @@
 }
 
 .disabled {
-	opacity: 0.6;
 	.nativeCheckbox {
 		cursor: not-allowed;
 	}
 }
+
 .showErrors + .toggleVisual:before {
 	border: 1px solid $default-warning;
+}
+
+.caption {
+	@include rightSideCaption;
+	cursor: pointer;
+	grid-column: 2;
+
+	&.disabled {
+		cursor: not-allowed;
+	}
+}
+
+.description {
+	@include rightSideSubCaption;
+	grid-column: 2;
 }

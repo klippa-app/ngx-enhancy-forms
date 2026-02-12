@@ -88,7 +88,7 @@ export class DemoComponent {
 		setInterval(() => {
 			console.log(this.myFormArray.controls);
 		}, 3000);
-		this.myForm.get('radioOption').disable();
+		this.myForm.controls.radioOption.disable();
 	}
 
 	public get emails(): any[] {

@@ -117,12 +117,12 @@ ohja
 				</klp-form-select>
       </klp-form-element>
 
-			<klp-form-element caption="cool_checkbox" spaceDistribution="34-66" direction="vertical" [size]="'medium'">
-				<klp-form-checkbox [ngModel]="false" [disabled]="true" [ngModelOptions]="{standalone: true}" [caption]="'caption'" [description]="'description'"></klp-form-checkbox>
+			<klp-form-element caption="cool_checkbox" spaceDistribution="34-66" direction="vertical" [size]="'small'">
+				<klp-form-checkbox [ngModel]="false" [disabled]="false" [ngModelOptions]="{standalone: true}" [caption]="'caption'" [description]="'description'"></klp-form-checkbox>
 			</klp-form-element>
 
-			<klp-form-element caption="cool_toggle" spaceDistribution="34-66" direction="vertical" [size]="'medium'">
-				<klp-form-toggle [ngModel]="false" [disabled]="true" [ngModelOptions]="{standalone: true}"></klp-form-toggle>
+			<klp-form-element caption="cool_toggle" spaceDistribution="34-66" direction="vertical" [size]="'small'">
+				<klp-form-toggle [ngModel]="false" [disabled]="false" [size]="'small'" [ngModelOptions]="{standalone: true}" [caption]="'caption'" [description]="'description'"></klp-form-toggle>
 			</klp-form-element>
 
       <klp-form-element caption="Password" spaceDistribution="34-66" direction="vertical">
@@ -203,7 +203,7 @@ ohja
 
 <div>
   <klp-form-element caption="radioButtons classic" spaceDistribution="34-66" verticalAlignment="top">
-    <klp-form-radio formControlName="radioOption" [options]="radioOptionsClassic" orientation="column">
+    <klp-form-radio formControlName="radioOption" [options]="radioOptionsClassic" orientation="column" [size]="'small'">
     </klp-form-radio>
   </klp-form-element>
   <klp-form-element caption="radioButtons button" spaceDistribution="34-66" verticalAlignment="top">

@@ -27,12 +27,11 @@ label {
 		outline: 2px solid $primary;
 	}
 	&.hasMargin {
-		margin-right: 10px;
+		margin-right: var(--caption-spacing);
 	}
 }
 .caption {
-	@include captionText();
-	font-weight: 400;
+	@include rightSideCaption();
 	cursor: pointer;
 	grid-column: 2;
 
@@ -42,9 +41,7 @@ label {
 }
 
 .description {
-	@include subCaptionText();
-	font-weight: 400;
-	color: $default-gray-dark;
+	@include rightSideSubCaption();
 	grid-column: 2;
 }
 
