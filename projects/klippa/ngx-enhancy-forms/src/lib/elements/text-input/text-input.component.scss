@@ -3,9 +3,12 @@
 
 :host {
 	display: block;
+	min-width: 0;
 
 	.componentContainer {
 		@include formControl();
+		width: 100%;
+		min-width: 0;
 		display: flex;
 		flex-direction: row;
 		align-items: center;

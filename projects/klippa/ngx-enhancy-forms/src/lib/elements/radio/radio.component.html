@@ -9,7 +9,6 @@
               [checked]="innerValue === option.id"
               (change)="setInnerValueAndNotify(option.id); touch()"
               [disabled]="disabled"
-              [name]="'radio-' + formControlName"
             />
             <div class="radioBtnContainer" [ngClass]="{selected: innerValue === option.id}">
               @if (innerValue === option.id) {

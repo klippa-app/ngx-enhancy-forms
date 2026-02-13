@@ -25,7 +25,7 @@
 }
 
 @if (variant === 'textInput') {
-  <div class="textInput" [class]="GetSizeClass(formSize)">
+  <div class="textInput" [class]="sizeClass">
     <input
       disabled
       type="text"
@@ -36,7 +36,7 @@
 }
 
 @if (variant === 'picker') {
-  <div class="picker" [class]="">
+  <div class="picker" [class]="sizeClass">
     <input
       disabled
       type="text"

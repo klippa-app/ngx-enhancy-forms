@@ -60,7 +60,6 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 	@Input() public initHour: string = null;
 	@Input() public initMinute: string = null;
 	@Input() public invalidTimeAsMidnight = false; // if the time is not valid, use 00:00 as the time
-	@Input() size: FormSize | null = null;
 	@Input() suffixTpl: TemplateRef<any> | null = null;
 	@Input() prefixTpl: TemplateRef<any> | null = null;
 
@@ -105,9 +104,6 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 
 	ngOnInit(): void {
 		super.ngOnInit();
-		if (this.parent && !this.size) {
-			this.size = this.parent.size;
-		}
 		if (this.multiple) {
 			this.placeholder = '';
 			this.showTimeInput = false;
