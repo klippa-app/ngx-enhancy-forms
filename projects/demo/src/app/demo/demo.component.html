@@ -145,6 +145,10 @@ ohja
 				<klp-form-error error="async"></klp-form-error>
 			</klp-form-element>
 
+			<klp-form-element>
+				<klp-form-checkbox [ngModel]="false" [disabled]="false" [ngModelOptions]="{standalone: true}" [size]="'small'"></klp-form-checkbox>
+			</klp-form-element>
+
 			<klp-form-element caption="Name aap noot mies" spaceDistribution="30-70" direction="horizontal">
 				<klp-form-text-input formControlName="name2" [clearable]="true">
 				</klp-form-text-input>

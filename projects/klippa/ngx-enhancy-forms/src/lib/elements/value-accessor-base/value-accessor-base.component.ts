@@ -9,6 +9,7 @@ import {
 	OnInit,
 	Optional,
 	Output, SimpleChanges,
+	SkipSelf,
 	TemplateRef,
 	ViewChild
 } from '@angular/core';
@@ -65,7 +66,7 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnCha
 	private getImmutableValueFn: () => T;
 
 	constructor(
-		@Host() @Optional() protected parent: FormElementComponent,
+		@SkipSelf() @Optional() protected parent: FormElementComponent,
 		@Host() @Optional() protected controlContainer: ControlContainer
 	) {
 	}

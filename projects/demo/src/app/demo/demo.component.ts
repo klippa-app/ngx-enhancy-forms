@@ -142,7 +142,7 @@ export class DemoComponent {
 	public myForm = this.fb.group({
 		deepInput: ['', Validators.required],
 		name: this.nameConfig,
-		password: this.nameConfig,
+		password: ['', Validators.required],
 		name2: this.nameConfig,
 		name3: this.nameConfig,
 		name4: this.nameConfig,

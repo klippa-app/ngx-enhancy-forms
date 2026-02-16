@@ -84,11 +84,6 @@
 		border-color: $border-color-hover;
 	}
 
-	&.error {
-		border-color: $default-danger;
-		background-color: $inverse-danger;
-	}
-
 	&.valid {
 		border-color: $default-success;
 		background-color: $inverse-success;
@@ -103,6 +98,10 @@
 		background-color: $default-disabled-background;
 		border-color: $default-disabled-background;
 		cursor: not-allowed;
+	}
+
+	&.showErrors:not(.focus):not(.focus-within) {
+		border-color: $default-warning;
 	}
 }
 

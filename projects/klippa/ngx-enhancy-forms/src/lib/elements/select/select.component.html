@@ -1,6 +1,6 @@
 <div class="componentContainer"
 		 [class.verticalOrientation]="orientation === 'vertical'"
-		 [ngClass]="{'grow': multiple,  noBorderLeft: !hasBorderLeft, noBorderRight: !hasBorderRight, disabled: disabled}"
+		 [ngClass]="{'grow': multiple,  noBorderLeft: !hasBorderLeft, noBorderRight: !hasBorderRight, disabled: disabled, showErrors: isInErrorState()}"
 		 [class]="sizeClass"
 >
 	@if (prefixTpl) {
