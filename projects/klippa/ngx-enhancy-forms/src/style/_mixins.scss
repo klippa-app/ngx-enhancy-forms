@@ -38,7 +38,7 @@
 
 	display: block;
 	background: white;
-	border: 1px solid $border-color;
+	border: $border-default;
 	border-radius: $border-radius-default;
 	box-shadow: none;
 	height: 40px;
@@ -49,10 +49,22 @@
 	line-height: 24px;
 	color: $default-text-color;
 
+	&:hover {
+		border: $border-hover;
+	}
+
+	&.showErrors {
+		border: $border-warning;
+	}
+
 	&:focus, &:focus-within {
-		outline: 1px solid $default-focus-color;
-		box-shadow: none;
-		border-color: $default-focus-color;
+		border: $border-focus;
+	}
+
+	&.disabled {
+		border: $border-disabled;
+		background-color: $default-disabled-background;
+		cursor: not-allowed;
 	}
 
 	&.input-sm {
@@ -80,28 +92,8 @@
 		min-height: 40px;
 	}
 
-	&:hover {
-		border-color: $border-color-hover;
-	}
-
-	&.valid {
-		border-color: $default-success;
-		background-color: $inverse-success;
-		color: darken($default-success, 15%);
-	}
-
 	&:placeholder-shown {
 		text-overflow: ellipsis;
-	}
-
-	&.disabled {
-		background-color: $default-disabled-background;
-		border-color: $default-disabled-background;
-		cursor: not-allowed;
-	}
-
-	&.showErrors:not(.focus):not(.focus-within) {
-		border-color: $default-warning;
 	}
 }
 

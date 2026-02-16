@@ -166,3 +166,13 @@ $container-max-widths: (
 	xl: 1140px,
 	xxl: 1440px
 );
+
+//==================================
+// 	Borders
+//==================================
+
+$border-default: 1px solid $border-color;
+$border-hover: 1px solid $border-color-hover;
+$border-warning: 1.5px solid $default-warning;
+$border-focus: 2px solid $default-focus-color;
+$border-disabled: 1px solid $default-disabled-background;
