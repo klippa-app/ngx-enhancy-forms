@@ -25,7 +25,6 @@ export class CheckboxComponent extends ValueAccessorBase<boolean> implements OnI
 		const sizes = this.calculateCheckboxSize();
 		this.checkBoxSize = sizes.size;
 		this.captionSpacing = sizes.captionSpacing;
-		console.log(this.checkBoxSize);
 	}
 
 	override ngOnChanges(changes: SimpleChanges): void {
