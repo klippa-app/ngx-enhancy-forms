@@ -385,7 +385,13 @@ simple form with form level errors
 </klp-form>
 
 <div class="box">
-	<klp-form-element>
-		<klp-form-text-input [ngModel]="'text'"/>
+	<h4>Width Test - Bounded Box (100px)</h4>
+
+	<p>With klp-form-element wrapper:</p>
+	<klp-form-element caption="Wrapped" direction="vertical">
+		<klp-form-text-input [ngModel]="'text'" placeholder="Should stay in bounds"/>
 	</klp-form-element>
+
+	<p>Without wrapper:</p>
+	<klp-form-text-input [ngModel]="'text'" placeholder="Should stay in bounds"/>
 </div>
