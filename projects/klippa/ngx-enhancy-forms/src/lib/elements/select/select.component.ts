@@ -10,7 +10,7 @@ import {
 	InjectionToken,
 	Input, NgZone,
 	OnChanges,
-	OnDestroy,
+	OnDestroy, OnInit,
 	Optional,
 	Output,
 	SimpleChanges,
@@ -48,7 +48,7 @@ export class KlpSelectOptionTemplateDirective {
 	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: SelectComponent, multi: true}],
 	standalone: false
 })
-export class SelectComponent extends ValueAccessorBase<string | string[]> implements OnChanges, AfterViewInit, OnDestroy {
+export class SelectComponent extends ValueAccessorBase<string | string[]> implements OnInit, OnChanges, AfterViewInit, OnDestroy {
 	@Input() placeholder: string;
 	@Input() prefix: string;
 	@Input() orientation: 'vertical' | 'horizontal' = 'horizontal';
@@ -65,7 +65,6 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 	@Input() public dropdownAlignment: 'left' | 'right' = 'left';
 	@Input() public customSearchFn: (term: string, item: { id: string; name: string; description: string }) => boolean;
 	@Input() public footerElement: TemplateRef<any>;
-	@Input() public size: 'small' | 'medium' | 'large' = 'medium';
 	@Input() prefixTpl: TemplateRef<any> | null = null;
 	@Input() suffixTpl: TemplateRef<any> | null = null;
 	@Output() public onSearch = new EventEmitter<string>();

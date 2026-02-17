@@ -5,15 +5,16 @@ import {MultipleValueAccessorBase} from '../value-accessor-base/multiple-value-a
 import {invalidDateKey} from '../../validators/dateValidator';
 import {isNullOrUndefined, stringIsSetAndFilled} from '../../util/values';
 import {FormElementComponent} from '../../form/form-element/form-element.component';
+import {FormSize} from '../../form/form-size-provider/form-size-provider';
 
 export const DATE_PICKER_TRANSLATIONS = new InjectionToken<any>('klp.form.date.translations');
 
 @Component({
-    selector: 'klp-form-date-picker',
-    templateUrl: './date-picker.component.html',
-    styleUrls: ['./date-picker.component.scss'],
-    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: DatePickerComponent, multi: true }],
-    standalone: false
+	selector: 'klp-form-date-picker',
+	templateUrl: './date-picker.component.html',
+	styleUrls: ['./date-picker.component.scss'],
+	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: DatePickerComponent, multi: true}],
+	standalone: false
 })
 export class DatePickerComponent extends MultipleValueAccessorBase<string | typeof invalidDateKey> {
 	@Input() public minDate: Date = undefined;
@@ -22,7 +23,7 @@ export class DatePickerComponent extends MultipleValueAccessorBase<string | type
 	@Input() public format = 'dd-MM-yyyy';
 	@Input() public placeholder: string;
 	@Input() public clearable = false;
-	@Input() size: 'small' | 'medium' | 'large' = 'medium';
+	@Input() size: FormSize | null = null;
 	@Input() suffixTpl: TemplateRef<any> | null = null;
 	@Input() prefixTpl: TemplateRef<any> | null = null;
 

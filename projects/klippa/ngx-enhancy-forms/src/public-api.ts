@@ -33,10 +33,13 @@ export * from './lib/elementIsTruncatedCb.component';
 export * from './lib/form/form.component';
 export * from './lib/form/form-caption/form-caption.component';
 export * from './lib/form/form-caption-end/form-caption-end.component';
+export * from './lib/form/form-sub-caption/form-sub-caption.component';
+export * from './lib/form/form-text-sub-caption/form-text-sub-caption.component';
 export * from './lib/form/form-element/form-element.component';
 export * from './lib/form/form-error/form-error.component';
 export * from './lib/form/form-submit-button/form-submit-button.component';
 export * from './lib/form/form-validation-error/form-validation-error';
+export * from './lib/form/form-size-provider/form-size-provider';
 
 export * from './lib/validators/dateValidator';
 

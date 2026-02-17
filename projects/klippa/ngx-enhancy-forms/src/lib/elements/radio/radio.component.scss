@@ -11,6 +11,12 @@
 
 	&.verticallyOriented {
 		flex-direction: column;
+		.optionWrapper {
+			margin-bottom: $spacing-tiny;
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
 		.optionContainer {
 			margin-bottom: $spacing-tiny;
 			&:last-child {
@@ -45,11 +51,96 @@
 		border-radius: $border-radius-default;
 		display: inline-block;
 	}
+}
 
-	&.sizeSmall {
-		.optionContainer {
-			padding: 0.4rem 0.8rem;
+.optionWrapper {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	align-items: start;
+	margin-bottom: 0;
+
+	label {
+		display: contents;
+		align-items: center;
+		justify-content: center;
+		margin-bottom: 0;
+	}
+
+	.radioVisualContainer {
+		position: relative;
+		grid-column: 1;
+		align-self: center;
+	}
+
+	.radioNative {
+		position: absolute;
+		opacity: 0;
+		top: 0;
+		left: 0;
+		width: var(--radio-size);
+		height: var(--radio-size);
+		cursor: pointer;
+		margin: 0;
+
+		&[disabled] {
+			cursor: not-allowed;
 		}
+
+		&:focus + .radioBtnContainer {
+			outline: 2px solid $primary;
+			outline-offset: 2px;
+		}
+	}
+
+	.radioBtnContainer {
+		pointer-events: none;
+		flex: 0 0 auto;
+		position: relative;
+		height: var(--radio-size);
+		width: var(--radio-size);
+		border-radius: 50%;
+		border: 1px solid $border-color;
+		margin-right: var(--caption-spacing);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		&.selected {
+			background-color: $primary;
+			border-color: $primary;
+		}
+
+		.innerCircle {
+			height: 50%;
+			width: 50%;
+			display: block;
+			border-radius: 100%;
+			background-color: $default-white;
+		}
+	}
+
+	.radioNative:disabled + .radioBtnContainer {
+		background-color: $default-gray;
+		border-color: $default-gray-quasi-dark;
+		&.selected {
+			background-color: $default-gray-quasi-dark;
+			border-color: $default-gray-quasi-dark;
+		}
+	}
+
+	.name {
+		@include rightSideCaption;
+		cursor: pointer;
+		grid-column: 2;
+
+		&.disabled {
+			cursor: not-allowed;
+		}
+	}
+
+	.description {
+		@include rightSideSubCaption;
+		grid-column: 2;
+		opacity: 1;
 	}
 }
 
@@ -58,60 +149,6 @@
 	background: transparent;
 	border: none;
 	align-items: center;
-
-	&.classic {
-		cursor: pointer;
-		&:focus, &:focus-visible {
-			outline: none;
-			.radioBtnContainer {
-				outline: 2px solid $primary;
-				outline-offset: 2px;
-			}
-		}
-		&:disabled {
-			.radioBtnContainer {
-				&.selected {
-					background-color: $default-gray-quasi-dark;
-					border-color: $default-gray-quasi-dark;
-				}
-			}
-		}
-
-		.radioBtnContainer {
-			flex: 0 0 auto;
-			position: relative;
-			height: 20px;
-			width: 20px;
-			padding: 4px;
-			border-radius: 50%;
-			border: 1px solid $border-color;
-			margin-right: $spacing-tiny;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			&.selected {
-				background-color: $primary;
-				border-color: $primary;
-			}
-
-			.innerCircle {
-				height: 80%;
-				width: 80%;
-				display: block;
-				border-radius: 100%;
-				background-color: $default-white;
-			}
-		}
-		.description {
-			opacity: 1;
-			margin-top: 0.4rem;
-			color: $default-dark;
-		}
-		.nameAndDescription {
-			color: $default-heading;
-			margin-top: 2px;
-		}
-	}
 
 	&.button {
 		position: relative;
@@ -125,6 +162,11 @@
 		&.isSelected {
 			background: $primary;
 			color: $default-white;
+		}
+
+		&:disabled {
+			cursor: not-allowed;
+			opacity: 0.6;
 		}
 	}
 
@@ -141,20 +183,21 @@
 			background: $default-white;
 			color: $default-heading;
 		}
+
+		&:disabled {
+			cursor: not-allowed;
+			opacity: 0.6;
+		}
 	}
 
 }
 
-.radioAndName {
-	display: flex;
-	flex-direction: row;
-	gap: 0.2rem;
-}
 .nameAndDescription {
 	text-align: left;
 	line-height: 1.1rem;
-}
-.description {
-	margin-top: 0.2rem;
-	opacity: 0.6;
+
+	.description {
+		margin-top: 0.2rem;
+		opacity: 0.6;
+	}
 }

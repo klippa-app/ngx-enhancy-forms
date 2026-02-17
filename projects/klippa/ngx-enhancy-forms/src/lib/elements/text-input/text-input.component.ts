@@ -1,4 +1,12 @@
-import {Component, ElementRef, EventEmitter, Input, Output, TemplateRef, ViewChild} from '@angular/core';
+import {
+	Component,
+	ElementRef,
+	EventEmitter,
+	Input,
+	Output,
+	TemplateRef,
+	ViewChild
+} from '@angular/core';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {ValueAccessorBase} from '../value-accessor-base/value-accessor-base.component';
 
@@ -18,7 +26,6 @@ export class TextInputComponent extends ValueAccessorBase<string> {
 	@Input() passwordPeekIcon: TemplateRef<any>;
 	@Input() suffixTpl: TemplateRef<any> | null = null;
 	@Input() prefixTpl: TemplateRef<any> | null = null;
-	@Input() size: 'small' | 'medium' | 'large' = 'medium';
 	@Output() onBlur = new EventEmitter<void>();
 
 	private isPeekingPassword = false;

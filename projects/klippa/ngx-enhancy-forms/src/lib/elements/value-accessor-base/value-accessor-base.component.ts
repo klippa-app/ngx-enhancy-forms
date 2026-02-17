@@ -3,12 +3,13 @@ import {
 	Component,
 	ElementRef,
 	EventEmitter,
-	Host,
-	Input,
+	Host, inject,
+	Input, OnChanges,
 	OnDestroy,
 	OnInit,
 	Optional,
-	Output,
+	Output, SimpleChanges,
+	SkipSelf,
 	TemplateRef,
 	ViewChild
 } from '@angular/core';
@@ -16,6 +17,12 @@ import {FormElementComponent} from '../../form/form-element/form-element.compone
 import {isNullOrUndefined, isValueSet, stringIsSetAndFilled} from '../../util/values';
 import {arrayIsSetAndFilled} from '../../util/arrays';
 import {cloneDeep} from 'lodash';
+import {
+	DefaultSize,
+	FormSize, getSizeClass,
+	KLP_FORM_DEFAULT_SIZE,
+	SizeClass
+} from '../../form/form-size-provider/form-size-provider';
 
 /**
  * This component is a base in order to create a component that supports ngModel.
@@ -28,11 +35,11 @@ import {cloneDeep} from 'lodash';
  */
 
 @Component({
-    selector: '',
-    template: '',
-    standalone: false
+	selector: '',
+	template: '',
+	standalone: false
 })
-export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDestroy {
+export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnChanges, OnDestroy {
 	public innerValue: T;
 	public changed = new Array<(value: T) => void>();
 	private touched = new Array<() => void>();
@@ -47,9 +54,13 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 	@Input() public formControl: UntypedFormControl = null;
 	@Input() public inErrorState = false;
 	@Input() getTailTplFn: () => TemplateRef<any>;
+	@Input() size: FormSize | null = null;
 	@Output() public onTouch = new EventEmitter<void>();
 	@ViewChild('nativeInputRef') nativeInputRef: ElementRef;
 
+	private injectedSize = inject(KLP_FORM_DEFAULT_SIZE, {optional: true});
+
+	protected sizeClass!: SizeClass;
 	private attachedFormControl: UntypedFormControl;
 	private tailTpl: TemplateRef<any>;
 	private getImmutableValueFn: () => T;
@@ -75,6 +86,18 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 				this.disabled = this.attachedFormControl.disabled;
 			});
 			this.getImmutableValueFn = this.parent?.registerControl(this.attachedFormControl, this);
+		}
+
+		if (!this.size) {
+			this.size = this.parent?.size ?? this.injectedSize ?? DefaultSize;
+		}
+
+		this.sizeClass = getSizeClass(this.size);
+	}
+
+	ngOnChanges(changes: SimpleChanges): void {
+		if (changes.size) {
+			this.sizeClass = getSizeClass(this.size);
 		}
 	}
 
@@ -154,9 +177,9 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnDes
 	}
 
 	public focus = (): void => {
-		if (isValueSet(this.nativeInputRef?.nativeElement)){
+		if (isValueSet(this.nativeInputRef?.nativeElement)) {
 			this.nativeInputRef?.nativeElement?.focus();
-		}else {
+		} else {
 			throw new Error('the focus() method is not implemented in this element!');
 		}
 	}

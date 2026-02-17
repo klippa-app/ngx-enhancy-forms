@@ -1,40 +1,63 @@
 @import '../../../style/themes/default/variables';
+@import '../../../style/mixins';
+
 :host {
 	display: block;
+	max-width: 100%;
+	max-height: 100%;
 }
+
 .componentContainer {
 	&:not(.hasCaption) {
-		.captionInputAndError{
+		.captionInputAndError {
 			display: block;
+
 			.inputContainer {
 				margin-top: 0;
 				padding-left: 0;
 				max-width: initial;
 			}
 		}
+
 		.errorContainer {
 			padding-left: 0;
 		}
 	}
+
+	&:not(.hasSubCaption) {
+		.captionInputAndError {
+			.inputContainer {
+				margin-bottom: 0 !important;
+			}
+		}
+	}
+
 	&.hasCaption .errorAboveInputContainer .spacer {
 		display: block;
 	}
-	&.reverseOrder .captionInputAndError{
+
+	&.reverseOrder .captionInputAndError {
 		flex-direction: row-reverse;
 		justify-content: flex-end;
 	}
+
 	&.horizontal .captionInputAndError {
 
 	}
-	&.vertical .captionInputAndError{
+
+	&.vertical .captionInputAndError {
 		display: block;
+
 		.inputContainer {
-			margin-top: $spacing-tiny;
+			margin-top: $spacing-miniscule;
+			margin-bottom: $spacing-miniscule;
 		}
+
 		.errorContainer {
 			margin-left: 0;
 		}
 	}
+
 	&.topAlignment .captionInputAndError {
 		align-items: flex-start;
 	}
@@ -43,58 +66,71 @@
 		.inputContainer {
 			padding-left: $spacing-normal;
 		}
+
 		.errorAboveInputContainer .errorContainer {
 			padding-left: $spacing-normal;
 		}
+
 		&.d40-60 {
 			.errorAboveInputContainer {
 				.spacer {
 					flex: 0 1 40%;
 				}
+
 				.errorContainer {
 					flex: 60 1 0px;
 				}
 			}
+
 			.caption {
 				max-width: 40%;
 				flex: 40 1 0px;
 			}
+
 			.inputContainer {
 				max-width: 60%;
 				flex: 60 1 0px;
 			}
 		}
+
 		&.d34-66 {
 			.errorAboveInputContainer {
 				.spacer {
 					flex: 0 1 34%;
 				}
+
 				.errorContainer {
 					flex: 66 1 0px;
 				}
 			}
+
 			.caption {
 				max-width: 34%;
 				flex: 34 1 0px;
 			}
+
 			.inputContainer {
 				max-width: 66%;
 				flex: 66 1 0px;
 			}
 		}
+
 		&.d30-70 {
 			.errorAboveInputContainer {
 				.spacer {
 					flex: 0 1 30%;
 				}
+
 				.errorContainer {
 					flex: 70 1 0px;
 				}
 			}
+
 			.caption {
 				max-width: 30%;
 				flex: 30 1 0px;
 			}
+
 			.inputContainer {
 				max-width: 70%;
 				flex: 70 1 0px;
@@ -108,6 +144,7 @@
 			flex: 1 1 0px;
 			overflow: hidden;
 		}
+
 		.inputContainer {
 			flex: 0 0 auto;
 		}
@@ -117,6 +154,7 @@
 		.caption {
 			flex: 0 0 auto;
 		}
+
 		.inputContainer {
 			flex: 1 1 0px;
 			overflow: hidden;
@@ -127,7 +165,6 @@
 .captionInputAndError {
 	display: flex;
 	align-items: center;
-	min-height: 42px;
 }
 
 .errorAboveInputContainer {
@@ -142,6 +179,7 @@
 .captionDummyForSpaceCalculation .caption.withErrorRightOfCaption {
 	height: 0px;
 	overflow: hidden;
+
 	.rightOfCaptionError {
 		display: block;
 	}
@@ -150,44 +188,54 @@
 .captionRefContainer, .captionEndRefContainer {
 	display: flex;
 }
+
 .caption {
-	font-weight: 500;
+	@include captionText();
 	flex: 0 0 auto;
+
 	&.percentageSpacing {
 		max-width: 40%;
 		flex: 40 1 0px;
+
 		&.d30-70 {
 			max-width: 30%;
 			flex: 30 1 0px;
 		}
+
 		&.d34-66 {
 			max-width: 34%;
 			flex: 34 1 0px;
 		}
 	}
-	color: $default-heading;
+
 	&.withErrorRightOfCaption {
 		display: flex;
 		justify-content: space-between;
 		gap: $spacing-normal;
+
 		.captionText {
 			flex: 1 2 auto;
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
 		}
+
 		.rightOfCaptionError {
 			display: none;
+
 			&.errorFullyVisible {
 				display: block;
 			}
+
 			&.errorMessageHasMaxWidth {
 				max-width: 40%;
 			}
+
 			font-weight: normal;
 			overflow: hidden;
 			flex: 1 0 auto;
 			text-align: right;
+
 			::ng-deep * {
 				white-space: nowrap;
 				overflow: hidden;
@@ -196,37 +244,47 @@
 		}
 	}
 }
+
 $triangleSize: 8px;
 .inputContainer {
 	position: relative;
 	flex: 1;
+
 	.errorTooltipContainer {
 		position: relative;
+
 		&.alwaysOpen {
 			.errorTooltipTriangle, .errorTooltipTriangleWhite, .errorTooltip {
 				display: flex;
 			}
+
 			.closeBtn {
 				display: block;
 			}
+
 			.errorTooltipInner {
 				padding-right: 1.4rem;
 			}
 		}
+
 		klp-form-warning-icon {
 			cursor: pointer;
 		}
+
 		.absoluteAnchor {
 			position: absolute;
 		}
+
 		.fixedAnchor {
 			position: fixed;
 		}
+
 		// using a fixed wrapper here to avoid the overflow hidden properties of a parent container, which could cut off the message tooltip
 		.fixedWrapper {
 			position: fixed;
 		}
 	}
+
 	.errorTooltipTriangle {
 		display: none;
 		z-index: 1;
@@ -239,6 +297,7 @@ $triangleSize: 8px;
 		border-right: $triangleSize solid transparent;
 		border-top: $triangleSize solid rgba(0, 0, 0, 0.13);
 	}
+
 	.errorTooltipTriangleWhite {
 		display: none;
 		z-index: 3;
@@ -251,12 +310,15 @@ $triangleSize: 8px;
 		border-right: $triangleSize solid transparent;
 		border-top: $triangleSize solid white;
 	}
+
 	.errorTooltip {
 		display: none;
 		justify-content: flex-end;
+
 		&.noPointerEvents {
 			pointer-events: none;
 		}
+
 		position: absolute;
 		top: -0.6rem;
 		right: -$spacing-large;
@@ -273,11 +335,13 @@ $triangleSize: 8px;
 			cursor: pointer;
 			color: $default-gray-dark;
 			font-size: 1rem;
+
 			&:hover {
 				color: $default-dark;
 			}
 		}
 	}
+
 	.errorTooltipInner {
 		background: white;
 		padding: 0.4rem 0.6rem;
@@ -285,6 +349,7 @@ $triangleSize: 8px;
 		border: 1px solid rgba(0, 0, 0, 0.13);
 		box-shadow: rgba(0, 0, 0, 0.13) 2px 3px 10px 0px;
 	}
+
 	&:hover .errorTooltipContainer {
 		.errorTooltip, .errorTooltipTriangle, .errorTooltipTriangleWhite {
 			display: flex;

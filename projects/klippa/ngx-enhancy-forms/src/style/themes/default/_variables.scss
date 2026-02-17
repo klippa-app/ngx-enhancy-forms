@@ -2,18 +2,18 @@
 // 	Fonts
 //==================================
 
-$primary: #00AC42!default;
+$primary: #00AC42 !default;
 $primary-light: #E6F7E9 !default;
 $primary-light-2: #C3EBCA !default;
 $primary-dark: #006912 !default;
-$default-primary: $primary!default;
-$success: $primary!default;
-$warning: #EC7500!default;
+$default-primary: $primary !default;
+$success: $primary !default;
+$warning: #EC7500 !default;
 
 $ocr-processing: rgba(100%, 76%, 3%, 0.2);
 $needs-ocr-review: lighten($primary, 50%);
 
-$font-primary:   Roboto, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif !default;
+$font-primary: Roboto, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif !default;
 $font-secondary: $font-primary;
 
 $font-size-small-2: 0.75rem;
@@ -32,6 +32,7 @@ $font-weight-bold: 600;
 //==================================
 
 // comments describe a guideline, it is not a strict rule
+$spacing-miniscule: 0.25rem;
 $spacing-tiny: 0.3125rem; // in front of fontawesome icon, size of a 'space'
 $spacing-small: 0.625rem; // between elements that are highly correlated
 $spacing-normal: 1rem; // around forms and modal elements
@@ -50,34 +51,35 @@ $padding-very-large: 0.75rem;
 // 	Default color
 //==================================
 
-$default-heading:         #101828 !default;
-$default-dark:            #475467 !default;
-$default-white:           #ffffff !default;
-$default-gray-light:      #f8f9fa !default;
-$default-gray:            #F2F4F7 !default;
+$default-heading: #101828 !default;
+$default-dark: #475467 !default;
+$default-white: #ffffff !default;
+$default-gray-light: #f8f9fa !default;
+$default-gray: #F2F4F7 !default;
 $default-gray-quasi-dark: #eaecf0 !default;
-$default-gray-semi-dark:  #cccccc !default;
+$default-gray-semi-dark: #cccccc !default;
 $default-gray-faded-dark: #adadad !default;
-$default-gray-dark:       #667085 !default;
-$default-text-color:      #101828 !default;
-$default-primary:         #7774e7 !default;
-$default-success:         #37c936 !default;
-$default-info:            #0f9aee !default;
-$default-accepted: 	 	  #17a2b8 !default;
-$default-warning:         #ff8000 !default;
-$default-danger:          #dc3545 !default;
+$default-gray-dark: #667085 !default;
+$default-text-color: #101828 !default;
+$default-primary: #7774e7 !default;
+$default-success: #37c936 !default;
+$default-info: #0f9aee !default;
+$default-accepted: #17a2b8 !default;
+$default-warning: #ff8000 !default;
+$default-danger: #dc3545 !default;
 $default-placeholder-color: #98A2B3 !default;
-$default-disabled-background:          $default-gray !default;
-$default-focus-color:          $primary !default;
+$default-disabled-color: #98A2B3 !default;
+$default-disabled-background: $default-gray !default;
+$default-focus-color: $primary !default;
 
 /* Toast variables */
-$success-border-color: $primary!default;
-$info-border-color: $default-info!default;
-$warning-border-color: $default-warning!default;
-$error-border-color: $default-danger!default;
-$async-border-color: $info-border-color!default;
-$confirm-border-color: $default-gray!default;
-$prompt-border-color: $default-dark!default;
+$success-border-color: $primary !default;
+$info-border-color: $default-info !default;
+$warning-border-color: $default-warning !default;
+$error-border-color: $default-danger !default;
+$async-border-color: $info-border-color !default;
+$confirm-border-color: $default-gray !default;
+$prompt-border-color: $default-dark !default;
 
 //==================================
 // 	Inverse color
@@ -91,16 +93,16 @@ $inverse-danger: lighten($default-danger, 35%);
 //==================================
 // 	Misc
 //==================================
-$border-color:            #D0D5DD;
-$border-color-hover:      #98A2B3;
-$header-height:           65px;
-$offscreen-size:          280px;
-$collapsed-size:          70px;
-$side-nav-dark:           #313644;
-$side-nav-dark-font:      #99abb4;
-$side-nav-dark-border:    rgba(120,130,140,0.3);
-$table-color:             $default-text-color;
-$table-cell-min-width: 	  8rem;
+$border-color: #D0D5DD;
+$border-color-hover: #98A2B3;
+$header-height: 65px;
+$offscreen-size: 280px;
+$collapsed-size: 70px;
+$side-nav-dark: #313644;
+$side-nav-dark-font: #99abb4;
+$side-nav-dark-border: rgba(120, 130, 140, 0.3);
+$table-color: $default-text-color;
+$table-cell-min-width: 8rem;
 
 //==================================
 // 	Containers
@@ -118,38 +120,38 @@ $badge-line-height: 1;
 //==================================
 // 	Header Themes
 //==================================
-$theme-primary:    $default-primary;
-$theme-info:       $default-info;
-$theme-success:    desaturate($default-success, 5%);
-$theme-danger:     #f53f61;
-$theme-dark:       lighten($side-nav-dark, 10%);
+$theme-primary: $default-primary;
+$theme-info: $default-info;
+$theme-success: desaturate($default-success, 5%);
+$theme-danger: #f53f61;
+$theme-dark: lighten($side-nav-dark, 10%);
 
 //==================================
 // 	Social media color
 //==================================
 
-$facebook:    #3B579D;
-$twitter:     #2CAAE1;
-$instagram:   #5d4a3b;
+$facebook: #3B579D;
+$twitter: #2CAAE1;
+$instagram: #5d4a3b;
 $google-plus: #dc4a38;
-$pinterest:   #c9181f;
-$skype:       #00AAF1;
-$linkedin:    #0177b5;
-$youtube:     #DE2825;
-$yahoo:       #7b0099;
-$rss:         #f58432;
-$dropbox:     #007EE6;
+$pinterest: #c9181f;
+$skype: #00AAF1;
+$linkedin: #0177b5;
+$youtube: #DE2825;
+$yahoo: #7b0099;
+$rss: #f58432;
+$dropbox: #007EE6;
 $sound-cloud: #FF6A22;
-$vimeo:       #1BB6EC;
-$bing:        #ffb900;
-$dribbble:    #ea4c89;
-$html5:       #f16528;
-$sharethis:   #50b948;
-$tumblr:      #36465d;
-$wordpress:   #0087be;
+$vimeo: #1BB6EC;
+$bing: #ffb900;
+$dribbble: #ea4c89;
+$html5: #f16528;
+$sharethis: #50b948;
+$tumblr: #36465d;
+$wordpress: #0087be;
 
 $grid-breakpoints: (
-  	xs: 0,
+	xs: 0,
 	sm: 576px,
 	md: 768px,
 	lg: 992px,
@@ -164,3 +166,4 @@ $container-max-widths: (
 	xl: 1140px,
 	xxl: 1440px
 );
+

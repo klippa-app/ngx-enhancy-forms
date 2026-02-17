@@ -1,7 +1,7 @@
 import {
 	Component,
 	Directive,
-	EventEmitter,
+	EventEmitter, inject,
 	Input,
 	OnChanges,
 	OnDestroy,
@@ -25,6 +25,7 @@ import {FormElementComponent} from './form-element/form-element.component';
 import {isValueSet} from '../util/values';
 import {deepMerge} from '../util/objects';
 import {cloneDeep} from 'lodash';
+import {DefaultSize, FormSize, KLP_FORM_DEFAULT_SIZE} from './form-size-provider/form-size-provider';
 
 export const invalidFieldsSymbol = Symbol('Not all fields are valid');
 
@@ -62,6 +63,7 @@ export class FormComponent implements OnInit, OnDestroy, OnChanges {
 	@Input() public errors: Map<AbstractControl, string> = new Map<AbstractControl, string>();
 	@Input() public patchValueInterceptor: (values: any) => Promise<any>;
 	@Input() public allowSubmitOn: 'buttonAndEnter' | 'buttonOnly' = 'buttonAndEnter';
+	@Input() public size: FormSize = inject(KLP_FORM_DEFAULT_SIZE, {optional: true}) ?? DefaultSize;
 	@Output() public onInjected = new EventEmitter<OnInjectedEmitterType>();
 
 	private topLevelFormControl: AbstractControl;

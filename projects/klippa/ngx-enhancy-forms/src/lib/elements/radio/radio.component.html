@@ -1,25 +1,40 @@
-<div class="componentContainer" [ngClass]="{'verticallyOriented': orientation === Orientation.COLUMN, 'horizontallyOriented': orientation === Orientation.ROW, buttonGray: variant === 'buttonGray', sizeSmall: size === 'small'}">
+<div class="componentContainer" [style.--radio-size]="radioSize + 'px'" [style.--caption-spacing]="captionSpacing + 'px'" [ngClass]="{'verticallyOriented': orientation === Orientation.COLUMN, 'horizontallyOriented': orientation === Orientation.ROW, buttonGray: variant === 'buttonGray'}">
   @for (option of options; track option) {
-    <button class="optionContainer"
-      [ngClass]="{classic: variant === 'classic', button: variant === 'button', buttonGray: variant === 'buttonGray', isSelected: innerValue === option.id}"
-      (click)="setInnerValueAndNotify(option.id)"
-			[disabled]="disabled"
-      >
-      <div class="radioAndName">
-        @if (variant === 'classic') {
-          <div class="radioBtnContainer" [ngClass]="{selected: innerValue === option.id}">
-            @if (innerValue === option.id) {
-              <div class="innerCircle"></div>
-            }
+    @if (variant === 'classic') {
+      <div class="optionWrapper">
+        <label>
+          <div class="radioVisualContainer">
+            <input type="radio"
+              class="radioNative"
+              [checked]="innerValue === option.id"
+              (change)="setInnerValueAndNotify(option.id); touch()"
+              [disabled]="disabled"
+            />
+            <div class="radioBtnContainer" [ngClass]="{selected: innerValue === option.id}">
+              @if (innerValue === option.id) {
+                <div class="innerCircle"></div>
+              }
+            </div>
           </div>
+          <div class="name" [class]="sizeClass" [ngClass]="{disabled: disabled}">{{option.name}}</div>
+        </label>
+        @if (option.description) {
+          <div class="description" [class]="sizeClass" [ngClass]="{disabled: disabled}">{{option.description}}</div>
         }
+      </div>
+    } @else {
+      <button class="optionContainer"
+        [ngClass]="{button: variant === 'button', buttonGray: variant === 'buttonGray', isSelected: innerValue === option.id}"
+        (click)="setInnerValueAndNotify(option.id)"
+        [disabled]="disabled"
+        >
         <div class="nameAndDescription">
           <div>{{option.name}}</div>
           @if (option.description) {
             <div class="description">{{option.description}}</div>
           }
         </div>
-      </div>
-    </button>
+      </button>
+    }
   }
 </div>

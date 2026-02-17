@@ -3,7 +3,7 @@ import {
 	Component,
 	ContentChild,
 	ElementRef,
-	Host,
+	Host, inject,
 	Input,
 	NgZone,
 	OnInit,
@@ -42,14 +42,7 @@ export class SortableItemsComponent
 	private currentDragPosition: number;
 
 	private scrollInterval = null;
-
-	constructor(
-		@Host() @Optional() protected parent: FormElementComponent,
-		@Host() @Optional() protected controlContainer: ControlContainer,
-		private ngZone: NgZone)
-	{
-		super(parent, controlContainer);
-	}
+	private ngZone: NgZone = inject(NgZone);
 
 	ngAfterViewInit(): void {
 		this.setDragItemListeners();

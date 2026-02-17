@@ -22,8 +22,9 @@ import {FormElementComponent} from '../../form/form-element/form-element.compone
 import {MultipleValueAccessorBase} from '../value-accessor-base/multiple-value-accessor-base.component';
 import {isValueSet, stringIsSetAndFilled} from '../../util/values';
 import {endOfMonth, format as formatDate, startOfMonth, isSameDay} from 'date-fns';
-import {arrayIsSetAndFilled, removeDuplicatesFromArray } from '../../util/arrays';
-import {runNextRenderCycle} from "../../util/angular";
+import {arrayIsSetAndFilled, removeDuplicatesFromArray} from '../../util/arrays';
+import {runNextRenderCycle} from '../../util/angular';
+import {FormSize} from '../../form/form-size-provider/form-size-provider';
 
 export const KLP_DATE_FORMATS = new InjectionToken<KlpDateFormats>('klp.form.date.formats');
 export const DATE_TIME_PICKER_TRANSLATIONS = new InjectionToken<any>('klp.form.dateTime.translations');
@@ -34,20 +35,21 @@ export function matDateFormatsFactory(component: DateTimePickerComponent, dateFo
 }
 
 @Component({
-    selector: 'klp-form-date-time-picker',
-    templateUrl: './date-time-picker.component.html',
-    styleUrls: ['./date-time-picker.component.scss'],
-    providers: [
-        { provide: NG_VALUE_ACCESSOR, useExisting: DateTimePickerComponent, multi: true },
-        {
-            provide: MAT_DATE_FORMATS,
-            deps: [DateTimePickerComponent, [new Optional(), KLP_DATE_FORMATS]],
-            useFactory: matDateFormatsFactory,
-        },
-    ],
-    standalone: false
+	selector: 'klp-form-date-time-picker',
+	templateUrl: './date-time-picker.component.html',
+	styleUrls: ['./date-time-picker.component.scss'],
+	providers: [
+		{provide: NG_VALUE_ACCESSOR, useExisting: DateTimePickerComponent, multi: true},
+		{
+			provide: MAT_DATE_FORMATS,
+			deps: [DateTimePickerComponent, [new Optional(), KLP_DATE_FORMATS]],
+			useFactory: matDateFormatsFactory,
+		},
+	],
+	standalone: false
 })
-export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | typeof invalidDateKey> implements OnInit, AfterViewInit, OnChanges {
+export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | typeof invalidDateKey>
+	implements OnInit, AfterViewInit, OnChanges {
 	@Input() public minDate: Date = undefined;
 	@Input() public maxDate: Date = undefined;
 	@Input() public sameMonthOnly = false;
@@ -58,7 +60,6 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 	@Input() public initHour: string = null;
 	@Input() public initMinute: string = null;
 	@Input() public invalidTimeAsMidnight = false; // if the time is not valid, use 00:00 as the time
-	@Input() size: 'small' | 'medium' | 'large' = 'medium';
 	@Input() suffixTpl: TemplateRef<any> | null = null;
 	@Input() prefixTpl: TemplateRef<any> | null = null;
 
@@ -308,13 +309,14 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 			return this.selectedDates.some((e) => isSameDay(e, d)) ? 'selected' : '';
 		}
 		return '';
-	};
+	}
+
 	filterDates: DateFilterFn<any> = (e) => {
 		if (this.disabled) {
 			return false;
 		}
 		return true;
-	};
+	}
 
 
 	formatTime(): void {
@@ -407,7 +409,7 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 	timeDropdownRendered = () => {
 		runNextRenderCycle(() => {
 			this.ngZone.runOutsideAngular(() => {
-				document.addEventListener('mousedown',  this.clickHandlerForTimeDropdown);
+				document.addEventListener('mousedown', this.clickHandlerForTimeDropdown);
 			});
 		});
 
@@ -429,11 +431,11 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 			if (!dropdown.contains(event.target)) {
 				this.ngZone.run(() => {
 					this.dropdownVisible = false;
-					document.removeEventListener('mousedown',  this.clickHandlerForTimeDropdown);
+					document.removeEventListener('mousedown', this.clickHandlerForTimeDropdown);
 				});
 			}
 		}
-	};
+	}
 
 	shizzle() {
 		console.log('a');

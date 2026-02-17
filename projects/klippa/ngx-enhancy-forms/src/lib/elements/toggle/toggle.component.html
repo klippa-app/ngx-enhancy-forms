@@ -1,11 +1,23 @@
-<div class="componentContainer" [ngClass]="{disabled: disabled}">
-	<div class="hiddenValue" data-cy-value>{{innerValue}}</div>
-	<input type="checkbox" class="nativeCheckbox"
-		[(ngModel)]="innerValue"
-		(input)="setInnerValueAndNotify($event.target.checked); touch()"
-		[disabled]="disabled"
-		[ngClass]="{showErrors: isInErrorState()}"
-	 #nativeInputRef
-	/>
-	<div class="toggleVisual" [ngClass]="{transparentBackground: transparentBackground}"></div>
+<div class="componentContainer" [style.--toggle-width]="toggleWidth + 'px'"
+		 [style.--toggle-height]="toggleHeight + 'px'"
+		 [style.--caption-spacing]="captionSpacing + 'px'">
+	<label>
+		<div class="toggleContainer" [ngClass]="{disabled: disabled}">
+			<div class="hiddenValue" data-cy-value>{{ innerValue }}</div>
+			<input type="checkbox" class="nativeCheckbox"
+						 [(ngModel)]="innerValue"
+						 (input)="setInnerValueAndNotify($event.target.checked); touch()"
+						 [disabled]="disabled"
+						 [ngClass]="{showErrors: isInErrorState()}"
+						 #nativeInputRef
+			/>
+			<div class="toggleVisual" [ngClass]="{transparentBackground: transparentBackground}"></div>
+		</div>
+		@if (caption) {
+			<div class="caption" [class]="sizeClass" [ngClass]="{disabled: disabled}">{{ caption }}</div>
+		}
+	</label>
+	@if (description) {
+		<div class="description" [class]="sizeClass" [ngClass]="{disabled: disabled}">{{ description }}</div>
+	}
 </div>

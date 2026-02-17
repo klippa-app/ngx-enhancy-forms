@@ -31,6 +31,32 @@
 	}
 }
 
+//--------------------------------------------------
+// [Border]
+//--------------------------------------------------
+
+@mixin border-default {
+	border: 1px solid $border-color;
+}
+
+@mixin border-hover {
+	border: 1px solid $border-color-hover;
+}
+
+@mixin border-warning {
+	border: 1px solid $default-warning;
+	outline: 0.5px solid $default-warning;
+}
+
+@mixin border-focus {
+	border: 1px solid $default-focus-color;
+	outline: 1px solid $default-focus-color;
+}
+
+@mixin border-disabled {
+	border: 1px solid $default-disabled-background;
+}
+
 @mixin formControl() {
 	@include placeholder {
 		color: $default-placeholder-color;
@@ -38,7 +64,7 @@
 
 	display: block;
 	background: white;
-	border: 1px solid $border-color;
+	@include border-default;
 	border-radius: $border-radius-default;
 	box-shadow: none;
 	height: 40px;
@@ -49,10 +75,22 @@
 	line-height: 24px;
 	color: $default-text-color;
 
+	&:hover {
+		@include border-hover;
+	}
+
+	&.showErrors {
+		@include border-warning;
+	}
+
 	&:focus, &:focus-within {
-		outline: 1px solid $default-focus-color;
-		box-shadow: none;
-		border-color: $default-focus-color;
+		@include border-focus;
+	}
+
+	&.disabled {
+		@include border-disabled;
+		background-color: $default-disabled-background;
+		cursor: not-allowed;
 	}
 
 	&.input-sm {
@@ -80,29 +118,8 @@
 		min-height: 40px;
 	}
 
-	&:hover {
-		border-color: $border-color-hover;
-	}
-
-	&.error {
-		border-color: $default-danger;
-		background-color: $inverse-danger;
-	}
-
-	&.valid {
-		border-color: $default-success;
-		background-color: $inverse-success;
-		color: darken($default-success, 15%);
-	}
-
 	&:placeholder-shown {
 		text-overflow: ellipsis;
-	}
-
-	&.disabled {
-		background-color: $default-disabled-background;
-		border-color: $default-disabled-background;
-		cursor: not-allowed;
 	}
 }
 
@@ -126,3 +143,38 @@
 	}
 }
 
+@mixin captionText() {
+	color: $default-text-color;
+	font-feature-settings: 'cv05' on;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 24px;
+	letter-spacing: 0.16px;
+
+	&.input-sm {
+		font-size: 14px;
+		line-height: 20px;
+		letter-spacing: 0.14px;
+	}
+
+	&.disabled {
+		color: $default-disabled-color;
+	}
+}
+
+@mixin subCaptionText() {
+	@include captionText();
+	color: $default-dark;
+	font-weight: 400;
+}
+
+@mixin rightSideCaption() {
+	@include captionText();
+	font-weight: 400;
+}
+
+@mixin rightSideSubCaption() {
+	@include rightSideCaption();
+	color: $default-gray-dark;
+}
