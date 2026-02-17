@@ -4,7 +4,7 @@ export type FormSize = 'small' | 'medium' | 'large';
 
 export type SizeClass = 'input-sm' | 'input-md' | 'input-lg';
 
-export function GetSizeClass(size: FormSize): SizeClass {
+export function getSizeClass(size: FormSize): SizeClass {
 	switch (size) {
 		case 'small':
 			return 'input-sm';

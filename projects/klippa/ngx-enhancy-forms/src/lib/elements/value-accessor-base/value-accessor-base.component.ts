@@ -19,7 +19,7 @@ import {arrayIsSetAndFilled} from '../../util/arrays';
 import {cloneDeep} from 'lodash';
 import {
 	DefaultSize,
-	FormSize, GetSizeClass,
+	FormSize, getSizeClass,
 	KLP_FORM_DEFAULT_SIZE,
 	SizeClass
 } from '../../form/form-size-provider/form-size-provider';
@@ -66,7 +66,7 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnCha
 	private getImmutableValueFn: () => T;
 
 	constructor(
-		@SkipSelf() @Optional() protected parent: FormElementComponent,
+		@Host() @Optional() protected parent: FormElementComponent,
 		@Host() @Optional() protected controlContainer: ControlContainer
 	) {
 	}
@@ -92,12 +92,12 @@ export class ValueAccessorBase<T> implements ControlValueAccessor, OnInit, OnCha
 			this.size = this.parent?.size ?? this.injectedSize ?? DefaultSize;
 		}
 
-		this.sizeClass = GetSizeClass(this.size);
+		this.sizeClass = getSizeClass(this.size);
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes.size) {
-			this.sizeClass = GetSizeClass(this.size);
+			this.sizeClass = getSizeClass(this.size);
 		}
 	}
 

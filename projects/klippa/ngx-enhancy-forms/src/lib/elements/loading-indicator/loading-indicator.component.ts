@@ -2,7 +2,7 @@ import {Component, inject, Input, OnChanges, OnInit, SimpleChanges} from '@angul
 import {FormElementComponent} from '../../form/form-element/form-element.component';
 import {
 	DefaultSize, FormSize,
-	GetSizeClass,
+	getSizeClass,
 	KLP_FORM_DEFAULT_SIZE,
 	SizeClass
 } from '../../form/form-size-provider/form-size-provider';
@@ -27,12 +27,12 @@ export class LoadingIndicatorComponent implements OnInit, OnChanges {
 			this.size = this.parent?.size ?? this.injectedSize ?? DefaultSize;
 		}
 
-		this.sizeClass = GetSizeClass(this.formSize);
+		this.sizeClass = getSizeClass(this.formSize);
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes.formSize) {
-			this.sizeClass = GetSizeClass(this.formSize);
+			this.sizeClass = getSizeClass(this.formSize);
 		}
 	}
 }

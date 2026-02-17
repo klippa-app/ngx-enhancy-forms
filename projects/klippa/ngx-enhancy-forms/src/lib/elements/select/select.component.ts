@@ -98,10 +98,6 @@ export class SelectComponent extends ValueAccessorBase<string | string[]> implem
 		super(parent, controlContainer);
 	}
 
-	ngOnInit(): void {
-		super.ngOnInit();
-	}
-
 	ngAfterViewInit(): void {
 		this.addPrefix();
 		this.addTail();

@@ -20,7 +20,7 @@ import {Subscription} from 'rxjs';
 import {
 	DefaultSize,
 	FormSize,
-	GetSizeClass,
+	getSizeClass,
 	KLP_FORM_DEFAULT_SIZE,
 	SizeClass
 } from '../form-size-provider/form-size-provider';
@@ -93,12 +93,12 @@ export class FormElementComponent implements OnInit, OnChanges, AfterViewInit, O
 		if (!this.size) {
 			this.size = this.parent?.size ?? this.injectedSize ?? DefaultSize;
 		}
-		this.sizeClass = GetSizeClass(this.size);
+		this.sizeClass = getSizeClass(this.size);
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes.size) {
-			this.sizeClass = GetSizeClass(this.size);
+			this.sizeClass = getSizeClass(this.size);
 		}
 	}
 

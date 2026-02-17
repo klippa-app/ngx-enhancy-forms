@@ -57,11 +57,5 @@ export class RadioComponent extends ValueAccessorBase<string> implements OnInit,
 				return { size: 24, captionSpacing: 12 };
 		}
 	}
-
-	public override setInnerValueAndNotify(value: string): void {
-		super.setInnerValueAndNotify(value);
-		console.log(this.innerValue)
-		console.log(value)
-	}
 }
 
