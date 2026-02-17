@@ -31,6 +31,32 @@
 	}
 }
 
+//--------------------------------------------------
+// [Border]
+//--------------------------------------------------
+
+@mixin border-default {
+	border: 1px solid $border-color;
+}
+
+@mixin border-hover {
+	border: 1px solid $border-color-hover;
+}
+
+@mixin border-warning {
+	border: 1px solid $default-warning;
+	outline: 0.5px solid $default-warning;
+}
+
+@mixin border-focus {
+	border: 1px solid $default-focus-color;
+	outline: 1px solid $default-focus-color;
+}
+
+@mixin border-disabled {
+	border: 1px solid $default-disabled-background;
+}
+
 @mixin formControl() {
 	@include placeholder {
 		color: $default-placeholder-color;
@@ -38,7 +64,7 @@
 
 	display: block;
 	background: white;
-	border: $border-default;
+	@include border-default;
 	border-radius: $border-radius-default;
 	box-shadow: none;
 	height: 40px;
@@ -50,19 +76,19 @@
 	color: $default-text-color;
 
 	&:hover {
-		border: $border-hover;
+		@include border-hover;
 	}
 
 	&.showErrors {
-		border: $border-warning;
+		@include border-warning;
 	}
 
 	&:focus, &:focus-within {
-		border: $border-focus;
+		@include border-focus;
 	}
 
 	&.disabled {
-		border: $border-disabled;
+		@include border-disabled;
 		background-color: $default-disabled-background;
 		cursor: not-allowed;
 	}
