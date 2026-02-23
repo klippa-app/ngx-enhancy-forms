@@ -13,8 +13,8 @@
 	<input
 		type="number"
 		class="form-control"
-		[(ngModel)]="innerValue"
-		(input)="setInnerValueAndNotify($event.target.value)"
+		[ngModel]="innerValue"
+		(ngModelChange)="setInnerValueAndNotify($event)"
 		[placeholder]="placeholder ? placeholder : ''"
 		[ngClass]="{showErrors: isInErrorState(), disabled: disabled}"
 		[disabled]="disabled"
