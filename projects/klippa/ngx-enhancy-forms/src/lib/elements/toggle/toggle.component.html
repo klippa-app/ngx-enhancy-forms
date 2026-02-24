@@ -1,8 +1,13 @@
-<div class="componentContainer" [style.--toggle-width]="toggleWidth + 'px'"
-		 [style.--toggle-height]="toggleHeight + 'px'"
-		 [style.--caption-spacing]="captionSpacing + 'px'">
-	<label>
-		<div class="toggleContainer" [ngClass]="{disabled: disabled}">
+<klp-form-grid-control-base
+	[caption]="caption"
+	[description]="description"
+	[disabled]="disabled"
+	[sizeClass]="sizeClass"
+	[captionSpacing]="captionSpacing">
+	<ng-template #controlContent>
+		<div class="toggleContainer" [ngClass]="{disabled: disabled}"
+				 [style.--toggle-width]="toggleWidth + 'px'"
+				 [style.--toggle-height]="toggleHeight + 'px'">
 			<div class="hiddenValue" data-cy-value>{{ innerValue }}</div>
 			<input type="checkbox" class="nativeCheckbox"
 						 [(ngModel)]="innerValue"
@@ -13,11 +18,5 @@
 			/>
 			<div class="toggleVisual" [ngClass]="{transparentBackground: transparentBackground}"></div>
 		</div>
-		@if (caption) {
-			<div class="caption" [class]="sizeClass" [ngClass]="{disabled: disabled}">{{ caption }}</div>
-		}
-	</label>
-	@if (description) {
-		<div class="description" [class]="sizeClass" [ngClass]="{disabled: disabled}">{{ description }}</div>
-	}
-</div>
+	</ng-template>
+</klp-form-grid-control-base>

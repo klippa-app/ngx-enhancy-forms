@@ -1,0 +1,34 @@
+@import '../../../style/themes/default/variables';
+@import '../../../style/mixins';
+
+:host {
+	display: block;
+}
+
+.componentContainer {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	align-items: start;
+	margin-bottom: 0;
+}
+
+label {
+	display: contents;
+	margin-bottom: 0;
+}
+
+.caption {
+	@include rightSideCaption;
+	cursor: pointer;
+	grid-column: 2;
+	align-self: start;
+
+	&.disabled {
+		cursor: not-allowed;
+	}
+}
+
+.description {
+	@include rightSideSubCaption;
+	grid-column: 2;
+}

@@ -9,24 +9,10 @@
 	display: none;
 }
 
-.componentContainer {
-	display: grid;
-	grid-template-columns: auto 1fr;
-	align-items: start;
-	margin-bottom: 0;
-}
-
-label {
-	display: contents;
-	align-items: center;
-	justify-content: center;
-	margin-bottom: 0;
-}
-
 .toggleContainer {
 	position: relative;
 	grid-column: 1;
-	align-self: center;
+	align-self: start;
 	margin-right: var(--caption-spacing);
 	&.disabled {
 		opacity: 0.6;
@@ -108,19 +94,4 @@ label {
 
 .showErrors + .toggleVisual:before {
 	border: 1px solid $default-warning;
-}
-
-.caption {
-	@include rightSideCaption;
-	cursor: pointer;
-	grid-column: 2;
-
-	&.disabled {
-		cursor: not-allowed;
-	}
-}
-
-.description {
-	@include rightSideSubCaption;
-	grid-column: 2;
 }

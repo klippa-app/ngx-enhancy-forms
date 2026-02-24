@@ -53,23 +53,11 @@
 	}
 }
 
-.optionWrapper {
-	display: grid;
-	grid-template-columns: auto 1fr;
-	align-items: start;
-	margin-bottom: 0;
-
-	label {
-		display: contents;
-		align-items: center;
-		justify-content: center;
-		margin-bottom: 0;
-	}
-
-	.radioVisualContainer {
+.radioVisualContainer {
 		position: relative;
 		grid-column: 1;
-		align-self: center;
+		align-self: start;
+		margin-right: var(--caption-spacing);
 	}
 
 	.radioNative {
@@ -126,23 +114,6 @@
 			border-color: $default-gray-quasi-dark;
 		}
 	}
-
-	.name {
-		@include rightSideCaption;
-		cursor: pointer;
-		grid-column: 2;
-
-		&.disabled {
-			cursor: not-allowed;
-		}
-	}
-
-	.description {
-		@include rightSideSubCaption;
-		grid-column: 2;
-		opacity: 1;
-	}
-}
 
 .optionContainer {
 	margin-right: $spacing-tiny;

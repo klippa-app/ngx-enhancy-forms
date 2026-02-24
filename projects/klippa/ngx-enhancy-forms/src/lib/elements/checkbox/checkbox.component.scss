@@ -3,22 +3,11 @@
 :host {
 	display: block;
 }
-.componentContainer {
-	display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: start;
-	margin-bottom: 0;
-}
-label {
-	display: contents;
-	align-items: center;
-	justify-content: center;
-	margin-bottom: 0;
-}
 .checkboxContainer {
 	position: relative;
 	grid-column: 1;
-	align-self: center;
+	align-self: start;
+	margin-right: var(--caption-spacing);
 }
 .checkBoxVisualContainer {
 	padding: 2px;
@@ -26,25 +15,7 @@ label {
 	&:focus-within {
 		outline: 2px solid $primary;
 	}
-	&.hasMargin {
-		margin-right: var(--caption-spacing);
-	}
 }
-.caption {
-	@include rightSideCaption();
-	cursor: pointer;
-	grid-column: 2;
-
-	&.disabled {
-		cursor: not-allowed;
-	}
-}
-
-.description {
-	@include rightSideSubCaption();
-	grid-column: 2;
-}
-
 .checkboxNative {
 	position: absolute;
 	opacity: 0;

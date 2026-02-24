@@ -1,7 +1,12 @@
-<div class="componentContainer" [style.--checkbox-size]="checkBoxSize + 'px'" [style.--caption-spacing]="captionSpacing + 'px'">
-	<label>
-		<div class="checkboxContainer">
-			<div class="checkBoxVisualContainer" [class.hasMargin]="stringIsSetAndFilled(caption)">
+<klp-form-grid-control-base
+	[caption]="caption"
+	[description]="description"
+	[disabled]="disabled"
+	[sizeClass]="sizeClass"
+	[captionSpacing]="captionSpacing">
+	<ng-template #controlContent>
+		<div class="checkboxContainer" [style.--checkbox-size]="checkBoxSize + 'px'">
+			<div class="checkBoxVisualContainer">
 				<input type="checkbox" class="checkboxNative"
 							 [(ngModel)]="innerValue"
 							 (change)="setInnerValueAndNotify(innerValue); touch()"
@@ -25,11 +30,5 @@
 				</div>
 			</div>
 		</div>
-		@if (caption) {
-			<div class="caption" [class]="sizeClass" [ngClass]="{disabled: disabled}">{{ caption }}</div>
-		}
-	</label>
-	@if (description) {
-		<div class="description" [class]="sizeClass" [ngClass]="{disabled: disabled}">{{ description }}</div>
-	}
-</div>
+	</ng-template>
+</klp-form-grid-control-base>

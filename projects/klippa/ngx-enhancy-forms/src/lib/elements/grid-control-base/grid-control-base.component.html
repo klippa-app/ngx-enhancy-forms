@@ -1,0 +1,23 @@
+<div class="componentContainer" [style.--caption-spacing]="captionSpacing + 'px'" #containerRef>
+	<label>
+		<ng-container *ngTemplateOutlet="controlContent"></ng-container>
+		@if (caption) {
+			<div class="caption" [class]="sizeClass" [ngClass]="{disabled: disabled}">
+				@if (isString(caption)) {
+					{{ caption }}
+				} @else if (isTemplateRef(caption)) {
+					<ng-container *ngTemplateOutlet="caption"></ng-container>
+				}
+			</div>
+		}
+	</label>
+	@if (description) {
+		<div class="description" [class]="sizeClass" [ngClass]="{disabled: disabled}">
+			@if (isString(description)) {
+				{{ description }}
+			} @else if (isTemplateRef(description)) {
+				<ng-container *ngTemplateOutlet="description"></ng-container>
+			}
+		</div>
+	}
+</div>

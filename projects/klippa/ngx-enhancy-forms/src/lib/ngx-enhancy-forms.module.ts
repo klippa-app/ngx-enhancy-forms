@@ -27,6 +27,7 @@ import {FileInputComponent} from './elements/file-input/file-input.component';
 import {SortableGroupedItemsComponent} from './elements/sortable-grouped-items/sortable-grouped-items.component';
 import {HourMinuteInputComponent} from './elements/hour-minute-input/hour-minute-input.component';
 import {RadioComponent} from './elements/radio/radio.component';
+import {GridControlBaseComponent} from './elements/grid-control-base/grid-control-base.component';
 import {WithTooltipDirective} from './withTooltip.component';
 import {WarningIconComponent} from './warning-icon/warning-icon.component';
 import {ElementIsTruncatedCbComponent} from './elementIsTruncatedCb.component';
@@ -74,6 +75,7 @@ import {FormTextSubCaptionComponent} from "./form/form-text-sub-caption/form-tex
 		SubFormDirective,
 		HourMinuteInputComponent,
 		RadioComponent,
+		GridControlBaseComponent,
 		WithTooltipDirective,
 		OnRenderDirective,
 		WarningIconComponent,
@@ -110,6 +112,7 @@ import {FormTextSubCaptionComponent} from "./form/form-text-sub-caption/form-tex
 		SubFormDirective,
 		HourMinuteInputComponent,
 		RadioComponent,
+		GridControlBaseComponent,
 		WithTooltipDirective,
 		OnRenderDirective,
 		ElementIsTruncatedCbComponent,

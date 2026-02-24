@@ -124,8 +124,16 @@ ohja
 
 			<klp-form-element caption="cool_checkbox" spaceDistribution="34-66" direction="vertical" [size]="'small'">
 				<klp-form-checkbox [ngModel]="false" [disabled]="false" [ngModelOptions]="{standalone: true}"
-													 [caption]="'caption'" [description]="'description'"></klp-form-checkbox>
+													 [caption]="coolCheckboxCaption" [description]="coolCheckboxDescription"></klp-form-checkbox>
 			</klp-form-element>
+
+			<ng-template #coolCheckboxCaption>
+				<strong>Custom</strong> caption with <em style="color: #7c3aed;">fancy styling</em> 🎨
+			</ng-template>
+
+			<ng-template #coolCheckboxDescription>
+				This is a <code style="background: #f3f4f6; padding: 2px 4px; border-radius: 3px;">template ref</code> description with <a href="#" style="color: #2563eb;">a link</a>!
+			</ng-template>
 
 			<klp-form-element [size]="'small'">
 				<klp-form-checkbox [ngModel]="false" [disabled]="false"
