@@ -235,30 +235,13 @@
 
 		.timeContainerInner {
 			height: 100%;
-			flex: 0 0 auto;
-			padding: 6px $spacing-small;
-			background: $default-white;
 			display: flex;
 			align-items: center;
-			border: $border-default;
-			border-radius: $border-radius-default;
-
-			&:hover {
-				border-color: $border-color-hover;
-			}
-
-			&:focus-within {
-				border-color: $default-focus-color;
-				outline: 1px solid $default-focus-color;
-			}
-
-			&.showErrors {
-				@include border-warning;
-			}
+			background: transparent;
 		}
 
 		&.disabled {
-			.timeContainerInner, input {
+			input {
 				background: $default-disabled-background;
 			}
 		}
