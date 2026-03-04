@@ -24,7 +24,7 @@ import {isValueSet, stringIsSetAndFilled} from '../../util/values';
 import {endOfMonth, format as formatDate, startOfMonth, isSameDay} from 'date-fns';
 import {arrayIsSetAndFilled, removeDuplicatesFromArray} from '../../util/arrays';
 import {runNextRenderCycle} from '../../util/angular';
-import {FormSize} from '../../form/form-size-provider/form-size-provider';
+import {ValueAccessorBase} from "../value-accessor-base/value-accessor-base.component";
 
 export const KLP_DATE_FORMATS = new InjectionToken<KlpDateFormats>('klp.form.date.formats');
 export const DATE_TIME_PICKER_TRANSLATIONS = new InjectionToken<any>('klp.form.dateTime.translations');
@@ -40,6 +40,7 @@ export function matDateFormatsFactory(component: DateTimePickerComponent, dateFo
 	styleUrls: ['./date-time-picker.component.scss'],
 	providers: [
 		{provide: NG_VALUE_ACCESSOR, useExisting: DateTimePickerComponent, multi: true},
+		{provide: ValueAccessorBase, useExisting: DateTimePickerComponent},
 		{
 			provide: MAT_DATE_FORMATS,
 			deps: [DateTimePickerComponent, [new Optional(), KLP_DATE_FORMATS]],
@@ -62,6 +63,7 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 	@Input() public invalidTimeAsMidnight = false; // if the time is not valid, use 00:00 as the time
 	@Input() suffixTpl: TemplateRef<any> | null = null;
 	@Input() prefixTpl: TemplateRef<any> | null = null;
+	@Input() inErrorState: boolean = false; // Error state passed from parent (e.g., date-picker)
 
 	@ViewChild('nativeInput') nativeInputRef: ElementRef;
 	@ViewChild('picker') datePickerRef: MatDatepicker<Date>;
@@ -437,8 +439,12 @@ export class DateTimePickerComponent extends MultipleValueAccessorBase<Date | ty
 		}
 	}
 
-	shizzle() {
-		console.log('a');
-		this.datePickerRef.open();
+	override isInErrorState(): boolean {
+		// Check if parent component (e.g., date-picker) passed error state
+		if (this.inErrorState) {
+			return true;
+		}
+		// Fall back to own error state for standalone usage
+		return super.isInErrorState();
 	}
 }

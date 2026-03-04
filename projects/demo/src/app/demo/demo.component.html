@@ -127,6 +127,10 @@ ohja
 													 [caption]="coolCheckboxCaption" [description]="coolCheckboxDescription"></klp-form-checkbox>
 			</klp-form-element>
 
+			<klp-form-element caption="Required text input" direction="vertical" size="small">
+				<klp-form-text-input formControlName="someString"/>
+			</klp-form-element>
+
 			<ng-template #coolCheckboxCaption>
 				<strong>Custom</strong> caption with <em style="color: #7c3aed;">fancy styling</em> 🎨
 			</ng-template>
@@ -193,6 +197,10 @@ ohja
 
 			<klp-form-element caption="A nice date" direction="vertical">
 				<klp-form-date-picker [clearable]="true" formControlName="date"></klp-form-date-picker>
+			</klp-form-element>
+
+			<klp-form-element caption="A nice date time" direction="vertical">
+				<klp-form-date-time-picker [clearable]="true" formControlName="dateTime"></klp-form-date-time-picker>
 			</klp-form-element>
 
 			<klp-form-element caption="Time" direction="vertical">

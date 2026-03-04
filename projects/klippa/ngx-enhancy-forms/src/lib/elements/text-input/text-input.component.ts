@@ -14,7 +14,10 @@ import {ValueAccessorBase} from '../value-accessor-base/value-accessor-base.comp
 	selector: 'klp-form-text-input',
 	templateUrl: './text-input.component.html',
 	styleUrls: ['./text-input.component.scss'],
-	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: TextInputComponent, multi: true}],
+	providers: [
+		{provide: NG_VALUE_ACCESSOR, useExisting: TextInputComponent, multi: true},
+		{provide: ValueAccessorBase, useExisting: TextInputComponent}
+	],
 	standalone: false
 })
 export class TextInputComponent extends ValueAccessorBase<string> {

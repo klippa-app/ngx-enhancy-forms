@@ -1,12 +1,14 @@
-<div class="componentContainer" [ngClass]="{showErrors: isInErrorState(), disabled: disabled}">
-	<div class="dateContainer" [class]="sizeClass" [style.--button-size]="size === 'small' ? '20px' : '24px'" >
-			<div class="head">
-				@if (prefixTpl) {
-					<div class="prefix">
-						<ng-container [ngTemplateOutlet]="prefixTpl"></ng-container>
-					</div>
-				}
-			</div>
+<div class="componentContainer">
+	<klp-form-border-control-base
+		class="dateContainer"
+		[disabled]="disabled"
+		[sizeClass]="sizeClass"
+		[isInErrorState]="isInErrorState()"
+		[suffixTpl]="suffixTpl"
+		[prefixTpl]="prefixTpl"
+		[style.--button-size]="size === 'small' ? '20px' : '24px'"
+	>
+		<ng-template  #inputContent>
 			<mat-form-field floatLabel="never">
 				@if (multiple) {
 					<div class="daysSelectedCaption" (click)="picker.open()" [ngClass]="{disabled: disabled}">
@@ -50,15 +52,8 @@
 					[startAt]="openPickerOnDate"
 				></mat-datepicker>
 			</mat-form-field>
-			<div class="tail">
-				<ng-container [ngTemplateOutlet]="getTailTpl()"></ng-container>
-				@if (suffixTpl) {
-					<div class="suffix">
-						<ng-container [ngTemplateOutlet]="suffixTpl"></ng-container>
-					</div>
-				}
-			</div>
-	</div>
+		</ng-template>
+	</klp-form-border-control-base>
 	@if (showTimeInput) {
 		<div class="timeContainer" [ngClass]="{disabled: disabled}">
 			<div class="timeContainerInner">

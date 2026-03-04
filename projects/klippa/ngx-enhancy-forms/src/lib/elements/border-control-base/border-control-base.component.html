@@ -1,5 +1,5 @@
 <div class="componentContainer"
-		 [ngClass]="{disabled: disabled, showErrors: isInErrorState}"
+		 [ngClass]="{disabled: disabled, showErrors: getErrorState()}"
 		 [class]="sizeClass">
 	<div class="head">
 		@if (prefixTpl) {

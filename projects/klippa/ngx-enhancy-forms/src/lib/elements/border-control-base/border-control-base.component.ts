@@ -1,4 +1,4 @@
-import {Component, ContentChild, Host, Input, Optional, TemplateRef} from '@angular/core';
+import {Component, ContentChild, Input, Optional, TemplateRef} from '@angular/core';
 import {ValueAccessorBase} from '../value-accessor-base/value-accessor-base.component';
 
 @Component({
@@ -17,8 +17,12 @@ export class BorderControlBaseComponent {
 	@ContentChild('inputContent', {static: false}) inputContent: TemplateRef<any>;
 
 	constructor(
-		@Host() @Optional() public valueAccessor: ValueAccessorBase<any>
+		@Optional() public valueAccessor: ValueAccessorBase<any>
 	) {}
+
+	getErrorState(): boolean {
+		return this.isInErrorState || this.valueAccessor?.isInErrorState() || false;
+	}
 
 	getTailTpl(): TemplateRef<any> {
 		return this.valueAccessor?.getTailTpl() ?? null;

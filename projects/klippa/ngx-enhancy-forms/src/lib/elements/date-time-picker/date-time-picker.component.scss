@@ -171,25 +171,10 @@
 .componentContainer {
 	display: flex;
 	position: relative;
-	border-radius: 2px;
 	color: $default-text-color;
 
 	.dateContainer {
-		@include formControl();
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		flex: 1 1 auto;
-		background: $default-white;
-		border: $border-default;
-		border-radius: $border-radius-default;
-
-		.prefix,
-		.suffix {
-			display: flex;
-			align-items: center;
-			flex-shrink: 0;
-		}
+		width: 100%;
 
 		mat-form-field {
 			flex: 1 1 auto;
@@ -230,25 +215,6 @@
 			}
 		}
 
-		&.disabled {
-			background: $default-disabled-background;
-			border-color: transparent;
-			cursor: pointer;
-
-			&::ng-deep input {
-				cursor: pointer;
-			}
-		}
-
-		&:hover {
-			border-color: $border-color-hover;
-		}
-
-		&:focus-within {
-			border-color: $default-focus-color;
-			outline: 1px solid $default-focus-color;
-		}
-
 		::ng-deep {
 			.mdc-text-field__input::placeholder {
 				color: #aaa !important;
@@ -258,55 +224,6 @@
 		.placeholderForMultipleSelection,
 		.placeholderForSelection {
 			color: $default-gray-faded-dark;
-		}
-
-		.head {
-			cursor: default;
-		}
-
-		.tail {
-			cursor: default;
-			display: flex;
-			flex-direction: row;
-			align-items: center;
-			gap: $spacing-small;
-		}
-
-		.prefix,
-		.suffix {
-			display: flex;
-			align-items: center;
-			flex-shrink: 0;
-		}
-
-		&.showErrors {
-			.dateContainer,
-			.timeContainer,
-			.clearButton.withoutSpacing {
-				border-color: $default-warning;
-			}
-		}
-
-		.clearButton {
-			flex: 0 0 auto;
-			display: flex;
-			align-items: center;
-			background: $default-white;
-			color: #7b7b7b;
-			border: $border-default;
-			margin-left: $spacing-medium;
-			padding: 6px 14px;
-			font-size: 18px;
-
-			&.withoutSpacing {
-				border-left: none;
-				margin-left: 0;
-			}
-
-			&:disabled {
-				border: $border-default;
-				background: $default-disabled-background;
-			}
 		}
 	}
 
@@ -333,6 +250,10 @@
 			&:focus-within {
 				border-color: $default-focus-color;
 				outline: 1px solid $default-focus-color;
+			}
+
+			&.showErrors {
+				@include border-warning;
 			}
 		}
 

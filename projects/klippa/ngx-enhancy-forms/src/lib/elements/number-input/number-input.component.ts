@@ -6,7 +6,10 @@ import {ValueAccessorBase} from "../value-accessor-base/value-accessor-base.comp
     selector: 'klp-form-number-input',
     templateUrl: './number-input.component.html',
     styleUrls: ['./number-input.component.scss'],
-    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: NumberInputComponent, multi: true }],
+    providers: [
+        { provide: NG_VALUE_ACCESSOR, useExisting: NumberInputComponent, multi: true },
+        { provide: ValueAccessorBase, useExisting: NumberInputComponent }
+    ],
     standalone: false
 })
 export class NumberInputComponent extends ValueAccessorBase<string | number> {
