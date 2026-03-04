@@ -1,82 +1,66 @@
-<div class="componentContainer"
-		 [class.verticalOrientation]="orientation === 'vertical'"
-		 [ngClass]="{'grow': multiple,  noBorderLeft: !hasBorderLeft, noBorderRight: !hasBorderRight, disabled: disabled, showErrors: isInErrorState()}"
-		 [class]="sizeClass"
+<klp-form-border-control-base
+	[class.verticalOrientation]="orientation === 'vertical'"
+	[ngClass]="{'grow': multiple, noBorderLeft: !hasBorderLeft, noBorderRight: !hasBorderRight}"
+	[disabled]="disabled"
+	[sizeClass]="sizeClass"
+	[prefixTpl]="prefixTpl"
+	[suffixTpl]="suffixTpl"
 >
-	@if (prefixTpl) {
-		<div class="prefix-tpl">
-			<ng-container [ngTemplateOutlet]="prefixTpl"></ng-container>
-		</div>
-	}
-
-	<div class="inputContainer" [class.grow]="multiple">
-		<ng-select
-			#ngSelect
-			[placeholder]="getTranslation('placeholder')"
-			bindLabel="name"
-			bindValue="id"
-			[items]="options"
-			[clearable]="clearable"
-			[(ngModel)]="innerValue"
-			[ngClass]="{showErrors: isInErrorState(), truncateOptions: truncateOptions, nonTruncatedOptions: !truncateOptions, withSeparatingLine: withSeparatingLine, hasCustomOptionTpl: !!customOptionTpl, 'grow': multiple, disabled: disabled}"
-			(change)="setInnerValueAndNotify(innerValue)"
-			[multiple]="multiple"
-			[disabled]="disabled"
-			(blur)="touch(); onBlur.emit()"
-			(clear)="onClear.emit()"
-			(search)="searchQueryChanged($event.term)"
-			[searchable]="searchable"
-			[dropdownPosition]="dropdownPositionToUse"
-			[searchFn]="customSearchFn"
-			[selectOnTab]="true"
-			[virtualScroll]="true"
-			(scroll)="onScroll($event.end)"
-			(open)="onOpen()"
-			(close)="onClose()"
-			(focus)="onFocus()"
-		>
-			<ng-template let-item="item" ng-option-tmp>
-				@if (customOptionTpl) {
-					<ng-container [ngTemplateOutlet]="customOptionTpl" [ngTemplateOutletContext]="{item: item}"></ng-container>
-				}
-				@if (!customOptionTpl) {
-					<div [attr.data-cy]="item.id">
-						{{ item.name }}
-						@if (item.description) {
-							<div class="dropdown-item-description">
-								{{ item.description }}
-							</div>
-						}
-					</div>
-				}
-			</ng-template>
-			@if (multiple && multipleDisplayedAsAmount && innerValue?.length > 1) {
-				<ng-template ng-multi-label-tmp>
-					<div class="ng-value">
-						<span class="ng-value-label">{{ getTranslation('amountSelected', innerValue?.length) }}</span>
-					</div>
+	<ng-template #inputContent>
+		<div class="inputContainer" [class.grow]="multiple">
+			<ng-select
+				#ngSelect
+				[placeholder]="getTranslation('placeholder')"
+				bindLabel="name"
+				bindValue="id"
+				[items]="options"
+				[clearable]="clearable"
+				[(ngModel)]="innerValue"
+				[ngClass]="{truncateOptions: truncateOptions, nonTruncatedOptions: !truncateOptions, withSeparatingLine: withSeparatingLine, hasCustomOptionTpl: !!customOptionTpl, 'grow': multiple, disabled: disabled}"
+				(change)="setInnerValueAndNotify(innerValue)"
+				[multiple]="multiple"
+				[disabled]="disabled"
+				(blur)="touch(); onBlur.emit()"
+				(clear)="onClear.emit()"
+				(search)="searchQueryChanged($event.term)"
+				[searchable]="searchable"
+				[dropdownPosition]="dropdownPositionToUse"
+				[searchFn]="customSearchFn"
+				[selectOnTab]="true"
+				[virtualScroll]="true"
+				(scroll)="onScroll($event.end)"
+				(open)="onOpen()"
+				(close)="onClose()"
+				(focus)="onFocus()"
+			>
+				<ng-template let-item="item" ng-option-tmp>
+					@if (customOptionTpl) {
+						<ng-container [ngTemplateOutlet]="customOptionTpl" [ngTemplateOutletContext]="{item: item}"></ng-container>
+					}
+					@if (!customOptionTpl) {
+						<div [attr.data-cy]="item.id">
+							{{ item.name }}
+							@if (item.description) {
+								<div class="dropdown-item-description">
+									{{ item.description }}
+								</div>
+							}
+						</div>
+					}
 				</ng-template>
-			}
-			@if (footerElement) {
-				<ng-template ng-footer-tmp>
-					<ng-container [ngTemplateOutlet]="footerElement"></ng-container>
-				</ng-template>
-			}
-		</ng-select>
-
-		<div class="tail" #tailRef>
-			<ng-container [ngTemplateOutlet]="getTailTpl()"></ng-container>
+				@if (multiple && multipleDisplayedAsAmount && innerValue?.length > 1) {
+					<ng-template ng-multi-label-tmp>
+						<div class="ng-value">
+							<span class="ng-value-label">{{ getTranslation('amountSelected', innerValue?.length) }}</span>
+						</div>
+					</ng-template>
+				}
+				@if (footerElement) {
+					<ng-template ng-footer-tmp>
+						<ng-container [ngTemplateOutlet]="footerElement"></ng-container>
+					</ng-template>
+				}
+			</ng-select>
 		</div>
-		<!-- I need this mock to reserve the space. I cant use the normal tail because that opens the dropdown from ng-select -->
-		<!-- I have no idea how to avoid that -->
-		<div class="tailMock" #tailMockRef>
-			<ng-container [ngTemplateOutlet]="getTailTpl()"></ng-container>
-		</div>
-	</div>
-
-	@if (suffixTpl) {
-		<div class="suffix">
-			<ng-container [ngTemplateOutlet]="suffixTpl"></ng-container>
-		</div>
-	}
-</div>
+	</ng-template>
+</klp-form-border-control-base>

@@ -10,44 +10,21 @@ $label-border: $border-color !default;
 	position: relative;
 }
 
-.componentContainer {
-	@include formControl();
-	display: flex;
-	flex-direction: row;
-
-	&.noBorderLeft {
+klp-form-border-control-base {
+	&.noBorderLeft ::ng-deep .componentContainer {
 		border-left: none;
 		border-top-left-radius: 0px;
 		border-bottom-left-radius: 0px;
 	}
 
-	&.noBorderRight {
+	&.noBorderRight ::ng-deep .componentContainer {
 		border-right: none;
 		border-top-right-radius: 0px;
 		border-bottom-right-radius: 0px;
 	}
 
-	&.input-sm {
-		padding-top: 3px;
-		padding-bottom: 3px;
-		::ng-deep .inputContainer .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value {
-			height: 24px;
-		}
-	}
-
-	.prefix-tpl,
-	.suffix {
-		display: flex;
-		align-items: center;
-		flex-shrink: 0;
-	}
-}
-
-ng-select.ng-select.showErrors {
-	&::ng-deep {
-		.ng-select-container {
-			border-color: $default-warning;
-		}
+	&.input-sm ::ng-deep .inputContainer .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value {
+		height: 24px;
 	}
 }
 
@@ -539,11 +516,11 @@ ng-select.ng-select.showErrors {
 	flex-wrap: wrap;
 }
 
-:host ::ng-deep .componentContainer .ng-input {
+:host ::ng-deep .ng-input {
 	height: 100%;
 }
 
-:host ::ng-deep .componentContainer .ng-input > input {
+:host ::ng-deep .ng-input > input {
 	font: inherit;
 	color: inherit;
 	line-height: inherit;
@@ -563,16 +540,4 @@ ng-select.ng-select.showErrors {
 			border-top-right-radius: 2px;
 		}
 	}
-}
-
-.tail {
-	position: absolute;
-	top: 10px;
-	z-index: 2;
-	background: transparent;
-}
-
-.tailMock {
-	opacity: 0;
-	pointer-events: none;
 }

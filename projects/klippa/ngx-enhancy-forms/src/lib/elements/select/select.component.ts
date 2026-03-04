@@ -45,7 +45,10 @@ export class KlpSelectOptionTemplateDirective {
 	selector: 'klp-form-select',
 	templateUrl: './select.component.html',
 	styleUrls: ['./select.component.scss'],
-	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: SelectComponent, multi: true}],
+	providers: [
+		{provide: NG_VALUE_ACCESSOR, useExisting: SelectComponent, multi: true},
+		{provide: ValueAccessorBase, useExisting: SelectComponent}
+	],
 	standalone: false
 })
 export class SelectComponent extends ValueAccessorBase<string | string[]> implements OnInit, OnChanges, AfterViewInit, OnDestroy {
