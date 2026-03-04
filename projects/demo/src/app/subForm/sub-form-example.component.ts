@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
     selector: 'app-sub-form-example',
@@ -13,7 +13,7 @@ export class SubFormExampleComponent {
 
 	public formArray = this.fb.array([
 		this.fb.group({
-			name: ['a name'],
+			name: ['a name', Validators.required],
 			age: [12],
 		}),
 	]);

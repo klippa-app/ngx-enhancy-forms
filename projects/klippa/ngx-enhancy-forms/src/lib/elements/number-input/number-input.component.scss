@@ -3,31 +3,8 @@
 
 :host {
 	display: block;
-}
-
-.componentContainer {
-	@include formControl();
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	overflow-y: hidden;
 
 	input {
 		@include nestedInput();
-	}
-
-	.head {
-		cursor: default;
-	}
-
-	.tail {
-		cursor: default;
-	}
-
-	.prefix,
-	.suffix {
-		display: flex;
-		align-items: center;
-		flex-shrink: 0;
 	}
 }

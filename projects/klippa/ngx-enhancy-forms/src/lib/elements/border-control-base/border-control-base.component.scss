@@ -1,0 +1,33 @@
+@import '../../../style/themes/default/variables';
+@import '../../../style/mixins';
+
+:host {
+	display: block;
+}
+
+.componentContainer {
+	@include formControl();
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	background: transparent;
+}
+
+.head {
+	cursor: default;
+}
+
+.tail {
+	cursor: default;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: $spacing-small;
+}
+
+.prefix,
+.suffix {
+	display: flex;
+	align-items: center;
+	flex-shrink: 0;
+}

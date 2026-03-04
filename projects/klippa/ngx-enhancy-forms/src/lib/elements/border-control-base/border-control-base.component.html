@@ -1,0 +1,22 @@
+<div class="componentContainer"
+		 [ngClass]="{disabled: disabled, showErrors: isInErrorState}"
+		 [class]="sizeClass">
+	<div class="head">
+		@if (prefixTpl) {
+			<div class="prefix">
+				<ng-container *ngTemplateOutlet="prefixTpl"></ng-container>
+			</div>
+		}
+	</div>
+
+	<ng-container *ngTemplateOutlet="inputContent"></ng-container>
+
+	<div class="tail">
+		<ng-container *ngTemplateOutlet="getTailTpl()"></ng-container>
+		@if (suffixTpl) {
+			<div class="suffix">
+				<ng-container *ngTemplateOutlet="suffixTpl"></ng-container>
+			</div>
+		}
+	</div>
+</div>

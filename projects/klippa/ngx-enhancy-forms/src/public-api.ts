@@ -7,6 +7,7 @@ export * from './lib/ngx-enhancy-forms.module';
 export * from './lib/elements/button/button.component';
 export * from './lib/elements/checkbox/checkbox.component';
 export * from './lib/elements/grid-control-base/grid-control-base.component';
+export * from './lib/elements/border-control-base/border-control-base.component';
 export * from './lib/elements/radio/radio.component';
 export * from './lib/elements/radio/radio.component';
 export * from './lib/elements/date-picker/date-picker.component';
